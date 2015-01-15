@@ -1,0 +1,12 @@
+<% if @backend_type == 'ido' -%>
+[icinga_ido]
+type                = "db"
+db                  = "mysql"
+host                = "localhost"
+<% if @ido_db_port -%>
+port                = <%= @ido_db_port %>
+<% end -%>
+dbname              = <%= @ido_db_name %>
+username            = <%= @ido_db_user %>
+password            = <%= @ido_db_password %>
+<% end -%>

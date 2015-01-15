@@ -1,61 +1,44 @@
 # == Class: icingaweb2
 #
-# Full description of class icingaweb2 here.
+# Install icingaweb2 from RPM packages
 #
-class icingaweb2 {
+# === Author
+#
+# Markus Frosch <markus.frosch@netways.de>
+#
+class icingaweb2 (
+  $use_apache      = true,
+  $timezone        = 'UTC',
+  $auth_mode       = 'demo',
+  $backend_type    = 'ido',
+  $ido_db_host     = 'localhost',
+  $ido_db_port     = undef,
+  $ido_db_name     = 'icinga2',
+  $ido_db_user     = 'icinga2',
+  $ido_db_password = 'icinga2',
+) {
 
-    include icingaweb2::depends
+  if $::osfamily != 'RedHat' {
+    fail('This module is only designed for RedHat at the moment')
+  }
 
-    Exec {
-        path        => [ '.', $::path],
-        cwd         => '/opt/icingaweb2',
-        environment => [
-            'http_proxy=http://172.16.0.15:80',
-            'https_proxy=http://172.16.0.15:80',
-        ],
-    }
+  if $use_apache {
+    include ::apache
+    include ::apache::mod::php
+    include ::apache::mod::rewrite
+    Class['apache'] -> Class['icingaweb2::install']
+  }
 
-    $db_icingaweb2 = trocla('icinga/master/db_icingaweb2', 'plain')
+  class { 'icingaweb2::install': } ~>
+  class { 'icingaweb2::config': } ~>
+  class { 'icingaweb2::settings': } ~>
+  class { 'icingaweb2::icinga2': } ~>
 
-    file { '/opt/icingaweb2':
-        ensure => directory,
-        owner  => 'www-data',
-        group  => 'www-data',
-        mode   => '0750',
-    } ->
-
-    exec { 'icingaweb2-git-clone':
-        command => 'git clone https://git.icinga.org/icingaweb2.git .',
-        user    => 'www-data',
-        cwd     => '/opt/icingaweb2',
-        creates => '/opt/icingaweb2/.git',
-    } ->
-
-    exec { 'icingaweb2-configure':
-        command => "/opt/icingaweb2/configure --prefix=/opt/icingaweb2 --with-internal-authentication --with-internal-db-name=icingaweb2 --with-internal-db-user=icingaweb2 --with-internal-db-password=\"'$db_icingaweb2'\"",
-        user    => 'www-data',
-        cwd     => '/opt/icingaweb2',
-        creates => '/opt/icingaweb2/config.status',
-    } ->
-
-    file { 'icingaweb2-apache2':
-        ensure => file,
-        path   => "${::apache::confd_dir}/icingaweb2.conf",
-        content => template('icingaweb2/icingaweb2.conf'),
-    } ~> Class['apache::service']
-
-    mysql::db { 'icingaweb2':
-        user     => 'icingaweb2',
-        password => $db_icingaweb2,
-        sql      => '/opt/icingaweb2/etc/schema/accounts.mysql.sql',
-        require  => Exec['icingaweb2-git-clone'],
-    }
-
-    icinga2::server::features::enable { 'command':
-    }
-    icinga2::server::features::enable { 'compatlog':
-    }
-    icinga2::server::features::enable { 'statusdata':
-    }
+  # temporary fix for the apache module
+  # TODO: check
+  Service <| title == 'httpd' |> {
+    hasrestart => true,
+  }
 
 }
+# vi: ts=2 sw=2 expandtab :

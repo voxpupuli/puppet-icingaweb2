@@ -1,0 +1,7 @@
+[icingaweb2]
+strip_username_regexp = ""
+<% if @auth_mode == 'demo' # or LDAP? -%>
+backend             = "autologin"
+<% else -%>
+backend             = ""
+<% end -%>
