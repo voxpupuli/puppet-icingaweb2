@@ -1,11 +1,11 @@
 {
-  "name": "lazyfrosch-icingaweb2",
+  "name": "icinga-icingaweb2",
   "version": "0.0.1",
-  "author": "Markus Frosch <markus@lazyfrosch.de>",
+  "author": "Icinga Development Team <info@icinga.org>",
   "summary": "Icingaweb2 from GIT for testing",
   "license": "GPL2+",
-  "source": "",
-  "project_page": null,
+  "source": "https://github.com/icinga/puppet-icingaweb2.git",
+  "project_page": "https://github.com/icinga/puppet-icingaweb2",
   "issues_url": null,
   "dependencies": [
     {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
