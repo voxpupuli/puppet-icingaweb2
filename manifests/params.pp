@@ -1,3 +1,5 @@
+# == Class: icingaweb2::params
+#
 class icingaweb2::params {
 
     # settings for config.ini

@@ -1,3 +1,5 @@
+# == Class: icingaweb2::config
+#
 class icingaweb2::config {
 
   file { '/etc/php.d/timezone.ini':
