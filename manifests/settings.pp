@@ -1,3 +1,5 @@
+# == Class: icingaweb2::settings
+#
 class icingaweb2::settings {
 
   # TODO: these files are temporary

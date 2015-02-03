@@ -1,3 +1,5 @@
+# == Class: icingaweb2::install
+#
 class icingaweb2::install {
 
   # TODO: db type?
