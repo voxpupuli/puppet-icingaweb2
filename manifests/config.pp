@@ -35,6 +35,10 @@ class icingaweb2::config {
     "${::icingaweb2::config_dir}/roles.ini":
       ensure  => present,
       content => template('icingaweb2/roles.ini.erb');
+
+    $::icingaweb2::web_root:
+      ensure  => directory,
+      mode    => $::icingaweb2::config_dir_mode;
   }
 }
 
