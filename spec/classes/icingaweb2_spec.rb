@@ -255,6 +255,7 @@ describe 'icingaweb2', :type => :class do
   end
 
   describe 'with parameter: manage_apache_vhost' do
+    let (:pre_condition) { '$concat_basedir = "/tmp"' }
     context 'manage_apache_vhost => true' do
       let (:params) { { :manage_apache_vhost => true } }
 
@@ -312,6 +313,7 @@ describe 'icingaweb2', :type => :class do
   end
 
   describe 'with parameter: web_root' do
+    let (:pre_condition) { '$concat_basedir = "/tmp"' }
     context 'default' do
       let (:params) { { :web_root => '/web/root' } }
 
