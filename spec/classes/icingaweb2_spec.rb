@@ -258,13 +258,13 @@ describe 'icingaweb2', :type => :class do
     context 'manage_apache_vhost => true' do
       let (:params) { { :manage_apache_vhost => true } }
 
-      pending
+      it { should contain_apache__custom_config('icingaweb2') }
     end
 
     context 'manage_apache_vhost => false' do
       let (:params) { { :manage_apache_vhost => false } }
 
-      pending
+      it { should_not contain_apache__custom_config('icingaweb2') }
     end
   end
 
@@ -312,12 +312,34 @@ describe 'icingaweb2', :type => :class do
   end
 
   describe 'with parameter: web_root' do
-    let (:params) { { :web_root => '/web/root' } }
+    context 'default' do
+      let (:params) { { :web_root => '/web/root' } }
 
-    it { should contain_file('/web/root').with(
-        'ensure' => 'directory'
-      )
-    }
+      it { should contain_file('/web/root').with(
+          'ensure' => 'directory'
+        )
+      }
+    end
+
+    context 'manage_apache_vhost => true' do
+      let (:params) {
+        {
+          :manage_apache_vhost => true,
+          :web_root => '/web/root'
+        }
+      }
+
+      it { should contain_file('/web/root').with(
+          'ensure' => 'directory'
+        )
+      }
+
+      it { should contain_apache__custom_config('icingaweb2').with(
+          'content' => /Alias.*\/web\/root/,
+          'content' => /<Directory.*\/web\/root/
+        )
+      }
+    end
   end
 end
 

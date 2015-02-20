@@ -54,5 +54,11 @@ class icingaweb2::config {
       ensure => directory,
       mode   => $::icingaweb2::config_dir_mode;
   }
+
+  if $::icingaweb2::manage_apache_vhost {
+    ::apache::custom_config { 'icingaweb2':
+      content => template('icingaweb2/apache2.conf.erb'),
+    }
+  }
 }
 
