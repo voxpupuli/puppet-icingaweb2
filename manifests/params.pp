@@ -32,10 +32,18 @@ class icingaweb2::params {
       $config_file_mode   = '0644'
       $config_group       = 'icingaweb2'
       $config_user        = 'icingaweb2'
-      $pkg_deps           = []
       $pkg_ensure         = present
       $pkg_list           = []
       $web_root           = '/usr/share/icingaweb2'
+
+      $pkg_deps = [
+        'php-gd',
+        'php-intl',
+        'php-ldap',
+        'php-mysql',
+        'php-pecl-imagick',
+        'php-pgsql',
+      ]
     }
 
     'Debian': {
@@ -45,10 +53,18 @@ class icingaweb2::params {
       $config_file_mode   = '0644'
       $config_group       = 'icingaweb2'
       $config_user        = 'icingaweb2'
-      $pkg_deps           = []
       $pkg_ensure         = present
       $pkg_list           = []
       $web_root           = '/usr/share/icingaweb2'
+
+      $pkg_deps = [
+        'php5-gd',
+        'php5-imagick',
+        'php5-intl',
+        'php5-ldap',
+        'php5-mysql',
+        'php5-pgsql',
+      ]
     }
 
     default: {
