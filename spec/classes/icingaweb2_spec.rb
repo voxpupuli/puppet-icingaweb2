@@ -22,14 +22,12 @@ describe 'icingaweb2', :type => :class do
     it { should contain_class('icingaweb2::preinstall') }
 
     it { should contain_file('/etc/icingaweb2') }
-    it { should contain_file('/etc/icingaweb2/enabledModules') }
-    it { should contain_file('/etc/icingaweb2/modules') }
-
     it { should contain_file('/etc/icingaweb2/authentication.ini') }
     it { should contain_file('/etc/icingaweb2/config.ini') }
+    it { should contain_file('/etc/icingaweb2/enabledModules') }
+    it { should contain_file('/etc/icingaweb2/modules') }
     it { should contain_file('/etc/icingaweb2/resources.ini') }
     it { should contain_file('/etc/icingaweb2/roles.ini') }
-
     it { should contain_file('/usr/share/icingaweb2') }
   end
 

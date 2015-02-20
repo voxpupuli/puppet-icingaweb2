@@ -15,22 +15,22 @@ class icingaweb2::params {
   $ido_db_user = 'icingaweb2'
   $ido_type    = 'db'
 
-  $web_type      = 'db'
+  $web_db        = 'mysql'
   $web_db_host   = 'localhost'
   $web_db_name   = 'icingaweb2'
   $web_db_pass   = 'icingaweb2'
   $web_db_port   = '3306'
   $web_db_prefix = 'icingaweb2_'
-  $web_db        = 'mysql'
   $web_db_user   = 'icingaweb2'
+  $web_type      = 'db'
 
   case $::osfamily {
     'RedHat': {
       $config_dir         = '/etc/icingaweb2'
       $config_dir_mode    = '0755'
       $config_dir_recurse = false
+      $config_file_mode   = '0644'
       $config_group       = 'root'
-      $config_mode        = '0644'
       $config_user        = 'root'
       $pkg_deps           = []
       $pkg_ensure         = present
