@@ -1,28 +1,38 @@
 # == Class icingaweb2::params
 #
 class icingaweb2::params {
+  # Module variables
   $git_repo            = 'https://git.icinga.org/icingaweb2.git'
-  $git_revision         = undef
+  $git_revision        = undef
   $install_method      = 'git'
   $manage_apache_vhost = false
   $manage_repo         = false
 
-  $ido_db      = 'mysql'
-  $ido_db_host = 'localhost'
-  $ido_db_name = 'icingaweb2'
-  $ido_db_pass = 'icingaweb2'
-  $ido_db_port = '3306'
-  $ido_db_user = 'icingaweb2'
-  $ido_type    = 'db'
-
-  $web_db        = 'mysql'
-  $web_db_host   = 'localhost'
-  $web_db_name   = 'icingaweb2'
-  $web_db_pass   = 'icingaweb2'
-  $web_db_port   = '3306'
-  $web_db_prefix = 'icingaweb2_'
-  $web_db_user   = 'icingaweb2'
-  $web_type      = 'db'
+  # Template variables
+  $admin_permissions = '*'
+  $admin_users       = 'icingaadmin'
+  $auth_backend      = 'db'
+  $auth_resource     = 'icingaweb_db'
+  $ido_db            = 'mysql'
+  $ido_db_host       = 'localhost'
+  $ido_db_name       = 'icingaweb2'
+  $ido_db_pass       = 'icingaweb2'
+  $ido_db_port       = '3306'
+  $ido_db_user       = 'icingaweb2'
+  $ido_type          = 'db'
+  $log_application   = 'icingaweb2'
+  $log_level         = 'ERROR'
+  $log_method        = 'syslog'
+  $log_resource      = 'icingaweb_db'
+  $log_store         = 'db'
+  $web_db            = 'mysql'
+  $web_db_host       = 'localhost'
+  $web_db_name       = 'icingaweb2'
+  $web_db_pass       = 'icingaweb2'
+  $web_db_port       = '3306'
+  $web_db_prefix     = 'icingaweb2_'
+  $web_db_user       = 'icingaweb2'
+  $web_type          = 'db'
 
   case $::osfamily {
     'RedHat': {

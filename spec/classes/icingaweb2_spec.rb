@@ -38,6 +38,58 @@ describe 'icingaweb2', :type => :class do
     it { should contain_user('icingaweb2') }
   end
 
+  describe 'with parameter: admin_permissions' do
+    let (:params) {
+      {
+        :admin_permissions => '_admin_permissions_'
+      }
+    }
+
+    it { should contain_file('/etc/icingaweb2/roles.ini').with(
+        'content' => /permissions.*_admin_permissions_/
+      )
+    }
+  end
+
+  describe 'with parameter: admin_users' do
+    let (:params) {
+      {
+        :admin_users => '_admin_users_'
+      }
+    }
+
+    it { should contain_file('/etc/icingaweb2/roles.ini').with(
+        'content' => /users.*_admin_users_/
+      )
+    }
+  end
+
+  describe 'with parameter: auth_backend' do
+    let (:params) {
+      {
+        :auth_backend => '_auth_backend_'
+      }
+    }
+
+    it { should contain_file('/etc/icingaweb2/authentication.ini').with(
+        'content' => /backend.*_auth_backend_/
+      )
+    }
+  end
+
+  describe 'with parameter: auth_resource' do
+    let (:params) {
+      {
+        :auth_resource => '_auth_resource_'
+      }
+    }
+
+    it { should contain_file('/etc/icingaweb2/authentication.ini').with(
+        'content' => /resource.*_auth_resource_/
+      )
+    }
+  end
+
   describe 'with parameter: config_dir' do
     let (:params) { { :config_dir => '/test/etc/icingaweb2' } }
 
@@ -102,6 +154,71 @@ describe 'icingaweb2', :type => :class do
         )
       }
     end
+  end
+
+  describe 'with parameter: log_application' do
+    let (:params) {
+      {
+        :log_application => '_log_application_'
+      }
+    }
+
+    it { should contain_file('/etc/icingaweb2/config.ini').with(
+        'content' => /application.*_log_application_/
+      )
+    }
+  end
+
+  describe 'with parameter: log_level' do
+    let (:params) {
+      {
+        :log_level => '_log_level_'
+      }
+    }
+
+    it { should contain_file('/etc/icingaweb2/config.ini').with(
+        'content' => /level.*_log_level_/
+      )
+    }
+  end
+
+  describe 'with parameter: log_method' do
+    let (:params) {
+      {
+        :log_method => '_log_method_'
+      }
+    }
+
+    it { should contain_file('/etc/icingaweb2/config.ini').with(
+        'content' => /log.*_log_method_/
+      )
+    }
+  end
+
+  describe 'with parameter: log_resource' do
+    let (:params) {
+      {
+        :log_resource => '_log_resource_'
+      }
+    }
+
+    it { should contain_file('/etc/icingaweb2/config.ini').with(
+        'content' => /resource.*_log_resource_/
+      )
+    }
+  end
+
+  describe 'with parameter: log_store' do
+    let (:params) {
+      {
+        :log_store => '_log_store_'
+      }
+    }
+
+    it { should contain_file('/etc/icingaweb2/config.ini').with(
+        'content' => /store.*_log_store_/
+      )
+    }
   end
 
   describe 'with parameter: ido_db' do

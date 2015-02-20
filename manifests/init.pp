@@ -1,5 +1,17 @@
 # == Class icingaweb2
 #
+# $admin_permissions::
+#                         Default:
+#
+# $admin_users::
+#                         Default:
+#
+# $auth_backend::
+#                         Default:
+#
+# $auth_resource::
+#                         Default:
+#
 # $config_dir::           Location of the main configuration directory.
 #                         Default: operating system specific.
 #
@@ -19,6 +31,60 @@
 # $config_user::          Posix user for configuration files.
 #                         Default: operating system specific.
 #
+# $git_repo::             Source repository containing upstream IcingaWeb2.
+#                         Default: 'https://git.icinga.org/icingaWeb2.git'
+#
+# $git_revision::         Allows git revisions, tags, hashes, ... to be
+#                         specified.
+#                         Default: undef.
+#
+# $ido_db::
+#                         Default:
+#
+# $ido_db_host::
+#                         Default:
+#
+# $ido_db_host::
+#                         Default:
+#
+# $ido_db_name::
+#                         Default:
+#
+# $ido_db_pass::
+#                         Default:
+#
+# $ido_db_port::
+#                         Default:
+#
+# $ido_db_user::
+#                         Default:
+#
+# $ido_type::
+#                         Default:
+#
+# $install_method::       Defines how to install install IcingaWeb2.
+#                         Options: git, package
+#                         Default: git.
+#
+# $log_application::
+#                         Default:
+#
+# $log_level::
+#                         Default:
+#
+# $log_method::
+#                         Default:
+#
+# $log_resource::
+#                         Default:
+#
+# $log_store::
+#                         Default:
+#
+# $manage_apache_vhos::   Define wether or not this module should manage
+#                         the virtualhost using Puppetlabs' apache module.
+#                         Default: false.
+#
 # $manage_repo::          Add a custom package repository.
 #                         Default: false.
 #
@@ -33,10 +99,38 @@
 #                         a number of dependencies.
 #                         Default: operating system specific.
 #
-# $web_root::             pending
+# $web_db::
+#                         Default:
+#
+# $web_db_host::
+#                         Default:
+#
+# $web_db_name::
+#                         Default:
+#
+# $web_db_pass::
+#                         Default:
+#
+# $web_db_port::
+#                         Default:
+#
+# $web_db_prefix::
+#                         Default:
+#
+# $web_db_user::
+#                         Default:
+#
+# $web_root::             Default location for when using using git.
 #                         Default: operating system specific.
 #
+# $web_type::
+#                         Default:
+#
 class icingaweb2 (
+  $admin_permissions   = $::icingaweb2::params::admin_permissions,
+  $admin_users         = $::icingaweb2::params::admin_users,
+  $auth_backend        = $::icingaweb2::params::auth_backend,
+  $auth_resource       = $::icingaweb2::params::auth_resource,
   $config_dir          = $::icingaweb2::params::config_dir,
   $config_dir_mode     = $::icingaweb2::params::config_dir_mode,
   $config_dir_recurse  = $::icingaweb2::params::config_dir_recurse,
@@ -54,6 +148,11 @@ class icingaweb2 (
   $ido_db_user         = $::icingaweb2::params::ido_db_user,
   $ido_type            = $::icingaweb2::params::ido_type,
   $install_method      = $::icingaweb2::params::install_method,
+  $log_application     = $::icingaweb2::params::log_application,
+  $log_level           = $::icingaweb2::params::log_level,
+  $log_method          = $::icingaweb2::params::log_method,
+  $log_resource        = $::icingaweb2::params::log_resource,
+  $log_store           = $::icingaweb2::params::log_store,
   $manage_apache_vhost = $::icingaweb2::params::manage_apache_vhost,
   $manage_repo         = $::icingaweb2::params::manage_repo,
   $pkg_deps            = $::icingaweb2::params::pkg_deps,
@@ -82,10 +181,19 @@ class icingaweb2 (
   validate_bool($manage_repo)
   validate_slength($config_dir_mode, 4)
   validate_slength($config_file_mode, 4)
+  validate_string($admin_permissions)
+  validate_string($admin_users)
+  validate_string($auth_backend)
+  validate_string($auth_resource)
   validate_string($config_dir_mode)
   validate_string($config_file_mode)
   validate_string($config_group)
   validate_string($config_user)
+  validate_string($log_application)
+  validate_string($log_level)
+  validate_string($log_method)
+  validate_string($log_resource)
+  validate_string($log_store)
   validate_string($pkg_ensure)
 
   validate_re($install_method,
