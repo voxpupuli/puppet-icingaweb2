@@ -30,8 +30,8 @@ class icingaweb2::params {
       $config_dir_mode    = '0755'
       $config_dir_recurse = false
       $config_file_mode   = '0644'
-      $config_group       = 'root'
-      $config_user        = 'root'
+      $config_group       = 'icingaweb2'
+      $config_user        = 'icingaweb2'
       $pkg_deps           = []
       $pkg_ensure         = present
       $pkg_list           = []
@@ -43,8 +43,8 @@ class icingaweb2::params {
       $config_dir_mode    = '0755'
       $config_dir_recurse = false
       $config_file_mode   = '0644'
-      $config_group       = 'root'
-      $config_user        = 'root'
+      $config_group       = 'icingaweb2'
+      $config_user        = 'icingaweb2'
       $pkg_deps           = []
       $pkg_ensure         = present
       $pkg_list           = []

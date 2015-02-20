@@ -1,6 +1,20 @@
 # == Class icingaweb2::config
 #
 class icingaweb2::config {
+  @user { 'icingaweb2':
+    ensure     => present,
+    home       => $::icingaweb2::web_root,
+    managehome => true,
+  }
+
+  @group { 'icingaweb2':
+    ensure => present,
+    system => true,
+  }
+
+  realize(User['icingaweb2'])
+  realize(Group['icingaweb2'])
+
   File {
     require => Class['::icingaweb2::install'],
     owner   => $::icingaweb2::config_user,
