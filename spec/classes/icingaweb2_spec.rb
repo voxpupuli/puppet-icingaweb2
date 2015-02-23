@@ -13,11 +13,6 @@ describe 'icingaweb2', :type => :class do
     'User <| |>'
   end
 
-  describe 'it compiles? shipt it!', :all do
-    it { should compile }
-    it { should compile.with_all_deps }
-  end
-
   describe 'without parameters' do
     it { should create_class('icingaweb2') }
     it { should contain_class('icingaweb2::config') }
@@ -388,15 +383,21 @@ describe 'icingaweb2', :type => :class do
 
   describe 'with parameter: manage_repo => true' do
     context 'with parameter: manage_repo => true' do
-      let (:params) { { :manage_repo => true } }
+      context 'Distro: CentOS' do
+        let (:params) { { :manage_repo => true } }
+        let (:facts) { centos_facts }
 
-      pending
+        it { should_not contain_icingaweb2__preinstall__redhat('icingaweb2') }
+      end
     end
 
     context 'with parameter: manage_repo => false' do
-      let (:params) { { :manage_repo => false } }
+      context 'Distro: Debian' do
+        let (:params) { { :manage_repo => false } }
+          let (:facts) { debian_facts }
 
-      pending
+        pending
+      end
     end
   end
 
@@ -427,6 +428,197 @@ describe 'icingaweb2', :type => :class do
     it {
       should contain_package('_PKG_')
     }
+  end
+
+  describe 'with parameter: pkg_repo_release_key' do
+    context 'Distro: CentOS' do
+      let (:facts) { centos_facts }
+      let (:params) {
+        {
+          :manage_repo => true,
+          :install_method => 'package',
+          :pkg_repo_release_key => '_PKG_REPO_RELEASE_KEY_',
+          :pkg_repo_version => 'release'
+        }
+      }
+
+      it {
+        should contain_icingaweb2__preinstall__redhat('icingaweb2').with(
+          'pkg_repo_version' => /release/
+        )
+      }
+
+      it {
+        should contain_yumrepo('ICINGA-release').with(
+          'gpgkey' => /_PKG_REPO_RELEASE_KEY_/,
+        )
+      }
+    end
+
+    context 'Distro: Debian' do
+      let (:facts) { debian_facts }
+
+      pending
+    end
+  end
+
+  describe 'with parameter: pkg_repo_release_metadata_expire' do
+    context 'Distro: CentOS' do
+      let (:facts) { centos_facts }
+      let (:params) {
+        {
+          :manage_repo => true,
+          :install_method => 'package',
+          :pkg_repo_release_metadata_expire => '_PKG_REPO_RELEASE_METADATA_EXPIRE_',
+          :pkg_repo_version => 'release'
+        }
+      }
+
+      it {
+        should contain_icingaweb2__preinstall__redhat('icingaweb2').with(
+          'pkg_repo_version' => /release/
+        )
+      }
+
+      it {
+        should contain_yumrepo('ICINGA-release').with(
+          'metadata_expire' => /_PKG_REPO_RELEASE_METADATA_EXPIRE_/,
+        )
+      }
+    end
+
+    context 'Distro: Debian' do
+      let (:facts) { debian_facts }
+
+      pending
+    end
+  end
+
+  describe 'with parameter: pkg_repo_release_url' do
+    context 'Distro: CentOS' do
+      let (:facts) { centos_facts }
+      let (:params) {
+        {
+          :manage_repo => true,
+          :install_method => 'package',
+          :pkg_repo_release_url => '_PKG_REPO_RELEASE_URL_',
+          :pkg_repo_version => 'release'
+        }
+      }
+
+      it {
+        should contain_icingaweb2__preinstall__redhat('icingaweb2').with(
+          'pkg_repo_version' => /release/
+        )
+      }
+
+      it {
+        should contain_yumrepo('ICINGA-release').with(
+          'baseurl' => /_PKG_REPO_RELEASE_URL_/,
+        )
+      }
+    end
+
+    context 'Distro: Debian' do
+      let (:facts) { debian_facts }
+
+      pending
+    end
+  end
+
+  describe 'with parameter: pkg_repo_snapshot_key' do
+    context 'Distro: CentOS' do
+      let (:facts) { centos_facts }
+      let (:params) {
+        {
+          :manage_repo => true,
+          :install_method => 'package',
+          :pkg_repo_snapshot_key => '_PKG_REPO_SNAPSHOT_KEY_',
+          :pkg_repo_version => 'snapshot'
+        }
+      }
+
+      it {
+        should contain_icingaweb2__preinstall__redhat('icingaweb2').with(
+          'pkg_repo_version' => /snapshot/
+        )
+      }
+
+      it {
+        should contain_yumrepo('ICINGA-snapshot').with(
+          'gpgkey' => /_PKG_REPO_SNAPSHOT_KEY_/,
+        )
+      }
+    end
+
+    context 'Distro: Debian' do
+      let (:facts) { debian_facts }
+
+      pending
+    end
+  end
+
+  describe 'with parameter: pkg_repo_snapshot_metadata_expire' do
+    context 'Distro: CentOS' do
+      let (:facts) { centos_facts }
+      let (:params) {
+        {
+          :manage_repo => true,
+          :install_method => 'package',
+          :pkg_repo_snapshot_metadata_expire => '_PKG_REPO_SNAPSHOT_METADATA_EXPIRE_',
+          :pkg_repo_version => 'snapshot'
+        }
+      }
+
+      it {
+        should contain_icingaweb2__preinstall__redhat('icingaweb2').with(
+          'pkg_repo_version' => /snapshot/
+        )
+      }
+
+      it {
+        should contain_yumrepo('ICINGA-snapshot').with(
+          'metadata_expire' => /_PKG_REPO_SNAPSHOT_METADATA_EXPIRE_/,
+        )
+      }
+    end
+
+    context 'Distro: Debian' do
+      let (:facts) { debian_facts }
+
+    end
+  end
+
+  describe 'with parameter: pkg_repo_snapshot_url' do
+    context 'Distro: CentOS' do
+      let (:facts) { centos_facts }
+      let (:params) {
+        {
+          :manage_repo => true,
+          :install_method => 'package',
+          :pkg_repo_snapshot_url => '_PKG_REPO_SNAPSHOT_URL_',
+          :pkg_repo_version => 'snapshot'
+        }
+      }
+
+      it {
+        should contain_icingaweb2__preinstall__redhat('icingaweb2').with(
+          'pkg_repo_version' => /snapshot/
+        )
+      }
+
+      it {
+        should contain_yumrepo('ICINGA-snapshot').with(
+          'baseurl' => /_PKG_REPO_SNAPSHOT_URL_/,
+        )
+      }
+    end
+
+    context 'Distro: Debian' do
+      let (:facts) { debian_facts }
+
+      pending
+    end
   end
 
   describe 'with parameter: web_root' do

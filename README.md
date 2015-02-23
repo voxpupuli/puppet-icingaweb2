@@ -38,7 +38,8 @@ Debian and derivatives only:
 
     node /box/ {
       class { 'icingaweb2':
-        manage_repo => true,
+        manage_repo    => true,
+        install_method => 'package',
       }
     }
 

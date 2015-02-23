@@ -25,6 +25,7 @@ class icingaweb2::params {
   $log_method        = 'syslog'
   $log_resource      = 'icingaweb_db'
   $log_store         = 'db'
+  $pkg_repo_version  = 'release'
   $web_db            = 'mysql'
   $web_db_host       = 'localhost'
   $web_db_name       = 'icingaweb2'
@@ -36,15 +37,21 @@ class icingaweb2::params {
 
   case $::osfamily {
     'RedHat': {
-      $config_dir         = '/etc/icingaweb2'
-      $config_dir_mode    = '0755'
-      $config_dir_recurse = false
-      $config_file_mode   = '0644'
-      $config_group       = 'icingaweb2'
-      $config_user        = 'icingaweb2'
-      $pkg_ensure         = present
-      $pkg_list           = []
-      $web_root           = '/usr/share/icingaweb2'
+      $config_dir                        = '/etc/icingaweb2'
+      $config_dir_mode                   = '0755'
+      $config_dir_recurse                = false
+      $config_file_mode                  = '0644'
+      $config_group                      = 'icingaweb2'
+      $config_user                       = 'icingaweb2'
+      $pkg_ensure                        = present
+      $pkg_list                          = ['icingaweb2']
+      $pkg_repo_release_key              = 'http://packages.icinga.org/icinga.key'
+      $pkg_repo_release_metadata_expire  = undef
+      $pkg_repo_release_url              = 'http://packages.icinga.org/epel/$releasever/release'
+      $pkg_repo_snapshot_key             = 'http://packages.icinga.org/icinga.key'
+      $pkg_repo_snapshot_metadata_expire = '1d'
+      $pkg_repo_snapshot_url             = 'http://packages.icinga.org/epel/$releasever/snapshot'
+      $web_root                          = '/usr/share/icingaweb2'
 
       $pkg_deps = [
         'php-gd',
@@ -57,15 +64,21 @@ class icingaweb2::params {
     }
 
     'Debian': {
-      $config_dir         = '/etc/icingaweb2'
-      $config_dir_mode    = '0755'
-      $config_dir_recurse = false
-      $config_file_mode   = '0644'
-      $config_group       = 'icingaweb2'
-      $config_user        = 'icingaweb2'
-      $pkg_ensure         = present
-      $pkg_list           = []
-      $web_root           = '/usr/share/icingaweb2'
+      $config_dir                        = '/etc/icingaweb2'
+      $config_dir_mode                   = '0755'
+      $config_dir_recurse                = false
+      $config_file_mode                  = '0644'
+      $config_group                      = 'icingaweb2'
+      $config_user                       = 'icingaweb2'
+      $pkg_ensure                        = present
+      $pkg_list                          = ['icingaweb2']
+      $pkg_repo_release_key              = undef
+      $pkg_repo_release_metadata_expire  = undef
+      $pkg_repo_release_url              = undef
+      $pkg_repo_snapshot_key             = undef
+      $pkg_repo_snapshot_metadata_expire = undef
+      $pkg_repo_snapshot_url             = undef
+      $web_root                          = '/usr/share/icingaweb2'
 
       $pkg_deps = [
         'php5-gd',
