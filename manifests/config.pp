@@ -17,9 +17,9 @@ class icingaweb2::config {
 
   File {
     require => Class['::icingaweb2::install'],
-    owner   => $::icingaweb2::config_user,
-    group   => $::icingaweb2::config_group,
-    mode    => $::icingaweb2::config_file_mode,
+    owner => $::icingaweb2::config_user,
+    group => $::icingaweb2::config_group,
+    mode  => $::icingaweb2::config_file_mode,
   }
 
   file {
