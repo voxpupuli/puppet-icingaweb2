@@ -1,6 +1,8 @@
 # == Class icingaweb2::preinstall
 #
 class icingaweb2::preinstall {
+  assert_private()
+
   if $::icingaweb2::manage_repo and $::icingaweb2::install_method == 'package' {
     case $::operatingsystem {
       'RedHat', 'CentOS': {

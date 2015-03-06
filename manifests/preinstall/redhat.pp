@@ -3,9 +3,7 @@
 define icingaweb2::preinstall::redhat(
   $pkg_repo_version,
 ) {
-  if $caller_module_name != $module_name {
-    fail 'Tried to include private class icingaweb2::preinstall::redhat'
-  }
+  assert_private()
 
   case $::operatingsystem {
     'RedHat', 'CentOS', 'Scientific': {
