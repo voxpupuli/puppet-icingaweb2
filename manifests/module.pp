@@ -20,13 +20,13 @@ define icingaweb2::module(
     $symlink = link
   }
 
-  file { 'icingaweb2-module-symlink':
+  file { "icingaweb2-module-${name}-symlink":
     ensure => $symlink,
     path   => "${icingaweb2::config_dir}/enabledModules/${name}",
     target => "${icingaweb2::web_root}/modules/${name}",
   }
 
-  file { 'icingaweb2-module-config':
+  file { "icingaweb2-module-${name}-config":
     ensure => directory,
     path   => "${icingaweb2::config_dir}/modules/${name}",
     mode   => $::icingaweb2::config_dir_mode,
