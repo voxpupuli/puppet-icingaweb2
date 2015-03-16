@@ -206,7 +206,7 @@ class icingaweb2 (
   $template_config                   = $::icingaweb2::params::template_config,
   $template_resources                = $::icingaweb2::params::template_resources,
   $template_roles                    = $::icingaweb2::params::template_roles,
-  $template_apache                   = $::icingaweb2::params::apache,
+  $template_apache                   = $::icingaweb2::params::template_apache,
   $web_db                            = $::icingaweb2::params::web_db,
   $web_db_host                       = $::icingaweb2::params::web_db_host,
   $web_db_name                       = $::icingaweb2::params::web_db_name,
