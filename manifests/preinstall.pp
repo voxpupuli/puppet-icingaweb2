@@ -1,7 +1,11 @@
 # == Class icingaweb2::preinstall
 #
 class icingaweb2::preinstall {
-  assert_private()
+  if is_function_available('assert_private') {
+    assert_private()
+  } else {
+    private()
+  }
 
   if $::icingaweb2::manage_repo and $::icingaweb2::install_method == 'package' {
     case $::operatingsystem {
