@@ -6,8 +6,6 @@ define icingaweb2::module(
 
   validate_re($ensure, '^(en|dis)abled$', 'ensure must be one of: enabled or disabled')
 
-  include ::icingaweb2
-
   File {
     owner => $::icingaweb2::config_user,
     group => $::icingaweb2::config_group,

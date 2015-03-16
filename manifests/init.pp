@@ -234,15 +234,13 @@ class icingaweb2 (
   Class [ 'icingaweb2' ]
 
   if $module_monitoring {
-    class { '::icingaweb2::module::monitoring': } ->
-    Class [ 'icingaweb2' ]
+    class { '::icingaweb2::module::monitoring': }
   }
 
   if $module_setup {
     ::icingaweb2::module { 'setup':
       ensure => 'disabled',
-    } ->
-    Class [ 'icingaweb2' ]
+    }
   }
 
   validate_absolute_path($config_dir)
