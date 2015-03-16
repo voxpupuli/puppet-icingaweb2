@@ -36,19 +36,19 @@ class icingaweb2::config {
 
     "${::icingaweb2::config_dir}/authentication.ini":
       ensure  => present,
-      content => template('icingaweb2/authentication.ini.erb');
+      content => template("${::icingaweb2::template_auth}");
 
     "${::icingaweb2::config_dir}/config.ini":
       ensure  => present,
-      content => template('icingaweb2/config.ini.erb');
+      content => template("${::icingaweb2::template_config}");
 
     "${::icingaweb2::config_dir}/resources.ini":
       ensure  => present,
-      content => template('icingaweb2/resources.ini.erb');
+      content => template("${::icingaweb2::template_resources}");
 
     "${::icingaweb2::config_dir}/roles.ini":
       ensure  => present,
-      content => template('icingaweb2/roles.ini.erb');
+      content => template("${::icingaweb2::template_roles}");
 
     $::icingaweb2::web_root:
       ensure => directory,
@@ -57,7 +57,7 @@ class icingaweb2::config {
 
   if $::icingaweb2::manage_apache_vhost {
     ::apache::custom_config { 'icingaweb2':
-      content => template('icingaweb2/apache2.conf.erb'),
+      content => template("${::icingaweb2::template_apache}"),
     }
   }
 }
