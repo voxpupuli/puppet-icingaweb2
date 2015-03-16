@@ -8,6 +8,10 @@ class icingaweb2::params {
   $manage_apache_vhost = false
   $manage_repo         = false
 
+  # Modules
+  $module_monitoring   = true
+  $module_setup        = true
+
   # Template variables
   $admin_permissions = '*'
   $admin_users       = 'icingaadmin'
