@@ -121,6 +121,21 @@
 # $pkg_repo_snapshot_url::
 #                         Default: operating system specific.
 #
+# $template_auth::
+#                         Default: icingaweb2/authentication.ini.erb
+#
+# $template_config::
+#                         Default: icingaweb2/config.ini.erb
+#
+# $template_resources::
+#                         Default: icingaweb2/resources.ini.erb
+#
+# $template_roles::
+#                         Default: icingaweb2/roles.ini.erb
+#
+# $template_apache::
+#                         Default: icingaweb2/apache2.ini.erb
+#
 # $web_db::
 #                         Default:
 #
@@ -187,6 +202,11 @@ class icingaweb2 (
   $pkg_repo_snapshot_metadata_expire = $::icingaweb2::params::pkg_repo_snapshot_metadata_expire,
   $pkg_repo_snapshot_url             = $::icingaweb2::params::pkg_repo_snapshot_url,
   $pkg_repo_version                  = $::icingaweb2::params::pkg_repo_version,
+  $template_auth                     = $::icingaweb2::params::template_auth,
+  $template_config                   = $::icingaweb2::params::template_config,
+  $template_resources                = $::icingaweb2::params::template_resources,
+  $template_roles                    = $::icingaweb2::params::template_roles,
+  $template_apache                   = $::icingaweb2::params::apache,
   $web_db                            = $::icingaweb2::params::web_db,
   $web_db_host                       = $::icingaweb2::params::web_db_host,
   $web_db_name                       = $::icingaweb2::params::web_db_name,
@@ -228,6 +248,14 @@ class icingaweb2 (
   validate_string($pkg_repo_release_url)
   validate_string($pkg_repo_snapshot_key)
   validate_string($pkg_repo_snapshot_url)
+  validate_string($template_auth)
+  validate_string($template_config)
+  validate_string($template_resources)
+  validate_string($template_roles)
+  if $::icingaweb2::manage_apache_vhost {
+    validate_string($template_apache)
+  }
+
 
   if $pkg_repo_release_metadata_expire {
     validate_string($pkg_repo_release_metadata_expire)
