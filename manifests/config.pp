@@ -31,10 +31,12 @@ class icingaweb2::config {
       recurse => $::icingaweb2::config_dir_recurse;
 
     "${::icingaweb2::config_dir}/enabledModules":
-      ensure  => directory;
+      ensure  => directory,
+      mode    => $::icingaweb2::config_dir_mode;
 
     "${::icingaweb2::config_dir}/modules":
-      ensure  => directory;
+      ensure  => directory,
+      mode    => $::icingaweb2::config_dir_mode;
 
     "${::icingaweb2::config_dir}/authentication.ini":
       ensure  => present,
