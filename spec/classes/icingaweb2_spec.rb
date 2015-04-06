@@ -40,8 +40,9 @@ describe 'icingaweb2', :type => :class do
       }
     }
 
-    it { should contain_file('/etc/icingaweb2/roles.ini').with(
-        'content' => /permissions.*_admin_permissions_/
+    it {
+      should contain_icingaweb2__config__roles('Admins').with(
+        'role_permissions' => /_admin_permissions_/
       )
     }
   end
@@ -53,23 +54,15 @@ describe 'icingaweb2', :type => :class do
       }
     }
 
-    it { should contain_file('/etc/icingaweb2/roles.ini').with(
-        'content' => /users.*_admin_users_/
+    it {
+      should contain_icingaweb2__config__roles('Admins').with(
+        'role_name' => /_admin_users_/
       )
     }
   end
 
   describe 'with parameter: auth_backend' do
-    let (:params) {
-      {
-        :auth_backend => '_auth_backend_'
-      }
-    }
-
-    it { should contain_file('/etc/icingaweb2/authentication.ini').with(
-        'content' => /backend.*_auth_backend_/
-      )
-    }
+    pending
   end
 
   describe 'with parameter: auth_resource' do
@@ -79,8 +72,9 @@ describe 'icingaweb2', :type => :class do
       }
     }
 
-    it { should contain_file('/etc/icingaweb2/authentication.ini').with(
-        'content' => /resource.*_auth_resource_/
+    it {
+      should contain_icingaweb2__config__authentication_database('Local Database Authentication').with(
+        'auth_resource' => /_auth_resource_/
       )
     }
   end
@@ -158,8 +152,9 @@ describe 'icingaweb2', :type => :class do
       }
     }
 
-    it { should contain_file('/etc/icingaweb2/config.ini').with(
-        'content' => /application.*_log_application_/
+    it { should contain_ini_setting('icingaweb2 config logging application').with(
+        'section' => /logging/,
+        'value'   => /_log_application_/
       )
     }
   end
@@ -171,8 +166,9 @@ describe 'icingaweb2', :type => :class do
       }
     }
 
-    it { should contain_file('/etc/icingaweb2/config.ini').with(
-        'content' => /level.*_log_level_/
+    it { should contain_ini_setting('icingaweb2 config logging level').with(
+        'section' => /logging/,
+        'value'   => /_log_level_/
       )
     }
   end
@@ -184,8 +180,9 @@ describe 'icingaweb2', :type => :class do
       }
     }
 
-    it { should contain_file('/etc/icingaweb2/config.ini').with(
-        'content' => /log.*_log_method_/
+    it { should contain_ini_setting('icingaweb2 config logging method').with(
+        'section' => /logging/,
+        'value'   => /_log_method_/
       )
     }
   end
@@ -197,8 +194,9 @@ describe 'icingaweb2', :type => :class do
       }
     }
 
-    it { should contain_file('/etc/icingaweb2/config.ini').with(
-        'content' => /resource.*_log_resource_/
+    it { should contain_ini_setting('icingaweb2 config preferences resource').with(
+        'section' => /preferences/,
+        'value'   => /_log_resource_/
       )
     }
   end
@@ -210,8 +208,9 @@ describe 'icingaweb2', :type => :class do
       }
     }
 
-    it { should contain_file('/etc/icingaweb2/config.ini').with(
-        'content' => /store.*_log_store_/
+    it { should contain_ini_setting('icingaweb2 config preferences store').with(
+        'section' => /preferences/,
+        'value'   => /_log_store_/
       )
     }
   end
@@ -220,8 +219,8 @@ describe 'icingaweb2', :type => :class do
     let (:params) { { :ido_db => '"_ido_db_"' } }
 
     it {
-      should contain_file('/etc/icingaweb2/resources.ini').with(
-        'content' => /^db.*"_ido_db_"/
+      should contain_icingaweb2__config__resource_database('icinga_ido').with(
+        'resource_db' => /_ido_db_/
       )
     }
   end
@@ -230,8 +229,8 @@ describe 'icingaweb2', :type => :class do
     let (:params) { { :ido_db_host => '"_ido_db_host_"' } }
 
     it {
-      should contain_file('/etc/icingaweb2/resources.ini').with(
-        'content' => /^host.*"_ido_db_host_"/
+      should contain_icingaweb2__config__resource_database('icinga_ido').with(
+        'resource_host' => /_ido_db_host_/
       )
     }
   end
@@ -240,8 +239,8 @@ describe 'icingaweb2', :type => :class do
     let (:params) { { :ido_db_name => '"_ido_db_name_"' } }
 
     it {
-      should contain_file('/etc/icingaweb2/resources.ini').with(
-        'content' => /^dbname.*"_ido_db_name_"/
+      should contain_icingaweb2__config__resource_database('icinga_ido').with(
+        'resource_dbname' => /_ido_db_name_/
       )
     }
   end
@@ -250,8 +249,8 @@ describe 'icingaweb2', :type => :class do
     let (:params) { { :ido_db_pass => '"_ido_db_pass_"' } }
 
     it {
-      should contain_file('/etc/icingaweb2/resources.ini').with(
-        'content' => /^password.*"_ido_db_pass_"/
+      should contain_icingaweb2__config__resource_database('icinga_ido').with(
+        'resource_password' => /_ido_db_pass_/
       )
     }
   end
@@ -260,8 +259,8 @@ describe 'icingaweb2', :type => :class do
     let (:params) { { :ido_db_port => '"_ido_db_port_"' } }
 
     it {
-      should contain_file('/etc/icingaweb2/resources.ini').with(
-        'content' => /^port.*"_ido_db_port_"/
+      should contain_icingaweb2__config__resource_database('icinga_ido').with(
+        'resource_port' => /_ido_db_port_/
       )
     }
   end
@@ -270,38 +269,22 @@ describe 'icingaweb2', :type => :class do
     let (:params) { { :ido_db_user => '"_ido_db_user_"' } }
 
     it {
-      should contain_file('/etc/icingaweb2/resources.ini').with(
-        'content' => /^username.*"_ido_db_user_"/
+      should contain_icingaweb2__config__resource_database('icinga_ido').with(
+        'resource_username' => /_ido_db_user_/
       )
     }
   end
 
   describe 'with parameter: ido_type' do
-    let (:params) { { :ido_type => '"_ido_type_"' } }
-
-    it {
-      should contain_file('/etc/icingaweb2/resources.ini').with(
-        'content' => /^type.*"_ido_type_"/
-      )
-    }
-  end
-
-  describe 'with parameter: web_type' do
-    let (:params) { { :web_type => '"_web_type_"' } }
-
-    it {
-      should contain_file('/etc/icingaweb2/resources.ini').with(
-        'content' => /^type.*"_web_type_"/
-      )
-    }
+    pending
   end
 
   describe 'with parameter: web_db_host' do
     let (:params) { { :web_db_host => '"_web_db_host_"' } }
 
     it {
-      should contain_file('/etc/icingaweb2/resources.ini').with(
-        'content' => /^host.*"_web_db_host_"/
+      should contain_icingaweb2__config__resource_database('icingaweb_db').with(
+        'resource_host' => /_web_db_host_/
       )
     }
   end
@@ -310,8 +293,8 @@ describe 'icingaweb2', :type => :class do
     let (:params) { { :web_db_name => '"_web_db_name_"' } }
 
     it {
-      should contain_file('/etc/icingaweb2/resources.ini').with(
-        'content' => /^dbname.*"_web_db_name_"/
+      should contain_icingaweb2__config__resource_database('icingaweb_db').with(
+        'resource_dbname' => /_web_db_name_/
       )
     }
   end
@@ -320,8 +303,8 @@ describe 'icingaweb2', :type => :class do
     let (:params) { { :web_db_pass => '"_web_db_pass_"' } }
 
     it {
-      should contain_file('/etc/icingaweb2/resources.ini').with(
-        'content' => /^password.*"_web_db_pass_"/
+      should contain_icingaweb2__config__resource_database('icingaweb_db').with(
+        'resource_password' => /_web_db_pass_/
       )
     }
   end
@@ -330,40 +313,28 @@ describe 'icingaweb2', :type => :class do
     let (:params) { { :web_db_port => '"_web_db_port_"' } }
 
     it {
-      should contain_file('/etc/icingaweb2/resources.ini').with(
-        'content' => /^port.*"_web_db_port_"/
+      should contain_icingaweb2__config__resource_database('icingaweb_db').with(
+        'resource_port' => /_web_db_port_/
       )
     }
   end
 
   describe 'with parameter: web_db_prefix' do
-    let (:params) { { :web_db_prefix => '"_web_db_prefix_"' } }
-
-    it {
-      should contain_file('/etc/icingaweb2/resources.ini').with(
-        'content' => /^prefix.*"_web_db_prefix_"/
-      )
-    }
+    pending
   end
 
   describe 'with parameter: web_db_user' do
     let (:params) { { :web_db_user => '"_web_db_user_"' } }
 
     it {
-      should contain_file('/etc/icingaweb2/resources.ini').with(
-        'content' => /^username.*"_web_db_user_"/
+      should contain_icingaweb2__config__resource_database('icingaweb_db').with(
+        'resource_username' => /_web_db_user_/
       )
     }
   end
 
   describe 'with parameter: web_type' do
-    let (:params) { { :web_type => '"_web_type_"' } }
-
-    it {
-      should contain_file('/etc/icingaweb2/resources.ini').with(
-        'content' => /^type.*"_web_type_"/
-      )
-    }
+    pending
   end
 
   describe 'with parameter: manage_apache_vhost' do

@@ -1,6 +1,6 @@
 # == Class icingaweb2::config
 #
-class icingaweb2::config { 
+class icingaweb2::config {
   if is_function_available('assert_private') {
     assert_private()
   } else {
@@ -60,7 +60,7 @@ class icingaweb2::config {
   }
 
   # Configure authentication.ini settings
-  icingaweb2::config::authentication_database { 'Local Database Authenticaiton':
+  icingaweb2::config::authentication_database { 'Local Database Authentication':
     auth_section  => 'icingaweb2',
     auth_resource => "${::icingaweb2::auth_resource}",
   }
