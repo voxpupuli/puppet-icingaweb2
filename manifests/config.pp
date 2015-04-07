@@ -60,7 +60,7 @@ class icingaweb2::config {
   }
 
   # Configure authentication.ini settings
-  case $::icingaweb2::auth_method {
+  case $::icingaweb2::auth_backend {
     'db': {
       icingaweb2::config::authentication_database { 'Local Database Authentication':
         auth_section  => 'icingaweb2',
