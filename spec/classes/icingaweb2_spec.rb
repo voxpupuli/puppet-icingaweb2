@@ -56,7 +56,7 @@ describe 'icingaweb2', :type => :class do
 
     it {
       should contain_icingaweb2__config__roles('Admins').with(
-        'role_name' => /_admin_users_/
+        'role_users' => /_admin_users_/
       )
     }
   end
