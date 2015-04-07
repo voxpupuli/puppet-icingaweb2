@@ -60,9 +60,19 @@ class icingaweb2::config {
   }
 
   # Configure authentication.ini settings
-  icingaweb2::config::authentication_database { 'Local Database Authentication':
-    auth_section  => 'icingaweb2',
-    auth_resource => "${::icingaweb2::auth_resource}",
+  case $::icingaweb2::auth_method {
+    'db': {
+      icingaweb2::config::authentication_database { 'Local Database Authentication':
+        auth_section  => 'icingaweb2',
+        auth_resource => $::icingaweb2::auth_resource,
+      }
+    }
+    'external': {
+      icingaweb2::config::authentication_external { 'External Authentication':
+        auth_section  => 'icingaweb2',
+      }
+    }
+    default: {}
   }
 
   # Configure config.ini settings
@@ -122,7 +132,7 @@ class icingaweb2::config {
 
   # Configure roles.ini
   icingaweb2::config::roles { 'Admins':
-    role_name        => "${::icingaweb2::admin_users}",
+    role_users       => "${::icingaweb2::admin_users}",
     role_permissions => "${::icingaweb2::admin_permissions}",
   }
 
