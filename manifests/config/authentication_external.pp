@@ -12,14 +12,14 @@ define icingaweb2::config::authentication_external (
   }
 
   ini_setting { "icingaweb2 authentication ${title} filter":
-    section => "$auth_section",
+    section => $auth_section,
     setting => 'strip_username_regexp',
-    value   => "\"$auth_filter\"",
+    value   => "\"${auth_filter}\"",
   }
 
   ini_setting { "icingaweb2 authentication ${title} backend":
-    section => "$auth_section",
+    section => $auth_section,
     setting => 'backend',
-    value   => '"external"', 
+    value   => '"external"',
   }
 }

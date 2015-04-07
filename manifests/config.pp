@@ -43,16 +43,16 @@ class icingaweb2::config {
       mode    => $::icingaweb2::config_dir_mode;
 
     "${::icingaweb2::config_dir}/authentication.ini":
-      ensure => present;
+      ensure => file;
 
     "${::icingaweb2::config_dir}/config.ini":
-      ensure  => present;
+      ensure  => file;
 
     "${::icingaweb2::config_dir}/resources.ini":
-      ensure  => present;
+      ensure  => file;
 
     "${::icingaweb2::config_dir}/roles.ini":
-      ensure  => present;
+      ensure  => file;
 
     $::icingaweb2::web_root:
       ensure => directory,
@@ -113,32 +113,32 @@ class icingaweb2::config {
 
   # Configure resources.ini
   icingaweb2::config::resource_database { 'icingaweb_db':
-    resource_db       => "${::icingaweb2::web_db}",
-    resource_host     => "${::icingaweb2::web_db_host}",
-    resource_port     => "${::icingaweb2::web_db_port}",
-    resource_dbname   => "${::icingaweb2::web_db_name}",
-    resource_username => "${::icingaweb2::web_db_user}",
-    resource_password => "${::icingaweb2::web_db_pass}",
+    resource_db       => $::icingaweb2::web_db,
+    resource_host     => $::icingaweb2::web_db_host,
+    resource_port     => $::icingaweb2::web_db_port,
+    resource_dbname   => $::icingaweb2::web_db_name,
+    resource_username => $::icingaweb2::web_db_user,
+    resource_password => $::icingaweb2::web_db_pass,
   }
 
   icingaweb2::config::resource_database { 'icinga_ido':
-    resource_db       => "${::icingaweb2::ido_db}",
-    resource_host     => "${::icingaweb2::ido_db_host}",
-    resource_port     => "${::icingaweb2::ido_db_port}",
-    resource_dbname   => "${::icingaweb2::ido_db_name}",
-    resource_username => "${::icingaweb2::ido_db_user}",
-    resource_password => "${::icingaweb2::ido_db_pass}",
+    resource_db       => $::icingaweb2::ido_db,
+    resource_host     => $::icingaweb2::ido_db_host,
+    resource_port     => $::icingaweb2::ido_db_port,
+    resource_dbname   => $::icingaweb2::ido_db_name,
+    resource_username => $::icingaweb2::ido_db_user,
+    resource_password => $::icingaweb2::ido_db_pass,
   }
 
   # Configure roles.ini
   icingaweb2::config::roles { 'Admins':
-    role_users       => "${::icingaweb2::admin_users}",
-    role_permissions => "${::icingaweb2::admin_permissions}",
+    role_users       => $::icingaweb2::admin_users,
+    role_permissions => $::icingaweb2::admin_permissions,
   }
 
   if $::icingaweb2::manage_apache_vhost {
     ::apache::custom_config { 'icingaweb2':
-      content => template("${::icingaweb2::template_apache}"),
+      content => template($::icingaweb2::template_apache),
     }
   }
 }
