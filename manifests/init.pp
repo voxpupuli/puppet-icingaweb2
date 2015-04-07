@@ -81,7 +81,7 @@
 # $log_store::
 #                         Default:
 #
-# $manage_apache_vhos::   Define wether or not this module should manage
+# $manage_apache_vhost::  Define wether or not this module should manage
 #                         the virtualhost using Puppetlabs' apache module.
 #                         Default: false.
 #
@@ -99,7 +99,7 @@
 #                         a number of dependencies.
 #                         Default: operating system specific.
 #
-# $pkg_pkg_repo_version::
+# $pkg_repo_version::
 #                         Options: release, snapshot.
 #                         Default: release.
 #
