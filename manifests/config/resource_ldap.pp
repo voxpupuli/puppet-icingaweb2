@@ -24,7 +24,7 @@ define icingaweb2::config::resource_ldap (
   ini_setting { "icingaweb2 resources ${title} hostname":
     section => $resource_name,
     setting => 'hostname',
-    value   => "\"${resource_hostname}\"",
+    value   => "\"${resource_host}\"",
   }
 
   ini_setting { "icingaweb2 resources ${title} port":
