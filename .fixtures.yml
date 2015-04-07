@@ -1,10 +1,10 @@
 fixtures:
   repositories:
-    apache:  'git://github.com/puppetlabs/puppetlabs-apache.git'
-    concat:  'git://github.com/puppetlabs/puppetlabs-concat.git'
-    inifile: 'git://github.com/puppetlabs/puppetlabs-inifile.git'
-    stdlib:  'git://github.com/puppetlabs/puppetlabs-stdlib.git'
-    vcsrepo: 'git://github.com/puppetlabs/puppetlabs-vcsrepo.git'
+    apache:  'https://github.com/puppetlabs/puppetlabs-apache'
+    concat:  'https://github.com/puppetlabs/puppetlabs-concat'
+    inifile: 'https://github.com/puppetlabs/puppetlabs-inifile'
+    stdlib:  'https://github.com/puppetlabs/puppetlabs-stdlib'
+    vcsrepo: 'https://github.com/puppetlabs/puppetlabs-vcsrepo'
 
   symlinks:
     icingaweb2: "#{source_dir}"
