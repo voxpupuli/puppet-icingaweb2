@@ -168,6 +168,9 @@ class icingaweb2 (
   $admin_users                       = $::icingaweb2::params::admin_users,
   $auth_backend                      = $::icingaweb2::params::auth_backend,
   $auth_resource                     = $::icingaweb2::params::auth_resource,
+  # TODO
+  # LDAP_AUTH
+
   $config_dir                        = $::icingaweb2::params::config_dir,
   $config_dir_mode                   = $::icingaweb2::params::config_dir_mode,
   $config_dir_recurse                = $::icingaweb2::params::config_dir_recurse,
@@ -216,6 +219,8 @@ class icingaweb2 (
   $web_db_user                       = $::icingaweb2::params::web_db_user,
   $web_root                          = $::icingaweb2::params::web_root,
   $web_type                          = $::icingaweb2::params::web_type,
+  $modules_enabled                   = $::icingaweb2::params::modules_enabled,
+  $modules_disabled                  = $::icingaweb2::params::modules_disabled,
 ) inherits icingaweb2::params {
   class { 'icingaweb2::preinstall': } ->
   class { 'icingaweb2::install': } ->

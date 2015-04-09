@@ -1,6 +1,7 @@
 # == Class icingaweb2::params
 #
 class icingaweb2::params {
+
   # Module variables
   $git_repo            = 'https://git.icinga.org/icingaweb2.git'
   $git_revision        = undef
@@ -39,6 +40,10 @@ class icingaweb2::params {
   $web_db_prefix     = 'icingaweb2_'
   $web_db_user       = 'icingaweb2'
   $web_type          = 'db'
+
+  # What Icingaweb 2 features should be enabled when icingaweb2::features class is applied:
+  $modules_enabled   = [ 'doc', 'monitoring', 'setup', 'translation' ]
+  $modules_disabled  = []
 
   case $::osfamily {
     'RedHat': {

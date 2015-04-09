@@ -42,6 +42,10 @@ class icingaweb2::config {
       ensure  => directory,
       mode    => $::icingaweb2::config_dir_mode;
 
+    "${::icingaweb2::config_dir}/modules/monitoring":
+      ensure  => directory,
+      mode    => $::icingaweb2::config_dir_mode;
+
     "${::icingaweb2::config_dir}/authentication.ini":
       ensure => file;
 
@@ -65,6 +69,17 @@ class icingaweb2::config {
       icingaweb2::config::authentication_database { 'Local Database Authentication':
         auth_section  => 'icingaweb2',
         auth_resource => $::icingaweb2::auth_resource,
+      }
+    }
+    'ldap': {
+      icingaweb2::config::resource_ldap {
+        'LDAP Authentication':
+          auth_section  => 'ldap_auth',
+          backend       => 'ldap',
+          resource      => '',
+          user_class    => '',
+          user_name_attribute => '',
+          base_dn             => ''
       }
     }
     'external': {
@@ -128,6 +143,14 @@ class icingaweb2::config {
     resource_dbname   => $::icingaweb2::ido_db_name,
     resource_username => $::icingaweb2::ido_db_user,
     resource_password => $::icingaweb2::ido_db_pass,
+  }
+
+  # enable / disable modules
+  class {
+    'icingaweb2::modules':
+      enabled  => $::icingaweb2::modules_enabled,
+      disabled => $::icingaweb2::modules_disabled,
+      require  => File["${::icingaweb2::config_dir}/modules/monitoring"]
   }
 
   # Configure roles.ini
