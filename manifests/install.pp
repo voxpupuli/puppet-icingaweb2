@@ -29,7 +29,7 @@ class icingaweb2::install {
         before => Vcsrepo['icingaweb2'],
       }
     }
-    
+
     vcsrepo { 'icingaweb2':
       ensure   => present,
       path     => $::icingaweb2::web_root,
@@ -38,5 +38,18 @@ class icingaweb2::install {
       source   => $::icingaweb2::git_repo,
     }
   }
+
+#       #Load the MySQL DB schema:
+#       exec { 'mysql_schema_load':
+#         user    => 'root',
+#         path    => '/usr/bin:/usr/sbin:/bin/:/sbin',
+#         command => "mysql -u ${db_user} -p${db_password} ${db_name} < ${server_db_schema_path} && touch /etc/icinga2/mysql_schema_loaded.txt",
+#         creates => '/etc/icinga2/mysql_schema_loaded.txt',
+#         require => Class['icinga2::server::install::packages'],
+#       }
+
+  # mysql -uicinga2 -ppassword icinga2_auth < /usr/share/doc/icingaweb2/schema/mysql.schema.sql
+
+
 }
 
