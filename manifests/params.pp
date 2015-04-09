@@ -28,7 +28,7 @@ class icingaweb2::params {
   $pkg_repo_version  = 'release'
   $template_auth     = 'icingaweb2/authentication.ini.erb'
   $template_config   = 'icingaweb2/config.ini.erb'
-  $template_resources='icingaweb2/resources.ini.erb'
+  $template_resources= 'icingaweb2/resources.ini.erb'
   $template_roles    = 'icingaweb2/roles.ini.erb'
   $template_apache   = 'icingaweb2/apache2.conf.erb'
   $web_db            = 'mysql'
@@ -65,6 +65,7 @@ class icingaweb2::params {
         'php-mysql',
         'php-pecl-imagick',
         'php-pgsql',
+        'php-ZendFramework-Db-Adapter-Pdo-Mysql'
       ]
     }
 
