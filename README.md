@@ -58,11 +58,11 @@ Debian and derivatives only:
   class {
     'icingaweb2::config::database::ido':
       db_type          => 'mysql',
-      db_username      => $ide_db_username',
+      db_username      => $ido_db_username',
       db_password      => $ido_db_password,
       db_schema        => $ido_db_name,
   }
-```
+
   class {
     'icingaweb2::config::database::web':
       db_type          => 'mysql',
