@@ -43,6 +43,65 @@ Debian and derivatives only:
       }
     }
 
+### Usage
+
+  class {
+    '::icingaweb2':
+      manage_repo     => false,
+      install_method  => 'package',
+      auth_backend    => 'ldap',
+      modules_enabled => [ 'doc', 'monitoring', 'setup', 'translation' ]
+  }
+
+  Note: This both Databaseschema must be exists!
+
+  class {
+    'icingaweb2::config::database::ido':
+      db_type          => 'mysql',
+      db_username      => $ide_db_username',
+      db_password      => $ido_db_password,
+      db_schema        => $ido_db_name,
+  }
+
+  class {
+    'icingaweb2::config::database::web':
+      db_type          => 'mysql',
+      db_username      => $web_db_user,
+      db_password      => $web_db_pass,
+      db_schema        => $web_db_name,
+      db_prefix        => $web_db_prefix,
+  }
+
+  LDAP Configuration
+
+  class {
+    'icingaweb2::config::auth::ldap':
+      # Auth
+      base_dn          => $ldap_base_dn,
+      user_class       => $ldap_user_class,
+      user_name_attr   => $ldap_user_name_attr,
+      # resource
+      hostname         => $ldap_host,
+      port             => $ldap_port,
+      bind_dn          => $ldap_bind_dn,
+      bind_pw          => $ldap_bind_pw,
+      root_dn          => $ldap_root_dn,
+      connection       => $ldap_connection,
+  }
+
+  class {
+    'icingaweb2::config::resources::livestatus':
+      socket   => '/var/run/icinga2/cmd/livestatus'
+  }
+
+  class {
+    'icingaweb2::module::monitoring':
+      enabled          => true,
+      backend_type     => 'ido',
+      backend_resource => 'icinga_ido'
+  }
+
+
 ## Contributing
 
 * Fork it
