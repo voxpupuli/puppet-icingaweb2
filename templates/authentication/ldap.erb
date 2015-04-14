@@ -1,0 +1,7 @@
+
+[ldap_auth]
+backend             = ldap
+resource            = ldap_auth
+<%- if @base_dn %>base_dn             = "<%= @base_dn -%>" <%- end %>
+<%- if @user_name_attr %>user_name_attribute = "<%= @user_name_attr -%>" <%- end %>
+<%- if @user_class %>user_class          = "<%= @user_class -%>" <%- end %>

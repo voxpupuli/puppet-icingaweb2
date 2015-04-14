@@ -29,7 +29,7 @@ class icingaweb2::install {
         before => Vcsrepo['icingaweb2'],
       }
     }
-    
+
     vcsrepo { 'icingaweb2':
       ensure   => present,
       path     => $::icingaweb2::web_root,
@@ -38,5 +38,6 @@ class icingaweb2::install {
       source   => $::icingaweb2::git_repo,
     }
   }
+
 }
 

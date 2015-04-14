@@ -1,6 +1,7 @@
 # == Class icingaweb2::params
 #
 class icingaweb2::params {
+
   # Module variables
   $git_repo            = 'https://git.icinga.org/icingaweb2.git'
   $git_revision        = undef
@@ -11,8 +12,10 @@ class icingaweb2::params {
   # Template variables
   $admin_permissions = '*'
   $admin_users       = 'icingaadmin'
+
   $auth_backend      = 'db'
   $auth_resource     = 'icingaweb_db'
+
   $ido_db            = 'mysql'
   $ido_db_host       = 'localhost'
   $ido_db_name       = 'icingaweb2'
@@ -20,17 +23,46 @@ class icingaweb2::params {
   $ido_db_port       = '3306'
   $ido_db_user       = 'icingaweb2'
   $ido_type          = 'db'
-  $log_application   = 'icingaweb2'
-  $log_level         = 'ERROR'
-  $log_method        = 'syslog'
-  $log_resource      = 'icingaweb_db'
-  $log_store         = 'db'
+
+  $config_logging    = {
+    'log'          => '"file"',
+    'level'        => '"INFO"',
+    'file'         => '"/var/log/icingaweb2/icingaweb2.log"'
+  }
+
+  $config_preferences = {
+    'store'        => '"db"',
+    'resource'     => '"icingaweb_db"'
+  }
+
+  $config_global     = {
+    'module_path'  => '"/usr/share/icingaweb2/modules"'
+  }
+
+  $ldap_hostname       = undef
+  $ldap_port           = undef
+  $ldap_bind_dn        = undef
+  $ldap_bind_pw        = undef
+  $ldap_root_dn        = undef
+  $ldap_connection     = undef
+  $auth_ldap_user_class = undef
+  $auth_ldap_user_name_attr = undef
+  $auth_ldap_base_dn        = undef
+
+#   $log_application   = 'icingaweb2'
+#   $log_level         = 'ERROR'
+#   $log_method        = 'syslog'
+#   $log_resource      = 'icingaweb_db'
+#   $log_store         = 'db'
+
   $pkg_repo_version  = 'release'
+
   $template_auth     = 'icingaweb2/authentication.ini.erb'
   $template_config   = 'icingaweb2/config.ini.erb'
-  $template_resources='icingaweb2/resources.ini.erb'
+  $template_resources= 'icingaweb2/resources.ini.erb'
   $template_roles    = 'icingaweb2/roles.ini.erb'
   $template_apache   = 'icingaweb2/apache2.conf.erb'
+
   $web_db            = 'mysql'
   $web_db_host       = 'localhost'
   $web_db_name       = 'icingaweb2'
@@ -39,6 +71,10 @@ class icingaweb2::params {
   $web_db_prefix     = 'icingaweb2_'
   $web_db_user       = 'icingaweb2'
   $web_type          = 'db'
+
+  # What Icingaweb 2 features should be enabled when icingaweb2::features class is applied:
+  $modules_enabled   = [ 'doc', 'monitoring', 'setup', 'translation' ]
+  $modules_disabled  = []
 
   case $::osfamily {
     'RedHat': {
@@ -65,6 +101,7 @@ class icingaweb2::params {
         'php-mysql',
         'php-pecl-imagick',
         'php-pgsql',
+        'php-ZendFramework-Db-Adapter-Pdo-Mysql'
       ]
     }
 

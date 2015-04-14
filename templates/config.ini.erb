@@ -1,0 +1,21 @@
+
+<%- if @config_logging -%>
+[logging]
+  <%- @config_logging.each do |key, value| -%>
+<%= key.to_s.ljust(10, ' ') %> = <%= value %>
+  <%- end -%>
+<%- end -%>
+
+<%- if @config_preferences -%>
+[preferences]
+  <%- @config_preferences.each do |key, value| -%>
+<%= key.to_s.ljust(10, ' ') %> = <%= value %>
+  <%- end -%>
+<%- end -%>
+
+<%- if @config_global -%>
+[global]
+  <%- @config_global.each do |key, value| -%>
+<%= key.to_s.ljust(10, ' ') %> = <%= value %>
+  <%- end -%>
+<%- end -%>

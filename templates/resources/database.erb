@@ -1,0 +1,12 @@
+
+[<%= @db_resource %>]
+type                = db
+db                  = "<%= @db_type -%>"
+host                = "<%= @db_host -%>"
+port                = "<%= @db_port -%>"
+dbname              = "<%= @db_schema -%>"
+username            = "<%= @db_username -%>"
+password            = "<%= @db_password -%>"
+<%- if @db_prefix -%>
+prefix              = "<%= @db_prefix -%>"
+<%- end -%>
