@@ -1,167 +1,103 @@
 # == Class icingaweb2::config
 #
 class icingaweb2::config {
-  if is_function_available('assert_private') {
+
+  if( is_function_available('assert_private') ) {
     assert_private()
   } else {
     private()
   }
 
-  @user { 'icingaweb2':
-    ensure     => present,
-    home       => $::icingaweb2::web_root,
-    managehome => true,
+  @user {
+    'icingaweb2':
+      ensure     => present,
+      home       => $::icingaweb2::web_root,
+      managehome => true,
   }
 
-  @group { 'icingaweb2':
-    ensure => present,
-    system => true,
+  @group {
+    'icingaweb2':
+      ensure => present,
+      system => true,
   }
 
   realize(User['icingaweb2'])
   realize(Group['icingaweb2'])
 
   File {
-    require => Class['::icingaweb2::install'],
-    owner => $::icingaweb2::config_user,
-    group => $::icingaweb2::config_group,
-    mode  => $::icingaweb2::config_file_mode,
+    owner   => $::icingaweb2::config_user,
+    group   => $::icingaweb2::config_group,
+    mode    => $::icingaweb2::config_file_mode,
+    require => Class['::icingaweb2::install']
   }
 
   file {
-    $::icingaweb2::config_dir:
-      ensure  => directory,
-      mode    => $::icingaweb2::config_dir_mode,
-      recurse => $::icingaweb2::config_dir_recurse;
-
-    "${::icingaweb2::config_dir}/enabledModules":
-      ensure  => directory,
-      mode    => $::icingaweb2::config_dir_mode;
-
-    "${::icingaweb2::config_dir}/modules":
-      ensure  => directory,
-      mode    => $::icingaweb2::config_dir_mode;
-
-    "${::icingaweb2::config_dir}/modules/monitoring":
-      ensure  => directory,
-      mode    => $::icingaweb2::config_dir_mode;
-
-    "${::icingaweb2::config_dir}/authentication.ini":
-      ensure => file;
-
-    "${::icingaweb2::config_dir}/config.ini":
-      ensure  => file;
-
-    "${::icingaweb2::config_dir}/resources.ini":
-      ensure  => file;
-
-    "${::icingaweb2::config_dir}/roles.ini":
-      ensure  => file;
-
     $::icingaweb2::web_root:
       ensure => directory,
-      mode   => $::icingaweb2::config_dir_mode;
+      mode   => $::icingaweb2::config_dir_mode
   }
 
-  # Configure authentication.ini settings
-  case $::icingaweb2::auth_backend {
-    'db': {
-      icingaweb2::config::authentication_database { 'Local Database Authentication':
-        auth_section  => 'icingaweb2',
-        auth_resource => $::icingaweb2::auth_resource,
-      }
-    }
-    'ldap': {
-      icingaweb2::config::resource_ldap {
-        'LDAP Authentication':
-          auth_section  => 'ldap_auth',
-          backend       => 'ldap',
-          resource      => '',
-          user_class    => '',
-          user_name_attribute => '',
-          base_dn             => ''
-      }
-    }
-    'external': {
-      icingaweb2::config::authentication_external { 'External Authentication':
-        auth_section  => 'icingaweb2',
-      }
-    }
-    default: {}
+  file {[
+    "${::icingaweb2::config_dir}",
+    "${::icingaweb2::config_dir}/enabledModules",
+    "${::icingaweb2::config_dir}/modules",
+    "${::icingaweb2::config_dir}/modules/monitoring"]:
+      ensure  => directory,
+      mode    => $::icingaweb2::config_dir_mode,
+      recurse => $::icingaweb2::config_dir_recurse
   }
 
-  # Configure config.ini settings
-  Ini_Setting {
-    ensure  => present,
-    require => File["${::icingaweb2::config_dir}/config.ini"],
-    path    => "${::icingaweb2::config_dir}/config.ini",
+  concat {
+    "icingaweb2_config":
+      path      => "${::icingaweb2::config_dir}/config.ini",
+      mode      => '0644'
   }
 
-  # Logging Configuration
-  ini_setting { 'icingaweb2 config logging method':
-    section => 'logging',
-    setting => 'log',
-    value   => "\"${::icingaweb2::log_method}\"",
-  }
-  ini_setting { 'icingaweb2 config logging level':
-    section => 'logging',
-    setting => 'level',
-    value   => "\"${::icingaweb2::log_level}\"",
-  }
-  ini_setting { 'icingaweb2 config logging application':
-    section => 'logging',
-    setting => 'application',
-    value   => "\"${::icingaweb2::log_application}\"",
+  concat {
+    "icingaweb2_authentication":
+      path      => "${::icingaweb2::config_dir}/authentication.ini",
+      mode      => '0644'
   }
 
-  # Preferences Configuration
-  ini_setting { 'icingaweb2 config preferences store':
-    section => 'preferences',
-    setting => 'store',
-    value   => "\"${::icingaweb2::log_store}\"",
-  }
-  ini_setting { 'icingaweb2 config preferences resource':
-    section => 'preferences',
-    setting => 'resource',
-    value   => "\"${::icingaweb2::log_resource}\"",
+  concat {
+    "icingaweb2_resources":
+      path      => "${::icingaweb2::config_dir}/resources.ini",
+      mode      => '0644'
   }
 
-  # Configure resources.ini
-  icingaweb2::config::resource_database { 'icingaweb_db':
-    resource_db       => $::icingaweb2::web_db,
-    resource_host     => $::icingaweb2::web_db_host,
-    resource_port     => $::icingaweb2::web_db_port,
-    resource_dbname   => $::icingaweb2::web_db_name,
-    resource_username => $::icingaweb2::web_db_user,
-    resource_password => $::icingaweb2::web_db_pass,
+  file {[
+    "${::icingaweb2::config_dir}/roles.ini"]:
+      ensure => file
   }
 
-  icingaweb2::config::resource_database { 'icinga_ido':
-    resource_db       => $::icingaweb2::ido_db,
-    resource_host     => $::icingaweb2::ido_db_host,
-    resource_port     => $::icingaweb2::ido_db_port,
-    resource_dbname   => $::icingaweb2::ido_db_name,
-    resource_username => $::icingaweb2::ido_db_user,
-    resource_password => $::icingaweb2::ido_db_pass,
+  concat::fragment {
+    "icingaweb2_config_CONTENT":
+      target  => "icingaweb2_config",
+      content => template( 'icingaweb2/config.ini.erb' ),
+      order   => 10
   }
+
 
   # enable / disable modules
-  class {
-    'icingaweb2::modules':
+  icingaweb2::modules {
+    'enable modules':
       enabled  => $::icingaweb2::modules_enabled,
       disabled => $::icingaweb2::modules_disabled,
       require  => File["${::icingaweb2::config_dir}/modules/monitoring"]
   }
 
   # Configure roles.ini
-  icingaweb2::config::roles { 'Admins':
-    role_users       => $::icingaweb2::admin_users,
-    role_permissions => $::icingaweb2::admin_permissions,
+  icingaweb2::config::roles {
+    'Admins':
+      role_users       => $::icingaweb2::admin_users,
+      role_permissions => $::icingaweb2::admin_permissions,
   }
 
-  if $::icingaweb2::manage_apache_vhost {
-    ::apache::custom_config { 'icingaweb2':
-      content => template($::icingaweb2::template_apache),
+  if( $::icingaweb2::manage_apache_vhost ) {
+
+    ::apache::custom_config {
+      'icingaweb2':
+        content => template($::icingaweb2::template_apache),
     }
   }
 }

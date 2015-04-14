@@ -38,30 +38,6 @@
 #                         specified.
 #                         Default: undef.
 #
-# $ido_db::
-#                         Default:
-#
-# $ido_db_host::
-#                         Default:
-#
-# $ido_db_host::
-#                         Default:
-#
-# $ido_db_name::
-#                         Default:
-#
-# $ido_db_pass::
-#                         Default:
-#
-# $ido_db_port::
-#                         Default:
-#
-# $ido_db_user::
-#                         Default:
-#
-# $ido_type::
-#                         Default:
-#
 # $install_method::       Defines how to install install IcingaWeb2.
 #                         Options: git, package
 #                         Default: git.
@@ -136,27 +112,6 @@
 # $template_apache::
 #                         Default: icingaweb2/apache2.ini.erb
 #
-# $web_db::
-#                         Default:
-#
-# $web_db_host::
-#                         Default:
-#
-# $web_db_name::
-#                         Default:
-#
-# $web_db_pass::
-#                         Default:
-#
-# $web_db_port::
-#                         Default:
-#
-# $web_db_prefix::
-#                         Default:
-#
-# $web_db_user::
-#                         Default:
-#
 # $web_root::             Default location for when using using git.
 #                         Default: operating system specific.
 #
@@ -168,9 +123,7 @@ class icingaweb2 (
   $admin_users                       = $::icingaweb2::params::admin_users,
   $auth_backend                      = $::icingaweb2::params::auth_backend,
   $auth_resource                     = $::icingaweb2::params::auth_resource,
-  # TODO
-  # LDAP_AUTH
-
+  #
   $config_dir                        = $::icingaweb2::params::config_dir,
   $config_dir_mode                   = $::icingaweb2::params::config_dir_mode,
   $config_dir_recurse                = $::icingaweb2::params::config_dir_recurse,
@@ -179,20 +132,19 @@ class icingaweb2 (
   $config_user                       = $::icingaweb2::params::config_user,
   $git_repo                          = $::icingaweb2::params::git_repo,
   $git_revision                      = $::icingaweb2::params::git_revision,
-  $ido_db                            = $::icingaweb2::params::ido_db,
-  $ido_db_host                       = $::icingaweb2::params::ido_db_host,
-  $ido_db_host                       = $::icingaweb2::params::ido_db_host,
-  $ido_db_name                       = $::icingaweb2::params::ido_db_name,
-  $ido_db_pass                       = $::icingaweb2::params::ido_db_pass,
-  $ido_db_port                       = $::icingaweb2::params::ido_db_port,
-  $ido_db_user                       = $::icingaweb2::params::ido_db_user,
-  $ido_type                          = $::icingaweb2::params::ido_type,
   $install_method                    = $::icingaweb2::params::install_method,
+
+  $config_logging                    = $::icingaweb2::params::config_logging,
+  $config_preferences                = $::icingaweb2::params::config_preferences,
+  $config_global                     = $::icingaweb2::params::config_global,
+  $config_resources                  = $::icingaweb2::params::config_resources,
+
   $log_application                   = $::icingaweb2::params::log_application,
   $log_level                         = $::icingaweb2::params::log_level,
   $log_method                        = $::icingaweb2::params::log_method,
   $log_resource                      = $::icingaweb2::params::log_resource,
   $log_store                         = $::icingaweb2::params::log_store,
+
   $manage_apache_vhost               = $::icingaweb2::params::manage_apache_vhost,
   $manage_repo                       = $::icingaweb2::params::manage_repo,
   $pkg_deps                          = $::icingaweb2::params::pkg_deps,
@@ -210,13 +162,6 @@ class icingaweb2 (
   $template_resources                = $::icingaweb2::params::template_resources,
   $template_roles                    = $::icingaweb2::params::template_roles,
   $template_apache                   = $::icingaweb2::params::template_apache,
-  $web_db                            = $::icingaweb2::params::web_db,
-  $web_db_host                       = $::icingaweb2::params::web_db_host,
-  $web_db_name                       = $::icingaweb2::params::web_db_name,
-  $web_db_pass                       = $::icingaweb2::params::web_db_pass,
-  $web_db_port                       = $::icingaweb2::params::web_db_port,
-  $web_db_prefix                     = $::icingaweb2::params::web_db_prefix,
-  $web_db_user                       = $::icingaweb2::params::web_db_user,
   $web_root                          = $::icingaweb2::params::web_root,
   $web_type                          = $::icingaweb2::params::web_type,
   $modules_enabled                   = $::icingaweb2::params::modules_enabled,
@@ -243,6 +188,11 @@ class icingaweb2 (
   validate_string($config_file_mode)
   validate_string($config_group)
   validate_string($config_user)
+
+  validate_hash($config_logging)
+  validate_hash($config_preferences)
+  validate_hash($config_global)
+
   validate_string($log_application)
   validate_string($log_level)
   validate_string($log_method)
@@ -257,10 +207,10 @@ class icingaweb2 (
   validate_string($template_config)
   validate_string($template_resources)
   validate_string($template_roles)
+
   if $::icingaweb2::manage_apache_vhost {
     validate_string($template_apache)
   }
-
 
   if $pkg_repo_release_metadata_expire {
     validate_string($pkg_repo_release_metadata_expire)

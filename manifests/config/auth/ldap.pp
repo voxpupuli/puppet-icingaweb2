@@ -36,7 +36,7 @@ class icingaweb2::config::auth::ldap(
 
   concat::fragment {
     "icingaweb2_resources_ldap_CONTENT":
-      target  => "icingaweb2_resources.ini",
+      target  => "icingaweb2_resources",
       content => template( 'icingaweb2/resources/ldap.erb' ),
       order   => 10
   }
