@@ -1,14 +1,13 @@
-# Define for setting IcingaWeb2 LDAP Resource 
-
+# Define for setting IcingaWeb2 LDAP Resource
+#
 define icingaweb2::config::resource_ldap (
-  $resource_name    = $title,
-  $resource_host    = undef,
-  $resource_port    = undef,
-  $resource_root_dn = undef,
   $resource_bind_dn = undef,
   $resource_bind_pw = undef,
+  $resource_host    = undef,
+  $resource_name    = $title,
+  $resource_port    = undef,
+  $resource_root_dn = undef,
 ) {
-
   Ini_Setting {
     ensure  => present,
     require => File["${::icingaweb2::config_dir}/resources.ini"],
@@ -51,3 +50,4 @@ define icingaweb2::config::resource_ldap (
     value   => "\"${resource_bind_pw}\"",
   }
 }
+

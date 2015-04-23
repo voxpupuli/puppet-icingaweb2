@@ -32,10 +32,10 @@ define icingaweb2::preinstall::redhat(
       }
     }
 
-    # TODO 'Debian': {}
-    # TODO 'Ubuntu': {}
-    # TODO 'Fedora': {}
     # TODO 'Amazon': {}
+    # TODO 'Debian': {}
+    # TODO 'Fedora': {}
+    # TODO 'Ubuntu': {}
 
     default: {
       # Already caught by icingaweb2::preinstall

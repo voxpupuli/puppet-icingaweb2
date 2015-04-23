@@ -32,24 +32,24 @@ class icingaweb2::config (
       recurse => $::icingaweb2::config_dir_recurse;
 
     "${::icingaweb2::config_dir}/enabledModules":
-      ensure  => directory,
-      mode    => $::icingaweb2::config_dir_mode;
+      ensure => directory,
+      mode   => $::icingaweb2::config_dir_mode;
 
     "${::icingaweb2::config_dir}/modules":
-      ensure  => directory,
-      mode    => $::icingaweb2::config_dir_mode;
+      ensure => directory,
+      mode   => $::icingaweb2::config_dir_mode;
 
     "${::icingaweb2::config_dir}/authentication.ini":
       ensure => file;
 
     "${::icingaweb2::config_dir}/config.ini":
-      ensure  => file;
+      ensure => file;
 
     "${::icingaweb2::config_dir}/resources.ini":
-      ensure  => file;
+      ensure => file;
 
     "${::icingaweb2::config_dir}/roles.ini":
-      ensure  => file;
+      ensure => file;
 
     $::icingaweb2::web_root:
       ensure => directory,
@@ -89,11 +89,13 @@ class icingaweb2::config (
     setting => 'log',
     value   => "\"${::icingaweb2::log_method}\"",
   }
+
   ini_setting { 'icingaweb2 config logging level':
     section => 'logging',
     setting => 'level',
     value   => "\"${::icingaweb2::log_level}\"",
   }
+
   ini_setting { 'icingaweb2 config logging application':
     section => 'logging',
     setting => 'application',
@@ -106,6 +108,7 @@ class icingaweb2::config (
     setting => 'store',
     value   => "\"${::icingaweb2::log_store}\"",
   }
+
   ini_setting { 'icingaweb2 config preferences resource':
     section => 'preferences',
     setting => 'resource',

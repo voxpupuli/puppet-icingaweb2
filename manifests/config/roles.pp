@@ -1,14 +1,13 @@
-# Define for setting IcingaWeb2 Roles 
-
+# Define for setting IcingaWeb2 Roles
+#
 define icingaweb2::config::roles (
-  $role_name           = $title,
-  $role_users          = undef,
   $role_groups         = undef,
-  $role_permissions    = undef,
   $role_host_filter    = undef,
+  $role_name           = $title,
+  $role_permissions    = undef,
   $role_service_filter = undef,
+  $role_users          = undef,
 ) {
-
   Ini_Setting {
     ensure  => present,
     require => File["${::icingaweb2::config_dir}/roles.ini"],
@@ -45,3 +44,4 @@ define icingaweb2::config::roles (
     value   => "\"${role_service_filter}\"",
   }
 }
+

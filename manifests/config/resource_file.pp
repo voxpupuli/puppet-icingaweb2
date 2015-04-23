@@ -1,11 +1,10 @@
-# Define for setting IcingaWeb2 File Resource 
-
+# Define for setting IcingaWeb2 File Resource
+#
 define icingaweb2::config::resource_file (
-  $resource_name     = $title,
   $resource_filepath = undef,
+  $resource_name     = $title,
   $resource_pattern  = undef,
 ) {
-
   Ini_Setting {
     ensure  => present,
     require => File["${::icingaweb2::config_dir}/resources.ini"],
@@ -30,3 +29,4 @@ define icingaweb2::config::resource_file (
     value   => "\"${resource_pattern}\"",
   }
 }
+

@@ -252,10 +252,10 @@ class icingaweb2 (
   validate_string($template_config)
   validate_string($template_resources)
   validate_string($template_roles)
+
   if $::icingaweb2::manage_apache_vhost {
     validate_string($template_apache)
   }
-
 
   if $pkg_repo_release_metadata_expire {
     validate_string($pkg_repo_release_metadata_expire)

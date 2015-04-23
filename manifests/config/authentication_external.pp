@@ -1,10 +1,9 @@
 # Define for setting IcingaWeb2 Authentication
-
+#
 define icingaweb2::config::authentication_external (
-  $auth_section = undef,
   $auth_filter  = undef,
+  $auth_section = undef,
 ) {
-
   Ini_Setting {
     ensure  => present,
     require => File["${::icingaweb2::config_dir}/authentication.ini"],
@@ -23,3 +22,4 @@ define icingaweb2::config::authentication_external (
     value   => '"external"',
   }
 }
+

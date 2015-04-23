@@ -1,15 +1,14 @@
-# Define for setting IcingaWeb2 Database Resource 
-
+# Define for setting IcingaWeb2 Database Resource
+#
 define icingaweb2::config::resource_database (
-  $resource_name     = $title,
   $resource_db       = undef,
-  $resource_host     = undef,
-  $resource_port     = undef,
   $resource_dbname   = undef,
-  $resource_username = undef,
+  $resource_host     = undef,
+  $resource_name     = $title,
   $resource_password = undef,
+  $resource_port     = undef,
+  $resource_username = undef,
 ) {
-
   Ini_Setting {
     ensure  => present,
     require => File["${::icingaweb2::config_dir}/resources.ini"],
@@ -58,3 +57,4 @@ define icingaweb2::config::resource_database (
     value   => "\"${resource_password}\"",
   }
 }
+
