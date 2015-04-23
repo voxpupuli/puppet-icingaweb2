@@ -220,7 +220,7 @@ class icingaweb2 (
   class { 'icingaweb2::preinstall': } ->
   class { 'icingaweb2::install': } ->
   class { 'icingaweb2::config': } ->
-  Class [ 'icingaweb2' ]
+  Class['icingaweb2']
 
   validate_absolute_path($config_dir)
   validate_absolute_path($web_root)

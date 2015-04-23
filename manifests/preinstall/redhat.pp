@@ -3,12 +3,6 @@
 define icingaweb2::preinstall::redhat(
   $pkg_repo_version,
 ) {
-  if is_function_available('assert_private') {
-    assert_private()
-  } else {
-    private()
-  }
-
   case $::operatingsystem {
     'RedHat', 'CentOS', 'Scientific': {
       case $pkg_repo_version {

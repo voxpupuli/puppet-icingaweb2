@@ -1,12 +1,9 @@
 # == Class icingaweb2::config
 #
-class icingaweb2::config {
-  if is_function_available('assert_private') {
-    assert_private()
-  } else {
-    private()
-  }
-
+class icingaweb2::config (
+  $config_dir = $::icingaweb2::config_dir,
+  $web_root   = $::icingaweb2::web_root,
+) {
   @user { 'icingaweb2':
     ensure     => present,
     home       => $::icingaweb2::web_root,

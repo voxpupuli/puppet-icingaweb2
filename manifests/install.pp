@@ -1,12 +1,6 @@
 # == Class icingaweb2::install
 #
 class icingaweb2::install {
-  if is_function_available('assert_private') {
-    assert_private()
-  } else {
-    private()
-  }
-
   if $::icingaweb2::install_method == 'package' {
     if $::icingaweb2::pkg_list {
       package { $::icingaweb2::pkg_list:
@@ -29,7 +23,7 @@ class icingaweb2::install {
         before => Vcsrepo['icingaweb2'],
       }
     }
-    
+
     vcsrepo { 'icingaweb2':
       ensure   => present,
       path     => $::icingaweb2::web_root,
