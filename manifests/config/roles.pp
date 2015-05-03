@@ -36,12 +36,20 @@ define icingaweb2::config::roles (
     section => $role_name,
     setting => 'monitoring/hosts/filter',
     value   => "\"${role_host_filter}\"",
+	ensure  => $role_host_filter ? {
+	  undef => absent,
+      default => present,
+	}
   }
 
   ini_setting { "icingaweb2 roles ${title} service filter":
     section => $role_name,
     setting => 'monitoring/services/filter',
     value   => "\"${role_service_filter}\"",
+	ensure  => $role_service_filter ? {
+	  undef => absent,
+      default => present,
+	}
   }
 }
 
