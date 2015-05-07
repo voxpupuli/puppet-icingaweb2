@@ -1,6 +1,6 @@
 {
   "name": "icinga-icingaweb2",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Tom De Vylder",
   "summary": "Module to install and maintain IcingaWeb2",
   "license": "Apache-2.0",
