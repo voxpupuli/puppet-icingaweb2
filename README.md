@@ -43,6 +43,45 @@ Debian and derivatives only:
       }
     }
 
+### Business process module
+
+    node /box/ {
+      class {
+        'icingaweb2':;
+        'icingaweb2::mod::businessprocess':;
+      }
+    }
+
+### Deployment module
+
+    node /box/ {
+      class {
+        'icingaweb2':;
+        'icingaweb2::mod::deployment':
+          auth_token => 'secret_token';
+      }
+    }
+
+### Graphite module
+
+    node /box/ {
+      class {
+        'icingaweb2':;
+        'icingaweb2::mod::graphite':
+          graphite_base_url => 'http://graphite.com/render?';
+      }
+    }
+
+### NagVis module
+
+    node /box/ {
+      class {
+        'icingaweb2':;
+        'icingaweb2::mod::nagvis':
+          nagvis_url => 'http://example.org/nagvis/';
+      }
+    }
+
 ## Contributing
 
 * Fork it
