@@ -2,8 +2,10 @@
 
 ## Requirements
 
+* [apache](https://github.com/puppetlabs/puppetlabs-apache)
+* [inifile](https://github.com/puppetlabs/puppetlabs-inifile)
 * [stdlib](https://github.com/puppetlabs/puppetlabs-stdlib)
-* [vcsrepo](https://github.com/puppetlabs/puppet-vcsrepo)
+* [vcsrepo](https://github.com/puppetlabs/puppetlabs-vcsrepo)
 
 Debian and derivatives only:
 
