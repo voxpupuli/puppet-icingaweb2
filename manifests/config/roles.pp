@@ -8,8 +8,11 @@ define icingaweb2::config::roles (
   $role_service_filter = undef,
   $role_users          = undef,
 ) {
+  validate_string($role_name)
+
   Ini_Setting {
     ensure  => present,
+    section => $role_name,
     require => File["${::icingaweb2::config_dir}/roles.ini"],
     path    => "${::icingaweb2::config_dir}/roles.ini",
   }
@@ -24,7 +27,6 @@ define icingaweb2::config::roles (
 
   ini_setting { "icingaweb2 roles ${title} users":
     ensure  => $role_users_ensure,
-    section => $role_name,
     setting => 'users',
     value   => "\"${role_users}\"",
   }
@@ -39,7 +41,6 @@ define icingaweb2::config::roles (
 
   ini_setting { "icingaweb2 roles ${title} groups":
     ensure  => $role_groups_ensure,
-    section => $role_name,
     setting => 'groups',
     value   => "\"${role_groups}\"",
   }
@@ -54,7 +55,6 @@ define icingaweb2::config::roles (
 
   ini_setting { "icingaweb2 roles ${title} permissions":
     ensure  => $role_permissions_ensure,
-    section => $role_name,
     setting => 'permissions',
     value   => "\"${role_permissions}\"",
   }
@@ -69,7 +69,6 @@ define icingaweb2::config::roles (
 
   ini_setting { "icingaweb2 roles ${title} host filter":
     ensure  => $role_host_filter_ensure,
-    section => $role_name,
     setting => 'monitoring/hosts/filter',
     value   => "\"${role_host_filter}\"",
   }
@@ -84,7 +83,6 @@ define icingaweb2::config::roles (
   
   ini_setting { "icingaweb2 roles ${title} service filter":
     ensure  => $role_service_filter_ensure,
-    section => $role_name,
     setting => 'monitoring/services/filter',
     value   => "\"${role_service_filter}\"",
   }
