@@ -15,74 +15,78 @@ define icingaweb2::config::roles (
   }
 
   if $role_users {
-    ini_setting { "icingaweb2 roles ${title} users":
-      section => $role_name,
-      setting => 'users',
-      value   => "\"${role_users}\"",
-    }
-  } else {
-    ini_setting { "icingaweb2 roles ${title} users":
-      ensure  => absent,
-      section => $role_name,
-      setting => 'users',
-    }
+    validate_string($role_users)
+    $role_users_ensure = present
+  }
+  else {
+    $role_users_ensure = absent
+  }
+
+  ini_setting { "icingaweb2 roles ${title} users":
+    ensure  => $role_users_ensure,
+    section => $role_name,
+    setting => 'users',
+    value   => "\"${role_users}\"",
   }
 
   if $role_groups {
-    ini_setting { "icingaweb2 roles ${title} groups":
-      section => $role_name,
-      setting => 'groups',
-      value   => "\"${role_groups}\"",
-    }
-  } else {
-    ini_setting { "icingaweb2 roles ${title} groups":
-      ensure  => absent,
-      section => $role_name,
-      setting => 'groups',
-    }
+    validate_string($role_users)
+    $role_groups_ensure = present
+  }
+  else {
+    $role_groups_ensure = absent
+  }
 
+  ini_setting { "icingaweb2 roles ${title} groups":
+    ensure  => $role_groups_ensure,
+    section => $role_name,
+    setting => 'groups',
+    value   => "\"${role_groups}\"",
   }
 
   if $role_permissions {
-    ini_setting { "icingaweb2 roles ${title} permissions":
-      section => $role_name,
-      setting => 'permissions',
-      value   => "\"${role_permissions}\"",
-    }
-  } else {
-    ini_setting { "icingaweb2 roles ${title} permissions":
-      ensure  => absent,
-      section => $role_name,
-      setting => 'permissions',
-    }
+    validate_string($role_permissions)
+    $role_permissions_ensure = present
+  }
+  else {
+    $role_permissions_ensure = absent
+  }
+
+  ini_setting { "icingaweb2 roles ${title} permissions":
+    ensure  => $role_permissions_ensure,
+    section => $role_name,
+    setting => 'permissions',
+    value   => "\"${role_permissions}\"",
   }
 
   if $role_host_filter {
-    ini_setting { "icingaweb2 roles ${title} host filter":
-      section => $role_name,
-      setting => 'monitoring/hosts/filter',
-      value   => "\"${role_host_filter}\"",
-    }
-  } else {
-    ini_setting { "icingaweb2 roles ${title} host filter":
-      ensure  => absent,
-      section => $role_name,
-      setting => 'monitoring/hosts/filter',
-    }
+    validate_string($role_host_filter)
+    $role_host_filter_ensure = present
+  }
+  else {
+    $role_host_filter_ensure = absent
+  }
+
+  ini_setting { "icingaweb2 roles ${title} host filter":
+    ensure  => $role_host_filter_ensure,
+    section => $role_name,
+    setting => 'monitoring/hosts/filter',
+    value   => "\"${role_host_filter}\"",
   }
 
   if $role_service_filter {
-    ini_setting { "icingaweb2 roles ${title} service filter":
-      section => $role_name,
-      setting => 'monitoring/services/filter',
-      value   => "\"${role_service_filter}\"",
-    }
-  } else {
-    ini_setting { "icingaweb2 roles ${title} service filter":
-      ensure  => absent,
-      section => $role_name,
-      setting => 'monitoring/services/filter',
-    }
+    validate_string($role_service_filter)
+    $role_service_filter_ensure = present
+  }
+  else {
+    $role_service_filter_ensure = absent
+  }
+  
+  ini_setting { "icingaweb2 roles ${title} service filter":
+    ensure  => $role_service_filter_ensure,
+    section => $role_name,
+    setting => 'monitoring/services/filter',
+    value   => "\"${role_service_filter}\"",
   }
 }
 
