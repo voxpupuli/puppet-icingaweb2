@@ -216,11 +216,11 @@ class icingaweb2 (
   $web_db_user                       = $::icingaweb2::params::web_db_user,
   $web_root                          = $::icingaweb2::params::web_root,
   $web_type                          = $::icingaweb2::params::web_type,
-) inherits icingaweb2::params {
-  class { 'icingaweb2::preinstall': } ->
-  class { 'icingaweb2::install': } ->
-  class { 'icingaweb2::config': } ->
-  Class['icingaweb2']
+) inherits ::icingaweb2::params {
+  class { '::icingaweb2::preinstall': } ->
+  class { '::icingaweb2::install': } ->
+  class { '::icingaweb2::config': } ->
+  Class['::icingaweb2']
 
   validate_absolute_path($config_dir)
   validate_absolute_path($web_root)
