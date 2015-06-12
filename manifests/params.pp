@@ -52,10 +52,20 @@ class icingaweb2::params {
       $pkg_list                          = ['icingaweb2']
       $pkg_repo_release_key              = 'http://packages.icinga.org/icinga.key'
       $pkg_repo_release_metadata_expire  = undef
-      $pkg_repo_release_url              = 'http://packages.icinga.org/epel/$releasever/release'
+
+      case $::operatingsystem {
+        'Scientific': {
+          $pkg_repo_release_url          = "http://packages.icinga.org/epel/${::operatingsystemmajrelease}/release"
+          $pkg_repo_snapshot_url         = "http://packages.icinga.org/epel/${::operatingsystemmajrelease}/snapshot"
+        }
+        default: {
+          $pkg_repo_release_url          = 'http://packages.icinga.org/epel/$releasever/release'
+          $pkg_repo_snapshot_url         = 'http://packages.icinga.org/epel/$releasever/snapshot'
+        }
+      }
+
       $pkg_repo_snapshot_key             = 'http://packages.icinga.org/icinga.key'
       $pkg_repo_snapshot_metadata_expire = '1d'
-      $pkg_repo_snapshot_url             = 'http://packages.icinga.org/epel/$releasever/snapshot'
       $web_root                          = '/usr/share/icingaweb2'
 
       $pkg_deps = [
