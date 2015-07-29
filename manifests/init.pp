@@ -44,9 +44,6 @@
 # $ido_db_host::
 #                         Default:
 #
-# $ido_db_host::
-#                         Default:
-#
 # $ido_db_name::
 #                         Default:
 #
@@ -177,7 +174,6 @@ class icingaweb2 (
   $git_repo                          = $::icingaweb2::params::git_repo,
   $git_revision                      = $::icingaweb2::params::git_revision,
   $ido_db                            = $::icingaweb2::params::ido_db,
-  $ido_db_host                       = $::icingaweb2::params::ido_db_host,
   $ido_db_host                       = $::icingaweb2::params::ido_db_host,
   $ido_db_name                       = $::icingaweb2::params::ido_db_name,
   $ido_db_pass                       = $::icingaweb2::params::ido_db_pass,
