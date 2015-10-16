@@ -73,6 +73,13 @@ class icingaweb2::config (
         auth_section  => 'icingaweb2',
       }
     }
+    'ldap', 'msldap': {
+      icingaweb2::config::authentication_ldap { 'LDAP Authentication':
+        auth_section  => 'icingaweb2',
+        auth_resource => $::icingaweb2::auth_resource,
+        auth_backend  => $::icingaweb2::auth_backend,
+      }
+    }
     default: {}
   }
 
