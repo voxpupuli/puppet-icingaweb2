@@ -18,6 +18,10 @@
 # $config_dir_mode::      Posix file mode for configuration directories.
 #                         Default: 0755.
 #
+# $config_dir_purge::     The $config_dir is purge at each puppet run.
+#                         Unmanaged puppet file will be lost
+#                         Default: false.
+#
 # $config_dir_recurse::   Apply the same posix permissions as $config_dir to any
 #                         directory contained in $config_dir.
 #                         Default: false.
@@ -167,6 +171,7 @@ class icingaweb2 (
   $auth_resource                     = $::icingaweb2::params::auth_resource,
   $config_dir                        = $::icingaweb2::params::config_dir,
   $config_dir_mode                   = $::icingaweb2::params::config_dir_mode,
+  $config_dir_purge                  = $::icingaweb2::params::config_dir_purge,
   $config_dir_recurse                = $::icingaweb2::params::config_dir_recurse,
   $config_file_mode                  = $::icingaweb2::params::config_file_mode,
   $config_group                      = $::icingaweb2::params::config_group,

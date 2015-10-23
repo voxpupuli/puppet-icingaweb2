@@ -1,8 +1,9 @@
 # == Class icingaweb2::config
 #
 class icingaweb2::config (
-  $config_dir = $::icingaweb2::config_dir,
-  $web_root   = $::icingaweb2::web_root,
+  $config_dir       = $::icingaweb2::config_dir,
+  $config_dir_purge = $::icingaweb2::config_dir_purge,
+  $web_root         = $::icingaweb2::web_root,
 ) {
   @user { 'icingaweb2':
     ensure     => present,
@@ -29,6 +30,7 @@ class icingaweb2::config (
     $::icingaweb2::config_dir:
       ensure  => directory,
       mode    => $::icingaweb2::config_dir_mode,
+      purge   => $::icingaweb2::config_dir_purge,
       recurse => $::icingaweb2::config_dir_recurse;
 
     "${::icingaweb2::config_dir}/enabledModules":
@@ -146,4 +148,3 @@ class icingaweb2::config (
     }
   }
 }
-

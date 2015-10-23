@@ -44,6 +44,7 @@ class icingaweb2::params {
     'RedHat': {
       $config_dir                        = '/etc/icingaweb2'
       $config_dir_mode                   = '0755'
+      $config_dir_purge                  = false
       $config_dir_recurse                = false
       $config_file_mode                  = '0664'
       $config_group                      = 'icingaweb2'
@@ -81,6 +82,7 @@ class icingaweb2::params {
     'Debian': {
       $config_dir                        = '/etc/icingaweb2'
       $config_dir_mode                   = '0755'
+      $config_dir_purge                  = false
       $config_dir_recurse                = false
       $config_file_mode                  = '0644'
       $config_group                      = 'icingaweb2'
