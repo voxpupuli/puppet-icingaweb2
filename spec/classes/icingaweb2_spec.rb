@@ -422,7 +422,7 @@ describe 'icingaweb2', :type => :class do
 
       it {
         should contain_yumrepo('ICINGA-release').with(
-          'gpgkey' => /_PKG_REPO_RELEASE_KEY_/,
+          'gpgkey' => /_PKG_REPO_RELEASE_KEY_/
         )
       }
     end
@@ -454,7 +454,7 @@ describe 'icingaweb2', :type => :class do
 
       it {
         should contain_yumrepo('ICINGA-release').with(
-          'metadata_expire' => /_PKG_REPO_RELEASE_METADATA_EXPIRE_/,
+          'metadata_expire' => /_PKG_REPO_RELEASE_METADATA_EXPIRE_/
         )
       }
     end
@@ -486,7 +486,7 @@ describe 'icingaweb2', :type => :class do
 
       it {
         should contain_yumrepo('ICINGA-release').with(
-          'baseurl' => /_PKG_REPO_RELEASE_URL_/,
+          'baseurl' => /_PKG_REPO_RELEASE_URL_/
         )
       }
     end
@@ -518,7 +518,7 @@ describe 'icingaweb2', :type => :class do
 
       it {
         should contain_yumrepo('ICINGA-snapshot').with(
-          'gpgkey' => /_PKG_REPO_SNAPSHOT_KEY_/,
+          'gpgkey' => /_PKG_REPO_SNAPSHOT_KEY_/
         )
       }
     end
@@ -550,7 +550,7 @@ describe 'icingaweb2', :type => :class do
 
       it {
         should contain_yumrepo('ICINGA-snapshot').with(
-          'metadata_expire' => /_PKG_REPO_SNAPSHOT_METADATA_EXPIRE_/,
+          'metadata_expire' => /_PKG_REPO_SNAPSHOT_METADATA_EXPIRE_/
         )
       }
     end
@@ -581,7 +581,7 @@ describe 'icingaweb2', :type => :class do
 
       it {
         should contain_yumrepo('ICINGA-snapshot').with(
-          'baseurl' => /_PKG_REPO_SNAPSHOT_URL_/,
+          'baseurl' => /_PKG_REPO_SNAPSHOT_URL_/
         )
       }
     end

@@ -1,4 +1,6 @@
+---
 language: ruby
+sudo: false
 
 rvm:
   - 1.8.7
@@ -9,7 +11,23 @@ rvm:
 matrix:
   allow_failures:
     - rvm: 1.8.7
-    - env: PUPPET_VERSION="2.7"
+  exclude:
+    # No support for Ruby 2.1 before Puppet 3.5
+    - rvm: 2.1.5
+      env: PUPPET_VERSION="2.7"
+    # No real support for Ruby 1.9.3 on Puppet 2.x
+    - rvm: 1.9.3
+      env: PUPPET_VERSION="2.7"
+    # No support for Ruby 2.0 before Puppet 3.2
+    - rvm: 2.0.0
+      env: PUPPET_VERSION="2.7"
+    # No Puppet 4 on Ruby 1.8
+    - rvm: 1.8.7
+      env: PUPPET_VERSION="4.0"
+    - rvm: 1.8.7
+      env: PUPPET_VERSION="4.1"
+    - rvm: 1.8.7
+      env: PUPPET_VERSION="4.2"
 
 before_install:
   - 'gem install bundler'
@@ -17,22 +35,16 @@ before_install:
 script:
   - bundle install
   - bundle update
-  - bundle exec rake
+  - bundle exec rake all
 
 env:
   - PUPPET_VERSION="2.7"
-  - PUPPET_VERSION="3.0"
-  - PUPPET_VERSION="3.1"
-  - PUPPET_VERSION="3.2"
-  - PUPPET_VERSION="3.3"
-  - PUPPET_VERSION="3.4"
   - PUPPET_VERSION="3.5"
   - PUPPET_VERSION="3.6"
   - PUPPET_VERSION="3.7"
+  - PUPPET_VERSION="3.7" FUTURE_PARSER="yes"
+  - PUPPET_VERSION="3.8"
+  - PUPPET_VERSION="3.8" FUTURE_PARSER="yes"
   - PUPPET_VERSION="4.0"
-
-branches:
-  only:
-    - master
-    - develop
-
+  - PUPPET_VERSION="4.1"
+  - PUPPET_VERSION="4.2"
