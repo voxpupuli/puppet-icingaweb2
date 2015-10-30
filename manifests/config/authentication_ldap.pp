@@ -1,3 +1,7 @@
+# == Define: icingaweb2::config::authentication_ldap
+#
+# Sets up an authentication definition for LDAP.
+#
 define icingaweb2::config::authentication_ldap (
   $auth_section = undef,
   $auth_resource = undef,
