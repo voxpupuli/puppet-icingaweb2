@@ -1,24 +1,45 @@
-# Puppet icingaweb2
+# Icinga Web 2
 
-## Requirements
+#### Table of Contents
 
-* [apache](https://github.com/puppetlabs/puppetlabs-apache)
-* [inifile](https://github.com/puppetlabs/puppetlabs-inifile)
-* [stdlib](https://github.com/puppetlabs/puppetlabs-stdlib)
-* [vcsrepo](https://github.com/puppetlabs/puppetlabs-vcsrepo)
+1. [Description](#description)
+2. [Setup - The basics of getting started with Icinga Web 2](#setup)
+    * [Setup requirements](#setup-requirements)
+    * [Beginning with Icinga Web 2](#beginning-with-icinga-web-2)
+3. [Usage - Configuration options and additional functionality](#usage)
+    * [Install using packages](#install-using-packages)
+    * [Install using Git](#install-using-git)
+    * [Manage repository](#manage-repository)
+    * [Business process module](#business-process-module)
+    * [Deployment module](#deployment-module)
+    * [Graphite module](#graphite-module)
+    * [NagVis module](#nagvis-module)
+4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
+5. [Limitations - OS compatibility, etc.](#limitations)
+6. [Development - Guide for contributing to the module](#development)
+
+## Description
+
+This module installs and configures Icinga Web 2.
+
+Icinga Web 2 is the next generation open source monitoring web interface, framework and command-line interface developed by the Icinga Project, supporting Icinga 2, Icinga Core and any other monitoring backend compatible with the Livestatus Protocol.
+
+## Setup
+
+### Setup requirements
 
 Debian and derivatives only:
 
 * Puppetlabs [apt module](https://github.com/puppetlabs/puppetlabs-apt) or
 * Camptocamp [apt module](https://github.com/camptocamp/puppet-apt)
 
-## Example usage
-
-### Install IcingaWeb2
+### Beginning with Icinga Web 2
 
     node /box/ {
       include icingaweb2
     }
+
+## Usage
 
 ### Install method: packages
 
@@ -84,7 +105,12 @@ Debian and derivatives only:
       }
     }
 
-## Contributing
+
+## Reference
+
+## Limitations
+
+## Development
 
 * Fork it
 * Create a feature branch (`git checkout -b my-new-feature`)
@@ -92,3 +118,4 @@ Debian and derivatives only:
 * Commit your changes (`git commit -am 'Added some feature'`)
 * Push to the branch (`git push origin my-new-feature`)
 * Create new Pull Request
+
