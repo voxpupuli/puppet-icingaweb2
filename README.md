@@ -28,11 +28,6 @@ Icinga Web 2 is the next generation open source monitoring web interface, framew
 
 ### Setup requirements
 
-Debian and derivatives only:
-
-* Puppetlabs [apt module](https://github.com/puppetlabs/puppetlabs-apt) or
-* Camptocamp [apt module](https://github.com/camptocamp/puppet-apt)
-
 ### Beginning with Icinga Web 2
 
     node /box/ {
