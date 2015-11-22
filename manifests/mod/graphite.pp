@@ -63,7 +63,7 @@ class icingaweb2::mod::graphite (
     }
 
     vcsrepo { 'graphite':
-      ensure   => present,
+      ensure   => latest,
       path     => "${web_root}/modules/graphite",
       provider => 'git',
       revision => $git_revision,
