@@ -89,6 +89,15 @@
 # $manage_repo::          Add a custom package repository.
 #                         Default: false.
 #
+# $module_monitoring::    If the module monitoring should be managed.
+#                         Type: boolean
+#                         Default: true
+
+# $module_setup::         If the module setup should be managed.
+#                         Note: this will disable that module!
+#                         Type: boolean
+#                         Default: true
+#
 # $pkg_deps::             Any dependencies that need to be resolved before
 #                         installing the main package.
 #                         Default: operating system specific.
@@ -193,6 +202,8 @@ class icingaweb2 (
   $log_store                         = $::icingaweb2::params::log_store,
   $manage_apache_vhost               = $::icingaweb2::params::manage_apache_vhost,
   $manage_repo                       = $::icingaweb2::params::manage_repo,
+  $module_monitoring                 = $::icingaweb2::params::module_monitoring,
+  $module_setup                      = $::icingaweb2::params::module_setup,
   $pkg_deps                          = $::icingaweb2::params::pkg_deps,
   $pkg_ensure                        = $::icingaweb2::params::pkg_ensure,
   $pkg_list                          = $::icingaweb2::params::pkg_list,
@@ -223,12 +234,24 @@ class icingaweb2 (
   class { '::icingaweb2::config': } ->
   Class['::icingaweb2']
 
+  if $module_monitoring {
+    class { '::icingaweb2::module::monitoring': }
+  }
+
+  if $module_setup {
+    ::icingaweb2::module { 'setup':
+      ensure => 'disabled',
+    }
+  }
+
   validate_absolute_path($config_dir)
   validate_absolute_path($web_root)
   validate_array($pkg_deps)
   validate_array($pkg_list)
   validate_bool($config_dir_recurse)
   validate_bool($manage_repo)
+  validate_bool($module_monitoring)
+  validate_bool($module_setup)
   validate_slength($config_dir_mode, 4)
   validate_slength($config_file_mode, 4)
   validate_string($admin_permissions)
