@@ -164,6 +164,8 @@
 # $web_type::
 #                         Default:
 #
+# $initialize::           Whether or not to initialize a db scheme and a user
+#                         Default : false
 class icingaweb2 (
   $admin_permissions                 = $::icingaweb2::params::admin_permissions,
   $admin_users                       = $::icingaweb2::params::admin_users,
@@ -217,10 +219,12 @@ class icingaweb2 (
   $web_db_user                       = $::icingaweb2::params::web_db_user,
   $web_root                          = $::icingaweb2::params::web_root,
   $web_type                          = $::icingaweb2::params::web_type,
+  $initialize                        = $::icingaweb2::params::initialize,
 ) inherits ::icingaweb2::params {
   class { '::icingaweb2::preinstall': } ->
   class { '::icingaweb2::install': } ->
   class { '::icingaweb2::config': } ->
+  class { '::icingaweb2::initialize': } ->
   Class['::icingaweb2']
 
   validate_absolute_path($config_dir)
@@ -229,6 +233,7 @@ class icingaweb2 (
   validate_array($pkg_list)
   validate_bool($config_dir_recurse)
   validate_bool($manage_repo)
+  validate_bool($initialize)
   validate_slength($config_dir_mode, 4)
   validate_slength($config_file_mode, 4)
   validate_string($admin_permissions)

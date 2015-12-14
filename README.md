@@ -52,6 +52,14 @@ Icinga Web 2 is the next generation open source monitoring web interface, framew
       }
     }
 
+### Initialize db
+
+    node /box/ {
+      class { 'icingaweb2':
+        initialize => true,
+      }
+    }
+
 ### Manage repository
 
     node /box/ {
