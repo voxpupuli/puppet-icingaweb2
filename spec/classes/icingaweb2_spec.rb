@@ -280,6 +280,15 @@ describe 'icingaweb2', :type => :class do
     pending
   end
 
+  describe 'with parameter: initialize => true' do
+    context 'Distro: CentOS' do
+      let (:params) { { :initialize => true } }
+      let (:facts) { centos_facts }
+
+      it { should contain_icingaweb2__initialize }
+    end
+  end
+
   describe 'with parameter: web_db_host' do
     let (:params) { { :web_db_host => '"_web_db_host_"' } }
 

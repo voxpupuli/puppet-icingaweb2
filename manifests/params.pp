@@ -39,6 +39,7 @@ class icingaweb2::params {
   $web_db_prefix     = 'icingaweb2_'
   $web_db_user       = 'icingaweb2'
   $web_type          = 'db'
+  $initialize        = false
 
   case $::osfamily {
     'RedHat': {
