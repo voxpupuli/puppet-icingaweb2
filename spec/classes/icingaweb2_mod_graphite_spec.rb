@@ -74,6 +74,38 @@ describe 'icingaweb2::mod::graphite', :type => :class do
     }
   end
 
+
+  describe 'with parameter: service_name_template' do
+    let (:params) {
+      {
+        :service_name_template=> '_service_name_template_'
+      }
+    }
+
+    it { should contain_ini_setting('service_name_template').with(
+        'section' => /graphite/,
+        'setting' => /service_name_template/,
+        'value'   => /_service_name_template_/
+      )
+    }
+  end
+
+
+  describe 'with parameter: host_name_template' do
+    let (:params) {
+      {
+        :host_name_template=> '_host_name_template_'
+      }
+    }
+
+    it { should contain_ini_setting('host_name_template').with(
+        'section' => /graphite/,
+        'setting' => /host_name_template/,
+        'value'   => /_host_name_template_/
+      )
+    }
+  end
+
   describe 'with parameter: install_method' do
     let (:params) {
       {
