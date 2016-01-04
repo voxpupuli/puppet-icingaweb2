@@ -9,8 +9,8 @@ class icingaweb2::initialize {
         case $::icingaweb2::web_db {
           'mysql': {
             exec { 'create db scheme':
-              command => "mysql -u ${::icingaweb2::web_db_user} -p${::icingaweb2::web_db_pass} ${::icingaweb2::web_db_name} < /usr/share/doc/icingaweb2/schema/mysql.schema.sql",
-              onlyif  => 'test -f /root/.my.cnf',
+              command => "mysql --defaults-file='/root/.my.cnf' ${::icingaweb2::web_db_name} < /usr/share/doc/icingaweb2/schema/mysql.schema.sql",
+              unless  => "mysql --defaults-file='/root/.my.cnf' ${::icingaweb2::web_db_name} -e \"SELECT 1 FROM icingaweb_user LIMIT 1;\"",
               notify  => Exec['create web user']
             }
 
