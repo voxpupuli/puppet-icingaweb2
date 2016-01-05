@@ -1,7 +1,6 @@
 # == Class icingaweb2::mod::monitoring
 #
 class icingaweb2::mod::monitoring (
-  $web_root = $::icingaweb2::params::web_root,
 ) {
   require ::icingaweb2
 
@@ -63,4 +62,3 @@ class icingaweb2::mod::monitoring (
   }
 
 }
-
