@@ -4,7 +4,9 @@ class icingaweb2::mod::graphite (
   $git_repo               = 'https://github.com/philiphoy/icingaweb2-module-graphite.git',
   $git_revision           = undef,
   $graphite_base_url      = 'http://graphite.com/render?',
-  $graphite_metric_prefix = 'icinga',
+  $graphite_metric_prefix = undef,
+  $service_name_template  = undef,
+  $host_name_template     = undef,
   $install_method         = 'git',
   $pkg_deps               = undef,
   $pkg_ensure             = 'present',
@@ -48,11 +50,30 @@ class icingaweb2::mod::graphite (
     value   => $graphite_base_url,
   }
 
-  ini_setting { 'metric_prefix':
-    section => 'graphite',
-    setting => 'metric_prefix',
-    value   => $graphite_metric_prefix,
+  if $graphite_metric_prefix {
+    ini_setting { 'metric_prefix':
+      section => 'graphite',
+      setting => 'metric_prefix',
+      value   => $graphite_metric_prefix,
+    }
   }
+
+  if $service_name_template {
+    ini_setting { 'service_name_template':
+      section => 'graphite',
+      setting => 'service_name_template',
+      value   => $service_name_template,
+    }
+  }
+
+  if $host_name_template {
+    ini_setting { 'host_name_template':
+      section => 'graphite',
+      setting => 'host_name_template',
+      value   => $host_name_template,
+    }
+  }
+
 
   if $install_method == 'git' {
     if $pkg_deps {
