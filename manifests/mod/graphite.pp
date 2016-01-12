@@ -5,8 +5,8 @@ class icingaweb2::mod::graphite (
   $git_revision           = undef,
   $graphite_base_url      = 'http://graphite.com/render?',
   $graphite_metric_prefix = undef,
-  $service_name_template  = 'icinga2.$host.name$.services.$service.name$.$service.check_command$.perfdata.$metric$.value',
-  $host_name_template     = 'icinga2.$host.name$.host.$host.check_command$.perfdata.$metric$.value',
+  $service_name_template  = undef,
+  $host_name_template     = undef,
   $install_method         = 'git',
   $pkg_deps               = undef,
   $pkg_ensure             = 'present',
@@ -58,16 +58,20 @@ class icingaweb2::mod::graphite (
     }
   }
 
-  ini_setting { 'service_name_template':
-    section => 'graphite',
-    setting => 'service_name_template',
-    value   => $service_name_template,
+  if $service_name_template {
+    ini_setting { 'service_name_template':
+      section => 'graphite',
+      setting => 'service_name_template',
+      value   => $service_name_template,
+    }
   }
 
-  ini_setting { 'host_name_template':
-    section => 'graphite',
-    setting => 'host_name_template',
-    value   => $host_name_template,
+  if $host_name_template {
+    ini_setting { 'host_name_template':
+      section => 'graphite',
+      setting => 'host_name_template',
+      value   => $host_name_template,
+    }
   }
 
 
