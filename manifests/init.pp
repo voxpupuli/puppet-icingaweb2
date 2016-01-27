@@ -89,6 +89,11 @@
 # $manage_repo::          Add a custom package repository.
 #                         Default: false.
 #
+# $manage_user::          Defines if user and group should be managed
+#                         by this module. Set to false if you don't want
+#                         user and group to be managed by this module.
+#                         Default: true.
+#
 # $pkg_deps::             Any dependencies that need to be resolved before
 #                         installing the main package.
 #                         Default: operating system specific.
@@ -195,6 +200,7 @@ class icingaweb2 (
   $log_store                         = $::icingaweb2::params::log_store,
   $manage_apache_vhost               = $::icingaweb2::params::manage_apache_vhost,
   $manage_repo                       = $::icingaweb2::params::manage_repo,
+  $manage_user                       = $::icingaweb2::params::manage_user,
   $pkg_deps                          = $::icingaweb2::params::pkg_deps,
   $pkg_ensure                        = $::icingaweb2::params::pkg_ensure,
   $pkg_list                          = $::icingaweb2::params::pkg_list,
@@ -233,6 +239,7 @@ class icingaweb2 (
   validate_array($pkg_list)
   validate_bool($config_dir_recurse)
   validate_bool($manage_repo)
+  validate_bool($manage_user)
   validate_bool($initialize)
   validate_slength($config_dir_mode, 4)
   validate_slength($config_file_mode, 4)
