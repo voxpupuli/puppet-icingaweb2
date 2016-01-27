@@ -382,6 +382,22 @@ describe 'icingaweb2', :type => :class do
     end
   end
 
+  describe 'icingaweb2::manage_user' do
+    context 'with manage_user => true' do
+      let (:params) { { :manage_user => true } }
+
+      it { should contain_user('icingaweb2') }
+      it { should contain_group('icingaweb2') }
+    end
+
+    context 'with manage_user => false' do
+      let (:params) { { :manage_user => false } }
+
+      it { should_not contain_user('icingaweb2') }
+      it { should_not contain_group('icingaweb2') }
+    end
+  end
+
   describe 'with parameter: pkg_ensure' do
     let (:params) {
       {

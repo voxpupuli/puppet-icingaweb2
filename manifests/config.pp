@@ -5,19 +5,22 @@ class icingaweb2::config (
   $config_dir_purge = $::icingaweb2::config_dir_purge,
   $web_root         = $::icingaweb2::web_root,
 ) {
-  @user { 'icingaweb2':
-    ensure     => present,
-    home       => $::icingaweb2::web_root,
-    managehome => true,
-  }
 
-  @group { 'icingaweb2':
-    ensure => present,
-    system => true,
-  }
+  if $::icingaweb2::manage_user {
+    @user { 'icingaweb2':
+      ensure     => present,
+      home       => $::icingaweb2::web_root,
+      managehome => true,
+    }
 
-  realize(User['icingaweb2'])
-  realize(Group['icingaweb2'])
+    @group { 'icingaweb2':
+      ensure => present,
+      system => true,
+    }
+
+    realize(User['icingaweb2'])
+    realize(Group['icingaweb2'])
+  }
 
   File {
     require => Class['::icingaweb2::install'],

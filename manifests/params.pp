@@ -7,6 +7,7 @@ class icingaweb2::params {
   $install_method      = 'git'
   $manage_apache_vhost = false
   $manage_repo         = false
+  $manage_user         = true
 
   # Template variables
   $admin_permissions = '*'
