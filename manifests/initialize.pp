@@ -8,8 +8,15 @@ class icingaweb2::initialize {
       'RedHat', 'CentOS': {
         case $::icingaweb2::web_db {
           'mysql': {
+
+            if $::icingaweb2::install_method == 'git' {
+              $sql_schema_location = '/usr/share/icingaweb2/etc/schema/mysql.schema.sql'
+            } else {
+              $sql_schema_location = '/usr/share/doc/icingaweb2/schema/mysql.schema.sql'
+            }
+
             exec { 'create db scheme':
-              command => "mysql --defaults-file='/root/.my.cnf' ${::icingaweb2::web_db_name} < /usr/share/doc/icingaweb2/schema/mysql.schema.sql",
+              command => "mysql --defaults-file='/root/.my.cnf' ${::icingaweb2::web_db_name} < ${sql_schema_location}",
               unless  => "mysql --defaults-file='/root/.my.cnf' ${::icingaweb2::web_db_name} -e \"SELECT 1 FROM icingaweb_user LIMIT 1;\"",
               notify  => Exec['create web user']
             }

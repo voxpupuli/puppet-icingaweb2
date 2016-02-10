@@ -282,10 +282,20 @@ describe 'icingaweb2', :type => :class do
 
   describe 'with parameter: initialize => true' do
     context 'Distro: CentOS' do
-      let (:params) { { :initialize => true } }
-      let (:facts) { centos_facts }
+      context 'install_method => git' do
+        let (:params) { { :initialize => true, :install_method => 'git' } }
+        let (:facts) { centos_facts }
 
-      it { should contain_icingaweb2__initialize }
+        it { should contain_icingaweb2__initialize }
+        it { should contain_exec('create db scheme').with_command("mysql --defaults-file='/root/.my.cnf' icingaweb2 < /usr/share/icingaweb2/etc/schema/mysql.schema.sql") }
+      end
+      context 'install_method => package' do
+        let (:params) { { :initialize => true, :install_method => 'package' } }
+        let (:facts) { centos_facts }
+
+        it { should contain_icingaweb2__initialize }
+        it { should contain_exec('create db scheme').with_command("mysql --defaults-file='/root/.my.cnf' icingaweb2 < /usr/share/doc/icingaweb2/schema/mysql.schema.sql") }
+      end
     end
   end
 
