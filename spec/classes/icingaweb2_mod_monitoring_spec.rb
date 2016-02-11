@@ -9,6 +9,25 @@ describe 'icingaweb2::mod::monitoring', :type => :class do
   end
 
   describe 'without parameters' do
+
+    [
+      'backends',
+      'config',
+      'commandtransports',
+    ].each do | config_file |
+
+      it {
+        should contain_file("/etc/icingaweb2/modules/monitoring/#{config_file}.ini").
+          with(
+          {
+            'owner' =>  'icingaweb2',
+            'group' =>  'icingaweb2',
+            'mode'  =>  '0644',
+          }
+        )
+      }
+    end
+
     it { should contain_ini_setting('security settings').with(
         'section' => /security/,
         'setting' => /protected_customvars/,

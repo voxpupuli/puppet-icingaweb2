@@ -11,6 +11,16 @@ class icingaweb2::mod::monitoring (
     mode  => $::icingaweb2::config_file_mode,
   }
 
+  $monitoring_mod_files = [
+    "${::icingaweb2::config_dir}/modules/monitoring/backends.ini",
+    "${::icingaweb2::config_dir}/modules/monitoring/config.ini",
+    "${::icingaweb2::config_dir}/modules/monitoring/commandtransports.ini",
+  ]
+
+  file { $monitoring_mod_files:
+    ensure => present,
+  }
+
   file { "${::icingaweb2::config_dir}/modules/monitoring":
     ensure => directory,
     mode   => $::icingaweb2::config_dir_mode;
