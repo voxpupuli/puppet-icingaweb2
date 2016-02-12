@@ -44,7 +44,7 @@ class icingaweb2::params {
   case $::osfamily {
     'RedHat': {
       $config_dir                        = '/etc/icingaweb2'
-      $config_dir_mode                   = '0755'
+      $config_dir_mode                   = '2770'
       $config_dir_purge                  = false
       $config_dir_recurse                = false
       $config_file_mode                  = '0664'
