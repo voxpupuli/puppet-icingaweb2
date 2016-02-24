@@ -10,6 +10,7 @@ tmtags
 *.sw[op]
 tags
 .idea/
+*.iml
 
 ## Bundler
 Gemfile.lock
