@@ -7,7 +7,7 @@ define icingaweb2::config::resource_ldap (
   $resource_name       = $title,
   $resource_port       = undef,
   $resource_root_dn    = undef,
-  $resource_encryption = undef,
+  $resource_encryption = 'none',
 ) {
   Ini_Setting {
     ensure  => present,
