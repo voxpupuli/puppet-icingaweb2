@@ -16,12 +16,14 @@ class icingaweb2::initialize {
             }
 
             exec { 'create db scheme':
+              path    => ['/usr/bin', '/usr/sbin', '/bin'],
               command => "mysql -h ${::icingaweb2::web_db_host} -u${::icingaweb2::web_db_user} -p${::icingaweb2::web_db_pass} ${::icingaweb2::web_db_name} < ${sql_schema_location}",
               unless  => "mysql -h ${::icingaweb2::web_db_host} -u${::icingaweb2::web_db_user} -p${::icingaweb2::web_db_pass} ${::icingaweb2::web_db_name} -e \"SELECT 1 FROM icingaweb_user LIMIT 1;\"",
               notify  => Exec['create web user']
             }
 
             exec { 'create web user':
+              path    => ['/usr/bin', '/usr/sbin', '/bin'],
               command     => "mysql -h ${::icingaweb2::web_db_host} -u${::icingaweb2::web_db_user} -p${::icingaweb2::web_db_pass} ${::icingaweb2::web_db_name} -e \" INSERT INTO icingaweb_user (name, active, password_hash) VALUES ('icingaadmin', 1, '\\\$1\\\$EzxLOFDr\\\$giVx3bGhVm4lDUAw6srGX1');\"",
               refreshonly => true,
             }
