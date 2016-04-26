@@ -8,6 +8,7 @@ define icingaweb2::config::resource_database (
   $resource_password = undef,
   $resource_port     = undef,
   $resource_username = undef,
+  $resource_charset  = undef,
 ) {
   Ini_Setting {
     ensure  => present,
@@ -56,5 +57,10 @@ define icingaweb2::config::resource_database (
     setting => 'password',
     value   => "\"${resource_password}\"",
   }
-}
 
+  ini_setting { "icingaweb2 resources ${title} charset":
+    section => $resource_name,
+    setting => 'charset',
+    value   => "\"${resource_charset}\"",
+  }
+}
