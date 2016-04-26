@@ -5,7 +5,11 @@ class icingaweb2::mod::monitoring (
   $backend_type = 'ido',
   $backend_resource = 'icinga_ido',
   $transport = 'local',
+  $transport_host = undef,
+  $transport_port = 22,
+  $transport_user = undef,
   $transport_path = '/var/run/icinga2/cmd/icinga2.cmd',
+  $transport_resource = undef,
 ) {
   require ::icingaweb2
 
@@ -71,6 +75,37 @@ class icingaweb2::mod::monitoring (
     path    => "${::icingaweb2::config_dir}/modules/monitoring/commandtransports.ini",
   }
 
+  if $transport == 'remote' {
+    ini_setting { 'command transport host setting':
+      section => 'icinga2',
+      setting => 'host',
+      value   => $transport_host,
+      path    => "${::icingaweb2::config_dir}/modules/monitoring/commandtransports.ini",
+    }
+  
+    ini_setting { 'command transport port setting':
+      section => 'icinga2',
+      setting => 'port',
+      value   => $transport_port,
+      path    => "${::icingaweb2::config_dir}/modules/monitoring/commandtransports.ini",
+    }
+
+    ini_setting { 'command transport user setting':
+      section => 'icinga2',
+      setting => 'user',
+      value   => $transport_user,
+      path    => "${::icingaweb2::config_dir}/modules/monitoring/commandtransports.ini",
+    }
+    
+    ini_setting { 'command transport resource setting':
+      section => 'icinga2',
+      setting => 'resource',
+      value   => $transport_resource,
+      path    => "${::icingaweb2::config_dir}/modules/monitoring/commandtransports.ini",
+    }
+    
+  }
+  
   file { "${::icingaweb2::config_dir}/enabledModules/monitoring":
     ensure => link,
     target => '/usr/share/icingaweb2/modules/monitoring'
