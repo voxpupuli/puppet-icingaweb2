@@ -78,6 +78,16 @@ class icingaweb2::config (
         auth_section  => 'icingaweb2',
       }
     }
+    'ldap': {
+      icingaweb2::config::authentication_ldap { 'LDAP Authentication':
+        auth_section        => 'icingaweb2',
+        auth_resource       => 'ldap',
+        user_class          => $::icingaweb2::auth_ldap_user_class,
+        user_name_attribute => $::icingaweb2::auth_ldap_user_name_attribute,
+        filter              => $::icingaweb2::auth_ldap_filter,
+        base_dn             => $::icingaweb2::auth_ldap_base_dn,
+      }
+    }
     default: {}
   }
 
@@ -137,6 +147,17 @@ class icingaweb2::config (
     resource_dbname   => $::icingaweb2::ido_db_name,
     resource_username => $::icingaweb2::ido_db_user,
     resource_password => $::icingaweb2::ido_db_pass,
+  }
+
+  if $::icingaweb2::auth_backend == 'ldap' {
+    icingaweb2::config::resource_ldap { 'ldap':
+      resource_host       => $::icingaweb2::ldap_host,
+      resource_bind_dn    => $::icingaweb2::ldap_bind_dn,
+      resource_bind_pw    => $::icingaweb2::ldap_bind_pw,
+      resource_port       => $::icingaweb2::ldap_port,
+      resource_root_dn    => $::icingaweb2::ldap_root_dn,
+      resource_encryption => $::icingaweb2::ldap_encryption,
+    }
   }
 
   # Configure roles.ini

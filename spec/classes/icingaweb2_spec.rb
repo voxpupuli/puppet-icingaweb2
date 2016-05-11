@@ -63,7 +63,24 @@ describe 'icingaweb2', :type => :class do
   end
 
   describe 'with parameter: auth_backend' do
-    pending
+    context 'auth_backend => db' do
+      let (:params) { { :auth_backend => 'db' } }
+      it {
+        should contain_icingaweb2__config__authentication_database('Local Database Authentication').with('auth_section' => 'icingaweb2')
+      }
+    end
+    context 'auth_backend => external' do
+      let (:params) { { :auth_backend => 'external' } }
+      it {
+        should contain_icingaweb2__config__authentication_external('External Authentication').with('auth_section' => 'icingaweb2')
+      }
+    end
+    context 'auth_backend => ldap' do
+      let (:params) { { :auth_backend => 'ldap' } }
+      it {
+        should contain_icingaweb2__config__authentication_ldap('LDAP Authentication').with('auth_section' => 'icingaweb2')
+      }
+    end
   end
 
   describe 'with parameter: auth_resource' do

@@ -9,6 +9,18 @@
 # $auth_backend::
 #                         Default:
 #
+# $auth_ldap_base_dn::    LDAP base dn.
+#                         Default: undef
+#
+# $auth_ldap_filter::     LDAP authentication filter.
+#                         Default: undef
+#
+# $auth_ldap_user_class:: LDAP authentication user class.
+#                         Default: inetOrgPerson
+#
+# $auth_ldap_user_name_attribute:: LDAP authentication user name attribute.
+#                         Default: uid
+#
 # $auth_resource::
 #                         Default:
 #
@@ -66,6 +78,25 @@
 # $install_method::       Defines how to install install IcingaWeb2.
 #                         Options: git, package
 #                         Default: git.
+#
+# $ldap_bind_dn::         LDAP bind dn
+#                         Default: undef
+#
+# $ldap_bind_pw::         LDAP bind pw
+#                         Default: undef
+#
+# $ldap_encryption::      LDAP encryption method
+#                         Allowed values are "starttls" and "ldaps".
+#                         Default: undef
+#
+# $ldap_host::            LDAP hostname
+#                         Default: undef
+#
+# $ldap_port::            LDAP bind port
+#                         Default: 389
+#
+# $ldap_root_dn::         LDAP root dn
+#                         Default: undef
 #
 # $log_application::
 #                         Default:
@@ -175,6 +206,10 @@ class icingaweb2 (
   $admin_permissions                 = $::icingaweb2::params::admin_permissions,
   $admin_users                       = $::icingaweb2::params::admin_users,
   $auth_backend                      = $::icingaweb2::params::auth_backend,
+  $auth_ldap_base_dn                 = $::icingaweb2::params::auth_base_dn,
+  $auth_ldap_filter                  = $::icingaweb2::params::auth_ldap_filter,
+  $auth_ldap_user_class              = $::icingaweb2::params::auth_ldap_user_class,
+  $auth_ldap_user_name_attribute     = $::icingaweb2::params::auth_ldap_user_name_attribute,
   $auth_resource                     = $::icingaweb2::params::auth_resource,
   $config_dir                        = $::icingaweb2::params::config_dir,
   $config_dir_mode                   = $::icingaweb2::params::config_dir_mode,
@@ -193,6 +228,12 @@ class icingaweb2 (
   $ido_db_user                       = $::icingaweb2::params::ido_db_user,
   $ido_type                          = $::icingaweb2::params::ido_type,
   $install_method                    = $::icingaweb2::params::install_method,
+  $ldap_bind_dn                      = $::icingaweb2::params::ldap_bind_dn,
+  $ldap_bind_pw                      = $::icingaweb2::params::ldap_bind_pw,
+  $ldap_encryption                   = $::icingaweb2::params::ldap_encryption,
+  $ldap_host                         = $::icingaweb2::params::ldap_host,
+  $ldap_port                         = $::icingaweb2::params::ldap_port,
+  $ldap_root_dn                      = $::icingaweb2::params::ldap_root_dn,
   $log_application                   = $::icingaweb2::params::log_application,
   $log_level                         = $::icingaweb2::params::log_level,
   $log_method                        = $::icingaweb2::params::log_method,
@@ -265,6 +306,21 @@ class icingaweb2 (
   validate_string($template_config)
   validate_string($template_resources)
   validate_string($template_roles)
+
+  if $::icingaweb2::auth_backend == 'ldap' {
+    validate_integer($ldap_port)
+    validate_string($auth_ldap_base_dn)
+    validate_string($auth_ldap_filter)
+    validate_string($auth_ldap_user_class)
+    validate_string($auth_ldap_user_name_attribute)
+    validate_string($ldap_host)
+    validate_string($ldap_bind_dn)
+    validate_string($ldap_bind_pw)
+    validate_string($ldap_root_dn)
+    if $::icingaweb2::ldap_encryption {
+      validate_re( $ldap_encryption, '^(ldaps|starttls)$', "\$ldap_encryption must be either 'ldaps' or 'starttls', got '${ldap_encryption}'")
+    }
+  }
 
   if $::icingaweb2::manage_apache_vhost {
     validate_string($template_apache)
