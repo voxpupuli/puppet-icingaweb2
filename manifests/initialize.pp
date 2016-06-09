@@ -36,7 +36,7 @@ class icingaweb2::initialize {
 
 
             exec { 'create db scheme':
-              environment => "PGPASSWORD=${::icingaweb2::web_db_pass}", 
+              environment => "PGPASSWORD=${::icingaweb2::web_db_pass}",
               command     => "psql -U ${::icingaweb2::web_db_user} -h ${::icingaweb2::web_db_host} -d ${::icingaweb2::web_db_name} < ${sql_schema_location}",
               unless      => "psql -U ${::icingaweb2::web_db_user} -h ${::icingaweb2::web_db_host} -d ${::icingaweb2::web_db_name} -c \"SELECT 1 FROM icingaweb_user LIMIT 1;\"",
               notify      => Exec['create web user']
@@ -78,7 +78,7 @@ class icingaweb2::initialize {
             $sql_schema_location = '/usr/share/icingaweb2/etc/schema/pgsql.schema.sql'
 
             exec { 'create db scheme':
-              environment => "PGPASSWORD=${::icingaweb2::web_db_pass}", 
+              environment => "PGPASSWORD=${::icingaweb2::web_db_pass}",
               command     => "psql -U ${::icingaweb2::web_db_user} -h ${::icingaweb2::web_db_host} -d ${::icingaweb2::web_db_name} < ${sql_schema_location}",
               unless      => "psql -U ${::icingaweb2::web_db_user} -h ${::icingaweb2::web_db_host} -d ${::icingaweb2::web_db_name} -c \"SELECT 1 FROM icingaweb_user LIMIT 1;\"",
               notify      => Exec['create web user']
