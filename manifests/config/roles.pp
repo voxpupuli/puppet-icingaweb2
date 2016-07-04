@@ -80,7 +80,7 @@ define icingaweb2::config::roles (
   else {
     $role_service_filter_ensure = absent
   }
-  
+
   ini_setting { "icingaweb2 roles ${title} service filter":
     ensure  => $role_service_filter_ensure,
     setting => 'monitoring/services/filter',

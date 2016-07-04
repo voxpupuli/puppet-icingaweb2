@@ -73,7 +73,7 @@ class icingaweb2::mod::graphite (
       value   => $host_name_template,
     }
   }
-  
+
   file { "${::icingaweb2::config_dir}/enabledModules/graphite":
     ensure => link,
     target => '/usr/share/icingaweb2/modules/graphite'
