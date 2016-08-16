@@ -10,6 +10,7 @@ class icingaweb2::config (
     @user { 'icingaweb2':
       ensure     => present,
       home       => $::icingaweb2::web_root,
+      system     => true,
       managehome => true,
     }
 
