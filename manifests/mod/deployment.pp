@@ -50,8 +50,8 @@ class icingaweb2::mod::deployment (
 
   Ini_Setting {
     ensure  => present,
-    require => File["${::icingaweb2::config_dir}/modules/deployment"],
-    path    => "${::icingaweb2::config_dir}/modules/deployment/config.ini",
+    require => File["${web_root}/modules/deployment"],
+    path    => "${web_root}/modules/deployment/config.ini",
   }
 
   ini_setting { 'deployment auth token':
