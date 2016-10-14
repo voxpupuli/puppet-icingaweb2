@@ -11,6 +11,7 @@ class icingaweb2::config (
       ensure     => present,
       home       => $::icingaweb2::web_root,
       managehome => true,
+      system     => true,
     }
 
     @group { 'icingaweb2':
