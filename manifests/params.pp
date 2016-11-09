@@ -65,6 +65,7 @@ class icingaweb2::params {
       $pkg_list                          = ['icingaweb2']
       $pkg_repo_release_key              = 'http://packages.icinga.org/icinga.key'
       $pkg_repo_release_metadata_expire  = undef
+      $db_password_file                  = '/root/.my.cnf'
 
       case $::operatingsystem {
         'Scientific': {

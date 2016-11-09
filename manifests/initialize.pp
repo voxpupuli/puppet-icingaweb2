@@ -15,15 +15,19 @@ class icingaweb2::initialize {
               $sql_schema_location = '/usr/share/doc/icingaweb2/schema/mysql.schema.sql'
             }
 
+            file { $::icingaweb2::db_password_file: ensure => file }
+
             exec { 'create db scheme':
               command => "mysql --defaults-file='/root/.my.cnf' ${::icingaweb2::web_db_name} < ${sql_schema_location}",
               unless  => "mysql --defaults-file='/root/.my.cnf' ${::icingaweb2::web_db_name} -e \"SELECT 1 FROM icingaweb_user LIMIT 1;\"",
-              notify  => Exec['create web user']
+              notify  => Exec['create web user'],
+              require => File[$::icingaweb2::db_pasword_file]
             }
 
             exec { 'create web user':
               command     => "mysql --defaults-file='/root/.my.cnf' ${::icingaweb2::web_db_name} -e \" INSERT INTO icingaweb_user (name, active, password_hash) VALUES ('icingaadmin', 1, '\\\$1\\\$EzxLOFDr\\\$giVx3bGhVm4lDUAw6srGX1');\"",
               refreshonly => true,
+              require     => File[$::icingaweb2::db_pasword_file]
             }
           }
 
