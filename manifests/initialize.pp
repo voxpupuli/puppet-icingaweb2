@@ -15,6 +15,8 @@ class icingaweb2::initialize {
               $sql_schema_location = '/usr/share/doc/icingaweb2/schema/mysql.schema.sql'
             }
 
+            file { $::icingaweb2::db_password_file: ensure => file }
+
             exec { 'create db scheme':
               command => "mysql --defaults-file='/root/.my.cnf' ${::icingaweb2::web_db_name} < ${sql_schema_location}",
               unless  => "mysql --defaults-file='/root/.my.cnf' ${::icingaweb2::web_db_name} -e \"SELECT 1 FROM icingaweb_user LIMIT 1;\"",
