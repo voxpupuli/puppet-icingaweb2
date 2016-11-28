@@ -206,7 +206,7 @@ class icingaweb2 (
   $admin_permissions                 = $::icingaweb2::params::admin_permissions,
   $admin_users                       = $::icingaweb2::params::admin_users,
   $auth_backend                      = $::icingaweb2::params::auth_backend,
-  $auth_ldap_base_dn                 = $::icingaweb2::params::auth_base_dn,
+  $auth_ldap_base_dn                 = $::icingaweb2::params::auth_ldap_base_dn,
   $auth_ldap_filter                  = $::icingaweb2::params::auth_ldap_filter,
   $auth_ldap_user_class              = $::icingaweb2::params::auth_ldap_user_class,
   $auth_ldap_user_name_attribute     = $::icingaweb2::params::auth_ldap_user_name_attribute,
