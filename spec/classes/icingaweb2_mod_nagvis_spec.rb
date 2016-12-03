@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe 'icingaweb2::mod::nagvis', :type => :class do
-  let (:pre_condition) { '$concat_basedir = "/tmp"' }
   let (:facts) { debian_facts }
 
   let :pre_condition do
