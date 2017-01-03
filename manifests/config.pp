@@ -168,6 +168,8 @@ class icingaweb2::config (
   }
 
   if $::icingaweb2::manage_apache_vhost {
+    include ::apache
+
     ::apache::custom_config { 'icingaweb2':
       content => template($::icingaweb2::template_apache),
     }
