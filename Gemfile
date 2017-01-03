@@ -1,11 +1,4 @@
-source ENV['GEM_SOURCE'] || "https://rubygems.org"
-
-# special dependencies for Ruby 1.8
-# since there are still several OSes with it
-if RUBY_VERSION =~ /^1\.8\./
-  gem 'rspec-core', '~> 3.1.7'
-  gem 'nokogiri', '~> 1.5.0'
-end
+source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
 gem 'puppet', ENV.key?('PUPPET_VERSION') ? ENV['PUPPET_VERSION'].to_s : '>= 2.7'
 gem 'rspec-puppet', '~> 2.0'
