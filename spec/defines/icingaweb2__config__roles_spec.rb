@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'icingaweb2::config::roles' do
+  let(:facts) { debian_facts }
+  let(:pre_condition) do
+    'include ::icingaweb2'
+  end
 
   context 'with no set values' do
 
