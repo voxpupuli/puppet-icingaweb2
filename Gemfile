@@ -7,4 +7,8 @@ gem 'puppet-lint', '>= 2'
 gem 'facter', '>= 1.7.0'
 gem 'metadata-json-lint'
 
+json_version = ENV.key?('TRAVIS_RUBY_VERSION') && ENV['TRAVIS_RUBY_VERSION'].to_i < 2 ? '~> 1.8.3' : '~> 2.0'
+gem 'json', json_version
+gem 'json_pure', json_version
+
 gem 'puppet-lint-strict_indent-check'
