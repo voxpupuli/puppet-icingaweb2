@@ -48,7 +48,7 @@
 #                         Default: operating system specific.
 #
 # $git_repo::             Source repository containing upstream IcingaWeb2.
-#                         Default: 'https://git.icinga.org/icingaWeb2.git'
+#                         Default: 'https://github.com/Icinga/icingaweb2.git'
 #
 # $git_revision::         Allows git revisions, tags, hashes, ... to be
 #                         specified.

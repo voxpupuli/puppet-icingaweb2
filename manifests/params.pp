@@ -2,7 +2,7 @@
 #
 class icingaweb2::params {
   # Module variables
-  $git_repo            = 'https://git.icinga.org/icingaweb2.git'
+  $git_repo            = 'https://github.com/Icinga/icingaweb2.git'
   $git_revision        = undef
   $install_method      = 'git'
   $manage_apache_vhost = false

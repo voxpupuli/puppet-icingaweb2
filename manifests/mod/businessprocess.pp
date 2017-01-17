@@ -1,7 +1,7 @@
 # == Class icingaweb2::mod::businessprocess
 #
 class icingaweb2::mod::businessprocess (
-  $git_repo       = 'http://git.icinga.org/icingaweb2-module-businessprocess.git',
+  $git_repo       = 'https://github.com/Icinga/icingaweb2-module-businessprocess.git',
   $git_revision   = undef,
   $install_method = 'git',
   $pkg_deps       = undef,
