@@ -1,5 +1,10 @@
 # Icinga Web 2
 
+[![Puppet Forge](http://img.shields.io/puppetforge/v/icinga/icingaweb2.svg)](https://forge.puppetlabs.com/icinga/icingaweb2)
+[![Build Status](https://travis-ci.org/Icinga/puppet-icingaweb2.png?branch=master)](https://travis-ci.org/Icinga/puppet-icingaweb2)
+[![Github Tag](https://img.shields.io/github/tag/Icinga/puppet-icingaweb2.svg)](https://github.com/Icinga/puppet-icingaweb2)
+[![Puppet Forge Downloads](http://img.shields.io/puppetforge/dt/icinga/icingaweb2.svg)](https://forge.puppetlabs.com/icinga/icingaweb2)
+
 #### Table of Contents
 
 1. [Description](#description)
