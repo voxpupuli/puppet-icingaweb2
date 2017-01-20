@@ -21,6 +21,7 @@ describe 'icingaweb2', :type => :class do
 
     it { should contain_file('/etc/icingaweb2') }
     it { should contain_file('/etc/icingaweb2/authentication.ini') }
+    it { should contain_file('/etc/icingaweb2/groups.ini') }
     it { should contain_file('/etc/icingaweb2/config.ini') }
     it { should contain_file('/etc/icingaweb2/enabledModules') }
     it { should contain_file('/etc/icingaweb2/modules') }
@@ -82,6 +83,15 @@ describe 'icingaweb2', :type => :class do
     end
   end
 
+  describe 'with parameter: groups_backend' do
+    context 'groups_backend => db' do
+      let (:params) { { :groups_backend => 'db' } }
+      it {
+        should contain_icingaweb2__config__groups_database('Local Database Groups').with('groups_section' => 'icingaweb2')
+      }
+    end
+  end
+
   describe 'with parameter: auth_resource' do
     let (:params) {
       {
@@ -101,6 +111,7 @@ describe 'icingaweb2', :type => :class do
 
     it { should contain_file('/test/etc/icingaweb2') }
     it { should contain_file('/test/etc/icingaweb2/authentication.ini') }
+    it { should contain_file('/test/etc/icingaweb2/groups.ini') }
     it { should contain_file('/test/etc/icingaweb2/config.ini') }
     it { should contain_file('/test/etc/icingaweb2/enabledModules') }
     it { should contain_file('/test/etc/icingaweb2/modules') }
@@ -674,4 +685,3 @@ describe 'icingaweb2', :type => :class do
     end
   end
 end
-
