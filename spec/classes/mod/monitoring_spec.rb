@@ -26,49 +26,58 @@ describe 'icingaweb2::mod::monitoring', :type => :class do
           end
         end
 
-        it { should contain_ini_setting('security settings').with(
+        it do
+          should contain_ini_setting('security settings').with(
             'section' => 'security',
             'setting' => 'protected_customvars',
             'value'   => /community/,
             'path'    => /\/config.ini$/
           )
-        }
-        it { should contain_ini_setting('backend ido setting').with(
+        end
+        it do
+          should contain_ini_setting('backend ido setting').with(
             'section' => 'icinga_ido',
             'setting' => 'type',
             'value'   => 'ido',
             'path'    => /\/backends.ini$/
           )
-        }
-        it { should contain_ini_setting('backend resource setting').with(
+        end
+        it do
+          should contain_ini_setting('backend resource setting').with(
             'section' => 'icinga_ido',
             'setting' => 'resource',
             'value'   => 'icinga_ido',
             'path'    => /\/backends.ini$/
           )
-        }
-        it { should contain_ini_setting('command transport setting').with(
+        end
+        it do
+          should contain_ini_setting('command transport setting').with(
             'section' => 'icinga2',
             'setting' => 'transport',
             'value'   => 'local',
             'path'    => /\/commandtransports.ini$/
           )
-        }
-        it { should contain_ini_setting('command transport path setting').with(
+        end
+        it do
+          should contain_ini_setting('command transport path setting').with(
             'section' => 'icinga2',
             'setting' => 'path',
             'value'   => '/var/run/icinga2/cmd/icinga2.cmd',
             'path'    => /\/commandtransports.ini$/
           )
-        }
+        end
+
+        it { should contain_ini_setting('command transport user setting').with_ensure('absent') }
+        it { should contain_ini_setting('command transport username setting').with_ensure('absent') }
+        it { should contain_ini_setting('command transport password setting').with_ensure('absent') }
       end
 
-      context 'with transport parameters' do
+      context 'with transport => remote' do
         let :params do
           {
             transport: 'remote',
             transport_host: 'icinga-master1',
-            transport_user: 'icingaweb2',
+            transport_username: 'icingaweb2',
             transport_port: 2222,
             transport_path: '/run/icinga2/icinga2.cmd'
           }
@@ -114,6 +123,64 @@ describe 'icingaweb2::mod::monitoring', :type => :class do
             'path'    => /\/commandtransports.ini$/
           )
         end
+
+        it { should contain_ini_setting('command transport username setting').with_ensure('absent') }
+        it { should contain_ini_setting('command transport password setting').with_ensure('absent') }
+      end
+
+      context 'with transport => api' do
+        let :params do
+          {
+            transport: 'api',
+            transport_host: 'icinga-master1',
+            transport_username: 'icingaweb2',
+            transport_password: 'secret',
+          }
+        end
+
+        it do
+          should contain_ini_setting('command transport setting').with(
+            'section' => 'icinga2',
+            'setting' => 'transport',
+            'value'   => 'api',
+            'path'    => /\/commandtransports.ini$/
+          )
+        end
+        it do
+          should contain_ini_setting('command transport host setting').with(
+            'section' => 'icinga2',
+            'setting' => 'host',
+            'value'   => 'icinga-master1',
+            'path'    => /\/commandtransports.ini$/
+          )
+        end
+        it do
+          should contain_ini_setting('command transport port setting').with(
+            'section' => 'icinga2',
+            'setting' => 'port',
+            'value'   => '5665',
+            'path'    => /\/commandtransports.ini$/
+          )
+        end
+        it do
+          should contain_ini_setting('command transport username setting').with(
+            'section' => 'icinga2',
+            'setting' => 'username',
+            'value'   => 'icingaweb2',
+            'path'    => /\/commandtransports.ini$/
+          )
+        end
+        it do
+          should contain_ini_setting('command transport password setting').with(
+            'section' => 'icinga2',
+            'setting' => 'password',
+            'value'   => 'secret',
+            'path'    => /\/commandtransports.ini$/
+          )
+        end
+
+        it { should contain_ini_setting('command transport user setting').with_ensure('absent') }
+        it { should contain_ini_setting('command transport path setting').with_ensure('absent') }
       end
     end
   end
