@@ -80,12 +80,40 @@ class { '::icingaweb2':
 
 ### Monitoring module
 
-    node /box/ {
-      class {
-        'icingaweb2':;
-        'icingaweb2::mod::monitoring':;
-      }
-    }
+In minimal default configuration:
+
+``` puppet
+include ::icingaweb2
+include ::icingaweb2::mod::monitoring
+```
+
+With transport configuration
+
+``` puppet
+include ::icingaweb2
+
+# default is local
+class { '::icingaweb2::mod::monitoring':
+  transport      => 'local',
+  transport_path => '/run/icinga2/cmd/icinga2.cmd',
+}
+
+# via SSH, make sure to add a SSH key to the user running PHP (apache)
+class { '::icingaweb2::mod::monitoring':
+  transport          => 'remote',
+  transport_host     => 'icinga-master1',
+  transport_username => 'icingaweb',
+  transport_path     => '/run/icinga2/cmd/icinga2.cmd',
+}
+
+# via Icinga 2 API
+class { '::icingaweb2::mod::monitoring':
+  transport          => 'api',
+  transport_host     => 'icinga-master1',
+  transport_username => 'icingaweb2',
+  transport_password => 'secret',
+}
+```
 
 ### Business process module
 
