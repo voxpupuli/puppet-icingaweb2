@@ -1,0 +1,12 @@
+---
+HOSTS:
+  ubuntu-1404-x64:
+    platform: ubuntu-14.04-amd64
+    box: ubuntu/trusty64
+    hypervisor: vagrant
+CONFIG:
+  trace_limit: 200
+  type: foss
+  masterless: true
+...
+# vim: syntax=yam

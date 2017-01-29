@@ -1,0 +1,13 @@
+---
+HOSTS:
+  centos-7-x64:
+    platform: centos-7-x86_64
+    box: centos/7
+    hypervisor: vagrant
+CONFIG:
+  trace_limit: 200
+  type: foss
+  masterless: true
+  add_el_extras: true
+...
+# vim: syntax=yam

@@ -3,7 +3,7 @@
 sudo: false
 language: ruby
 cache: bundler
-#bundler_args: --without system_tests development
+bundler_args: --without system_tests
 before_install:
   - bundle -v
   - rm Gemfile.lock || true
