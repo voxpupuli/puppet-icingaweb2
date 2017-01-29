@@ -1,11 +1,12 @@
 fixtures:
   repositories:
     apache:  'https://github.com/puppetlabs/puppetlabs-apache'
+    apt:     'https://github.com/puppetlabs/puppetlabs-apt'
     concat:  'https://github.com/puppetlabs/puppetlabs-concat'
     inifile: 'https://github.com/puppetlabs/puppetlabs-inifile'
     stdlib:  'https://github.com/puppetlabs/puppetlabs-stdlib'
     vcsrepo: 'https://github.com/puppetlabs/puppetlabs-vcsrepo'
+    #zypprepo: 'https://github.com/deadpoint/puppet-zypprepo'
 
   symlinks:
     icingaweb2: "#{source_dir}"
-

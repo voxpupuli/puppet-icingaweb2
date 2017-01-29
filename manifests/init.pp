@@ -136,28 +136,6 @@
 #                         a number of dependencies.
 #                         Default: operating system specific.
 #
-# $pkg_repo_version::
-#                         Options: release, snapshot.
-#                         Default: release.
-#
-# $pkg_repo_release_key::
-#                         Default: operating system specific.
-#
-# $pkg_repo_release_metadata_expire::
-#                         Default: operating system specific.
-#
-# $pkg_repo_release_url::
-#                         Default: operating system specific.
-#
-# $pkg_repo_snapshot_key::
-#                         Default: operating system specific.
-#
-# $pkg_repo_snapshot_metadata_expire::
-#                         Default: operating system specific.
-#
-# $pkg_repo_snapshot_url::
-#                         Default: operating system specific.
-#
 # $template_auth::
 #                         Default: icingaweb2/authentication.ini.erb
 #
@@ -240,18 +218,18 @@ class icingaweb2 (
   $log_resource                      = $::icingaweb2::params::log_resource,
   $log_store                         = $::icingaweb2::params::log_store,
   $manage_apache_vhost               = $::icingaweb2::params::manage_apache_vhost,
-  $manage_repo                       = $::icingaweb2::params::manage_repo,
+  $manage_repo                       = false,
   $manage_user                       = $::icingaweb2::params::manage_user,
   $pkg_deps                          = $::icingaweb2::params::pkg_deps,
   $pkg_ensure                        = $::icingaweb2::params::pkg_ensure,
   $pkg_list                          = $::icingaweb2::params::pkg_list,
-  $pkg_repo_release_key              = $::icingaweb2::params::pkg_repo_release_key,
-  $pkg_repo_release_metadata_expire  = $::icingaweb2::params::pkg_repo_release_metadata_expire,
-  $pkg_repo_release_url              = $::icingaweb2::params::pkg_repo_release_url,
-  $pkg_repo_snapshot_key             = $::icingaweb2::params::pkg_repo_snapshot_key,
-  $pkg_repo_snapshot_metadata_expire = $::icingaweb2::params::pkg_repo_snapshot_metadata_expire,
-  $pkg_repo_snapshot_url             = $::icingaweb2::params::pkg_repo_snapshot_url,
-  $pkg_repo_version                  = $::icingaweb2::params::pkg_repo_version,
+  $pkg_repo_release_key              = undef, # Deprecated
+  $pkg_repo_release_metadata_expire  = undef, # Deprecated
+  $pkg_repo_release_url              = undef, # Deprecated
+  $pkg_repo_snapshot_key             = undef, # Deprecated
+  $pkg_repo_snapshot_metadata_expire = undef, # Deprecated
+  $pkg_repo_snapshot_url             = undef, # Deprecated
+  $pkg_repo_version                  = undef, # Deprecated
   $template_auth                     = $::icingaweb2::params::template_auth,
   $template_config                   = $::icingaweb2::params::template_config,
   $template_resources                = $::icingaweb2::params::template_resources,
@@ -268,7 +246,7 @@ class icingaweb2 (
   $web_type                          = $::icingaweb2::params::web_type,
   $initialize                        = $::icingaweb2::params::initialize,
 ) inherits ::icingaweb2::params {
-  class { '::icingaweb2::preinstall': } ->
+  class { '::icingaweb2::repo': } ->
   class { '::icingaweb2::install': } ->
   class { '::icingaweb2::config': } ->
   class { '::icingaweb2::initialize': } ->
@@ -298,10 +276,6 @@ class icingaweb2 (
   validate_string($log_resource)
   validate_string($log_store)
   validate_string($pkg_ensure)
-  validate_string($pkg_repo_release_key)
-  validate_string($pkg_repo_release_url)
-  validate_string($pkg_repo_snapshot_key)
-  validate_string($pkg_repo_snapshot_url)
   validate_string($template_auth)
   validate_string($template_config)
   validate_string($template_resources)
@@ -326,14 +300,6 @@ class icingaweb2 (
     validate_string($template_apache)
   }
 
-  if $pkg_repo_release_metadata_expire {
-    validate_string($pkg_repo_release_metadata_expire)
-  }
-
-  if $pkg_repo_snapshot_metadata_expire {
-    validate_string($pkg_repo_snapshot_metadata_expire)
-  }
-
   validate_re($install_method,
     [
       'git',
@@ -349,12 +315,4 @@ class icingaweb2 (
       'purged',
     ]
   )
-
-  validate_re($pkg_repo_version,
-    [
-      'release',
-      'snapshot',
-    ]
-  )
 }
-

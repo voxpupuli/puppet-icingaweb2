@@ -6,7 +6,6 @@ class icingaweb2::params {
   $git_revision        = undef
   $install_method      = 'git'
   $manage_apache_vhost = false
-  $manage_repo         = false
   $manage_user         = true
 
   # Template variables
@@ -36,7 +35,6 @@ class icingaweb2::params {
   $log_method                    = 'syslog'
   $log_resource                  = 'icingaweb_db'
   $log_store                     = 'db'
-  $pkg_repo_version              = 'release'
   $template_auth                 = 'icingaweb2/authentication.ini.erb'
   $template_config               = 'icingaweb2/config.ini.erb'
   $template_resources            ='icingaweb2/resources.ini.erb'
@@ -63,22 +61,7 @@ class icingaweb2::params {
       $config_user                       = 'icingaweb2'
       $pkg_ensure                        = present
       $pkg_list                          = ['icingaweb2']
-      $pkg_repo_release_key              = 'http://packages.icinga.org/icinga.key'
-      $pkg_repo_release_metadata_expire  = undef
 
-      case $::operatingsystem {
-        'Scientific': {
-          $pkg_repo_release_url          = "http://packages.icinga.org/epel/${::operatingsystemmajrelease}/release"
-          $pkg_repo_snapshot_url         = "http://packages.icinga.org/epel/${::operatingsystemmajrelease}/snapshot"
-        }
-        default: {
-          $pkg_repo_release_url          = 'http://packages.icinga.org/epel/$releasever/release'
-          $pkg_repo_snapshot_url         = 'http://packages.icinga.org/epel/$releasever/snapshot'
-        }
-      }
-
-      $pkg_repo_snapshot_key             = 'http://packages.icinga.org/icinga.key'
-      $pkg_repo_snapshot_metadata_expire = '1d'
       $web_root                          = '/usr/share/icingaweb2'
 
       $pkg_deps = [
@@ -101,12 +84,6 @@ class icingaweb2::params {
       $config_user                       = 'icingaweb2'
       $pkg_ensure                        = present
       $pkg_list                          = ['icingaweb2']
-      $pkg_repo_release_key              = undef
-      $pkg_repo_release_metadata_expire  = undef
-      $pkg_repo_release_url              = undef
-      $pkg_repo_snapshot_key             = undef
-      $pkg_repo_snapshot_metadata_expire = undef
-      $pkg_repo_snapshot_url             = undef
       $web_root                          = '/usr/share/icingaweb2'
 
       $pkg_deps = [
