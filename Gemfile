@@ -4,6 +4,7 @@ gem 'puppet', ENV.key?('PUPPET_VERSION') ? ENV['PUPPET_VERSION'].to_s : '>= 2.7'
 gem 'rspec-puppet', '~> 2.0'
 gem 'puppetlabs_spec_helper', '>= 0.1.0'
 gem 'puppet-lint', '>= 2'
+gem 'rspec-puppet-facts', '>= 1.6.0'
 gem 'facter', '>= 1.7.0'
 gem 'metadata-json-lint'
 
