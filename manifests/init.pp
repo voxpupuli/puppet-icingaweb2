@@ -24,6 +24,12 @@
 # $auth_resource::
 #                         Default:
 #
+# $groups_backend::
+#                         Default:
+#
+# $groups_resource::
+#                         Default:
+#
 # $config_dir::           Location of the main configuration directory.
 #                         Default: operating system specific.
 #
@@ -139,6 +145,9 @@
 # $template_auth::
 #                         Default: icingaweb2/authentication.ini.erb
 #
+# $template_groups::
+#                         Default: icingaweb2/groups.ini.erb
+#
 # $template_config::
 #                         Default: icingaweb2/config.ini.erb
 #
@@ -189,6 +198,8 @@ class icingaweb2 (
   $auth_ldap_user_class              = $::icingaweb2::params::auth_ldap_user_class,
   $auth_ldap_user_name_attribute     = $::icingaweb2::params::auth_ldap_user_name_attribute,
   $auth_resource                     = $::icingaweb2::params::auth_resource,
+  $groups_backend                    = $::icingaweb2::params::groups_backend,
+  $groups_resource                   = $::icingaweb2::params::groups_resource,
   $config_dir                        = $::icingaweb2::params::config_dir,
   $config_dir_mode                   = $::icingaweb2::params::config_dir_mode,
   $config_dir_purge                  = $::icingaweb2::params::config_dir_purge,
@@ -231,6 +242,7 @@ class icingaweb2 (
   $pkg_repo_snapshot_url             = undef, # Deprecated
   $pkg_repo_version                  = undef, # Deprecated
   $template_auth                     = $::icingaweb2::params::template_auth,
+  $template_groups                   = $::icingaweb2::params::template_groups,
   $template_config                   = $::icingaweb2::params::template_config,
   $template_resources                = $::icingaweb2::params::template_resources,
   $template_roles                    = $::icingaweb2::params::template_roles,

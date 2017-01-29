@@ -17,6 +17,8 @@ class icingaweb2::params {
   $auth_ldap_user_class          = 'inetOrgPerson'
   $auth_ldap_user_name_attribute = 'uid'
   $auth_resource                 = 'icingaweb_db'
+  $groups_backend                = 'db'
+  $groups_resource               = 'icingaweb_db'
   $ido_db                        = 'mysql'
   $ido_db_host                   = 'localhost'
   $ido_db_name                   = 'icingaweb2'
@@ -36,8 +38,9 @@ class icingaweb2::params {
   $log_resource                  = 'icingaweb_db'
   $log_store                     = 'db'
   $template_auth                 = 'icingaweb2/authentication.ini.erb'
+  $template_groups               = 'icingaweb2/groups.ini.erb'
   $template_config               = 'icingaweb2/config.ini.erb'
-  $template_resources            ='icingaweb2/resources.ini.erb'
+  $template_resources            = 'icingaweb2/resources.ini.erb'
   $template_roles                = 'icingaweb2/roles.ini.erb'
   $template_apache               = 'icingaweb2/apache2.conf.erb'
   $web_db                        = 'mysql'
@@ -101,4 +104,3 @@ class icingaweb2::params {
     }
   }
 }
-

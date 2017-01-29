@@ -48,6 +48,9 @@ class icingaweb2::config (
     "${::icingaweb2::config_dir}/authentication.ini":
       ensure => file;
 
+    "${::icingaweb2::config_dir}/groups.ini":
+      ensure => file;
+
     "${::icingaweb2::config_dir}/config.ini":
       ensure => file;
 
@@ -87,6 +90,17 @@ class icingaweb2::config (
         user_name_attribute => $::icingaweb2::auth_ldap_user_name_attribute,
         filter              => $::icingaweb2::auth_ldap_filter,
         base_dn             => $::icingaweb2::auth_ldap_base_dn,
+      }
+    }
+    default: {}
+  }
+
+  # Configure groups.ini settings
+  case $::icingaweb2::groups_backend {
+    'db': {
+      icingaweb2::config::groups_database { 'Local Database Groups':
+        groups_section  => 'icingaweb2',
+        groups_resource => $::icingaweb2::groups_resource,
       }
     }
     default: {}
