@@ -12,23 +12,13 @@ class icingaweb2::mod::deployment (
   require ::icingaweb2
 
   validate_absolute_path($web_root)
-  validate_re($install_method,
-    [
-      'git',
-      'package',
-    ]
-  )
+  validate_re($install_method, '^(git|package)$')
 
   File {
     require => Class['::icingaweb2::config'],
     owner => $::icingaweb2::config_user,
     group => $::icingaweb2::config_group,
     mode  => $::icingaweb2::config_file_mode,
-  }
-
-  file { "${web_root}/modules/deployment":
-    ensure => directory,
-    mode   => $::icingaweb2::config_dir_mode;
   }
 
   if $install_method == 'git' {
@@ -48,6 +38,11 @@ class icingaweb2::mod::deployment (
     }
   }
 
+  file { "${::icingaweb2::config_dir}/modules/deployment":
+    ensure => directory,
+    mode   => $::icingaweb2::config_dir_mode;
+  }
+
   Ini_Setting {
     ensure  => present,
     require => File["${::icingaweb2::config_dir}/modules/deployment"],
@@ -60,4 +55,3 @@ class icingaweb2::mod::deployment (
     value   => $auth_token,
   }
 }
-
