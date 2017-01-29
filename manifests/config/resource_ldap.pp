@@ -7,7 +7,7 @@ define icingaweb2::config::resource_ldap (
   $resource_name       = $title,
   $resource_port       = undef,
   $resource_root_dn    = undef,
-  $resource_encryption = undef,
+  $resource_encryption = 'none',
 ) {
   Ini_Setting {
     ensure  => present,
@@ -51,11 +51,9 @@ define icingaweb2::config::resource_ldap (
     value   => "\"${resource_bind_pw}\"",
   }
 
-  if $::icingaweb2::ldap_encryption {
-    ini_setting { "icingaweb2 resources ${title} encryption":
-      section => $resource_name,
-      setting => 'encryption',
-      value   => "\"${resource_encryption}\"",
-    }
+  ini_setting { "icingaweb2 resources ${title} encryption":
+    section => $resource_name,
+    setting => 'encryption',
+    value   => "\"${resource_encryption}\"",
   }
 }
