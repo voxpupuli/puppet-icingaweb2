@@ -4,6 +4,11 @@
 # Depends on the pupppetlabs-mysql module
 class icingaweb2::initialize {
   if $::icingaweb2::initialize {
+
+    Exec {
+      path => $::path,
+    }
+
     case $::operatingsystem {
       'RedHat', 'CentOS': {
         case $::icingaweb2::web_db {
