@@ -9,7 +9,6 @@ class icingaweb2::mod::monitoring (
   $transport_port = 22,
   $transport_user = undef,
   $transport_path = '/var/run/icinga2/cmd/icinga2.cmd',
-  $transport_resource = undef,
 ) {
   require ::icingaweb2
 
@@ -68,11 +67,13 @@ class icingaweb2::mod::monitoring (
     path    => "${::icingaweb2::config_dir}/modules/monitoring/commandtransports.ini",
   }
 
-  ini_setting { 'command transport path setting':
-    section => 'icinga2',
-    setting => 'path',
-    value   => $transport_path,
-    path    => "${::icingaweb2::config_dir}/modules/monitoring/commandtransports.ini",
+  if $transport == 'local' or $transport == 'remote' {
+    ini_setting { 'command transport path setting':
+      section => 'icinga2',
+      setting => 'path',
+      value   => $transport_path,
+      path    => "${::icingaweb2::config_dir}/modules/monitoring/commandtransports.ini",
+    }
   }
 
   if $transport == 'remote' {
@@ -96,14 +97,9 @@ class icingaweb2::mod::monitoring (
       value   => $transport_user,
       path    => "${::icingaweb2::config_dir}/modules/monitoring/commandtransports.ini",
     }
-    
-    ini_setting { 'command transport resource setting':
-      section => 'icinga2',
-      setting => 'resource',
-      value   => $transport_resource,
-      path    => "${::icingaweb2::config_dir}/modules/monitoring/commandtransports.ini",
-    }
-    
+  }
+  elsif $transport != 'local' {
+    fail("transport '${transport}' is not supported!")
   }
   
   file { "${::icingaweb2::config_dir}/enabledModules/monitoring":
