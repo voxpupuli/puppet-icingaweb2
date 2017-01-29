@@ -1,6 +1,6 @@
 # Icinga Web 2
 
-[![Puppet Forge](http://img.shields.io/puppetforge/v/icinga/icingaweb2.svg)](https://forge.puppetlabs.com/icinga/icingaweb2)
+[![Puppet Forge](http://img.shields.io/puppetforge/v/icinga/icingaweb2.svg)](https://forge.puppet.com/icinga/icingaweb2)
 [![Build Status](https://travis-ci.org/Icinga/puppet-icingaweb2.png?branch=master)](https://travis-ci.org/Icinga/puppet-icingaweb2)
 [![Github Tag](https://img.shields.io/github/tag/Icinga/puppet-icingaweb2.svg)](https://github.com/Icinga/puppet-icingaweb2)
 [![Puppet Forge Downloads](http://img.shields.io/puppetforge/dt/icinga/icingaweb2.svg)](https://forge.puppetlabs.com/icinga/icingaweb2)
@@ -69,12 +69,14 @@ Default Credentials will be icingaadmin:icinga
 
 ### Manage repository
 
-    node /box/ {
-      class { 'icingaweb2':
-        manage_repo    => true,
-        install_method => 'package',
-      }
-    }
+**Note:** This will add the same repositories as `icinga/icinga2`, make sure you only enable one.
+
+``` puppet
+class { '::icingaweb2':
+  manage_repo    => true,
+  install_method => 'package',
+}
+```
 
 ### Monitoring module
 
