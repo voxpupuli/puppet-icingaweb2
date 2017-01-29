@@ -24,12 +24,15 @@ class icingaweb2::install {
       }
     }
 
+    ensure_packages(['git'])
+
     vcsrepo { 'icingaweb2':
       ensure   => present,
       path     => $::icingaweb2::web_root,
       provider => 'git',
       revision => $::icingaweb2::git_revision,
       source   => $::icingaweb2::git_repo,
+      require  => Package['git'],
     }
   }
 }
