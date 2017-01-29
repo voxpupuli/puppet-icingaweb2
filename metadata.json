@@ -1,10 +1,10 @@
 {
   "name": "icinga-icingaweb2",
   "version": "1.0.6",
-  "author": "Tom De Vylder",
-  "summary": "Module to install and maintain IcingaWeb2",
+  "author": "Icinga Development Team",
+  "summary": "Module to install and maintain Icinga Web 2",
   "license": "Apache-2.0",
-  "source": "https://github.com/Icinga/puppet-icingaweb2",
+  "source": "https://github.com/Icinga/puppet-icingaweb2.git",
   "project_page": "https://github.com/Icinga/puppet-icingaweb2",
   "issues_url": "https://github.com/Icinga/puppet-icingaweb2/issues",
   "dependencies": [
@@ -12,6 +12,9 @@
     {"name":"puppetlabs/inifile","version_requirement":">= 1.2.0 < 2.0.0"},
     {"name":"puppetlabs/stdlib","version_requirement":">= 4.4.0 < 5.0.0"},
     {"name":"puppetlabs/vcsrepo","version_requirement":">= 1.2.0 < 2.0.0"}
+  ],
+  "requirements": [
+    { "name": "puppet", "version_requirement": ">= 3.8.0 < 5.0.0" }
   ],
   "data_provider": null,
   "description": "This module install IcingaWeb2",
@@ -43,6 +46,13 @@
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
         "6", "7"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "14.04",
+        "16.04"
       ]
     }
   ]
