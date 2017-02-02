@@ -19,6 +19,7 @@ def centos_facts
     :operatingsystem        => 'CentOS',
     :osfamily               => 'RedHat',
     :operatingsystemrelease => '6',
+    :path                   => '/usr/sbin:/sbin:/usr/bin:/bin',
   }
 end
 
@@ -27,5 +28,6 @@ def debian_facts
     :operatingsystem        => 'Debian',
     :osfamily               => 'Debian',
     :operatingsystemrelease => '7',
+    :path                   => '/usr/sbin:/sbin:/usr/bin:/bin',
   }
 end

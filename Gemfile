@@ -14,15 +14,17 @@ if RUBY_VERSION < '2.0.0'
   gem 'json_pure', '< 2'
 end
 
-group :system_tests do
-  if (beaker_version = ENV['BEAKER_VERSION'])
-    gem 'beaker', beaker_version
+unless RUBY_VERSION < '2.0.0'
+  group :system_tests do
+    if (beaker_version = ENV['BEAKER_VERSION'])
+      gem 'beaker', beaker_version
+    end
+    if (beaker_rspec_version = ENV['BEAKER_RSPEC_VERSION'])
+      gem 'beaker-rspec', beaker_rspec_version
+    else
+      gem 'beaker-rspec',  :require => false
+    end
+    gem 'serverspec',                    :require => false
+    gem 'beaker-puppet_install_helper',  :require => false
   end
-  if (beaker_rspec_version = ENV['BEAKER_RSPEC_VERSION'])
-    gem 'beaker-rspec', beaker_rspec_version
-  else
-    gem 'beaker-rspec',  :require => false
-  end
-  gem 'serverspec',                    :require => false
-  gem 'beaker-puppet_install_helper',  :require => false
 end
