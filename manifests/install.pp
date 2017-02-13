@@ -7,13 +7,6 @@ class icingaweb2::install {
         ensure => $::icingaweb2::pkg_ensure,
       }
     }
-
-    if $::icingaweb2::pkg_deps {
-      package { $::icingaweb2::pkg_deps:
-        ensure => $::icingaweb2::pkg_ensure,
-        before => Package[$::icingaweb2::pkg_list],
-      }
-    }
   }
 
   if $::icingaweb2::install_method == 'git' {
