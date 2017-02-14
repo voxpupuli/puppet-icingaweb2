@@ -7,8 +7,9 @@ describe 'icingaweb2' do
   it 'with basic settings for package installation' do
     pp = <<-EOS
       class { '::icingaweb2':
-        manage_repo    => true,
-        install_method => 'package',
+        manage_apache_vhost => true,
+        manage_repo         => true,
+        install_method      => 'package',
       }
     EOS
     apply_manifest(pp, catch_failures: true, debug: false, trace: true)

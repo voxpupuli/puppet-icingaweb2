@@ -9,62 +9,43 @@ class icingaweb2::initialize {
       path => $::path,
     }
 
-    case $::operatingsystem {
-      'RedHat', 'CentOS': {
-        case $::icingaweb2::web_db {
-          'mysql': {
+    unless $::osfamily =~ /^(Debian|RedHat)$/ {
+      fail("Database initialization not implemented on osfamily ${::osfamily}!")
+    }
 
-            if $::icingaweb2::install_method == 'git' {
-              $sql_schema_location = '/usr/share/icingaweb2/etc/schema/mysql.schema.sql'
-            } else {
-              $sql_schema_location = '/usr/share/doc/icingaweb2/schema/mysql.schema.sql'
-            }
+    $_icingaadmin_default_password = '$1$EzxLOFDr$giVx3bGhVm4lDUAw6srGX1' # icinga
+    $_escaped_icingaadmin_password = shell_escape($_icingaadmin_default_password)
 
-            exec { 'create db scheme':
-              command => "mysql --defaults-file='/root/.my.cnf' ${::icingaweb2::web_db_name} < ${sql_schema_location}",
-              unless  => "mysql --defaults-file='/root/.my.cnf' ${::icingaweb2::web_db_name} -e \"SELECT 1 FROM icingaweb_user LIMIT 1;\"",
-              notify  => Exec['create web user']
-            }
-
-            exec { 'create web user':
-              command     => "mysql --defaults-file='/root/.my.cnf' ${::icingaweb2::web_db_name} -e \" INSERT INTO icingaweb_user (name, active, password_hash) VALUES ('icingaadmin', 1, '\\\$1\\\$EzxLOFDr\\\$giVx3bGhVm4lDUAw6srGX1');\"",
-              refreshonly => true,
-            }
-          }
-
-          default: {
-            fail "DB type ${::icingaweb2::web_db} not supported yet"
-          }
-        }
+    if $::icingaweb2::web_db == 'mysql' {
+      if $::icingaweb2::install_method == 'git' or $::osfamily == 'Debian' {
+        $_sql_schema_location = '/usr/share/icingaweb2/etc/schema/mysql.schema.sql'
+      } else {
+        $_sql_schema_location = '/usr/share/doc/icingaweb2/schema/mysql.schema.sql'
       }
 
-      'Debian', 'Ubuntu': {
-        case $::icingaweb2::web_db {
-          'mysql': {
+      $_mysql_command = join([
+        'mysql',
+        '-h', shell_escape($::icingaweb2::web_db_host),
+        '-u', shell_escape($::icingaweb2::web_db_user),
+        #'-p', shell_escape($::icingaweb2::web_db_pass), TODO: remove
+        shell_escape($::icingaweb2::web_db_name),
+      ], ' ')
+      $_mysql_environment = "MYSQL_PWD=${::icingaweb2::web_db_pass}"
 
-            $sql_schema_location = '/usr/share/icingaweb2/etc/schema/mysql.schema.sql'
+      exec { 'icingaweb2 create db schema':
+        command     => "${_mysql_command} < ${_sql_schema_location}",
+        unless      => "${_mysql_command} -e 'SELECT 1 FROM icingaweb_user LIMIT 1;'",
+        environment => $_mysql_environment,
+      } ~>
 
-            exec { 'create db scheme':
-              command => "mysql -h ${::icingaweb2::web_db_host} -u${::icingaweb2::web_db_user} -p${::icingaweb2::web_db_pass} ${::icingaweb2::web_db_name} < ${sql_schema_location}",
-              unless  => "mysql -h ${::icingaweb2::web_db_host} -u${::icingaweb2::web_db_user} -p${::icingaweb2::web_db_pass} ${::icingaweb2::web_db_name} -e \"SELECT 1 FROM icingaweb_user LIMIT 1;\"",
-              notify  => Exec['create web user']
-            }
-
-            exec { 'create web user':
-              command     => "mysql -h ${::icingaweb2::web_db_host} -u${::icingaweb2::web_db_user} -p${::icingaweb2::web_db_pass} ${::icingaweb2::web_db_name} -e \" INSERT INTO icingaweb_user (name, active, password_hash) VALUES ('icingaadmin', 1, '\\\$1\\\$EzxLOFDr\\\$giVx3bGhVm4lDUAw6srGX1');\"",
-              refreshonly => true,
-            }
-          }
-
-          default: {
-            fail "DB type ${::icingaweb2::web_db} not supported yet"
-          }
-        }
+      exec { 'icingaweb2 create default web user':
+        command     => "${_mysql_command} -e \"INSERT INTO icingaweb_user (name, active, password_hash)
+                     VALUES ('icingaadmin', 1, '${_escaped_icingaadmin_password}');\"",
+        environment => $_mysql_environment,
+        refreshonly => true,
       }
-
-      default: {
-        fail "Managing repositories for ${::operatingsystem} is not supported."
-      }
+    } else {
+      fail("database initialization is not supported for web_db ${::icingaweb2::web_db}")
     }
   }
 }
