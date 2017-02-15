@@ -31,6 +31,29 @@ class icingaweb2::initialize {
               refreshonly => true,
             }
           }
+          'pgsql': {
+
+            if $::icingaweb2::install_method == 'git' {
+              $sql_schema_location = '/usr/share/icingaweb2/etc/schema/pgsql.schema.sql'
+            } else {
+              $sql_schema_location = '/usr/share/doc/icingaweb2/schema/pgsql.schema.sql'
+            }
+
+
+            exec { 'create db scheme':
+              environment => "PGPASSWORD=${::icingaweb2::web_db_pass}",
+              command     => "psql -U ${::icingaweb2::web_db_user} -h ${::icingaweb2::web_db_host} -d ${::icingaweb2::web_db_name} < ${sql_schema_location}",
+              unless      => "psql -U ${::icingaweb2::web_db_user} -h ${::icingaweb2::web_db_host} -d ${::icingaweb2::web_db_name} -c \"SELECT 1 FROM icingaweb_user LIMIT 1;\"",
+              notify      => Exec['create web user']
+            }
+
+            exec { 'create web user':
+              environment => "PGPASSWORD=${::icingaweb2::web_db_pass}",
+              command     => "psql -U ${::icingaweb2::web_db_user} -h ${::icingaweb2::web_db_host} -d ${::icingaweb2::web_db_name} -c \" INSERT INTO icingaweb_user (name, active, password_hash) VALUES ('icingaadmin', 1, '\\\$1\\\$EzxLOFDr\\\$giVx3bGhVm4lDUAw6srGX1');\"",
+              refreshonly => true,
+            }
+          }
+
 
           default: {
             fail "DB type ${::icingaweb2::web_db} not supported yet"
@@ -55,6 +78,24 @@ class icingaweb2::initialize {
               refreshonly => true,
             }
           }
+          'pgsql': {
+
+            $sql_schema_location = '/usr/share/icingaweb2/etc/schema/pgsql.schema.sql'
+
+            exec { 'create db scheme':
+              environment => "PGPASSWORD=${::icingaweb2::web_db_pass}",
+              command     => "psql -U ${::icingaweb2::web_db_user} -h ${::icingaweb2::web_db_host} -d ${::icingaweb2::web_db_name} < ${sql_schema_location}",
+              unless      => "psql -U ${::icingaweb2::web_db_user} -h ${::icingaweb2::web_db_host} -d ${::icingaweb2::web_db_name} -c \"SELECT 1 FROM icingaweb_user LIMIT 1;\"",
+              notify      => Exec['create web user']
+            }
+
+            exec { 'create web user':
+              environment => "PGPASSWORD=${::icingaweb2::web_db_pass}",
+              command     => "psql -U ${::icingaweb2::web_db_user} -h ${::icingaweb2::web_db_host} -d ${::icingaweb2::web_db_name} -c \" INSERT INTO icingaweb_user (name, active, password_hash) VALUES ('icingaadmin', 1, '\\\$1\\\$EzxLOFDr\\\$giVx3bGhVm4lDUAw6srGX1');\"",
+              refreshonly => true,
+            }
+          }
+
 
           default: {
             fail "DB type ${::icingaweb2::web_db} not supported yet"
