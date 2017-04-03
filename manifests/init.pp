@@ -246,11 +246,11 @@ class icingaweb2 (
   $web_type                          = $::icingaweb2::params::web_type,
   $initialize                        = $::icingaweb2::params::initialize,
 ) inherits ::icingaweb2::params {
-  class { '::icingaweb2::repo': } ->
-  class { '::icingaweb2::install': } ->
-  class { '::icingaweb2::config': } ->
-  class { '::icingaweb2::initialize': } ->
-  Class['::icingaweb2']
+  class { '::icingaweb2::repo': }
+  -> class { '::icingaweb2::install': }
+  -> class { '::icingaweb2::config': }
+  -> class { '::icingaweb2::initialize': }
+  -> Class['::icingaweb2']
 
   validate_absolute_path($config_dir)
   validate_absolute_path($web_root)

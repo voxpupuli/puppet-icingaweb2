@@ -159,6 +159,8 @@ class { '::icingaweb2::mod::monitoring':
 Icinga2 is installed or on another host. One needs only the ido data to configure icingaweb2.
 This could be a profile class to include icingaweb2 in a architecture with roles and profiles.
 
+### Mysql
+
     class profile::icingaweb2(){
       $ido_db_name = hiera('icinga2::ido::name', 'icinga2')
       $ido_db_user = hiera('icinga2::ido::user', 'icinga2')
@@ -194,6 +196,51 @@ This could be a profile class to include icingaweb2 in a architecture with roles
         web_db_pass         => $web_db_pass,
         web_db_user         => $web_db_user,
         require             => Class['::mysql::server'],
+      } ->
+
+      augeas { 'php.ini':
+        context => '/files/etc/php.ini/PHP',
+        changes => ['set date.timezone Europe/Berlin',],
+      }
+
+      contain ::icingaweb2::mod::monitoring
+    }
+
+### Postgresql
+
+    class profile::icingaweb2(){
+      $ido_db_name = hiera('icinga2::ido::name', 'icinga2')
+      $ido_db_user = hiera('icinga2::ido::user', 'icinga2')
+      $ido_db_pass = hiera('icinga2::ido::password', 'icinga2')
+      $web_db_name = hiera('icingaweb2::db::name', 'icingaweb2')
+      $web_db_user = hiera('icingaweb2::db::user', 'icingaweb2')
+      $web_db_pass = hiera('icingaweb2::db::password', 'icingaweb2')
+
+      contain '::postgresql::server'
+
+      contain '::apache'
+      contain '::apache::mod::php'
+
+      Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ] }
+
+      postgresql::server::db { "$web_db_name":
+        user     => "$web_db_user",
+        password => postgresql_password("$web_db_name", " $web_db_pass"),
+      }
+
+      class { '::icingaweb2':
+        initialize          => true,
+        install_method      => 'package',
+        manage_apache_vhost => true,
+        ido_db_name         => $ido_db_name,
+        ido_db_pass         => $ido_db_pass,
+        ido_db_user         => $ido_db_user,
+        web_db              => 'pgsql',
+        web_db_port         => '5432',
+        web_db_name         => $web_db_name,
+        web_db_pass         => $web_db_pass,
+        web_db_user         => $web_db_user,
+        require             => Postgresql::Server::Db["$web_db_name"],
       } ->
 
       augeas { 'php.ini':
