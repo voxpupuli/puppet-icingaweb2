@@ -12,6 +12,12 @@ class icingaweb2::initialize {
     case $::operatingsystem {
       'RedHat', 'CentOS': {
         case $::icingaweb2::web_db {
+          if $::icingaweb2::install_method == 'git' {
+            $sql_schema_location = '/usr/share/icingaweb2/etc/schema/mysql.schema.sql'
+          } else {
+            $sql_schema_location = '/usr/share/doc/icingaweb2/schema/mysql.schema.sql'
+          }
+        
           'mysql': {
 
             if $::icingaweb2::install_method == 'git' {
