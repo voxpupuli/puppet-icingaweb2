@@ -63,178 +63,146 @@ Other operating systems or versions may work but have not been tested.
 
 ## Usage
 
-### Install method: packages
+### Install Icinga Web 2
 
-    node /box/ {
-      class { 'icingaweb2':
-        install_method => 'package',
-      }
-    }
+#### Install and Manage Modules
 
-### Install method: Git
+##### Monitoring
 
-    node /box/ {
-      class { 'icingaweb2':
-        install_method => 'git',
-      }
-    }
+##### Director
 
-### Initialize db
+##### Business Process
 
-Default Credentials will be icingaadmin:icinga
-
-    node /box/ {
-      class { 'icingaweb2':
-        initialize => true,
-      }
-    }
-
-### Manage repository
-
-**Note:** This will add the same repositories as `icinga/icinga2`, make sure you only enable one.
-
-``` puppet
-class { '::icingaweb2':
-  manage_repo    => true,
-  install_method => 'package',
-}
-```
-
-### Monitoring module
-
-In minimal default configuration:
-
-``` puppet
-include ::icingaweb2
-include ::icingaweb2::mod::monitoring
-```
-
-With transport configuration
-
-``` puppet
-include ::icingaweb2
-
-# default is local
-class { '::icingaweb2::mod::monitoring':
-  transport      => 'local',
-  transport_path => '/run/icinga2/cmd/icinga2.cmd',
-}
-
-# via SSH, make sure to add a SSH key to the user running PHP (apache)
-class { '::icingaweb2::mod::monitoring':
-  transport          => 'remote',
-  transport_host     => 'icinga-master1',
-  transport_username => 'icingaweb',
-  transport_path     => '/run/icinga2/cmd/icinga2.cmd',
-}
-
-# via Icinga 2 API
-class { '::icingaweb2::mod::monitoring':
-  transport          => 'api',
-  transport_host     => 'icinga-master1',
-  transport_username => 'icingaweb2',
-  transport_password => 'secret',
-}
-```
-
-### Business process module
-
-    node /box/ {
-      class {
-        'icingaweb2':;
-        'icingaweb2::mod::businessprocess':;
-      }
-    }
-
-### Deployment module
-
-    node /box/ {
-      class {
-        'icingaweb2':;
-        'icingaweb2::mod::deployment':
-          auth_token => 'secret_token';
-      }
-    }
-
-### Graphite module
-
-    node /box/ {
-      class {
-        'icingaweb2':;
-        'icingaweb2::mod::graphite':
-          graphite_base_url => 'http://graphite.com/render?';
-      }
-    }
-
-### NagVis module
-
-    node /box/ {
-      class {
-        'icingaweb2':;
-        'icingaweb2::mod::nagvis':
-          nagvis_url => 'http://example.org/nagvis/';
-      }
-    }
-
-### Real world example
-
-Icinga2 is installed or on another host. One needs only the ido data to configure icingaweb2.
-This could be a profile class to include icingaweb2 in a architecture with roles and profiles.
-
-    class profile::icingaweb2(){
-      $ido_db_name = hiera('icinga2::ido::name', 'icinga2')
-      $ido_db_user = hiera('icinga2::ido::user', 'icinga2')
-      $ido_db_pass = hiera('icinga2::ido::password', 'icinga2')
-      $web_db_name = hiera('icingaweb2::db::name', 'icingaweb2')
-      $web_db_user = hiera('icingaweb2::db::user', 'icingaweb2')
-      $web_db_pass = hiera('icingaweb2::db::password', 'icingaweb2')
-
-      contain '::mysql::server'
-      contain '::mysql::client'
-      contain '::mysql::server::account_security'
-
-      contain '::apache'
-      contain '::apache::mod::php'
-
-      Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ] }
-
-      ::mysql::db { $web_db_name:
-        user     => $web_db_user,
-        password => $web_db_pass,
-        host     => 'localhost',
-        grant    => ['ALL'],
-      }
-
-      class { '::icingaweb2':
-        initialize          => true,
-        install_method      => 'package',
-        manage_apache_vhost => true,
-        ido_db_name         => $ido_db_name,
-        ido_db_pass         => $ido_db_pass,
-        ido_db_user         => $ido_db_user,
-        web_db_name         => $web_db_name,
-        web_db_pass         => $web_db_pass,
-        web_db_user         => $web_db_user,
-        require             => Class['::mysql::server'],
-      } ->
-
-      augeas { 'php.ini':
-        context => '/files/etc/php.ini/PHP',
-        changes => ['set date.timezone Europe/Berlin',],
-      }
-
-      contain ::icingaweb2::mod::monitoring
-    }
+##### Cube 
 
 ## Reference
 
-## Limitations
+- [**Public classes**](#public-classes)
+    - [Class: icingaweb2](#class-icingaweb2)
+    - [Class: icingaweb2::mod::monitoring](#class-icingaweb2modmonitoring)
+    - [Class: icingaweb2::mod::businessprocess](#class-icingaweb2modbusinessprocess)
+    - [Class: icingaweb2::mod::deployment](#class-icingaweb2moddeployment)
+    - [Class: icingaweb2::mod::graphite](#class-icingaweb2modgraphite)
+    - [Class: icingaweb2::mod::nagvis](#class-icingaweb2modnagvis)
+- [**Private classes**](#private-classes)
+    - [Class: icingaweb2::config](#class-icingaweb2config)
+    - [Class: icingaweb2::install](#class-icingaweb2install)
+    - [Class: icingaweb2::params](#class-icingaweb2params)
+    - [Class: icingaweb2::repo](#class-icingaweb2repo)
+    - [Class: icingaweb2::initialize](#class-icingaweb2initialize)
+- [**Public defined types**](#public-defined-types)
+    - [Defined type: icingaweb2::config::authentication_database](#defined-type-icingaweb2::config::authentication_database)
+    - [Defined type: icingaweb2::config::authentication_external](#defined-type-icingaweb2::config::authentication_external)
+    - [Defined type: icingaweb2::config::authentication_ldap](#defined-type-icingaweb2::config::authentication_ldap)
+    - [Defined type: icingaweb2::config::resource_database](#defined-type-icingaweb2::config::resource_database)
+    - [Defined type: icingaweb2::config::resource_file](#defined-type-icingaweb2::config::resource_file)
+    - [Defined type: icingaweb2::config::resource_ldap](#defined-type-icingaweb2::config::resource_ldap)
+    - [Defined type: icingaweb2::config::resource_livestatus](#defined-type-icingaweb2::config::resource_livestatus)
+    - [Defined type: icingaweb2::config::roles](#defined-type-icingaweb2::config::roles)
+- [**Private defined types**](#private-defined-types)
+
+### Public Classes
+
+#### Class: `icingaweb2`
+The default class of this module. It handles the basic installation and configuration of Icinga Web 2. 
+
+**Parameters of `icingaweb2`:**
+
+#### Class: `icingaweb2::mod::monitoring`
+
+**Parameters of `icingaweb2::mod::monitoring`:**
+
+#### Class: `icingaweb2::mod::businessprocess`
+
+**Parameters of `icingaweb2::mod:businessprocess`:**
+
+#### Class: `icingaweb2::mod::deployment`
+
+This class is deprecated and will be removed.
+
+#### Class: `icingaweb2::mod::graphite`
+
+This class is deprecated and will be removed.
+
+#### Class: `icingaweb2::mod::nagvis`
+
+This class is deprecated and will be removed.
+
+### Private Classes
+
+#### Class: `icingaweb2::config`
+
+**Parameters of `icingaweb2::config`:**
+
+#### Class: `icingaweb2::install`
+
+**Parameters of `icingaweb2::install`:**
+
+#### Class: `icingaweb2::params`
+
+**Parameters of `icingaweb2::params`:**
+
+#### Class: `icingaweb2::repo`
+
+**Parameters of `icingaweb2::repo`:**
+
+#### Class: `icingaweb2::initialize`
+
+**Parameters of `icingaweb2::initialize`:**
+
+### Public Defined Types
+
+#### Defined type: `icingaweb2::config::authentication_database`
+
+**Parameters of `icingaweb2::config::authentication_database`:**
+
+#### Defined type: `icingaweb2::config::authentication_external`
+
+**Parameters of `icingaweb2::config::authentication_external`:**
+
+#### Defined type: `icingaweb2::config::authentication_ldap`
+
+**Parameters of `icingaweb2::config::authentication_ldap`:**
+
+#### Defined type: `icingaweb2::config::resource_database`
+
+**Parameters of `icingaweb2::config::resource_database`:**
+
+#### Defined type: `icingaweb2::config::resource_file`
+
+**Parameters of `icingaweb2::config::resource_file`:**
+
+#### Defined type: `icingaweb2::config::resource_ldap`
+
+**Parameters of `icingaweb2::config::resource_ldap`:**
+
+#### Defined type: `icingaweb2::config::resource_livestatus`
+
+**Parameters of `icingaweb2::config::resource_livestatus`:**
+
+#### Defined type: `icingaweb2::config::roles`
+
+**Parameters of `icingaweb2::config::roles`:**
+
+### Private Defined Types
 
 ## Development
+A roadmap of this project is located at https://github.com/Icinga/puppet-icingaweb2/milestones. Please consider
+this roadmap when you start contributing to the project.
 
-* Fork it
-* Create a feature branch (`git checkout -b my-new-feature`)
-* Run rspec tests (`bundle exec rake spec`)
-* Commit your changes (`git commit -am 'Added some feature'`)
-* Push to the branch (`git push origin my-new-feature`)
-* Create new Pull Request
+### Contributing
+When contributing several steps such as pull requests and proper testing implementations are required.
+Find a detailed step by step guide in [CONTRIBUTING.md].
+
+### Testing
+Testing is essential in our workflow to ensure a good quality. We use RSpec as well as Serverspec to test all components
+of this module. For a detailed description see [TESTING.md].
+
+## Release Notes
+When releasing new versions we refer to [SemVer 1.0.0] for version numbers. All steps required when creating a new
+release are described in [RELEASE.md]
+
+See also [CHANGELOG.md]
+
+## Authors
+[AUTHORS] is generated on each release.
