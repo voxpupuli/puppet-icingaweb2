@@ -13,53 +13,34 @@
 class icingaweb2::config (
   $config_dir       = $::icingaweb2::config_dir,
   $config_dir_purge = $::icingaweb2::config_dir_purge,
-  $web_root         = $::icingaweb2::web_root,
 ) {
-
-  if $::icingaweb2::manage_user {
-    @user { 'icingaweb2':
-      ensure     => present,
-      home       => $::icingaweb2::web_root,
-      managehome => true,
-      system     => true,
-    }
-
-    @group { 'icingaweb2':
-      ensure => present,
-      system => true,
-    }
-
-    realize(User['icingaweb2'])
-    realize(Group['icingaweb2'])
-  }
 
   File {
     require => Class['::icingaweb2::install'],
     owner => $::icingaweb2::config_user,
     group => $::icingaweb2::config_group,
-    mode  => $::icingaweb2::config_file_mode,
+    mode  => '0660',
   }
 
   file {
     $::icingaweb2::config_dir:
       ensure  => directory,
-      mode    => $::icingaweb2::config_dir_mode,
-      purge   => $::icingaweb2::config_dir_purge,
-      recurse => $::icingaweb2::config_dir_recurse;
+      purge   => $::icingaweb2::config_dir_purge;
 
     "${::icingaweb2::config_dir}/enabledModules":
       ensure => directory,
-      mode   => $::icingaweb2::config_dir_mode;
+      mode   => '2750';
 
     "${::icingaweb2::config_dir}/modules":
       ensure => directory,
-      mode   => $::icingaweb2::config_dir_mode;
+      mode   => '2770';
 
     "${::icingaweb2::config_dir}/authentication.ini":
       ensure => file;
 
     "${::icingaweb2::config_dir}/config.ini":
-      ensure => file;
+      ensure => file
+      ;
 
     "${::icingaweb2::config_dir}/resources.ini":
       ensure => file;
@@ -67,13 +48,8 @@ class icingaweb2::config (
     "${::icingaweb2::config_dir}/roles.ini":
       ensure => file;
 
-    $::icingaweb2::web_root:
-      ensure => directory,
-      mode   => $::icingaweb2::config_dir_mode;
-
-    "${::icingaweb2::web_root}/modules":
-      ensure => directory,
-      mode   => $::icingaweb2::config_dir_mode;
+    "${::icingaweb2::config_dir}/groups.ini":
+      ensure => file,
   }
 
   # Configure authentication.ini settings
@@ -175,13 +151,5 @@ class icingaweb2::config (
   icingaweb2::config::roles { 'Admins':
     role_users       => $::icingaweb2::admin_users,
     role_permissions => $::icingaweb2::admin_permissions,
-  }
-
-  if $::icingaweb2::manage_apache_vhost {
-    include ::apache
-
-    ::apache::custom_config { 'icingaweb2':
-      content => template($::icingaweb2::template_apache),
-    }
   }
 }

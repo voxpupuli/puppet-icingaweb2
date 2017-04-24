@@ -15,13 +15,13 @@
 #
 class icingaweb2::params {
 
-  $package = 'icingaweb2'
+  $package                       = 'icingaweb2'
+  $config_dir                    = '/etc/icingaweb2'
+  $config_dir_mode               = '2770'
+  $config_dir_purge              = false
+  $config_group                  = 'icingaweb2'
+  $config_user                   = 'icingaweb2'
 
-  # Module variables
-  $manage_apache_vhost = false
-  $manage_user         = true
-
-  # Template variables
   $admin_permissions             = '*'
   $admin_users                   = 'icingaadmin'
   $auth_backend                  = 'db'
@@ -62,54 +62,5 @@ class icingaweb2::params {
   $web_db_user                   = 'icingaweb2'
   $web_type                      = 'db'
   $initialize                    = false
-
-  case $::osfamily {
-    'RedHat': {
-      $config_dir                        = '/etc/icingaweb2'
-      $config_dir_mode                   = '2770'
-      $config_dir_purge                  = false
-      $config_dir_recurse                = false
-      $config_file_mode                  = '0664'
-      $config_group                      = 'icingaweb2'
-      $config_user                       = 'icingaweb2'
-      $pkg_list                          = ['icingaweb2']
-
-      $web_root                          = '/usr/share/icingaweb2'
-
-      $pkg_deps = [
-        'php-gd',
-        'php-intl',
-        'php-ldap',
-        'php-mysql',
-        'php-pecl-imagick',
-        'php-pgsql',
-      ]
-    }
-
-    'Debian': {
-      $config_dir                        = '/etc/icingaweb2'
-      $config_dir_mode                   = '0755'
-      $config_dir_purge                  = false
-      $config_dir_recurse                = false
-      $config_file_mode                  = '0644'
-      $config_group                      = 'icingaweb2'
-      $config_user                       = 'icingaweb2'
-      $pkg_list                          = ['icingaweb2']
-      $web_root                          = '/usr/share/icingaweb2'
-
-      $pkg_deps = [
-        'php5-gd',
-        'php5-imagick',
-        'php5-intl',
-        'php5-ldap',
-        'php5-mysql',
-        'php5-pgsql',
-      ]
-    }
-
-    default: {
-      fail "Operating system ${::operatingsystem} is not supported."
-    }
-  }
 }
 
