@@ -1,16 +1,22 @@
 # == Class icingaweb2::mod::director
 #
 class icingaweb2::mod::director (
-  $git_repo       = 'https://github.com/Icinga/icingaweb2-module-director.git',
-  $git_revision   = undef,
-  $install_method = 'git',
-  $pkg_deps       = undef,
-  $pkg_ensure     = 'present',
-  $web_root       = $::icingaweb2::params::web_root,
-  $db_resource    = undef,
-  $endpoint_name = undef,
-  $endpoint_host = undef,
-  $endpoint_port = undef,
+  $git_repo          = 'https://github.com/Icinga/icingaweb2-module-director.git',
+  $git_revision      = undef,
+  $install_method    = 'git',
+  $pkg_deps          = undef,
+  $pkg_ensure        = 'present',
+  $web_root          = $::icingaweb2::params::web_root,
+  $director_db       = undef,
+  $director_db_host  = undef,
+  $director_db_port  = undef,
+  $director_db_name  = undef,
+  $director_db_user  = undef,
+  $director_db_pass  = undef,
+  $db_resource       = undef,
+  $endpoint_name     = undef,
+  $endpoint_host     = undef,
+  $endpoint_port     = undef,
   $endpoint_username = undef,
   $endpoint_password = undef,
 ) {
@@ -23,6 +29,17 @@ class icingaweb2::mod::director (
       'package',
     ]
   )
+
+  # Configure resources.ini
+  icingaweb2::config::resource_database { $db_resource:
+    resource_db       => $director_db,
+    resource_host     => $director_db_host,
+    resource_port     => $director_db_port,
+    resource_dbname   => $director_db_name,
+    resource_username => $director_db_user,
+    resource_password => $director_db_pass,
+    resource_charset  => 'utf8',
+  }
 
   File {
     require => Class['::icingaweb2::config'],
