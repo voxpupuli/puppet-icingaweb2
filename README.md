@@ -70,6 +70,35 @@ Other operating systems or versions may work but have not been tested.
 
 ### Install Icinga Web 2
 
+The default class `icingaweb2` installs a basic installation of Icinga Web 2 by using the systems package manager. It
+is recommended to use the official Icinga repository for the installation.
+
+Use the `manage_repo` parameter to configure the official [packages.icinga.com](https://packages.icinga.com)
+repository.
+
+``` puppet
+class { '::icingaweb2':
+  manage_repo => true,
+}
+```
+
+If you want to manage the version of Icinga Web 2, you have to disable the package management of this module and handle
+packages in your own Puppet code.
+
+``` puppet
+package { 'icinga2':
+  ensure => latest,
+  notifiy => Class['icinga2'],
+}
+
+class { '::icinga2':
+  manage_package => false,
+}
+```
+
+Be careful with this option: Setting `manage_package` to false also means that this module will not install any dependent
+packages of modules.
+
 #### Install and Manage Modules
 
 ##### Monitoring
