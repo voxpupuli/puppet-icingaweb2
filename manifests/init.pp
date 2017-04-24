@@ -4,6 +4,14 @@
 #
 # === Parameters
 #
+# [*manage_repo*]
+#   When set to true this module will install the packages.icinga.com repository. With this official repo you can get
+#   the latest version of Icinga Web. When set to false the operating systems default will be used. Defaults to false.
+#   NOTE: will be ignored if manage_package is set to false.
+#
+# [*manage_package*]
+#   If set to false packages aren't managed. Defaults to true.
+#
 # === Variables
 #
 # === Examples
@@ -12,6 +20,8 @@
 
 #This module installs and configures Icinga Web 2.
 class icingaweb2 (
+  $manage_repo                       = false,
+  $manage_package                    = true,
   $admin_permissions                 = $::icingaweb2::params::admin_permissions,
   $admin_users                       = $::icingaweb2::params::admin_users,
   $auth_backend                      = $::icingaweb2::params::auth_backend,
@@ -42,7 +52,6 @@ class icingaweb2 (
   $log_method                        = $::icingaweb2::params::log_method,
   $log_resource                      = $::icingaweb2::params::log_resource,
   $log_store                         = $::icingaweb2::params::log_store,
-  $manage_repo                       = false,
   $template_auth                     = $::icingaweb2::params::template_auth,
   $template_config                   = $::icingaweb2::params::template_config,
   $template_resources                = $::icingaweb2::params::template_resources,
@@ -57,9 +66,9 @@ class icingaweb2 (
   $initialize                        = $::icingaweb2::params::initialize,
 ) inherits ::icingaweb2::params {
 
-
   validate_absolute_path($config_dir)
   validate_bool($manage_repo)
+  validate_bool($manage_package)
   validate_bool($initialize)
   validate_string($admin_permissions)
   validate_string($admin_users)

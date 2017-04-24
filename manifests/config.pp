@@ -16,25 +16,10 @@ class icingaweb2::config (
 ) {
 
   File {
-    require => Class['::icingaweb2::install'],
-    owner => $::icingaweb2::config_user,
-    group => $::icingaweb2::config_group,
     mode  => '0660',
   }
 
   file {
-    $::icingaweb2::config_dir:
-      ensure  => directory,
-      purge   => $::icingaweb2::config_dir_purge;
-
-    "${::icingaweb2::config_dir}/enabledModules":
-      ensure => directory,
-      mode   => '2750';
-
-    "${::icingaweb2::config_dir}/modules":
-      ensure => directory,
-      mode   => '2770';
-
     "${::icingaweb2::config_dir}/authentication.ini":
       ensure => file;
 

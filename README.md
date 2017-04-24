@@ -110,6 +110,15 @@ The default class of this module. It handles the basic installation and configur
 
 **Parameters of `icingaweb2`:**
 
+##### `manage_repo`
+When set to true this module will install the packages.icinga.com repository. With this official repo you can get the
+latest version of Icinga Web. When set to false the operating systems default will be used. Defaults to `false`
+
+**NOTE**: will be ignored if manage_package is set to `false`
+
+##### `manage_package`
+If set to false packages aren't managed. Defaults to `true`
+
 #### Class: `icingaweb2::mod::monitoring`
 
 **Parameters of `icingaweb2::mod::monitoring`:**

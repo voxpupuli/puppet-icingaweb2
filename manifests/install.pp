@@ -15,12 +15,15 @@
 class icingaweb2::install {
 
   if defined($caller_module_name) and $module_name != $caller_module_name {
-    fail("icinga2::install is a private class of the module icinga2, you're not permitted to use it.")
+    fail("icingaweb2::install is a private class of the module icingaweb2, you're not permitted to use it.")
   }
 
   $package        = $::icingaweb2::params::package
+  $manage_package = $::icingaweb2::manage_package
 
-  package { $package:
-    ensure => installed,
+  if $manage_package {
+    package { $package:
+      ensure => installed,
+    }
   }
 }

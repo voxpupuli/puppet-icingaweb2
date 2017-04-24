@@ -6,7 +6,7 @@
 #
 # This class does not provide any parameters.
 # To control the behaviour of this class, have a look at the parameters:
-# * icinga2::manage_repo
+# * icingaweb2::manage_repo
 #
 # === Variables
 #
@@ -20,7 +20,7 @@ class icingaweb2::repo {
     fail("icingaweb2::repo is a private class of the module icingaweb2, you're not permitted to use it.")
   }
 
-  if $::icingaweb2::manage_repo {
+  if $::icingaweb2::manage_repo and $::icingaweb2::manage_package {
 
     case $::osfamily {
       'redhat': {

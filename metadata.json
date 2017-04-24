@@ -22,7 +22,7 @@
     "icinga",
     "icinga2",
     "icingaweb2",
-    "monitoring",
+    "monitoring"
   ],
   "operatingsystem_support": [
     {

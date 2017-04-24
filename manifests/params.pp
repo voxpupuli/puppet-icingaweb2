@@ -17,10 +17,7 @@ class icingaweb2::params {
 
   $package                       = 'icingaweb2'
   $config_dir                    = '/etc/icingaweb2'
-  $config_dir_mode               = '2770'
   $config_dir_purge              = false
-  $config_group                  = 'icingaweb2'
-  $config_user                   = 'icingaweb2'
 
   $admin_permissions             = '*'
   $admin_users                   = 'icingaadmin'
