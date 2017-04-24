@@ -20,31 +20,12 @@ class icingaweb2::repo {
     fail("icingaweb2::repo is a private class of the module icingaweb2, you're not permitted to use it.")
   }
 
-  if $::icingaweb2::manage_repo and $::icingaweb2::install_method == 'package' {
-
-    if $::icingaweb2::pkg_repo_version and $::icingaweb2::pkg_repo_version != 'release' {
-      fail('Setting pkg_repo_version is no longer supported!')
-    }
-
-    if (
-      $::icingaweb2::pkg_repo_release_key or $::icingaweb2::pkg_repo_release_metadata_expire
-      or $::icingaweb2::pkg_repo_release_url or
-      $::icingaweb2::pkg_repo_snapshot_key or $::icingaweb2::pkg_repo_snapshot_metadata_expire
-      or $::icingaweb2::pkg_repo_snapshot_url
-    ) {
-      fail('Setting pkg_* properties is no longer supported!')
-    }
+  if $::icingaweb2::manage_repo {
 
     case $::osfamily {
       'redhat': {
         case $::operatingsystem {
-          'centos', 'redhat': {
-
-            # removing old yumrepo names
-            yumrepo { 'ICINGA-stable':
-              ensure => absent,
-            }
-
+          'centos', 'redhat', 'oraclelinux': {
             yumrepo { 'icinga-stable-release':
               baseurl  => "http://packages.icinga.com/epel/${::operatingsystemmajrelease}/release/",
               descr    => 'ICINGA (stable release for epel)',
@@ -116,9 +97,6 @@ class icingaweb2::repo {
             fail('Your plattform is not supported to manage a repository.')
           }
         }
-      }
-      'windows': {
-        warning("The Icinga Project doesn't offer chocolaty packages at the moment.")
       }
       default: {
         fail('Your plattform is not supported to manage a repository.')

@@ -1,0 +1,2 @@
+class { 'icingaweb2':
+}

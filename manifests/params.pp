@@ -1,8 +1,11 @@
 # == Class: icingaweb2::params
 #
-#
+# In this class all default parameters are stored. It is inherited by other classes in order to get access to those
+# parameters.
 #
 # === Parameters
+#
+# This class does not provide any parameters.
 #
 # === Variables
 #
@@ -11,10 +14,10 @@
 # This class is private and should not be called by others than this module.
 #
 class icingaweb2::params {
+
+  $package = 'icingaweb2'
+
   # Module variables
-  $git_repo            = 'https://github.com/Icinga/icingaweb2.git'
-  $git_revision        = undef
-  $install_method      = 'git'
   $manage_apache_vhost = false
   $manage_user         = true
 
@@ -69,7 +72,6 @@ class icingaweb2::params {
       $config_file_mode                  = '0664'
       $config_group                      = 'icingaweb2'
       $config_user                       = 'icingaweb2'
-      $pkg_ensure                        = present
       $pkg_list                          = ['icingaweb2']
 
       $web_root                          = '/usr/share/icingaweb2'
@@ -92,7 +94,6 @@ class icingaweb2::params {
       $config_file_mode                  = '0644'
       $config_group                      = 'icingaweb2'
       $config_user                       = 'icingaweb2'
-      $pkg_ensure                        = present
       $pkg_list                          = ['icingaweb2']
       $web_root                          = '/usr/share/icingaweb2'
 

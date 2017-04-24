@@ -27,8 +27,6 @@ class icingaweb2 (
   $config_file_mode                  = $::icingaweb2::params::config_file_mode,
   $config_group                      = $::icingaweb2::params::config_group,
   $config_user                       = $::icingaweb2::params::config_user,
-  $git_repo                          = $::icingaweb2::params::git_repo,
-  $git_revision                      = $::icingaweb2::params::git_revision,
   $ido_db                            = $::icingaweb2::params::ido_db,
   $ido_db_host                       = $::icingaweb2::params::ido_db_host,
   $ido_db_name                       = $::icingaweb2::params::ido_db_name,
@@ -36,7 +34,6 @@ class icingaweb2 (
   $ido_db_port                       = $::icingaweb2::params::ido_db_port,
   $ido_db_user                       = $::icingaweb2::params::ido_db_user,
   $ido_type                          = $::icingaweb2::params::ido_type,
-  $install_method                    = $::icingaweb2::params::install_method,
   $ldap_bind_dn                      = $::icingaweb2::params::ldap_bind_dn,
   $ldap_bind_pw                      = $::icingaweb2::params::ldap_bind_pw,
   $ldap_encryption                   = $::icingaweb2::params::ldap_encryption,
@@ -52,15 +49,7 @@ class icingaweb2 (
   $manage_repo                       = false,
   $manage_user                       = $::icingaweb2::params::manage_user,
   $pkg_deps                          = $::icingaweb2::params::pkg_deps,
-  $pkg_ensure                        = $::icingaweb2::params::pkg_ensure,
   $pkg_list                          = $::icingaweb2::params::pkg_list,
-  $pkg_repo_release_key              = undef, # Deprecated
-  $pkg_repo_release_metadata_expire  = undef, # Deprecated
-  $pkg_repo_release_url              = undef, # Deprecated
-  $pkg_repo_snapshot_key             = undef, # Deprecated
-  $pkg_repo_snapshot_metadata_expire = undef, # Deprecated
-  $pkg_repo_snapshot_url             = undef, # Deprecated
-  $pkg_repo_version                  = undef, # Deprecated
   $template_auth                     = $::icingaweb2::params::template_auth,
   $template_config                   = $::icingaweb2::params::template_config,
   $template_resources                = $::icingaweb2::params::template_resources,
@@ -106,7 +95,6 @@ class icingaweb2 (
   validate_string($log_method)
   validate_string($log_resource)
   validate_string($log_store)
-  validate_string($pkg_ensure)
   validate_string($template_auth)
   validate_string($template_config)
   validate_string($template_resources)
@@ -131,19 +119,4 @@ class icingaweb2 (
     validate_string($template_apache)
   }
 
-  validate_re($install_method,
-    [
-      'git',
-      'package',
-    ]
-  )
-
-  validate_re($pkg_ensure,
-    [
-      'absent',
-      'latest',
-      'present',
-      'purged',
-    ]
-  )
 }
