@@ -1,7 +1,16 @@
-# == Class icingaweb2::initialize
+# == Class: icingaweb2::initialize
 #
 # This class is used to initialize a default icingaweb2 db and user
 # Depends on the pupppetlabs-mysql module
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
+# This class is private and should not be called by others than this module.
+#
 class icingaweb2::initialize {
   if $::icingaweb2::initialize {
 

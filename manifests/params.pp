@@ -1,4 +1,14 @@
-# == Class icingaweb2::params
+# == Class: icingaweb2::params
+#
+#
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
+# This class is private and should not be called by others than this module.
 #
 class icingaweb2::params {
   # Module variables

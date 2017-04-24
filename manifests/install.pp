@@ -1,4 +1,14 @@
-# == Class icingaweb2::install
+# == Class: icingaweb2::install
+#
+#
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
+# This class is private and should not be called by others than this module.
 #
 class icingaweb2::install {
   if $::icingaweb2::install_method == 'package' {

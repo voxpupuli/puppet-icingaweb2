@@ -1,4 +1,13 @@
-# == Class icingaweb2::mod::graphite
+# == Class: icingaweb2::mod::graphite
+#
+#
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
 #
 class icingaweb2::mod::graphite (
   $git_repo               = 'https://github.com/philiphoy/icingaweb2-module-graphite.git',

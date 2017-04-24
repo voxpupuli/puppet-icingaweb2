@@ -1,4 +1,13 @@
-# == Class icingaweb2::mod::deployment
+# == Class: icingaweb2::mod::deployment
+#
+#
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
 #
 class icingaweb2::mod::deployment (
   $auth_token,

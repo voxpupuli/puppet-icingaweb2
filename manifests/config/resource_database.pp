@@ -1,4 +1,13 @@
-# Define for setting IcingaWeb2 Database Resource
+# == Define: icingaweb2::config::resource_database
+#
+#
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
 #
 define icingaweb2::config::resource_database (
   $resource_db       = undef,

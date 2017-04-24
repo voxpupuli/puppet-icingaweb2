@@ -1,4 +1,13 @@
-# == Class icingaweb2::mod::businessprocess
+# == Class: icingaweb2::mod::businessprocess
+#
+#
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
 #
 class icingaweb2::mod::businessprocess (
   $git_repo       = 'https://github.com/Icinga/icingaweb2-module-businessprocess.git',

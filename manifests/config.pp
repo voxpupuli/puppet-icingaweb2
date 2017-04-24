@@ -1,4 +1,14 @@
-# == Class icingaweb2::config
+# == Class: icingaweb2::config
+#
+#
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
+# This class is private and should not be called by others than this module.
 #
 class icingaweb2::config (
   $config_dir       = $::icingaweb2::config_dir,

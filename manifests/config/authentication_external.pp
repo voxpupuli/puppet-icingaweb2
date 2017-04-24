@@ -1,6 +1,14 @@
-# Define for setting IcingaWeb2 Authentication
+# == Define: icingaweb2::config::authentication_external
 #
-define icingaweb2::config::authentication_external (
+#
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
+#define icingaweb2::config::authentication_external (
   $auth_filter  = undef,
   $auth_section = undef,
 ) {

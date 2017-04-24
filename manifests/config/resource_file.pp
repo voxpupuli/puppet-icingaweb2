@@ -1,4 +1,13 @@
-# Define for setting IcingaWeb2 File Resource
+# == Define: icingaweb2::config::resource_file
+#
+#
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
 #
 define icingaweb2::config::resource_file (
   $resource_filepath = undef,

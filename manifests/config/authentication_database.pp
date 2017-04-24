@@ -1,4 +1,13 @@
-# Define for setting IcingaWeb2 Authentication
+# == Define: icingaweb2::config::authentication_database
+#
+#
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
 #
 define icingaweb2::config::authentication_database (
   $auth_resource = undef,

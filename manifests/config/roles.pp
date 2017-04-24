@@ -1,4 +1,13 @@
-# Define for setting IcingaWeb2 Roles
+# == Define: icingaweb2::config::roles
+#
+#
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
 #
 define icingaweb2::config::roles (
   $role_groups         = undef,

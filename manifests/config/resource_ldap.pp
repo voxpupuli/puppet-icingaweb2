@@ -1,4 +1,13 @@
-# Define for setting IcingaWeb2 LDAP Resource
+# == Define: icingaweb2::config::resource_ldap
+#
+#
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
 #
 define icingaweb2::config::resource_ldap (
   $resource_bind_dn    = undef,

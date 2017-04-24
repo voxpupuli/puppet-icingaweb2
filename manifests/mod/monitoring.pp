@@ -1,4 +1,13 @@
-# == Class icingaweb2::mod::monitoring
+# == Class: icingaweb2::mod::monitoring
+#
+#
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
 #
 class icingaweb2::mod::monitoring (
   $protected_customvars = '*pw*,*pass*,community',

@@ -1,4 +1,13 @@
-# Define for setting IcingaWeb2 LiveStatus
+# == Define: icingaweb2::config::resource_livestatus
+#
+#
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
 #
 define icingaweb2::config::resource_livestatus (
   $resource_name   = $title,

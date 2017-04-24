@@ -1,4 +1,13 @@
-# == Class icingaweb2::mod::nagvis
+# == Class: icingaweb2::mod::nagvis
+#
+#
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
 #
 class icingaweb2::mod::nagvis (
   $git_repo             = 'https://github.com/divetoh/icingaweb2-module-nagvis.git',
