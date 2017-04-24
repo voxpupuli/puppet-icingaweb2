@@ -22,30 +22,28 @@
     "icinga",
     "icinga2",
     "icingaweb2",
-    "ido",
-    "idoutils",
     "monitoring",
-    "mysql",
-    "nagios",
-    "postgresql"
   ],
   "operatingsystem_support": [
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "7", "8"
+        "7",
+        "8"
       ]
     },
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "6", "7"
+        "6",
+        "7"
       ]
     },
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "6", "7"
+        "6",
+        "7"
       ]
     },
     {
@@ -53,6 +51,12 @@
       "operatingsystemrelease": [
         "14.04",
         "16.04"
+      ]
+    },
+    {
+      "operatingsystem": "SLES",
+      "operatingsystemrelease": [
+        "12"
       ]
     }
   ]

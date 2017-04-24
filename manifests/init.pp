@@ -1,6 +1,6 @@
 # == Class: icingaweb2
 #
-#
+# This module installs and configures Icinga Web 2.
 #
 # === Parameters
 #

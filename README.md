@@ -50,6 +50,11 @@ This module depends on
 * [puppetlabs/stdlib](https://forge.puppet.com/puppetlabs/stdlib) >= 4.4.0
 * [puppetlabs/vcsrepo](https://forge.puppet.com/puppetlabs/vcsrepo) >= 1.2.0
 
+Depending on your setup following modules may also be required:
+
+* [puppetlabs/apt](https://forge.puppet.com/puppetlabs/apt) >= 1.8.0
+* [darin/zypprepo](https://forge.puppet.com/darin/zypprepo) >= 1.0.2
+
 ### Limitations
 
 This module has been tested on:
@@ -81,9 +86,6 @@ Other operating systems or versions may work but have not been tested.
     - [Class: icingaweb2](#class-icingaweb2)
     - [Class: icingaweb2::mod::monitoring](#class-icingaweb2modmonitoring)
     - [Class: icingaweb2::mod::businessprocess](#class-icingaweb2modbusinessprocess)
-    - [Class: icingaweb2::mod::deployment](#class-icingaweb2moddeployment)
-    - [Class: icingaweb2::mod::graphite](#class-icingaweb2modgraphite)
-    - [Class: icingaweb2::mod::nagvis](#class-icingaweb2modnagvis)
 - [**Private classes**](#private-classes)
     - [Class: icingaweb2::config](#class-icingaweb2config)
     - [Class: icingaweb2::install](#class-icingaweb2install)
@@ -115,18 +117,6 @@ The default class of this module. It handles the basic installation and configur
 #### Class: `icingaweb2::mod::businessprocess`
 
 **Parameters of `icingaweb2::mod:businessprocess`:**
-
-#### Class: `icingaweb2::mod::deployment`
-
-This class is deprecated and will be removed.
-
-#### Class: `icingaweb2::mod::graphite`
-
-This class is deprecated and will be removed.
-
-#### Class: `icingaweb2::mod::nagvis`
-
-This class is deprecated and will be removed.
 
 ### Private Classes
 
