@@ -1,42 +1,65 @@
-# Icinga Web 2
-
-### :warning: This branch ist still in development. It will be merged to master once all features are implemented!
-
 [![Build Status](https://travis-ci.org/Icinga/puppet-icingaweb2.png?branch=v2)](https://travis-ci.org/Icinga/puppet-icingaweb2)
+
+# Icinga Web 2 Puppet Module
 
 #### Table of Contents
 
-1. [Description](#description)
-2. [Setup - The basics of getting started with Icinga Web 2](#setup)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with Icinga Web 2](#beginning-with-icinga-web-2)
-3. [Usage - Configuration options and additional functionality](#usage)
-    * [Install using packages](#install-using-packages)
-    * [Install using Git](#install-using-git)
-    * [Manage repository](#manage-repository)
-    * [Business process module](#business-process-module)
-    * [Deployment module](#deployment-module)
-    * [Graphite module](#graphite-module)
-    * [NagVis module](#nagvis-module)
-4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-5. [Limitations - OS compatibility, etc.](#limitations)
+1. [Overview](#overview)
+2. [Module Description - What the module does and why it is useful](#module-description)
+3. [Setup - The basics of getting started with Icinga Web 2](#setup)
+    * [What Icinga Web 2 affects](##what-icinga-web-2-affects)
+4. [Usage - Configuration options and additional functionality](#usage)
+5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
+    * [Public Classes](#public-classes)
+    * [Private Classes](#private-classes)
+    * [Public defined types](#public-defined-types)
+    * [Private defined types](#private-defined-types)
 6. [Development - Guide for contributing to the module](#development)
+
+## Overview
+[Icinga Web 2](https://www.icinga.com/products/icinga-web-2/) is the associated web interface for the open source
+monitoring tool [Icinga 2](https://www.icinga.com/products/icinga-2/). This module helps with installing and managing
+configuration of Icinga Web 2 and its modules on multiple operating systems.
 
 ## Description
 
-This module installs and configures Icinga Web 2.
+This module installs and configures Icinga Web 2 on your Linux host by using the official packages from
+[packages.icinga.com](https://packages.icinga.com). Dependend packages are installed as they are defined in the
+Icinga Web 2 package.
 
-Icinga Web 2 is the next generation open source monitoring web interface, framework and command-line interface developed by the Icinga Project, supporting Icinga 2, Icinga Core and any other monitoring backend compatible with the Livestatus Protocol.
+The module can manage all configurations files of Icinga Web 2 and import an initial database schema. It can install and
+manage all official [modules](https://www.icinga.com/products/icinga-web-2-modules/) by cloning the repositories.
+Community driven modules can be installed but not managed.
 
 ## Setup
 
-### Setup requirements
+### What the Icinga 2 Puppet module supports
 
-### Beginning with Icinga Web 2
+* Installation of Icinga Web 2 via packages
+* Configuration
+* MySQL / PostgreSQL database schema import
+* Install and manage official Icinga Web 2 modules
+* Install community modules
 
-    node /box/ {
-      include icingaweb2
-    }
+### Dependencies
+
+This module depends on
+
+* [puppetlabs/apache](https://forge.puppet.com/puppetlabs/apache) >= 1.2.0
+* [puppetlabs/inifile](https://forge.puppet.com/puppetlabs/inifile) >= 1.2.0
+* [puppetlabs/stdlib](https://forge.puppet.com/puppetlabs/stdlib) >= 4.4.0
+* [puppetlabs/vcsrepo](https://forge.puppet.com/puppetlabs/vcsrepo) >= 1.2.0
+
+### Limitations
+
+This module has been tested on:
+
+* Debian 7, 8
+* CentOS/RHEL 6, 7
+* Ubuntu 14.04, 16.04
+* SLES 12
+
+Other operating systems or versions may work but have not been tested.
 
 ## Usage
 
