@@ -10,13 +10,17 @@
 #
 # This class is private and should not be called by others than this module.
 #
-class icingaweb2::config (
-  $config_dir       = $::icingaweb2::config_dir,
-  $config_dir_purge = $::icingaweb2::config_dir_purge,
-) {
+class icingaweb2::config {
+
+  $config_dir       = $::icingaweb2::params::config_dir
+  $config_dir_purge = $::icingaweb2::params::config_dir_purge
+  $config_user      = $::icingaweb2::params::config_user
+  $config_group     = $::icingaweb2::params::config_group
 
   File {
     mode  => '0660',
+    owner => $config_user,
+    group => $config_group
   }
 
   file {
@@ -24,8 +28,7 @@ class icingaweb2::config (
       ensure => file;
 
     "${::icingaweb2::config_dir}/config.ini":
-      ensure => file
-      ;
+      ensure => file;
 
     "${::icingaweb2::config_dir}/resources.ini":
       ensure => file;

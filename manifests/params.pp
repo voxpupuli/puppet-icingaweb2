@@ -19,6 +19,27 @@ class icingaweb2::params {
   $config_dir                    = '/etc/icingaweb2'
   $config_dir_purge              = false
 
+  case $::osfamily {
+    'redhat': {
+      $config_user    = 'apache'
+      $config_group   = 'icingaweb2'
+    } # RedHat
+
+    'debian': {
+      $config_user    = 'www-data'
+      $config_group   = 'icingaweb2'
+    } # Debian
+
+    'suse': {
+      $config_user    = 'wwwrun'
+      $config_group   = 'icingaweb2'
+    } # Suse
+
+    default: {
+      fail("Your plattform ${::osfamily} is not supported, yet.")
+    }
+  } # case $::osfamily
+
   $admin_permissions             = '*'
   $admin_users                   = 'icingaadmin'
   $auth_backend                  = 'db'
@@ -47,7 +68,7 @@ class icingaweb2::params {
   $log_store                     = 'db'
   $template_auth                 = 'icingaweb2/authentication.ini.erb'
   $template_config               = 'icingaweb2/config.ini.erb'
-  $template_resources            ='icingaweb2/resources.ini.erb'
+  $template_resources            = 'icingaweb2/resources.ini.erb'
   $template_roles                = 'icingaweb2/roles.ini.erb'
   $template_apache               = 'icingaweb2/apache2.conf.erb'
   $web_db                        = 'mysql'
