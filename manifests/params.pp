@@ -17,12 +17,11 @@ class icingaweb2::params {
 
   $package        = 'icingaweb2'
   $conf_dir       = '/etc/icingaweb2'
-  $conf_dir_purge = false
 
   case $::osfamily {
     'redhat': {
-      $config_user  = 'apache'
-      $config_group = 'icingaweb2'
+      $conf_user  = 'apache'
+      $conf_group = 'icingaweb2'
     } # RedHat
 
     'debian': {

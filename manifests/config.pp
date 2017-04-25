@@ -13,14 +13,13 @@
 class icingaweb2::config {
 
   $conf_dir       = $::icingaweb2::params::conf_dir
-  $conf_dir_purge = $::icingaweb2::params::conf_dir_purge
   $conf_user      = $::icingaweb2::params::conf_user
   $conf_group     = $::icingaweb2::params::conf_group
 
   File {
     mode  => '0660',
-    owner => $config_user,
-    group => $config_group
+    owner => $conf_user,
+    group => $conf_group
   }
 
   file {
