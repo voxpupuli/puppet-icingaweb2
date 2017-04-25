@@ -17,15 +17,14 @@
 6. [Development - Guide for contributing to the module](#development)
 
 ## Overview
-[Icinga Web 2](https://www.icinga.com/products/icinga-web-2/) is the associated web interface for the open source
-monitoring tool [Icinga 2](https://www.icinga.com/products/icinga-2/). This module helps with installing and managing
+[Icinga Web 2] is the associated web interface for the open source
+monitoring tool [Icinga 2]. This module helps with installing and managing
 configuration of Icinga Web 2 and its modules on multiple operating systems.
 
 ## Description
 
 This module installs and configures Icinga Web 2 on your Linux host by using the official packages from
-[packages.icinga.com](https://packages.icinga.com). Dependend packages are installed as they are defined in the
-Icinga Web 2 package.
+[packages.icinga.com]. Dependend packages are installed as they are defined in the Icinga Web 2 package.
 
 The module can manage all configurations files of Icinga Web 2 and import an initial database schema. It can install and
 manage all official [modules](https://www.icinga.com/products/icinga-web-2-modules/) by cloning the repositories.
@@ -45,15 +44,13 @@ Community driven modules can be installed but not managed.
 
 This module depends on
 
-* [puppetlabs/apache](https://forge.puppet.com/puppetlabs/apache) >= 1.2.0
-* [puppetlabs/inifile](https://forge.puppet.com/puppetlabs/inifile) >= 1.2.0
-* [puppetlabs/stdlib](https://forge.puppet.com/puppetlabs/stdlib) >= 4.4.0
-* [puppetlabs/vcsrepo](https://forge.puppet.com/puppetlabs/vcsrepo) >= 1.2.0
+* [puppetlabs/stdlib] >= 4.4.0
+* [puppetlabs/vcsrepo] >= 1.2.0
 
 Depending on your setup following modules may also be required:
 
-* [puppetlabs/apt](https://forge.puppet.com/puppetlabs/apt) >= 1.8.0
-* [darin/zypprepo](https://forge.puppet.com/darin/zypprepo) >= 1.0.2
+* [puppetlabs/apt] >= 1.8.0
+* [darin/zypprepo] >= 1.0.2
 
 ### Limitations
 
@@ -73,8 +70,7 @@ Other operating systems or versions may work but have not been tested.
 The default class `icingaweb2` installs a basic installation of Icinga Web 2 by using the systems package manager. It
 is recommended to use the official Icinga repository for the installation.
 
-Use the `manage_repo` parameter to configure the official [packages.icinga.com](https://packages.icinga.com)
-repository.
+Use the `manage_repo` parameter to configure the official [packages.icinga.com] repository.
 
 ``` puppet
 class { '::icingaweb2':
@@ -113,23 +109,12 @@ packages of modules.
 
 - [**Public classes**](#public-classes)
     - [Class: icingaweb2](#class-icingaweb2)
-    - [Class: icingaweb2::mod::monitoring](#class-icingaweb2modmonitoring)
-    - [Class: icingaweb2::mod::businessprocess](#class-icingaweb2modbusinessprocess)
 - [**Private classes**](#private-classes)
     - [Class: icingaweb2::config](#class-icingaweb2config)
     - [Class: icingaweb2::install](#class-icingaweb2install)
     - [Class: icingaweb2::params](#class-icingaweb2params)
     - [Class: icingaweb2::repo](#class-icingaweb2repo)
-    - [Class: icingaweb2::initialize](#class-icingaweb2initialize)
 - [**Public defined types**](#public-defined-types)
-    - [Defined type: icingaweb2::config::authentication_database](#defined-type-icingaweb2::config::authentication_database)
-    - [Defined type: icingaweb2::config::authentication_external](#defined-type-icingaweb2::config::authentication_external)
-    - [Defined type: icingaweb2::config::authentication_ldap](#defined-type-icingaweb2::config::authentication_ldap)
-    - [Defined type: icingaweb2::config::resource_database](#defined-type-icingaweb2::config::resource_database)
-    - [Defined type: icingaweb2::config::resource_file](#defined-type-icingaweb2::config::resource_file)
-    - [Defined type: icingaweb2::config::resource_ldap](#defined-type-icingaweb2::config::resource_ldap)
-    - [Defined type: icingaweb2::config::resource_livestatus](#defined-type-icingaweb2::config::resource_livestatus)
-    - [Defined type: icingaweb2::config::roles](#defined-type-icingaweb2::config::roles)
 - [**Private defined types**](#private-defined-types)
 
 ### Public Classes
@@ -148,69 +133,22 @@ latest version of Icinga Web. When set to false the operating systems default wi
 ##### `manage_package`
 If set to false packages aren't managed. Defaults to `true`
 
-#### Class: `icingaweb2::mod::monitoring`
-
-**Parameters of `icingaweb2::mod::monitoring`:**
-
-#### Class: `icingaweb2::mod::businessprocess`
-
-**Parameters of `icingaweb2::mod:businessprocess`:**
-
 ### Private Classes
 
 #### Class: `icingaweb2::config`
-
-**Parameters of `icingaweb2::config`:**
+Installs basic configuration files required to run Icinga Web 2.
 
 #### Class: `icingaweb2::install`
-
-**Parameters of `icingaweb2::install`:**
+Handles the installation of the Icinga Web 2 package.
 
 #### Class: `icingaweb2::params`
-
-**Parameters of `icingaweb2::params`:**
+Stores all default parameters for the Icinga Web 2 installation.
 
 #### Class: `icingaweb2::repo`
-
-**Parameters of `icingaweb2::repo`:**
-
-#### Class: `icingaweb2::initialize`
-
-**Parameters of `icingaweb2::initialize`:**
+Installs the [packages.icinga.com] repository. Depending on your operating system [puppetlabs/apt] or
+[darin/zypprepo] are required.
 
 ### Public Defined Types
-
-#### Defined type: `icingaweb2::config::authentication_database`
-
-**Parameters of `icingaweb2::config::authentication_database`:**
-
-#### Defined type: `icingaweb2::config::authentication_external`
-
-**Parameters of `icingaweb2::config::authentication_external`:**
-
-#### Defined type: `icingaweb2::config::authentication_ldap`
-
-**Parameters of `icingaweb2::config::authentication_ldap`:**
-
-#### Defined type: `icingaweb2::config::resource_database`
-
-**Parameters of `icingaweb2::config::resource_database`:**
-
-#### Defined type: `icingaweb2::config::resource_file`
-
-**Parameters of `icingaweb2::config::resource_file`:**
-
-#### Defined type: `icingaweb2::config::resource_ldap`
-
-**Parameters of `icingaweb2::config::resource_ldap`:**
-
-#### Defined type: `icingaweb2::config::resource_livestatus`
-
-**Parameters of `icingaweb2::config::resource_livestatus`:**
-
-#### Defined type: `icingaweb2::config::roles`
-
-**Parameters of `icingaweb2::config::roles`:**
 
 ### Private Defined Types
 
@@ -234,3 +172,18 @@ See also [CHANGELOG.md]
 
 ## Authors
 [AUTHORS] is generated on each release.
+
+
+[Icinga 2]: https://www.icinga.com/products/icinga-2/
+[Icinga Web 2]: https://www.icinga.com/products/icinga-web-2/
+
+[puppetlabs/apt]: https://github.com/puppetlabs/puppetlabs-apt
+[darin/zypprepo]: https://forge.puppet.com/darin/zypprepo
+[puppetlabs/stdlib]: https://github.com/puppetlabs/puppetlabs-stdlib
+[packages.icinga.com]: https://packages.icinga.com
+
+[CHANGELOG.md]: CHANGELOG.md
+[AUTHORS]: AUTHORS
+[RELEASE.md]: RELEASE.md
+[TESTING.md]: TESTING.md
+[CONTRIBUTING.md]: CONTRIBUTING.md

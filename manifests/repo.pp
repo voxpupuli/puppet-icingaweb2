@@ -102,7 +102,5 @@ class icingaweb2::repo {
         fail('Your plattform is not supported to manage a repository.')
       }
     }
-
   } # if $::icinga::manage_repo
-
 }

@@ -15,70 +15,29 @@
 #
 class icingaweb2::params {
 
-  $package                       = 'icingaweb2'
-  $config_dir                    = '/etc/icingaweb2'
-  $config_dir_purge              = false
+  $package        = 'icingaweb2'
+  $conf_dir       = '/etc/icingaweb2'
+  $conf_dir_purge = false
 
   case $::osfamily {
     'redhat': {
-      $config_user    = 'apache'
-      $config_group   = 'icingaweb2'
+      $config_user  = 'apache'
+      $config_group = 'icingaweb2'
     } # RedHat
 
     'debian': {
-      $config_user    = 'www-data'
-      $config_group   = 'icingaweb2'
+      $conf_user  = 'www-data'
+      $conf_group = 'icingaweb2'
     } # Debian
 
     'suse': {
-      $config_user    = 'wwwrun'
-      $config_group   = 'icingaweb2'
+      $conf_user  = 'wwwrun'
+      $conf_group = 'icingaweb2'
     } # Suse
 
     default: {
       fail("Your plattform ${::osfamily} is not supported, yet.")
     }
   } # case $::osfamily
-
-  $admin_permissions             = '*'
-  $admin_users                   = 'icingaadmin'
-  $auth_backend                  = 'db'
-  $auth_ldap_base_dn             = undef
-  $auth_ldap_filter              = undef
-  $auth_ldap_user_class          = 'inetOrgPerson'
-  $auth_ldap_user_name_attribute = 'uid'
-  $auth_resource                 = 'icingaweb_db'
-  $ido_db                        = 'mysql'
-  $ido_db_host                   = 'localhost'
-  $ido_db_name                   = 'icingaweb2'
-  $ido_db_pass                   = 'icingaweb2'
-  $ido_db_port                   = '3306'
-  $ido_db_user                   = 'icingaweb2'
-  $ido_type                      = 'db'
-  $ldap_bind_dn                  = undef
-  $ldap_bind_pw                  = undef
-  $ldap_encryption               = undef
-  $ldap_host                     = undef
-  $ldap_port                     = '389'
-  $ldap_root_dn                  = undef
-  $log_application               = 'icingaweb2'
-  $log_level                     = 'ERROR'
-  $log_method                    = 'syslog'
-  $log_resource                  = 'icingaweb_db'
-  $log_store                     = 'db'
-  $template_auth                 = 'icingaweb2/authentication.ini.erb'
-  $template_config               = 'icingaweb2/config.ini.erb'
-  $template_resources            = 'icingaweb2/resources.ini.erb'
-  $template_roles                = 'icingaweb2/roles.ini.erb'
-  $template_apache               = 'icingaweb2/apache2.conf.erb'
-  $web_db                        = 'mysql'
-  $web_db_host                   = 'localhost'
-  $web_db_name                   = 'icingaweb2'
-  $web_db_pass                   = 'icingaweb2'
-  $web_db_port                   = '3306'
-  $web_db_prefix                 = 'icingaweb2_'
-  $web_db_user                   = 'icingaweb2'
-  $web_type                      = 'db'
-  $initialize                    = false
 }
 
