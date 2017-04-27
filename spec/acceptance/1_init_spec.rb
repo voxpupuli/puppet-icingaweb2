@@ -8,7 +8,6 @@ describe 'icingaweb2' do
     pp = <<-EOS
       class { '::icingaweb2':
         manage_repo    => true,
-        install_method => 'package',
       }
     EOS
     apply_manifest(pp, catch_failures: true, debug: false, trace: true)
@@ -19,26 +18,7 @@ describe 'icingaweb2' do
     it { should be_installed }
   end
 
-  describe package('icingacli') do
-    it { should be_installed }
-  end
-
   describe service('apache2') do
     it { is_expected.to be_running }
-  end
-
-  describe user('icingaweb2') do
-    it { should exist }
-    it { should belong_to_primary_group 'icingaweb2' }
-    # TODO: fix in module
-    # it { should_not have_login_shell }
-  end
-
-  describe file('/usr/share/icingaweb2') do
-    it { should be_directory }
-  end
-
-  describe file('/usr/share/icingaweb2/.git') do
-    it { should_not exist }
   end
 end

@@ -1,8 +1,8 @@
 ---
 HOSTS:
   debian-8-x64:
-    platform: debian-8-amd64
-    box: debian/jessie64
+    platform: debian-7-amd64
+    box: debian/wheezy64
     hypervisor: vagrant
 CONFIG:
   trace_limit: 200

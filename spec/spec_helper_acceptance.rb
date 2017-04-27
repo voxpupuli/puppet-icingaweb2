@@ -36,9 +36,10 @@ RSpec.configure do |c|
     end
 
     hosts.each do |host|
-      %w(puppetlabs-apache puppetlabs-apt puppetlabs-concat
-         puppetlabs-inifile puppetlabs-stdlib puppetlabs-vcsrepo
-         puppetlabs-mysql puppetlabs-postgresql
+      %w(puppetlabs-apt
+         puppetlabs-concat
+         puppetlabs-stdlib
+         puppetlabs-vcsrepo
       ).each do |mod|
         on host, puppet('module', 'install', mod), acceptable_exit_codes: [0, 1]
       end
@@ -62,21 +63,3 @@ def get_puppet_version
   (on default, puppet('--version')).output.chomp
 end
 # rubocop:enable Style/AccessorMethodName
-
-def prepare_mysql
-  pp = <<-EOS
-    include ::mysql::server
-  EOS
-
-  apply_manifest(pp, catch_failures: true, debug: false, trace: true)
-  apply_manifest(pp, catch_changes: true, debug: false, trace: true)
-end
-
-def prepare_postgresql
-  pp = <<-EOS
-    include ::postgresql::server
-  EOS
-
-  apply_manifest(pp, catch_failures: true, debug: false, trace: true)
-  apply_manifest(pp, catch_changes: true, debug: false, trace: true)
-end
