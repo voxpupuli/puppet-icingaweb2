@@ -19,6 +19,7 @@
     * [Deployment module](#deployment-module)
     * [Graphite module](#graphite-module)
     * [NagVis module](#nagvis-module)
+    * [Director module](#director-module)
 4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 5. [Limitations - OS compatibility, etc.](#limitations)
 6. [Development - Guide for contributing to the module](#development)
@@ -151,6 +152,17 @@ class { '::icingaweb2::mod::monitoring':
         'icingaweb2':;
         'icingaweb2::mod::nagvis':
           nagvis_url => 'http://example.org/nagvis/';
+      }
+    }
+
+### Director module
+
+    node /box/ {
+      class {
+        'icingaweb2':;
+        'icingaweb2::mod::director':
+          director_db_pass => 'geheim',
+          endpoint_password => 'geheim';
       }
     }
 
