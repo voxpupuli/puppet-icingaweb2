@@ -13,7 +13,7 @@ class icingaweb2::mod::director (
   $director_db_name  = undef,
   $director_db_user  = undef,
   $director_db_pass  = undef,
-  $db_resource       = undef,
+  $db_resource       = 'director_db',
   $endpoint_name     = undef,
   $endpoint_host     = undef,
   $endpoint_port     = undef,
@@ -47,10 +47,15 @@ class icingaweb2::mod::director (
     group => $::icingaweb2::config_group,
     mode  => $::icingaweb2::config_file_mode,
   }
-  
-  file { "${::icingaweb2::config_dir}/modules/director":
-    ensure => directory,
-    mode   => $::icingaweb2::config_dir_mode;
+
+  file {
+    "${web_root}/modules/director":
+      ensure => directory,
+      mode   => $::icingaweb2::config_dir_mode;
+
+    "${::icingaweb2::config_dir}/modules/director":
+      ensure => directory,
+      mode   => $::icingaweb2::config_dir_mode;
   }
 
   $director_mod_files = [
