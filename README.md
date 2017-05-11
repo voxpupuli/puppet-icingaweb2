@@ -154,6 +154,18 @@ class { '::icingaweb2::mod::monitoring':
       }
     }
 
+### Grafana module
+
+    node /box/ {
+      class {
+        'icingaweb2':;
+        'icingaweb2::mod::grafana':
+          host => 'http://localhost:3000/',
+          datasource => 'graphite',
+          defaultdashboard => 'icinga2-default';
+      }
+    }
+
 ### Real world example
 
 Icinga2 is installed or on another host. One needs only the ido data to configure icingaweb2.
