@@ -7,16 +7,15 @@
 #
 # This class does not provide any parameters.
 #
-# === Variables
-#
 # === Examples
 #
 # This class is private and should not be called by others than this module.
 #
 class icingaweb2::params {
 
-  $package        = 'icingaweb2'
-  $conf_dir       = '/etc/icingaweb2'
+  $package          = 'icingaweb2'
+  $conf_dir         = '/etc/icingaweb2'
+  $module_path      = '/usr/share/icingaweb2/modules'
 
   case $::osfamily {
     'redhat': {

@@ -6,8 +6,6 @@
 #
 # This class does not provide any parameters.
 #
-# === Variables
-#
 # === Examples
 #
 # This class is private and should not be called by others than this module.

@@ -115,6 +115,7 @@ packages of modules.
     - [Class: icingaweb2::params](#class-icingaweb2params)
     - [Class: icingaweb2::repo](#class-icingaweb2repo)
 - [**Public defined types**](#public-defined-types)
+    - [Defined type: icingaweb2::inifile](#defined-type-icingaweb2inifile)
 - [**Private defined types**](#private-defined-types)
 
 ### Public Classes
@@ -123,6 +124,27 @@ packages of modules.
 The default class of this module. It handles the basic installation and configuration of Icinga Web 2. 
 
 **Parameters of `icingaweb2`:**
+
+##### `logging`
+Whether Icinga Web 2 should log to `file` or to `syslog`. Setting `none` disables logging. Defaults to `file`
+
+##### `logging_file`
+If 'logging' is set to `file`, this is the target log file. Defaults to `/var/log/icingaweb2/icingaweb2.log`.
+
+##### `logging_level`
+Logging verbosity. Possible values are `ERROR`, `WARNING`, `INFO` and `DEBUG`. Defaults to `INFO`
+
+##### `enable_stacktraces`
+Whether to display stacktraces in the web interface or not. Defaults to `false`
+
+##### `module_path`
+Path to module sources. Multiple paths must be separated by colon. Defaults to `/usr/share/icingaweb2/modules`
+
+##### `theme`
+The default theme setting. Users may override this settings. Defaults to `icinga`.
+
+##### `theme_access`
+Whether users can change themes or not. Defaults to `true`.
 
 ##### `manage_repo`
 When set to true this module will install the packages.icinga.com repository. With this official repo you can get the
@@ -149,6 +171,20 @@ Installs the [packages.icinga.com] repository. Depending on your operating syste
 [darin/zypprepo] are required.
 
 ### Public Defined Types
+
+#### Defined type: `icingaweb2::inifile`
+Manage settings in INI configuration files.
+
+**Parameters of `icingaweb2::inifile`:**
+
+##### `ensure`
+Set to present creates the configuration file, absent removes it. Defaults to present. Singhe settings may be set to 'absent' int he $settings parameter.
+
+##### `target`
+Absolute path to the configuration file.
+
+##### `settings`
+A hash of settings and their settings. Single settings may be set to absent.
 
 ### Private Defined Types
 

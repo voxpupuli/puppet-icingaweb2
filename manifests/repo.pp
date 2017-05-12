@@ -8,8 +8,6 @@
 # To control the behaviour of this class, have a look at the parameters:
 # * icingaweb2::manage_repo
 #
-# === Variables
-#
 # === Examples
 #
 # This class is private and should not be called by others than this module.
