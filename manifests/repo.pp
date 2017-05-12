@@ -44,23 +44,25 @@ class icingaweb2::repo {
           'debian': {
             include ::apt, ::apt::backports
             apt::source { 'icinga-stable-release':
-              location    => 'http://packages.icinga.com/debian',
-              release     => "icinga-${::lsbdistcodename}",
-              repos       => 'main',
-              key_source  => 'http://packages.icinga.com/icinga.key',
-              key         => 'F51A91A5EE001AA5D77D53C4C6E319C334410682',
-              include_src => false,
+              location => 'http://packages.icinga.com/debian',
+              release  => "icinga-${::lsbdistcodename}",
+              repos    => 'main',
+              key      => {
+                id     => 'F51A91A5EE001AA5D77D53C4C6E319C334410682',
+                source => 'http://packages.icinga.com/icinga.key',
+              };
             }
           }
           'ubuntu': {
             include ::apt
             apt::source { 'icinga-stable-release':
-              location    => 'http://packages.icinga.com/ubuntu',
-              release     => "icinga-${::lsbdistcodename}",
-              repos       => 'main',
-              key_source  => 'http://packages.icinga.com/icinga.key',
-              key         => 'F51A91A5EE001AA5D77D53C4C6E319C334410682',
-              include_src => false,
+              location => 'http://packages.icinga.com/ubuntu',
+              release  => "icinga-${::lsbdistcodename}",
+              repos    => 'main',
+              key      => {
+                id     => 'F51A91A5EE001AA5D77D53C4C6E319C334410682',
+                source => 'http://packages.icinga.com/icinga.key',
+              };
             }
           }
           default: {
