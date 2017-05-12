@@ -5,6 +5,7 @@ HOSTS:
     box: ubuntu/trusty64
     hypervisor: vagrant
 CONFIG:
-  trace_limit: 200
   type: foss
+  preserve_hosts: always
+  trace_limit: 200
   masterless: true

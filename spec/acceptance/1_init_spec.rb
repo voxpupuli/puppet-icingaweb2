@@ -15,10 +15,12 @@ describe 'icingaweb2' do
   end
 
   describe package('icingaweb2') do
-    it { should be_installed }
+    it { is_expected.to be_installed }
   end
 
-  describe service('apache2') do
-    it { is_expected.to be_running }
+  if fact('osfamily') == 'Debian'
+    describe service('apache2') do
+      it { is_expected.to be_running }
+    end
   end
 end

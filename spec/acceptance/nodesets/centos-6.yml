@@ -5,7 +5,9 @@ HOSTS:
     box: centos/6
     hypervisor: vagrant
 CONFIG:
+  type: foss
+  type: foss
+  preserve_hosts: always
   trace_limit: 200
   masterless: true
-  preserve_hosts: always
   add_el_extras: true
