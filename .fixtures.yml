@@ -2,6 +2,7 @@ fixtures:
   forge_modules:
     stdlib: "puppetlabs/stdlib"
     apt: "puppetlabs/apt"
+    inifile: "puppetlabs/inifile"
     zypprepo: "darin/zypprepo"
   symlinks:
     icingaweb2: "#{source_dir}"

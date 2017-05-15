@@ -44,12 +44,13 @@ Community driven modules can be installed but not managed.
 
 This module depends on
 
-* [puppetlabs/stdlib] >= 4.4.0
-* [puppetlabs/vcsrepo] >= 1.2.0
+* [puppetlabs/stdlib] >= 4.16.0
+* [puppetlabs/vcsrepo] >= 1.3.0
+* [puppetlabs/inifile] >= 1.5.0
 
 Depending on your setup following modules may also be required:
 
-* [puppetlabs/apt] >= 1.8.0
+* [puppetlabs/apt] >= 2.0.0
 * [darin/zypprepo] >= 1.0.2
 
 ### Limitations
@@ -216,6 +217,7 @@ See also [CHANGELOG.md]
 [puppetlabs/apt]: https://github.com/puppetlabs/puppetlabs-apt
 [darin/zypprepo]: https://forge.puppet.com/darin/zypprepo
 [puppetlabs/stdlib]: https://github.com/puppetlabs/puppetlabs-stdlib
+[puppetlabs/inifile]: https://forge.puppet.com/puppetlabs/inifile
 [packages.icinga.com]: https://packages.icinga.com
 
 [CHANGELOG.md]: CHANGELOG.md
