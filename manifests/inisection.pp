@@ -5,8 +5,8 @@
 # === Parameters
 #
 # [*ensure*]
-#   Set to present creates the configuration file, absent removes it. Defaults to present.
-#   Singhe settings may be set to 'absent' int he $settings parameter.
+#   Set to present creates the ini section, absent removes it. Defaults to present.
+#   Single settings may be set to 'absent' in the $settings parameter.
 #
 # [*target*]
 #   Absolute path to the configuration file.
@@ -29,9 +29,9 @@
 #   },
 # }
 #
-define icingaweb2::inifile(
+define icingaweb2::inisection(
+  $target,
   $ensure   = present,
-  $target   = $title,
   $settings = {},
 ){
 
@@ -43,17 +43,18 @@ define icingaweb2::inifile(
   validate_absolute_path($target)
   validate_hash($settings)
 
-  if $ensure == 'present' {
-    file { $target:
-      owner => $conf_user,
-      group => $conf_group
-    }
+  ensure_resource('file', $target, {
+    ensure => present,
+    owner  => $conf_user,
+    group  => $conf_group,
+  })
 
-    $defaults = { 'path' => $target }
-    create_ini_settings($settings, $defaults)
-  } else {
-    file { $target:
-      ensure => $ensure,
-    }
+  $defaults = {
+    'ensure' => $ensure,
+    'path'   => $target,
   }
+
+  manage_ini_settings($settings, $defaults)
+
+  File <| |> -> Ini_setting <| |>
 }

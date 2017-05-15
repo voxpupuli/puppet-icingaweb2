@@ -93,8 +93,42 @@ class { '::icinga2':
 }
 ```
 
-Be careful with this option: Setting `manage_package` to false also means that this module will not install any dependent
-packages of modules.
+Be careful with this option: Setting `manage_package` to false also means that this module will not install any
+dependent packages of modules.
+
+#### Manage Resources
+Icinga Web 2 resources are managed with the `icingaweb2::config::resource` defined resource. Supported resource types
+are `db` and `ldap`. Resources are used for the internal authentication mechanism and by modules. Depending on the type
+of resource you are managing, different parameters may be required.
+
+Create a `db` resource:
+
+``` puppet
+icingaweb2::config::resource{'my-sql':
+  ensure      => present,
+  type        => 'db',
+  db_type     => 'mysql',
+  host        => 'localhost',
+  port        => '3306',
+  db_name     => 'icingaweb2',
+  db_username => 'root',
+  db_password => 'supersecret',
+}
+```
+
+Create a `ldap` resource:
+
+``` puppet
+icingaweb2::config::resource{'my-ldap':
+  ensure       => present,
+  type         => 'ldap',
+  host         => 'localhost',
+  port         => 389,
+  ldap_root_dn => 'dc=users,dc=icinga,dc=com',
+  ldap_bind_dn => 'cn=root,dc=users,dc=icinga,dc=com',
+  ldap_bind_pw => 'supersecret',
+}
+```
 
 #### Install and Manage Modules
 
@@ -116,7 +150,8 @@ packages of modules.
     - [Class: icingaweb2::params](#class-icingaweb2params)
     - [Class: icingaweb2::repo](#class-icingaweb2repo)
 - [**Public defined types**](#public-defined-types)
-    - [Defined type: icingaweb2::inifile](#defined-type-icingaweb2inifile)
+    - [Defined type: icingaweb2::inisection](#defined-type-icingaweb2inisection)
+    - [Defined type: icingaweb2::config::resource](#defined-type-icingaweb2configresource)
 - [**Private defined types**](#private-defined-types)
 
 ### Public Classes
@@ -173,19 +208,69 @@ Installs the [packages.icinga.com] repository. Depending on your operating syste
 
 ### Public Defined Types
 
-#### Defined type: `icingaweb2::inifile`
+#### Defined type: `icingaweb2::inisection`
 Manage settings in INI configuration files.
 
-**Parameters of `icingaweb2::inifile`:**
+**Parameters of `icingaweb2::inisection`:**
 
 ##### `ensure`
-Set to present creates the configuration file, absent removes it. Defaults to present. Singhe settings may be set to 'absent' int he $settings parameter.
+Set to present creates the ini section, absent removes it. Defaults to present. Singhe settings may be set to 'absent'
+in the $settings parameter.
 
 ##### `target`
 Absolute path to the configuration file.
 
 ##### `settings`
 A hash of settings and their settings. Single settings may be set to absent.
+
+#### Defined type: `icingaweb2::config::resource`
+Manage settings in INI configuration files.
+
+**Parameters of `icingaweb2::config::resource`:**
+
+##### `ensure`
+Set to present creates the resource, absent removes it. Defaults to `present`
+
+##### `name`
+Name of the resources. Resources are referenced by their name in other configuration sections.
+
+##### `type`
+Supported resource types are `db` and `ldap`.
+
+##### `host`
+Connect to the database or ldap server on the given host. For using unix domain sockets, specify `localhost` for MySQL
+and the path to the unix domain socket directory for PostgreSQL. When using the 'ldap' type you can also provide
+multiple hosts separated by a space.
+
+##### `port`
+Port number to use.
+
+##### `db_type`
+Supported DB types are `mysql` and `pgsql`.
+
+##### `db_name`
+The database to use.
+
+##### `db_username`
+The username to use when connecting to the server.
+
+##### `db_password`
+The password to use when connecting to the server.
+
+##### `db_charset`
+The character set to use for the database connection.
+
+##### `ldap_root_dn`
+Root object of the tree, e.g. `ou=people,dc=icinga,dc=com`
+
+##### `ldap_bind_dn`
+The user to use when connecting to the server.
+
+##### `ldap_bind_pw`
+The password to use when connecting to the server.
+
+##### `ldap_encryption`
+Type of encryption to use: `none` (default), `starttls`, `ldaps`.
 
 ### Private Defined Types
 

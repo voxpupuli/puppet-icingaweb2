@@ -24,7 +24,6 @@ describe 'icingaweb2', :type => :class do
 
         it { is_expected.to contain_file(@conf_dir + "/authentication.ini") }
         it { is_expected.to contain_file(@conf_dir + "/config.ini") }
-        it { is_expected.to contain_file(@conf_dir + "/resources.ini") }
         it { is_expected.to contain_file(@conf_dir + "/roles.ini") }
         it { is_expected.to contain_file(@conf_dir + "/groups.ini") }
 

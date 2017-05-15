@@ -53,15 +53,13 @@ class icingaweb2::config {
     }
   }
 
-  icingaweb2::inifile {"${conf_dir}/config.ini":
+  icingaweb2::inisection {'config.ini':
+    target   => "${conf_dir}/config.ini",
     settings => $config_ini,
   }
 
   file {
     "${conf_dir}/authentication.ini":
-      ensure => file;
-
-    "${conf_dir}/resources.ini":
       ensure => file;
 
     "${conf_dir}/roles.ini":
