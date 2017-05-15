@@ -25,9 +25,9 @@ class icingaweb2::config (
 
   File {
     require => Class['::icingaweb2::install'],
-    owner => $::icingaweb2::config_user,
-    group => $::icingaweb2::config_group,
-    mode  => $::icingaweb2::config_file_mode,
+    owner   => $::icingaweb2::config_user,
+    group   => $::icingaweb2::config_group,
+    mode    => $::icingaweb2::config_file_mode,
   }
 
   file {
@@ -57,6 +57,9 @@ class icingaweb2::config (
     "${::icingaweb2::config_dir}/roles.ini":
       ensure => file;
 
+    "${::icingaweb2::config_dir}/groups.ini":
+      ensure => file;
+
     $::icingaweb2::web_root:
       ensure => directory,
       mode   => $::icingaweb2::config_dir_mode;
@@ -76,7 +79,7 @@ class icingaweb2::config (
     }
     'external': {
       icingaweb2::config::authentication_external { 'External Authentication':
-        auth_section  => 'icingaweb2',
+        auth_section => 'icingaweb2',
       }
     }
     'ldap': {
@@ -89,7 +92,21 @@ class icingaweb2::config (
         base_dn             => $::icingaweb2::auth_ldap_base_dn,
       }
     }
-    default: {}
+    default: { }
+  }
+
+  case $::icingaweb2::group_backend {
+    'ldap': {
+      icingaweb2::config::group_ldap { 'LDAP Group Backend':
+        auth_section         => 'ldapgroup',
+        auth_resource        => $::icingaweb2::group_resource,
+        user_backend         => $::icingaweb2::group_user_backend,
+        group_name_attribute => $::icingaweb2::group_ldap_group_name_attribute,
+        filter               => $::icingaweb2::group_ldap_filter,
+        base_dn              => $::icingaweb2::group_ldap_base_dn,
+      }
+    }
+    default: { }
   }
 
   # Configure config.ini settings

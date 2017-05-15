@@ -24,6 +24,27 @@
 # $auth_resource::
 #                         Default:
 #
+# $group_backend::
+#                         Default:
+#
+# $group_user_backend::
+#                         Default: icingaweb2
+#
+# $group_ldap_base_dn::   LDAP base dn.
+#                         Default: undef
+#
+# $group_ldap_filter::    LDAP group filter.
+#                         Default: undef
+#
+# $group_ldap_group_class:: LDAP group user class.
+#                         Default: group
+#
+# $group_ldap_group_name_attribute:: LDAP group user name attribute.
+#                         Default: gid
+#
+# $group_resource::
+#                         Default:
+#
 # $config_dir::           Location of the main configuration directory.
 #                         Default: operating system specific.
 #
@@ -189,6 +210,13 @@ class icingaweb2 (
   $auth_ldap_user_class              = $::icingaweb2::params::auth_ldap_user_class,
   $auth_ldap_user_name_attribute     = $::icingaweb2::params::auth_ldap_user_name_attribute,
   $auth_resource                     = $::icingaweb2::params::auth_resource,
+  $group_backend                     = $::icingaweb2::params::group_backend,
+  $group_user_backend                = $::icingaweb2::params::group_user_backend,
+  $group_ldap_base_dn                = $::icingaweb2::params::group_ldap_base_dn,
+  $group_ldap_filter                 = $::icingaweb2::params::group_ldap_filter,
+  $group_ldap_group_class            = $::icingaweb2::params::group_ldap_group_class,
+  $group_ldap_group_name_attribute   = $::icingaweb2::params::group_ldap_group_name_attribute,
+  $group_resource                    = $::icingaweb2::params::group_resource,
   $config_dir                        = $::icingaweb2::params::config_dir,
   $config_dir_mode                   = $::icingaweb2::params::config_dir_mode,
   $config_dir_purge                  = $::icingaweb2::params::config_dir_purge,
