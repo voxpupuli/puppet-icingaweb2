@@ -101,13 +101,13 @@ define icingaweb2::config::resource(
       if $db_charset { validate_string($db_charset) }
 
       $type_settings = {
-        type     => $type,
-        host     => $host,
-        port     => $port,
-        username => $db_username,
-        password => $db_password,
-        dbname   => $db_name,
-        charset  => $db_charset,
+        'type'     => $type,
+        'host'     => $host,
+        'port'     => $port,
+        'username' => $db_username,
+        'password' => $db_password,
+        'dbname'   => $db_name,
+        'charset'  => $db_charset,
       }
     }
     'ldap': {
@@ -118,13 +118,13 @@ define icingaweb2::config::resource(
         "${ldap_encryption} isn't supported. Valid values are 'none', 'starttls' and 'ldaps'.")
 
       $type_settings = {
-        type       => $type,
-        hostname   => $host,
-        port       => $port,
-        root_dn    => $ldap_root_dn,
-        bind_dn    => $ldap_bind_dn,
-        bind_pw    => $ldap_bind_pw,
-        encryption => $ldap_encryption,
+        'type'       => $type,
+        'hostname'   => $host,
+        'port'       => $port,
+        'root_dn'    => $ldap_root_dn,
+        'bind_dn'    => $ldap_bind_dn,
+        'bind_pw'    => $ldap_bind_pw,
+        'encryption' => $ldap_encryption,
       }
     }
     default: {
