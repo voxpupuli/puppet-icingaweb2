@@ -1,0 +1,10 @@
+fixtures:
+  forge_modules:
+    stdlib: "puppetlabs/stdlib"
+    apt:
+      repo: "puppetlabs/apt"
+      ref: "2.4.0"
+    inifile: "puppetlabs/inifile"
+    zypprepo: "darin/zypprepo"
+  symlinks:
+    icingaweb2: "#{source_dir}"
