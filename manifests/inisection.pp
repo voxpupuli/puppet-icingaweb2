@@ -8,6 +8,9 @@
 #   Set to present creates the ini section, absent removes it. Defaults to present.
 #   Single settings may be set to 'absent' in the $settings parameter.
 #
+# [*section_name*]
+#   Name of the target section. Settings are set under [$section_name]
+#
 # [*target*]
 #   Absolute path to the configuration file.
 #
@@ -31,8 +34,9 @@
 #
 define icingaweb2::inisection(
   $target,
-  $ensure   = present,
-  $settings = {},
+  $ensure        = present,
+  $section_name  = $title,
+  $settings      = {},
 ){
 
   $conf_user      = $::icingaweb2::params::conf_user
@@ -40,6 +44,7 @@ define icingaweb2::inisection(
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($section_name)
   validate_absolute_path($target)
   validate_hash($settings)
 
@@ -54,7 +59,8 @@ define icingaweb2::inisection(
     'path'   => $target,
   }
 
-  manage_ini_settings($settings, $defaults)
+  $section = { "${section_name}" => $settings }
+  manage_ini_settings($section, $defaults)
 
   File <| |> -> Ini_setting <| |>
 }

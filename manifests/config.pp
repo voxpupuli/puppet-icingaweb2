@@ -33,29 +33,37 @@ class icingaweb2::config {
     group => $conf_group
   }
 
-  $config_ini = {
-    logging => {
+  icingaweb2::inisection {'logging':
+    target   => "${conf_dir}/config.ini",
+    settings => {
       'log'   => $logging,
       'file'  => $logging_file,
-      'level' => $logging_level,
+      'level' => $logging_level
     },
-    preferences => {
-      'type' => $preferences_type,
+  }
+
+  icingaweb2::inisection {'preferences':
+    target   => "${conf_dir}/config.ini",
+    settings => {
+      'type' => $preferences_type
     },
-    global => {
+  }
+
+  icingaweb2::inisection {'global':
+    target   => "${conf_dir}/config.ini",
+    settings => {
       'show_stacktraces' => $show_stacktraces,
       'module_path'      => $module_path,
       'config_backend'   => $config_backend,
     },
-    themes => {
-      'default' => $theme,
-      'disabled' => $theme_disabled,
-    }
   }
 
-  icingaweb2::inisection {'config.ini':
+  icingaweb2::inisection {'themes':
     target   => "${conf_dir}/config.ini",
-    settings => $config_ini,
+    settings => {
+      'default'  => $theme,
+      'disabled' => $theme_disabled,
+    },
   }
 
   file {

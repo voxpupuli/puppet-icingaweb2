@@ -25,28 +25,28 @@
 #   Supported DB types are `mysql` and `pgsql`.
 #
 # [*db_name*]
-#   The database to use.
+#   The database to use. Only valid if `type` is `db`.
 #
 # [*db_username*]
-#   The username to use when connecting to the server.
+#   The username to use when connecting to the server. Only valid if `type` is `db`.
 #
 # [*db_password*]
-#   The password to use when connecting to the server.
+#   The password to use when connecting to the server. Only valid if `type` is `db`.
 #
 # [*db_charset*]
-#   The character set to use for the database connection.
+#   The character set to use for the database connection. Only valid if `type` is `db`.
 #
 # [*ldap_root_dn*]
-#   Root object of the tree, e.g. 'ou=people,dc=icinga,dc=com'
+#   Root object of the tree, e.g. 'ou=people,dc=icinga,dc=com'. Only valid if `type` is `ldap`.
 #
 # [*ldap_bind_dn*]
-#   The user to use when connecting to the server.
+#   The user to use when connecting to the server. Only valid if `type` is `ldap`.
 #
 # [*ldap_bind_pw*]
-#   The password to use when connecting to the server.
+#   The password to use when connecting to the server. Only valid if `type` is `ldap`.
 #
 # [*ldap_encryption*]
-#   Type of encryption to use: none (default), starttls, ldaps.
+#   Type of encryption to use: none (default), starttls, ldaps. Only valid if `type` is `ldap`.
 #
 # === Examples
 #
@@ -100,13 +100,14 @@ define icingaweb2::config::resource(
       validate_string($db_name)
       if $db_charset { validate_string($db_charset) }
 
-      $type_settings = {
+      $settings = {
         'type'     => $type,
+        'db'       => $db_type,
         'host'     => $host,
         'port'     => $port,
+        'dbname'   => $db_name,
         'username' => $db_username,
         'password' => $db_password,
-        'dbname'   => $db_name,
         'charset'  => $db_charset,
       }
     }
@@ -117,7 +118,7 @@ define icingaweb2::config::resource(
       validate_re($ldap_encryption, [ 'none', 'starttls', 'ldaps' ],
         "${ldap_encryption} isn't supported. Valid values are 'none', 'starttls' and 'ldaps'.")
 
-      $type_settings = {
+      $settings = {
         'type'       => $type,
         'hostname'   => $host,
         'port'       => $port,
@@ -132,13 +133,9 @@ define icingaweb2::config::resource(
     }
   }
 
-  $settings = {
-    $resource_name => delete_undef_values($type_settings)
-  }
-
   icingaweb2::inisection { $resource_name:
     ensure   => $ensure,
     target   => "${conf_dir}/resources.ini",
-    settings => $settings,
+    settings => delete_undef_values($settings),
   }
 }

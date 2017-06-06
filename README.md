@@ -217,6 +217,9 @@ Manage settings in INI configuration files.
 Set to present creates the ini section, absent removes it. Defaults to present. Singhe settings may be set to 'absent'
 in the $settings parameter.
 
+##### `section_name`
+Name of the target section. Settings are set under `[$section_name]`
+
 ##### `target`
 Absolute path to the configuration file.
 
@@ -246,31 +249,31 @@ multiple hosts separated by a space.
 Port number to use.
 
 ##### `db_type`
-Supported DB types are `mysql` and `pgsql`.
+Supported DB types are `mysql` and `pgsql`. Only valid when `type` is `db`.
 
 ##### `db_name`
-The database to use.
+The database to use. Only valid if `type` is `db`.
 
 ##### `db_username`
-The username to use when connecting to the server.
+The username to use when connecting to the server. Only valid if `type` is `db`.
 
 ##### `db_password`
-The password to use when connecting to the server.
+The password to use when connecting to the server. Only valid if `type` is `db`.
 
 ##### `db_charset`
-The character set to use for the database connection.
+The character set to use for the database connection. Only valid if `type` is `db`.
 
 ##### `ldap_root_dn`
-Root object of the tree, e.g. `ou=people,dc=icinga,dc=com`
+Root object of the tree, e.g. `ou=people,dc=icinga,dc=com`. Only valid if `type` is `ldap`.
 
 ##### `ldap_bind_dn`
-The user to use when connecting to the server.
+The user to use when connecting to the server. Only valid if `type` is `ldap`.
 
 ##### `ldap_bind_pw`
-The password to use when connecting to the server.
+The password to use when connecting to the server. Only valid if `type` is `ldap`.
 
 ##### `ldap_encryption`
-Type of encryption to use: `none` (default), `starttls`, `ldaps`.
+Type of encryption to use: `none` (default), `starttls`, `ldaps`. Only valid if `type` is `ldap`.
 
 ### Private Defined Types
 
@@ -303,6 +306,7 @@ See also [CHANGELOG.md]
 [darin/zypprepo]: https://forge.puppet.com/darin/zypprepo
 [puppetlabs/stdlib]: https://github.com/puppetlabs/puppetlabs-stdlib
 [puppetlabs/inifile]: https://forge.puppet.com/puppetlabs/inifile
+[puppetlabs/vcsrepo]: https://forge.puppet.com/puppetlabs/vcsrepo
 [packages.icinga.com]: https://packages.icinga.com
 
 [CHANGELOG.md]: CHANGELOG.md
