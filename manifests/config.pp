@@ -22,7 +22,7 @@ class icingaweb2::config {
   $preferences_type = 'ini'
   $show_stacktraces = $::icingaweb2::show_stacktraces
   $module_path      = $::icingaweb2::module_path
-  # TODO: $config_backend can be 'db', however in this case it requires a valid $config_resource
+  # TODO: $config_backend can be 'db', however in this case it requires a valid resource at 'config_resource'
   $config_backend   = 'ini'
   $theme            = $::icingaweb2::theme
   $theme_disabled   = $::icingaweb2::theme_disabled
@@ -55,6 +55,7 @@ class icingaweb2::config {
       'show_stacktraces' => $show_stacktraces,
       'module_path'      => $module_path,
       'config_backend'   => $config_backend,
+      #'config_resource'  => $foobar
     },
   }
 

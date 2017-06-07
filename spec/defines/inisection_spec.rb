@@ -12,20 +12,16 @@ describe('icingaweb2::inisection', :type => :define) do
     end
 
     context "#{os} with valid params" do
-      let(:params) { {:target => '/foo/bar', :section_name => 'global', :settings =>  {'setting1' => 'value1', 'setting2' => 'value2'}  } }
+      let(:params) { {:target => '/foo/bar', :section_name => 'test', :settings =>  {'setting1' => 'value1', 'setting2' => 'value2'}  } }
 
-      it { is_expected.to contain_file('/foo/bar') }
+      it { is_expected.to contain_concat('/foo/bar') }
 
-      it { is_expected.to contain_ini_setting('present /foo/bar [global] setting1')
-        .with_path('/foo/bar')
-        .with_setting('setting1')
-        .with_value('value1')
-      }
-
-      it { is_expected.to contain_ini_setting('present /foo/bar [global] setting2')
-        .with_path('/foo/bar')
-        .with_setting('setting2')
-        .with_value('value2') }
+      it { is_expected.to contain_concat__fragment('test')
+        .with_target('/foo/bar')
+        .with_order('01')
+        .with_content(/\[test\]/)
+        .with_content(/setting1=value1/)
+        .with_content(/setting2=value2/)}
     end
   end
 end

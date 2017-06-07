@@ -46,7 +46,7 @@ This module depends on
 
 * [puppetlabs/stdlib] >= 4.16.0
 * [puppetlabs/vcsrepo] >= 1.3.0
-* [puppetlabs/inifile] >= 1.5.0
+* [puppetlabs/concat] >= 2.0.1
 
 Depending on your setup following modules may also be required:
 
@@ -105,7 +105,6 @@ Create a `db` resource:
 
 ``` puppet
 icingaweb2::config::resource{'my-sql':
-  ensure      => present,
   type        => 'db',
   db_type     => 'mysql',
   host        => 'localhost',
@@ -120,7 +119,6 @@ Create a `ldap` resource:
 
 ``` puppet
 icingaweb2::config::resource{'my-ldap':
-  ensure       => present,
   type         => 'ldap',
   host         => 'localhost',
   port         => 389,
@@ -213,10 +211,6 @@ Manage settings in INI configuration files.
 
 **Parameters of `icingaweb2::inisection`:**
 
-##### `ensure`
-Set to present creates the ini section, absent removes it. Defaults to present. Singhe settings may be set to 'absent'
-in the $settings parameter.
-
 ##### `section_name`
 Name of the target section. Settings are set under `[$section_name]`
 
@@ -226,15 +220,15 @@ Absolute path to the configuration file.
 ##### `settings`
 A hash of settings and their settings. Single settings may be set to absent.
 
+##### `order`
+Ordering of the INI section within a file. Defaults to `01`
+
 #### Defined type: `icingaweb2::config::resource`
 Manage settings in INI configuration files.
 
 **Parameters of `icingaweb2::config::resource`:**
 
-##### `ensure`
-Set to present creates the resource, absent removes it. Defaults to `present`
-
-##### `name`
+##### `resource_name`
 Name of the resources. Resources are referenced by their name in other configuration sections.
 
 ##### `type`
@@ -305,7 +299,7 @@ See also [CHANGELOG.md]
 [puppetlabs/apt]: https://github.com/puppetlabs/puppetlabs-apt
 [darin/zypprepo]: https://forge.puppet.com/darin/zypprepo
 [puppetlabs/stdlib]: https://github.com/puppetlabs/puppetlabs-stdlib
-[puppetlabs/inifile]: https://forge.puppet.com/puppetlabs/inifile
+[puppetlabs/concat]: https://github.com/puppetlabs/puppetlabs-concat
 [puppetlabs/vcsrepo]: https://forge.puppet.com/puppetlabs/vcsrepo
 [packages.icinga.com]: https://packages.icinga.com
 

@@ -21,42 +21,10 @@ describe('icingaweb2::config::resource', :type => :define) do
           :db_username => 'bar',
           :db_password => 'secret' } }
 
-      it { is_expected.to contain_file('/etc/icingaweb2/resources.ini') }
+      it { is_expected.to contain_icingaweb2__inisection('myresource')
+        .with_target('/etc/icingaweb2/resources.ini')
+        .with_settings({'type'=>'db', 'db'=>'mysql', 'host'=>'localhost', 'port'=>'3306', 'dbname'=>'foo', 'username'=>'bar', 'password'=>'secret'}) }
 
-      it { is_expected.to contain_ini_setting('present /etc/icingaweb2/resources.ini [myresource] type')
-                              .with_path('/etc/icingaweb2/resources.ini')
-                              .with_setting('type')
-                              .with_value('db') }
-
-      it { is_expected.to contain_ini_setting('present /etc/icingaweb2/resources.ini [myresource] host')
-                              .with_path('/etc/icingaweb2/resources.ini')
-                              .with_setting('host')
-                              .with_value('localhost') }
-
-      it { is_expected.to contain_ini_setting('present /etc/icingaweb2/resources.ini [myresource] port')
-                              .with_path('/etc/icingaweb2/resources.ini')
-                              .with_setting('port')
-                              .with_value('3306') }
-
-      it { is_expected.to contain_ini_setting('present /etc/icingaweb2/resources.ini [myresource] db')
-                              .with_path('/etc/icingaweb2/resources.ini')
-                              .with_setting('db')
-                              .with_value('mysql') }
-
-      it { is_expected.to contain_ini_setting('present /etc/icingaweb2/resources.ini [myresource] dbname')
-                              .with_path('/etc/icingaweb2/resources.ini')
-                              .with_setting('dbname')
-                              .with_value('foo') }
-
-      it { is_expected.to contain_ini_setting('present /etc/icingaweb2/resources.ini [myresource] username')
-                              .with_path('/etc/icingaweb2/resources.ini')
-                              .with_setting('username')
-                              .with_value('bar') }
-
-      it { is_expected.to contain_ini_setting('present /etc/icingaweb2/resources.ini [myresource] password')
-                              .with_path('/etc/icingaweb2/resources.ini')
-                              .with_setting('password')
-                              .with_value('secret') }
     end
 
     context "#{os} with type ldap" do
@@ -68,37 +36,9 @@ describe('icingaweb2::config::resource', :type => :define) do
           :ldap_bind_dn => 'cn=root,dc=bar',
           :ldap_bind_pw => 'secret' } }
 
-      it { is_expected.to contain_file('/etc/icingaweb2/resources.ini') }
-
-      it { is_expected.to contain_ini_setting('present /etc/icingaweb2/resources.ini [myresource] type')
-                              .with_path('/etc/icingaweb2/resources.ini')
-                              .with_setting('type')
-                              .with_value('ldap') }
-
-      it { is_expected.to contain_ini_setting('present /etc/icingaweb2/resources.ini [myresource] hostname')
-                              .with_path('/etc/icingaweb2/resources.ini')
-                              .with_setting('hostname')
-                              .with_value('localhost') }
-
-      it { is_expected.to contain_ini_setting('present /etc/icingaweb2/resources.ini [myresource] port')
-                              .with_path('/etc/icingaweb2/resources.ini')
-                              .with_setting('port')
-                              .with_value('389') }
-
-      it { is_expected.to contain_ini_setting('present /etc/icingaweb2/resources.ini [myresource] root_dn')
-                              .with_path('/etc/icingaweb2/resources.ini')
-                              .with_setting('root_dn')
-                              .with_value('cn=foo,dc=bar') }
-
-      it { is_expected.to contain_ini_setting('present /etc/icingaweb2/resources.ini [myresource] bind_dn')
-                              .with_path('/etc/icingaweb2/resources.ini')
-                              .with_setting('bind_dn')
-                              .with_value('cn=root,dc=bar') }
-
-      it { is_expected.to contain_ini_setting('present /etc/icingaweb2/resources.ini [myresource] bind_pw')
-                              .with_path('/etc/icingaweb2/resources.ini')
-                              .with_setting('bind_pw')
-                              .with_value('secret') }
+      it { is_expected.to contain_icingaweb2__inisection('myresource')
+        .with_target('/etc/icingaweb2/resources.ini')
+        .with_settings({'type'=>'ldap', 'hostname'=>'localhost', 'port'=>'389', 'root_dn'=>'cn=foo,dc=bar', 'bind_dn'=>'cn=root,dc=bar', 'bind_pw'=>'secret', 'encryption'=>'none'})}
 
     end
 

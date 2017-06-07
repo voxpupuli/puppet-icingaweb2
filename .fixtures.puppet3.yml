@@ -1,6 +1,9 @@
 fixtures:
   forge_modules:
     stdlib: "puppetlabs/stdlib"
+    concat:
+      repo: "puppetlabs/concat"
+      ref: "2.2.1"
     apt:
       repo: "puppetlabs/apt"
       ref: "2.4.0"

@@ -3,7 +3,6 @@ class { 'icingaweb2':
 }
 
 icingaweb2::config::resource{'my-sql':
-  ensure      => present,
   type        => 'db',
   db_type     => 'mysql',
   host        => 'localhost',
@@ -14,7 +13,6 @@ icingaweb2::config::resource{'my-sql':
 }
 
 icingaweb2::config::resource{'my-ldap':
-  ensure       => present,
   type         => 'ldap',
   host         => 'localhost',
   port         => 389,

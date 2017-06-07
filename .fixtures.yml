@@ -1,6 +1,7 @@
 fixtures:
   forge_modules:
     stdlib: "puppetlabs/stdlib"
+    concat: "puppetlabs/concat"
     apt: "puppetlabs/apt"
     inifile: "puppetlabs/inifile"
     zypprepo: "darin/zypprepo"

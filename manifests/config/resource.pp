@@ -1,11 +1,8 @@
-# == Define: icingaweb2::inifile
+# == Define: icingaweb2::config::resource
 #
 # Create and remove Icinga Web 2 resources. Resources may be referenced in other configuration sections.
 #
 # === Parameters
-#
-# [*ensure*]
-#   Set to present creates the resource, absent removes it. Defaults to present.
 #
 # [*name*]
 #   Name of the resources. Resources are referenced by their name in other configuration sections.
@@ -53,7 +50,6 @@
 # Create a 'db' resource:
 #
 # icingaweb2::config::resource{'my-sql':
-#   ensure      => present,
 #   type        => 'db',
 #   db_type     => 'mysql',
 #   host        => 'localhost',
@@ -65,7 +61,6 @@
 #
 #
 define icingaweb2::config::resource(
-  $ensure          = present,
   $resource_name   = $title,
   $type            = undef,
   $host            = undef,
@@ -83,8 +78,6 @@ define icingaweb2::config::resource(
 
   $conf_dir = $::icingaweb2::params::conf_dir
 
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($name)
   validate_re($type, [ 'db', 'ldap' ],
     "${type} isn't supported. Valid values are 'db' and 'ldap'.")
@@ -134,7 +127,6 @@ define icingaweb2::config::resource(
   }
 
   icingaweb2::inisection { $resource_name:
-    ensure   => $ensure,
     target   => "${conf_dir}/resources.ini",
     settings => delete_undef_values($settings),
   }

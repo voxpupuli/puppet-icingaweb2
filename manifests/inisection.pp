@@ -4,10 +4,6 @@
 #
 # === Parameters
 #
-# [*ensure*]
-#   Set to present creates the ini section, absent removes it. Defaults to present.
-#   Single settings may be set to 'absent' in the $settings parameter.
-#
 # [*section_name*]
 #   Name of the target section. Settings are set under [$section_name]
 #
@@ -16,6 +12,9 @@
 #
 # [*settings*]
 #   A hash of settings and their settings. Single settings may be set to absent.
+#
+# [*order*]
+#   Ordering of the INI section within a file. Defaults to `01`
 #
 # === Examples
 #
@@ -34,33 +33,31 @@
 #
 define icingaweb2::inisection(
   $target,
-  $ensure        = present,
   $section_name  = $title,
   $settings      = {},
+  $order         = '01',
 ){
 
   $conf_user      = $::icingaweb2::params::conf_user
   $conf_group     = $::icingaweb2::params::conf_group
 
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_string($section_name)
   validate_absolute_path($target)
   validate_hash($settings)
+  validate_string($order)
 
-  ensure_resource('file', $target, {
-    ensure => present,
-    owner  => $conf_user,
-    group  => $conf_group,
-  })
-
-  $defaults = {
-    'ensure' => $ensure,
-    'path'   => $target,
+  if !defined(Concat[$target]) {
+    concat { $target:
+      ensure  => present,
+      warn    => true,
+      owner   => $conf_user,
+      group   => $conf_group,
+    }
   }
 
-  $section = { "${section_name}" => $settings }
-  manage_ini_settings($section, $defaults)
-
-  File <| |> -> Ini_setting <| |>
+  concat::fragment { $section_name:
+    target  =>  $target,
+    content => template('icingaweb2/inisection.erb'),
+    order   => $order,
+  }
 }
