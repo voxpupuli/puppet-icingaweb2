@@ -68,9 +68,6 @@ class icingaweb2::config {
   }
 
   file {
-    "${conf_dir}/authentication.ini":
-      ensure => file;
-
     "${conf_dir}/roles.ini":
       ensure => file;
 

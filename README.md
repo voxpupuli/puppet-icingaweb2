@@ -150,6 +150,7 @@ icingaweb2::config::resource{'my-ldap':
 - [**Public defined types**](#public-defined-types)
     - [Defined type: icingaweb2::inisection](#defined-type-icingaweb2inisection)
     - [Defined type: icingaweb2::config::resource](#defined-type-icingaweb2configresource)
+    - [Defined type: icingaweb2::config::authmethod](#defined-type-icingaweb2configauthmethod)
 - [**Private defined types**](#private-defined-types)
 
 ### Public Classes
@@ -268,6 +269,31 @@ The password to use when connecting to the server. Only valid if `type` is `ldap
 
 ##### `ldap_encryption`
 Type of encryption to use: `none` (default), `starttls`, `ldaps`. Only valid if `type` is `ldap`.
+
+#### Defined type: `icingaweb2::config::authmethod`
+# Manage Icinga Web 2 authentication methods. Auth methods may be chained by setting proper ordering. Some backends
+# require additional resources.
+
+**Parameters of `icingaweb2::config::authmethod`:**
+
+##### `backend`
+Select between 'external', 'ldap', 'msldap' or 'db'. Each backend may require other settings.
+
+##### `resource`
+The name of the resource defined in resources.ini.
+
+##### `ldap_user_class`
+LDAP user class. Only valid if `backend` is `ldap`.
+
+##### `ldap_user_name_attribute`
+LDAP attribute which contains the username. Only valid if `backend` is `ldap`.
+
+##### `ldap_filter`
+LDAP search filter. Only valid if `backend` is `ldap`.
+
+##### `order`
+Multiple authentication methods can be chained. The order of entries in the authentication configuration determines
+the order of the authentication methods. Defaults to `01`
 
 ### Private Defined Types
 
