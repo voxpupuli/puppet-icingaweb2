@@ -42,10 +42,17 @@ class icingaweb2 (
   $logging_level      = 'INFO',
   $enable_stacktraces = false,
   $module_path        = $::icingaweb2::params::module_path,
-  $theme              = 'icinga',
+  $theme              = 'Icinga',
   $theme_access       = true,
   $manage_repo        = false,
   $manage_package     = true,
+  $import_schema      = false,
+  $db_type            = 'mysql',
+  $db_host            = 'localhost',
+  $db_port            = '3306',
+  $db_name            = 'icingaweb2',
+  $db_username        = undef,
+  $db_password        = undef,
 ) inherits ::icingaweb2::params {
 
   validate_re($logging, [ 'file', 'syslog', 'none' ],
@@ -59,6 +66,15 @@ class icingaweb2 (
   validate_bool($theme_access)
   validate_bool($manage_repo)
   validate_bool($manage_package)
+  validate_bool($import_schema)
+
+  if $import_schema {
+    validate_re($db_type, [ 'mysql', 'pgsql' ],
+      "${db_type} isn't supported. Valid values are 'mysql' and 'pgsql'.")
+    validate_string($db_name)
+    validate_string($db_user)
+    validate_string($db_password)
+  }
 
   $show_stacktraces = $enable_stacktraces ? {
     true    => '1',

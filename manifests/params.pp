@@ -13,24 +13,27 @@
 #
 class icingaweb2::params {
 
-  $package          = 'icingaweb2'
-  $conf_dir         = '/etc/icingaweb2'
-  $module_path      = '/usr/share/icingaweb2/modules'
+  $package     = 'icingaweb2'
+  $conf_dir    = '/etc/icingaweb2'
+  $module_path = '/usr/share/icingaweb2/modules'
 
   case $::osfamily {
     'redhat': {
       $conf_user  = 'apache'
       $conf_group = 'icingaweb2'
+      $schema_dir = '/usr/share/doc/icingaweb2/schema'
     } # RedHat
 
     'debian': {
       $conf_user  = 'www-data'
       $conf_group = 'icingaweb2'
+      $schema_dir = '/usr/share/icingaweb2/etc/schema'
     } # Debian
 
     'suse': {
       $conf_user  = 'wwwrun'
       $conf_group = 'icingaweb2'
+      $schema_dir = '/usr/share/doc/icingaweb2/schema'
     } # Suse
 
     default: {

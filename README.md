@@ -85,7 +85,6 @@ packages in your own Puppet code.
 ``` puppet
 package { 'icinga2':
   ensure => latest,
-  notifiy => Class['icinga2'],
 }
 
 class { '::icinga2':
@@ -97,7 +96,7 @@ Be careful with this option: Setting `manage_package` to false also means that t
 dependent packages of modules.
 
 #### Manage Resources
-Icinga Web 2 resources are managed with the `icingaweb2::config::resource` defined resource. Supported resource types
+Icinga Web 2 resources are managed with the `icingaweb2::config::resource` defined type. Supported resource types
 are `db` and `ldap`. Resources are used for the internal authentication mechanism and by modules. Depending on the type
 of resource you are managing, different parameters may be required.
 
@@ -125,6 +124,82 @@ icingaweb2::config::resource{'my-ldap':
   ldap_root_dn => 'dc=users,dc=icinga,dc=com',
   ldap_bind_dn => 'cn=root,dc=users,dc=icinga,dc=com',
   ldap_bind_pw => 'supersecret',
+}
+```
+
+#### Manage Authentication Methods
+Authentication methods are created with the `icingaweb2::config:authmethod` defined type. Various authentication methods
+are supported: `db`, `ldap`, `msldap` and `external`. Auth methods can be chained with the `order` parameter.
+
+Create a MySQL authmethod:
+
+``` puppet
+icingaweb2::config::resource{'my-sql':
+  type        => 'db',
+  db_type     => 'mysql',
+  host        => 'localhost',
+  port        => '3306',
+  db_name     => 'icingaweb2',
+  db_username => 'root',
+  db_password => 'supersecret',
+}
+```
+
+##### DB Schema and Default User
+You can choose to import the database schema for MySQL or PostgreSQL. If you set `import_schema` to `true` the module
+import the corresponding schema for your `db_type`. Additionally a resource, an authentication method and a role will be
+generated.
+
+The module does not support the creation of databases, we encourage you to use either the [puppetlabs/mysql] or the
+[puppetlabs/puppetlabs-postgresql] module.
+
+:bulb: Default credentials are: **User:** `icinga` **Password**: `icinga`
+
+###### MySQL
+Use MySQL as backend for user authentication in Icinga Web 2:
+
+``` puppet
+include ::mysql::server
+
+mysql::db { 'icingaweb2':
+  user     => 'icingaweb2',
+  password => 'icingaweb2',
+  host     => 'localhost',
+  grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER'],
+}
+
+class {'icingaweb2':
+  manage_repo   => true,
+  import_schema => true,
+  db_type       => 'pgsql',
+  db_host       => 'localhost',
+  db_port       => '5432',
+  db_username   => 'icingaweb2',
+  db_password   => 'icingaweb2',
+  require       => Mysql::Db['icingaweb2'],
+}
+```
+
+###### PostgreSQL
+Use PostgreSQL as backend for user authentication in Icinga Web 2:
+
+``` puppet
+include ::postgresql::server
+
+postgresql::server::db { 'icingaweb2':
+  user     => 'icingaweb2',
+  password => postgresql_password('icingaweb2', 'icingaweb2'),
+}
+
+class {'icingaweb2':
+  manage_repo   => true,
+  import_schema => true,
+  db_type       => 'pgsql',
+  db_host       => 'localhost',
+  db_port       => '5432',
+  db_username   => 'icingaweb2',
+  db_password   => 'icingaweb2',
+  require       => Postgresql::Server::Db['icingaweb2'],
 }
 ```
 
@@ -271,8 +346,8 @@ The password to use when connecting to the server. Only valid if `type` is `ldap
 Type of encryption to use: `none` (default), `starttls`, `ldaps`. Only valid if `type` is `ldap`.
 
 #### Defined type: `icingaweb2::config::authmethod`
-# Manage Icinga Web 2 authentication methods. Auth methods may be chained by setting proper ordering. Some backends
-# require additional resources.
+Manage Icinga Web 2 authentication methods. Auth methods may be chained by setting proper ordering. Some backends
+require additional resources.
 
 **Parameters of `icingaweb2::config::authmethod`:**
 
@@ -327,6 +402,8 @@ See also [CHANGELOG.md]
 [puppetlabs/stdlib]: https://github.com/puppetlabs/puppetlabs-stdlib
 [puppetlabs/concat]: https://github.com/puppetlabs/puppetlabs-concat
 [puppetlabs/vcsrepo]: https://forge.puppet.com/puppetlabs/vcsrepo
+[puppetlabs/mysql]: https://github.com/puppetlabs/puppetlabs-mysql
+[puppetlabs/puppetlabs-postgresql]: https://github.com/puppetlabs/puppetlabs-postgresql
 [packages.icinga.com]: https://packages.icinga.com
 
 [CHANGELOG.md]: CHANGELOG.md

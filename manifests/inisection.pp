@@ -49,7 +49,7 @@ define icingaweb2::inisection(
   if !defined(Concat[$target]) {
     concat { $target:
       ensure => present,
-      warn   => true,
+      warn   => false,
       owner  => $conf_user,
       group  => $conf_group,
     }
