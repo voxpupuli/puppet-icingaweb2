@@ -4,7 +4,7 @@
 #
 # === Parameters
 #
-# [*name*]
+# [*resource_name*]
 #   Name of the resources. Resources are referenced by their name in other configuration sections.
 #
 # [*type*]

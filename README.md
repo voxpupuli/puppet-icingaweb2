@@ -95,7 +95,7 @@ class { '::icinga2':
 Be careful with this option: Setting `manage_package` to false also means that this module will not install any
 dependent packages of modules.
 
-#### Manage Resources
+### Manage Resources
 Icinga Web 2 resources are managed with the `icingaweb2::config::resource` defined type. Supported resource types
 are `db` and `ldap`. Resources are used for the internal authentication mechanism and by modules. Depending on the type
 of resource you are managing, different parameters may be required.
@@ -127,7 +127,7 @@ icingaweb2::config::resource{'my-ldap':
 }
 ```
 
-#### Manage Authentication Methods
+### Manage Authentication Methods
 Authentication methods are created with the `icingaweb2::config:authmethod` defined type. Various authentication methods
 are supported: `db`, `ldap`, `msldap` and `external`. Auth methods can be chained with the `order` parameter.
 
@@ -145,7 +145,7 @@ icingaweb2::config::resource{'my-sql':
 }
 ```
 
-##### DB Schema and Default User
+#### DB Schema and Default User
 You can choose to import the database schema for MySQL or PostgreSQL. If you set `import_schema` to `true` the module
 import the corresponding schema for your `db_type`. Additionally a resource, an authentication method and a role will be
 generated.
@@ -155,7 +155,7 @@ The module does not support the creation of databases, we encourage you to use e
 
 :bulb: Default credentials are: **User:** `icinga` **Password**: `icinga`
 
-###### MySQL
+##### MySQL
 Use MySQL as backend for user authentication in Icinga Web 2:
 
 ``` puppet
@@ -180,7 +180,7 @@ class {'icingaweb2':
 }
 ```
 
-###### PostgreSQL
+##### PostgreSQL
 Use PostgreSQL as backend for user authentication in Icinga Web 2:
 
 ``` puppet
@@ -203,15 +203,71 @@ class {'icingaweb2':
 }
 ```
 
-#### Install and Manage Modules
+#### Manage Roles
+Roles are a set of permissions applied to users and groups. With filters you can limit the access to certain objects
+only. Each module can add its own permissions, so it's hard to create a list of all available permissions. The following
+permissions are included when the `monitoring` module is enabled:
 
-##### Monitoring
+| Description | Value |
+|-------------|-------|
+| Allow everything | `*` |
+| Allow to share navigation items | `application/share/navigation` |
+| Allow to adjust in the preferences whether to show stacktraces | `application/stacktraces` |
+| Allow to view the application log | `application/log` |
+| Grant admin permissions, e.g. manage announcements | `admin` |
+| Allow config access | `config/*` |
+| Allow access to module doc | `module/doc` |
+| Allow access to module monitoring | `module/monitoring` |
+| Allow all commands | `monitoring/command/*` |
+| Allow scheduling host and service checks | `monitoring/command/schedule-check` |
+| Allow acknowledging host and service problems | `monitoring/command/acknowledge-problem` |
+| Allow removing problem acknowledgements | `monitoring/command/remove-acknowledgement` |
+| Allow adding and deleting host and service comments | `monitoring/command/comment/*` |
+| Allow commenting on hosts and services | `monitoring/command/comment/add` |
+| Allow deleting host and service comments | `monitoring/command/comment/delete` |
+| Allow scheduling and deleting host and service downtimes | `monitoring/command/downtime/*` |
+| Allow scheduling host and service downtimes | `monitoring/command/downtime/schedule` |
+| Allow deleting host and service downtimes | `monitoring/command/downtime/delete` |
+| Allow processing host and service check results | `monitoring/command/process-check-result` |
+| Allow processing commands for toggling features on an instance-wide basis | `monitoring/command/feature/instance` |
+| Allow processing commands for toggling features on host and service objects | `monitoring/command/feature/object/*`) |
+| Allow processing commands for toggling active checks on host and service objects | `monitoring/command/feature/object/active-checks` |
+| Allow processing commands for toggling passive checks on host and service objects | `monitoring/command/feature/object/passive-checks` |
+| Allow processing commands for toggling notifications on host and service objects | `monitoring/command/feature/object/notifications` |
+| Allow processing commands for toggling event handlers on host and service objects | `monitoring/command/feature/object/event-handler` |
+| Allow processing commands for toggling flap detection on host and service objects | `monitoring/command/feature/object/flap-detection` |
+| Allow sending custom notifications for hosts and services | `monitoring/command/send-custom-notification` |
+| Allow access to module setup | `module/setup` |
+| Allow access to module test | `module/test` |
+| Allow access to module translation | `module/translation` |
 
-##### Director
+With the monitoring module, possible filters are:
+* `application/share/users`
+* `application/share/groups`
+* `monitoring/filter/objects`
+* `monitoring/blacklist/properties`
 
-##### Business Process
+Create role that allows a user to see only hosts beginning with `linux-*`:
 
-##### Cube 
+``` puppet
+icingaweb2::config::role{'linux-user':
+  users       => 'bob, pete',
+  permissions => '*',
+  filters     => {
+    'monitoring/filter/objects' => 'host_name=linux-*',
+  }
+}
+```
+
+### Install and Manage Modules
+
+#### Monitoring
+
+#### Director
+
+#### Business Process
+
+#### Cube 
 
 ## Reference
 
@@ -226,6 +282,7 @@ class {'icingaweb2':
     - [Defined type: icingaweb2::inisection](#defined-type-icingaweb2inisection)
     - [Defined type: icingaweb2::config::resource](#defined-type-icingaweb2configresource)
     - [Defined type: icingaweb2::config::authmethod](#defined-type-icingaweb2configauthmethod)
+    - [Defined type: icingaweb2::config::role](#defined-type-icingaweb2configrole)
 - [**Private defined types**](#private-defined-types)
 
 ### Public Classes
@@ -369,6 +426,38 @@ LDAP search filter. Only valid if `backend` is `ldap`.
 ##### `order`
 Multiple authentication methods can be chained. The order of entries in the authentication configuration determines
 the order of the authentication methods. Defaults to `01`
+
+#### Defined type: `icingaweb2::config::role`
+Roles define a set of permissions that may be applied to users or groups.
+
+**Parameters of `icingaweb2::config::role`:**
+
+##### `role_name`
+Name of the role.
+
+##### `users`
+Comma separated list of users this role applies to.
+
+##### `groups`
+Comma separated list of groups this role applies to.
+
+##### `permissions`
+Comma separated lsit of permissions. Each module may add it's own permissions. Examples are
+- Allow everything: `*`
+- Allow config access: `config/*`
+- Allow access do module monitoring: `module/monitoring`
+- Allow scheduling checks: `monitoring/command/schedule-checks`
+- Grant admin permissions: `admin`
+
+##### `filters`
+Hash of filters. Modules may add new filter keys, some sample keys are:
+- `application/share/users`
+- `application/share/groups`
+- `monitoring/filter/objects`
+- `monitoring/blacklist/properties`
+
+A string value is expected for each used key. For example:
+- monitoring/filter/objects = `host_name!=*win*`
 
 ### Private Defined Types
 
