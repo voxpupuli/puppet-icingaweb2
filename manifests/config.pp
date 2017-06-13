@@ -97,6 +97,11 @@ class icingaweb2::config {
       resource => "${db_type}-icingaweb2"
     }
 
+    icingaweb2::config::role { "default admin user":
+      users       => 'icinga',
+      permissions => '*',
+    }
+
     case $db_type {
       'mysql': {
         exec { 'import schema':

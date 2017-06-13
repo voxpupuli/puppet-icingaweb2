@@ -14,6 +14,7 @@ describe('icingaweb2::config', :type => :class) do
 
         it { is_expected.to contain_icingaweb2__config__resource('mysql-icingaweb2')}
         it { is_expected.to contain_icingaweb2__config__authmethod('mysql-auth')}
+        it { is_expected.to contain_icingaweb2__config__role('default admin user')}
         it { is_expected.to contain_exec('import schema') }
         it { is_expected.to contain_exec('create default user') }
       end
@@ -25,6 +26,7 @@ describe('icingaweb2::config', :type => :class) do
 
         it { is_expected.to contain_icingaweb2__config__resource('pgsql-icingaweb2')}
         it { is_expected.to contain_icingaweb2__config__authmethod('pgsql-auth')}
+        it { is_expected.to contain_icingaweb2__config__role('default admin user')}
         it { is_expected.to contain_exec('import schema') }
         it { is_expected.to contain_exec('create default user') }
       end
@@ -44,6 +46,7 @@ describe('icingaweb2::config', :type => :class) do
 
         it { is_expected.not_to contain_exec('import schema')}
         it { is_expected.not_to contain_exec('create default user')}
+        it { is_expected.not_to contain_icingaweb2__config__role('default admin user')}
       end
     end
   end
