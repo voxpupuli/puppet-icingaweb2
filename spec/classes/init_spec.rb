@@ -25,17 +25,17 @@ describe 'icingaweb2', :type => :class do
 
         case facts[:osfamily]
           when 'Debian'
-            it { should_not contain_apt__source('icinga-stable-release') }
+            it { is_expected.not_to contain_apt__source('icinga-stable-release') }
           when 'RedHat'
-            it { should_not contain_yumrepo('icinga-stable-release') }
+            it { is_expected.not_to contain_yumrepo('icinga-stable-release') }
           when 'Suse'
-            it { should_not contain_zypprepo('icinga-stable-release') }
+            it { is_expected.not_to contain_zypprepo('icinga-stable-release') }
         end
 
         context "#{os} with manage_package => false" do
           let(:params) { {:manage_package => false} }
 
-          it { should_not contain_package('icinga2').with({ 'ensure' => 'installed' }) }
+          it { is_expected.not_to contain_package('icinga2').with({ 'ensure' => 'installed' }) }
         end
       end
     end

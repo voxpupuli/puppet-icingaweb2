@@ -14,11 +14,11 @@ describe('icingaweb2::repo', :type => :class) do
 
         case facts[:osfamily]
           when 'Debian'
-            it { should contain_apt__source('icinga-stable-release') }
+            it { is_expected.to contain_apt__source('icinga-stable-release') }
           when 'RedHat'
-            it { should contain_yumrepo('icinga-stable-release') }
+            it { is_expected.to contain_yumrepo('icinga-stable-release') }
           when 'Suse'
-            it { should contain_zypprepo('icinga-stable-release') }
+            it { is_expected.to contain_zypprepo('icinga-stable-release') }
         end
       end
 
@@ -29,14 +29,14 @@ describe('icingaweb2::repo', :type => :class) do
 
         case facts[:osfamily]
           when 'Debian'
-            it { should_not contain_apt__source('icinga-stable-release') }
-            it { should_not contain_zypprepo('icinga-stable-release') }
+            it { is_expected.not_to contain_apt__source('icinga-stable-release') }
+            it { is_expected.not_to contain_zypprepo('icinga-stable-release') }
           when 'RedHat'
-            it { should_not contain_yumrepo('icinga-stable-release') }
-            it { should_not contain_zypprepo('icinga-stable-release') }
+            it { is_expected.not_to contain_yumrepo('icinga-stable-release') }
+            it { is_expected.not_to contain_zypprepo('icinga-stable-release') }
           when 'Suse'
-            it { should_not contain_yumrepo('icinga-stable-release') }
-            it { should_not contain_apt__source('icinga-stable-release') }
+            it { is_expected.not_to contain_yumrepo('icinga-stable-release') }
+            it { is_expected.not_to contain_apt__source('icinga-stable-release') }
         end
       end
     end
