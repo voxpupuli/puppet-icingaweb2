@@ -21,15 +21,7 @@ describe 'icingaweb2', :type => :class do
 
         it { is_expected.to contain_package('icingaweb2').with({ 'ensure' => 'installed' }) }
 
-        it { is_expected.to contain_icingaweb2__inisection('logging') }
-        it { is_expected.to contain_icingaweb2__inisection('preferences') }
-        it { is_expected.to contain_icingaweb2__inisection('logging') }
-        it { is_expected.to contain_icingaweb2__inisection('global') }
-        it { is_expected.to contain_icingaweb2__inisection('themes') }
 
-        it { is_expected.to contain_file(@conf_dir + "/authentication.ini") }
-        it { is_expected.to contain_file(@conf_dir + "/roles.ini") }
-        it { is_expected.to contain_file(@conf_dir + "/groups.ini") }
 
         case facts[:osfamily]
           when 'Debian'

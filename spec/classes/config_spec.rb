@@ -7,6 +7,18 @@ describe('icingaweb2::config', :type => :class) do
         facts
       end
 
+      context 'with default parameters' do
+        let :pre_condition do
+          "class { 'icingaweb2': }"
+        end
+
+        it { is_expected.to contain_icingaweb2__inisection('logging') }
+        it { is_expected.to contain_icingaweb2__inisection('preferences') }
+        it { is_expected.to contain_icingaweb2__inisection('logging') }
+        it { is_expected.to contain_icingaweb2__inisection('global') }
+        it { is_expected.to contain_icingaweb2__inisection('themes') }
+      end
+
       context 'with import_schema => true and db_type => mysql' do
         let :pre_condition do
           "class { 'icingaweb2': import_schema => true, db_type => 'mysql'}"
