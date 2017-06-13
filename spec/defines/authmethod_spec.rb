@@ -25,27 +25,27 @@ describe('icingaweb2::config::authmethod', :type => :define) do
       let(:params) { { :backend => 'ldap', :resource => 'myresource', :ldap_user_class => 'users', :ldap_user_name_attribute => 'uid', :ldap_filter => 'foobar', :order => '10' } }
 
       it { is_expected.to contain_icingaweb2__inisection('myauthmethod')
-                              .with_target('/etc/icingaweb2/authentication.ini')
-                              .with_settings({'backend'=>'ldap', 'resource'=>'myresource', 'user_class'=>'users', 'user_name_attribute'=>'uid', 'filter'=>'foobar'})
-                              .with_order('10')}
+        .with_target('/etc/icingaweb2/authentication.ini')
+        .with_settings({'backend'=>'ldap', 'resource'=>'myresource', 'user_class'=>'users', 'user_name_attribute'=>'uid', 'filter'=>'foobar'})
+        .with_order('10')}
     end
 
     context "#{os} with backend 'msldap'" do
       let(:params) { { :backend => 'msldap', :resource => 'myresource', :order => '10' } }
 
       it { is_expected.to contain_icingaweb2__inisection('myauthmethod')
-                              .with_target('/etc/icingaweb2/authentication.ini')
-                              .with_settings({'backend'=>'msldap', 'resource'=>'myresource'})
-                              .with_order('10')}
+        .with_target('/etc/icingaweb2/authentication.ini')
+        .with_settings({'backend'=>'msldap', 'resource'=>'myresource'})
+        .with_order('10')}
     end
 
     context "#{os} with backend 'db'" do
       let(:params) { { :backend => 'db', :resource => 'myresource', :order => '10' } }
 
       it { is_expected.to contain_icingaweb2__inisection('myauthmethod')
-                              .with_target('/etc/icingaweb2/authentication.ini')
-                              .with_settings({'backend'=>'db', 'resource'=>'myresource'})
-                              .with_order('10')}
+        .with_target('/etc/icingaweb2/authentication.ini')
+        .with_settings({'backend'=>'db', 'resource'=>'myresource'})
+        .with_order('10')}
     end
 
     context "#{os} with invalid backend" do

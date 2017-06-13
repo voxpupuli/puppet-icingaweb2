@@ -134,9 +134,4 @@ class icingaweb2::config {
       }
     }
   }
-
-  file {
-    "${conf_dir}/groups.ini":
-      ensure => file,
-  }
 }

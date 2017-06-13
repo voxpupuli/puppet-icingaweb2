@@ -259,6 +259,33 @@ icingaweb2::config::role{'linux-user':
 }
 ```
 
+#### Manage Group Backends
+Group backends store information about available groups and their members. Valid backends are `db`, `ldap` or `msldap`.
+Groups backends can be combined with authentication methods. For example, users can be stored in a database, but group
+definitions in LDAP. If a user is member of multiple groups, he inherits permissions of all his groups.
+
+Create an LDAP group backend:
+
+``` puppet
+icingaweb2::config::groupbackend {'ldap-backend':
+  backend                     => 'ldap',
+  resource                    => 'my-ldap',
+  ldap_group_class            => 'groupofnames',
+  ldap_group_name_attribute   => 'cn',
+  ldap_group_member_attribute => 'member',
+  ldap_base_dn                => 'ou=groups,dc=icinga,dc=com'
+}
+```
+
+If you have imported the database schema (parameter `import_schema`), you can use this database as group backend:
+
+``` puppet
+icingaweb2::config::groupbackend {'mysql-backend':
+  backend  => 'db',
+  resource => 'mysql-icingaweb2',
+}
+```
+
 ### Install and Manage Modules
 
 #### Monitoring
@@ -283,6 +310,7 @@ icingaweb2::config::role{'linux-user':
     - [Defined type: icingaweb2::config::resource](#defined-type-icingaweb2configresource)
     - [Defined type: icingaweb2::config::authmethod](#defined-type-icingaweb2configauthmethod)
     - [Defined type: icingaweb2::config::role](#defined-type-icingaweb2configrole)
+    - [Defined type: icingaweb2::config::groupbackend](#defined-type-icingaweb2configgroupbackend)
 - [**Private defined types**](#private-defined-types)
 
 ### Public Classes
@@ -443,21 +471,61 @@ Comma separated list of groups this role applies to.
 
 ##### `permissions`
 Comma separated lsit of permissions. Each module may add it's own permissions. Examples are
-- Allow everything: `*`
-- Allow config access: `config/*`
-- Allow access do module monitoring: `module/monitoring`
-- Allow scheduling checks: `monitoring/command/schedule-checks`
-- Grant admin permissions: `admin`
+
+* Allow everything: `*`
+* Allow config access: `config/*`
+* Allow access do module monitoring: `module/monitoring`
+* Allow scheduling checks: `monitoring/command/schedule-checks`
+* Grant admin permissions: `admin`
 
 ##### `filters`
 Hash of filters. Modules may add new filter keys, some sample keys are:
-- `application/share/users`
-- `application/share/groups`
-- `monitoring/filter/objects`
-- `monitoring/blacklist/properties`
+
+* `application/share/users`
+* `application/share/groups`
+* `monitoring/filter/objects`
+* `monitoring/blacklist/properties`
 
 A string value is expected for each used key. For example:
-- monitoring/filter/objects = `host_name!=*win*`
+* monitoring/filter/objects = `host_name!=*win*`
+
+#### Defined type: `icingaweb2::config::groupbackend`
+Groups of users can be stored either in a database, LDAP or ActiveDirectory. This defined type configures backends that
+store groups.
+
+**Parameters of `icingaweb2::config::groupbackend`:**
+
+##### `group_name`
+Name of the resources. Resources are referenced by their name in other configuration sections.
+
+##### `backend`
+Type of backend. Valide values are: `db`, `ldap` and `msldap`. Each backend supports different settings, see the
+parameters for detailed information.
+
+##### `resource`
+The resource used to connect to the backend. The resource contains connection information.
+
+##### `ldap_user_backend`
+A group backend can be connected with an authentication method. This parameter references the auth method. Only
+valid with backend `ldap` or `msldap`.
+
+##### `ldap_group_class`
+Class used to identify group objects. Only valid with backend `ldap`.
+
+##### `ldap_group_filter`
+Use a LDAP filter to receive only certain groups. Only valid with backend `ldap` or `msldap`.
+
+##### `ldap_group_name_attribute`
+The group name attribute. Only valid with backend `ldap`.
+
+##### `ldap_group_member_attribute`
+The group member attribute. Only valid with backend `ldap`.
+
+##### `ldap_base_dn`
+Base DN that is searched for groups. Only valid with backend `ldap` with `msldap`.
+
+##### `ldap_nested_group_search`
+Search for groups in groups. Only valid with backend `msldap`.
 
 ### Private Defined Types
 
