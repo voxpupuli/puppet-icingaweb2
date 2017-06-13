@@ -72,7 +72,7 @@ class icingaweb2 (
     validate_re($db_type, [ 'mysql', 'pgsql' ],
       "${db_type} isn't supported. Valid values are 'mysql' and 'pgsql'.")
     validate_string($db_name)
-    validate_string($db_user)
+    validate_string($db_username)
     validate_string($db_password)
   }
 
