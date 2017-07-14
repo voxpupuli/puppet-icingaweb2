@@ -7,6 +7,6 @@ fixtures:
     apt:
       repo: "puppetlabs/apt"
       ref: "2.4.0"
-    zypprepo: "darin/zypprepo"
+    zypprepo: "puppet/zypprepo"
   symlinks:
     icingaweb2: "#{source_dir}"
