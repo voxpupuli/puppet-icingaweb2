@@ -3,6 +3,6 @@ fixtures:
     stdlib: "puppetlabs/stdlib"
     concat: "puppetlabs/concat"
     apt: "puppetlabs/apt"
-    zypprepo: "darin/zypprepo"
+    zypprepo: "puppet/zypprepo"
   symlinks:
     icingaweb2: "#{source_dir}"

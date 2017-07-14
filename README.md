@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Icinga/puppet-icingaweb2.png?branch=master)](https://travis-ci.org/Icinga/puppet-icingaweb2)
+
 
 # Icinga Web 2 Puppet Module
 
@@ -51,7 +51,7 @@ This module depends on
 Depending on your setup following modules may also be required:
 
 * [puppetlabs/apt] >= 2.0.0
-* [darin/zypprepo] >= 1.0.2
+* [puppet/zypprepo] >= 2.0.0
 
 ### Limitations
 
@@ -294,7 +294,7 @@ icingaweb2::config::groupbackend {'mysql-backend':
 
 #### Business Process
 
-#### Cube 
+#### Cube
 
 ## Reference
 
@@ -316,7 +316,7 @@ icingaweb2::config::groupbackend {'mysql-backend':
 ### Public Classes
 
 #### Class: `icingaweb2`
-The default class of this module. It handles the basic installation and configuration of Icinga Web 2. 
+The default class of this module. It handles the basic installation and configuration of Icinga Web 2.
 
 **Parameters of `icingaweb2`:**
 
@@ -363,7 +363,7 @@ Stores all default parameters for the Icinga Web 2 installation.
 
 #### Class: `icingaweb2::repo`
 Installs the [packages.icinga.com] repository. Depending on your operating system [puppetlabs/apt] or
-[darin/zypprepo] are required.
+[puppet/zypprepo] are required.
 
 ### Public Defined Types
 
@@ -555,7 +555,7 @@ See also [CHANGELOG.md]
 [Icinga Web 2]: https://www.icinga.com/products/icinga-web-2/
 
 [puppetlabs/apt]: https://github.com/puppetlabs/puppetlabs-apt
-[darin/zypprepo]: https://forge.puppet.com/darin/zypprepo
+[puppet/zypprepo]: https://forge.puppet.com/puppet/zypprepo
 [puppetlabs/stdlib]: https://github.com/puppetlabs/puppetlabs-stdlib
 [puppetlabs/concat]: https://github.com/puppetlabs/puppetlabs-concat
 [puppetlabs/vcsrepo]: https://forge.puppet.com/puppetlabs/vcsrepo
