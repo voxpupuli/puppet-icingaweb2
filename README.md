@@ -95,6 +95,8 @@ class { '::icinga2':
 Be careful with this option: Setting `manage_package` to false also means that this module will not install any
 dependent packages of modules.
 
+Use the [monitoring](#monitoring) class to connect the web interface to Icinga 2.
+
 ### Manage Resources
 Icinga Web 2 resources are managed with the `icingaweb2::config::resource` defined type. Supported resource types
 are `db` and `ldap`. Resources are used for the internal authentication mechanism and by modules. Depending on the type
@@ -289,6 +291,26 @@ icingaweb2::config::groupbackend {'mysql-backend':
 ### Install and Manage Modules
 
 #### Monitoring
+This module is mandatory for almost every setup. It connects your Icinga Web interface to the Icinga 2 core. Current and
+history information are queried through the IDO database. Actions such as `Check Now`, `Set Downtime` or `Acknowledge`
+are send to the Icinga 2 API.
+
+Requirements: 
+
+* IDO feature in Icinga 2 (MySQL or PostgreSQL)
+* `ApiUser` object in Icinga 2 with proper permissions
+
+Example:
+``` puppet
+class {'icingaweb2::module::monitoring':
+  ido_host        => 'localhost',
+  ido_db_name     => 'icinga2',
+  ido_db_username => 'icinga2',
+  ido_db_password => 'supersecret',
+  api_username    => 'icinga',
+  api_password    => 'root',
+}
+```
 
 #### Director
 
@@ -300,6 +322,7 @@ icingaweb2::config::groupbackend {'mysql-backend':
 
 - [**Public classes**](#public-classes)
     - [Class: icingaweb2](#class-icingaweb2)
+    - [Class: icingaweb2::module::monitoring](#class-icingaweb2modulemonitoring)
 - [**Private classes**](#private-classes)
     - [Class: icingaweb2::config](#class-icingaweb2config)
     - [Class: icingaweb2::install](#class-icingaweb2install)
@@ -311,6 +334,7 @@ icingaweb2::config::groupbackend {'mysql-backend':
     - [Defined type: icingaweb2::config::authmethod](#defined-type-icingaweb2configauthmethod)
     - [Defined type: icingaweb2::config::role](#defined-type-icingaweb2configrole)
     - [Defined type: icingaweb2::config::groupbackend](#defined-type-icingaweb2configgroupbackend)
+    - [Defined type: icingaweb2::module](#defined-type-icingaweb2module)
 - [**Private defined types**](#private-defined-types)
 
 ### Public Classes
@@ -349,6 +373,47 @@ latest version of Icinga Web. When set to false the operating systems default wi
 
 ##### `manage_package`
 If set to false packages aren't managed. Defaults to `true`
+
+#### Class: `icingaweb2::module::monitoring`
+Manage the monitoring module. This module is mandatory for probably every setup.
+
+##### `ensure`
+Enable or disable module. Defaults to `present`
+
+##### `pretected_customvars`
+Custom variables in Icinga 2 may contain sensible information. Set patterns for custom variables that should be hidden
+in the web interface. Defaults to `*pw*, *pass*, community`
+
+##### `ido_type`
+Type of your IDO database. Either `mysql` or `pgsql`. Defaults to `mysql`
+
+##### `ido_host`
+Hostname of the IDO database.
+
+##### `ido_port`
+Port of the IDO database. Defaults to `3306`
+
+##### `ido_db_name`
+Name of the IDO database.
+
+##### `ido_db_username`
+Username for IDO DB connection.
+
+##### `ido_db_password`
+Password for IDO DB connection.
+
+##### `api_host`
+The API host is your Icinga 2.
+
+##### `api_port`
+Port of your Icinga 2 API. Defaults to `5665`
+
+##### `api_username`
+API username. This is needed to send commands to the Icinga 2 core Make sure you have a proper `ApiUser` configuration
+object configured in Icinga 2.
+
+##### `api_password`
+Password of the API user.
 
 ### Private Classes
 
@@ -526,6 +591,59 @@ Base DN that is searched for groups. Only valid with backend `ldap` with `msldap
 
 ##### `ldap_nested_group_search`
 Search for groups in groups. Only valid with backend `msldap`.
+
+#### Defined type: `icingaweb2::module`
+Download, enable and configure Icinga Web 2 modules. This is a public defined type and is meant to be used to install
+modules developed by the community as well.
+
+**Parameters of `icingaweb2::module`:**
+
+##### `ensure`
+Enable or disable module. Defaults to `present`
+
+##### `module`
+Name of the module.
+
+##### `install_method`
+Currently only `git` is supported as installation method. Other methods, such as `package`, may follow in future
+releases.
+
+##### `module_dir`
+Target directory of the module. This setting is only valid in combination with the installation method `git`.
+
+##### `git_repository`
+Git repository of the module. This setting is only valid in combination with the installation method `git`.
+
+##### `git_revision`
+Tag or branch of the git repository. This setting is only valid in combination with the installation method `git`.
+
+##### `settings`
+A hash with the module settings. Multiple configuration files with ini sections can be configured with this hash. The
+`module_name` should be used as target directory for the configuration files.
+
+Example:
+
+``` puppet 
+ $conf_dir        = $::icingaweb2::params::conf_dir
+ $module_conf_dir = "${conf_dir}/modules/mymodule"
+
+ $settings = {
+   'section1' => {
+     'target'   => "${module_conf_dir}/config1.ini",
+     'settings' => {
+       'setting1' => 'value1',
+       'setting2' => 'value2',
+     }
+   },
+   'section2' => {
+     'target'   => "${module_conf_dir}/config2.ini",
+     'settings' => {
+       'setting3' => 'value3',
+       'setting4' => 'value4',
+     }
+   }
+ }
+```
 
 ### Private Defined Types
 
