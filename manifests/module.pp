@@ -102,7 +102,7 @@ define icingaweb2::module(
       }
     }
     'none': { }
-    'default': {
+    default: {
       fail('The installation method you provided is not supported.')
     }
   }
