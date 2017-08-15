@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Icinga/puppet-icingaweb2.png?branch=master)](https://travis-ci.org/Icinga/puppet-icingaweb2)
+
 
 # Icinga Web 2 Puppet Module
 
