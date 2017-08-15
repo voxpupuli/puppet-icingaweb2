@@ -136,14 +136,22 @@ are supported: `db`, `ldap`, `msldap` and `external`. Auth methods can be chaine
 Create a MySQL authmethod:
 
 ``` puppet
-icingaweb2::config::resource{'my-sql':
-  type        => 'db',
-  db_type     => 'mysql',
-  host        => 'localhost',
-  port        => '3306',
-  db_name     => 'icingaweb2',
-  db_username => 'root',
-  db_password => 'supersecret',
+icingaweb2::config::authmethod{'my-sql':
+  backend  => 'db',
+  resource => 'my-sql',
+  order    => '01',
+}
+```
+Create a LDAP authmethod:
+
+``` puppet
+icingaweb2::config::authmethod {'ldap-auth':
+  backend                  => 'ldap',
+  resource                 => 'my-ldap',
+  ldap_user_class          => 'myObjectClass',
+  ldap_filter              => '(icingaaccess=true))',
+  ldap_user_name_attribute => 'uid',
+  order                    => '02',
 }
 ```
 
