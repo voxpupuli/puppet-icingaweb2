@@ -613,11 +613,11 @@ Enable or disable module. Defaults to `present`
 Name of the module.
 
 ##### `install_method`
-Currently only `git` is supported as installation method. Other methods, such as `package`, may follow in future
-releases.
+Currently only `git` and `none` is supported as installation method. Other methods, such as `package`, may follow in 
+future releases. Defaults to `git`
 
 ##### `module_dir`
-Target directory of the module. This setting is only valid in combination with the installation method `git`.
+Target directory of the module.
 
 ##### `git_repository`
 Git repository of the module. This setting is only valid in combination with the installation method `git`.

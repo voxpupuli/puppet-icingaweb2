@@ -11,12 +11,12 @@
 # [*module*]
 #   Name of the module.
 #
-# [*install_method*]
-#   Currently only `git` is supported as installation method. Other methods, such as `package`, may follow in future
-#   releases.
-#
 # [*module_dir*]
-#   Target directory of the module. This setting is only valid in combination with the installation method `git`.
+#   Target directory of the module.
+#
+# [*install_method*]
+#   Currently only `git` and `none` is supported as installation method. Other methods, such as `package`, may follow in
+#   future releases. Defaults to `git`
 #
 # [*git_repository*]
 #   Git repository of the module. This setting is only valid in combination with the installation method `git`.
@@ -65,6 +65,7 @@ define icingaweb2::module(
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($module_dir)
   validate_re($install_method, [ '^git$', '^none$' ],
     "${install_method} isn't supported. Valid values are 'git' and 'none'.")
   validate_string($module_name)
@@ -90,7 +91,6 @@ define icingaweb2::module(
 
   case $install_method {
     'git': {
-      validate_absolute_path($module_dir)
       validate_string($git_repository)
       validate_string($git_revision)
 
