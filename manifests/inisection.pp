@@ -52,6 +52,7 @@ define icingaweb2::inisection(
       warn   => false,
       owner  => $conf_user,
       group  => $conf_group,
+      mode   => '0640',
     }
   }
 
