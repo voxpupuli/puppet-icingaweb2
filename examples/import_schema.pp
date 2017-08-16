@@ -4,7 +4,7 @@ mysql::db { 'icingaweb2':
   user     => 'icingaweb2',
   password => 'icingaweb2',
   host     => 'localhost',
-  grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER'],
+  grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER', 'REFERENCES'],
 }
 
 include ::postgresql::server

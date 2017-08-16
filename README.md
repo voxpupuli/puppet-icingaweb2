@@ -97,6 +97,11 @@ dependent packages of modules.
 
 Use the [monitoring](#monitoring) class to connect the web interface to Icinga 2.
 
+This module does not provide functionality to install and configure any web server, see the following examples how to
+install Icinga Web 2 with differen web servers:
+
+* [Apache2](examples/apache2/apache2.pp)
+
 ### Manage Resources
 Icinga Web 2 resources are managed with the `icingaweb2::config::resource` defined type. Supported resource types
 are `db` and `ldap`. Resources are used for the internal authentication mechanism and by modules. Depending on the type
@@ -175,7 +180,7 @@ mysql::db { 'icingaweb2':
   user     => 'icingaweb2',
   password => 'icingaweb2',
   host     => 'localhost',
-  grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER'],
+  grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER', 'REFERENCES'],
 }
 
 class {'icingaweb2':
