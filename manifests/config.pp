@@ -81,6 +81,10 @@ class icingaweb2::config {
     },
   }
 
+  file { "${conf_dir}/enabledModules":
+    ensure => 'directory'
+  }
+
   if $import_schema {
     icingaweb2::config::resource { "${db_type}-icingaweb2":
       type        => 'db',

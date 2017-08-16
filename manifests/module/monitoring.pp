@@ -118,6 +118,7 @@ class icingaweb2::module::monitoring(
   }
 
   icingaweb2::module {'monitoring':
+    ensure         => $ensure,
     install_method => 'none',
     module_dir     => '/usr/share/icingaweb2/modules/monitoring',
     settings       => $settings,
