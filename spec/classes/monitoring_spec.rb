@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe('icingaweb2::module::monitoring', :type => :define) do
+describe('icingaweb2::module::monitoring', :type => :class) do
   let(:pre_condition) { [
       "class { 'icingaweb2': }"
   ] }
