@@ -79,6 +79,9 @@ class { '::icingaweb2':
 }
 ```
 
+**Info:** If you are using the [Icinga 2](https://github.com/icinga/puppet-icinga2) Puppet module on the same server,
+make sure to disable the repository management for one of the modules!
+
 If you want to manage the version of Icinga Web 2, you have to disable the package management of this module and handle
 packages in your own Puppet code.
 
