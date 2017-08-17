@@ -145,6 +145,8 @@ class icingaweb2::module::director(
     } else {
       $kickstart_settings = {}
     }
+  } else {
+    $kickstart_settings = {}
   }
 
   icingaweb2::module {'director':
