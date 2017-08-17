@@ -141,6 +141,8 @@ class icingaweb2::module::director(
         onlyif  => 'icingacli director kickstart required',
         require => [ Exec['director-migration'], Icingaweb2::Module['director'] ]
       }
+    } else {
+      $kickstart_settings = {}
     }
   }
 
