@@ -24,14 +24,16 @@ describe('icingaweb2::module::monitoring', :type => :class) do
         .with_install_method('none')
         .with_module_dir('/usr/share/icingaweb2/modules/monitoring')
         .with_settings({
-                           'backends'=>{
+                           'module-monitoring-backends'=>{
+                               'section_name' => 'backends',
                                'target'=>'/etc/icingaweb2/modules/monitoring/backends.ini',
                                'settings'=>{
                                    'type'=>'ido',
                                    'resource'=>'icingaweb2-module-monitoring'
                                }
                            },
-                           'commandtransports'=>{
+                           'module-monitoring-commandtransports'=>{
+                               'section_name' => 'commandtransports',
                                'target'=>'/etc/icingaweb2/modules/monitoring/commandtransports.ini',
                                'settings'=>{
                                    'transport'=>'api',
@@ -41,7 +43,8 @@ describe('icingaweb2::module::monitoring', :type => :class) do
                                    'password'=>'foobar'
                                }
                            },
-                           'config'=>{
+                           'module-monitoring-config'=>{
+                               'section_name' => 'config',
                                'target'=>'/etc/icingaweb2/modules/monitoring/config.ini',
                                'settings'=>{
                                    'protected_customvars'=>'*pw*, *pass*, community'
