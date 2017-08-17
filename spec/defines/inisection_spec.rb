@@ -19,9 +19,7 @@ describe('icingaweb2::inisection', :type => :define) do
       it { is_expected.to contain_concat__fragment('foo-test-01')
         .with_target('/foo/bar')
         .with_order('01')
-        .with_content(/\[test\]/)
-        .with_content(/setting1=value1/)
-        .with_content(/setting2=value2/)}
+        .with_content(/\[test\]\nsetting1 = \"value1\"\nsetting2 = \"value2\"\n\n/) }
     end
   end
 end
