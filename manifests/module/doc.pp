@@ -10,14 +10,14 @@
 class icingaweb2::module::doc(
   $ensure        = 'present',
 ){
-  $module_conf_dir = "${::icingaweb2::params::module_path}/doc"
+  $module_dir = "${::icingaweb2::params::module_path}/doc"
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
 
   icingaweb2::module { 'doc':
     ensure         => $ensure,
-    module_dir     => $module_conf_dir,
+    module_dir     => $module_dir,
     install_method => 'none',
   }
 }

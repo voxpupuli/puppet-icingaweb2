@@ -58,6 +58,7 @@ class icingaweb2::module::monitoring(
 ){
 
   $conf_dir        = $::icingaweb2::params::conf_dir
+  $module_dir      = "${::icingaweb2::params::module_path}/monitoring"
   $module_conf_dir = "${conf_dir}/modules/monitoring"
 
   validate_re($ensure, [ '^present$', '^absent$' ],
@@ -123,7 +124,7 @@ class icingaweb2::module::monitoring(
   icingaweb2::module {'monitoring':
     ensure         => $ensure,
     install_method => 'none',
-    module_dir     => '/usr/share/icingaweb2/modules/monitoring',
+    module_dir     => $module_dir,
     settings       => $settings,
   }
 }
