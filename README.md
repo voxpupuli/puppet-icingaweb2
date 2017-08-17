@@ -374,6 +374,54 @@ class {'::icingaweb2::module::doc':
 }
 ```
 
+#### Puppetdb
+You can configure director to query one or more PuppetDB servers.
+
+Example: set up puppetdb module and configure two SSL keys
+``` puppet
+$certificates = {'pupdb1' => {
+                   :ssl_key => '-----BEGIN RSA PRIVATE KEY----- abc...',
+                   :ssl_cacert => '-----BEGIN RSA PRIVATE KEY----- def...', },
+                 'pupdb2' => {
+                   :ssl_key => '-----BEGIN RSA PRIVATE KEY----- zyx...',
+                   :ssl_cacert => '-----BEGIN RSA PRIVATE KEY----- wvur...', },
+                }
+class {'::icingaweb2::module::puppetdb':
+  git_revision => 'fdfbe11989171840f0a228ac1b1eef6c5808bd77',
+  ssl          => 'none',
+  certificates => $certificates,
+}
+```
+
+Example: set up puppetdb module and configure puppet SSL key
+``` puppet
+class {'::icingaweb2::module::puppetdb':
+  git_revision => 'fdfbe11989171840f0a228ac1b1eef6c5808bd77',
+  ssl          => 'puppet',
+}
+```
+
+Example: set up puppetdb module and configure one SSL key *and* puppet SSL key
+``` puppet
+$certificates = {'pupdb1' => {
+                   :ssl_key => '-----BEGIN RSA PRIVATE KEY----- abc...',
+                   :ssl_cacert => '-----BEGIN RSA PRIVATE KEY----- def...', },
+                }
+class {'::icingaweb2::module::puppetdb':
+  git_revision => 'fdfbe11989171840f0a228ac1b1eef6c5808bd77',
+  ssl          => 'puppet',
+  certificates => $certificates,
+}
+```
+
+Example: add extra certificates with with icingaweb2::module::puppetdb::certificate:
+``` puppet
+icingaweb2::module::puppetdb::certificate { 'mypuppetdbhost.example.com':
+  ssl_cacert  => '-----BEGIN CERTIFICATE----- ...',
+  ssl_key     => '-----BEGIN RSA PRIVATE KEY----- ...',
+}
+```
+
 #### Business Process
 The Business Process module allows you to visualize and monitor business processes based on hosts and services monitored
 by Icinga 2. The module is installed by cloning the git repository, therefore you need to set `git_revision` to either a
@@ -429,6 +477,7 @@ class { 'icingaweb2::module::generictts':
     - [Class: icingaweb2::module::businessprocess](#class-icingaweb2modulebusinessprocess)
     - [Class: icingaweb2::module::cube](#class-icingaweb2modulecube)
     - [Class: icingaweb2::module::generictts](#class-icingaweb2modulegenerictts)
+    - [Class: icingaweb2::module::puppetdb](#class-icingaweb2modulepuppetdb)
 - [**Private classes**](#private-classes)
     - [Class: icingaweb2::config](#class-icingaweb2config)
     - [Class: icingaweb2::install](#class-icingaweb2install)
@@ -441,6 +490,7 @@ class { 'icingaweb2::module::generictts':
     - [Defined type: icingaweb2::config::role](#defined-type-icingaweb2configrole)
     - [Defined type: icingaweb2::config::groupbackend](#defined-type-icingaweb2configgroupbackend)
     - [Defined type: icingaweb2::module](#defined-type-icingaweb2module)
+    - [Defined type: icingaweb2::module::puppetdb::certificate](#defined-type-icingaweb2modulepuppetdbcertificate)
 - [**Private defined types**](#private-defined-types)
     - [Defined type: icingaweb2::module::generictts::ticketsystem](#defined-type-icingaweb2modulegenericttsticketsystem)
 
@@ -599,6 +649,8 @@ or `v2.1.0`.
 Install and configure the cube module.
 
 **Parameters of `icingaweb2::module::cube`:**
+The cube module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master`
+or `v1.0.0`.
 
 ##### `ensure`
 Enable or disable module. Defaults to `present`
@@ -635,6 +687,26 @@ ticketsystems => {
 
 ##### `ensure`
 Enable or disable module. Defaults to `present`
+
+#### Class: `icingaweb2::module::puppetdb`
+Install and configure the puppetdb module.
+
+**Parameters of `icingaweb2::module::puppetdb`:**
+
+##### `ensure`
+Enable or disable module. Defaults to `present`
+
+##### `git_revision`
+The puppetdb module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master`
+or `v1.3.2`.
+
+##### `ssl`
+How to configure the SSL certificates.  Defaults to `none`.  Other option is `puppet`.  See also `certificates`
+parameter
+
+##### `certificates`
+Hash with SSL certificates to configure.  See `icingaweb2::module::puppetdb::certificate`.
+>>>>>>> Implement icingaweb2::module::puppetdb class and icingaweb2::module::puppetdb::certificate type
 
 ### Private Classes
 
@@ -865,6 +937,21 @@ Example:
    }
  }
 ```
+
+#### Defined type: `icingaweb2::module::puppetdb::certificate`
+
+Add extra certificates to the puppetdb module
+
+**Parameters of `icingaweb2::module::puppetdb::certificate`:**
+
+##### `ensure`
+Enable or disable certificate. Defaults to `present`
+
+##### `ssl_key`
+Contents of the combined SSL key.
+
+##### `ssl_cacert`
+CA certificate
 
 ### Private Defined Types
 
