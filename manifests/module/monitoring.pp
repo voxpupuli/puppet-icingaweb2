@@ -103,17 +103,20 @@ class icingaweb2::module::monitoring(
   }
 
   $settings = {
-    'backends' => {
-      'target'   => "${module_conf_dir}/backends.ini",
-      'settings' => delete_undef_values($backend_settings)
+    'module-monitoring-backends' => {
+      'section_name' => 'backends',
+      'target'       => "${module_conf_dir}/backends.ini",
+      'settings'     => delete_undef_values($backend_settings)
     },
-    'commandtransports' => {
-      'target'   => "${module_conf_dir}/commandtransports.ini",
-      'settings' => delete_undef_values($commandtransport_settings)
+    'module-monitoring-commandtransports' => {
+      'section_name' => 'commandtransports',
+      'target'       => "${module_conf_dir}/commandtransports.ini",
+      'settings'     => delete_undef_values($commandtransport_settings)
     },
-    'config' => {
-      'target'   => "${module_conf_dir}/config.ini",
-      'settings' => delete_undef_values($config_settings)
+    'module-monitoring-config' => {
+      'section_name' => 'config',
+      'target'       => "${module_conf_dir}/config.ini",
+      'settings'     => delete_undef_values($config_settings)
     }
   }
 
