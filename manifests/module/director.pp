@@ -86,6 +86,7 @@ class icingaweb2::module::director(
   validate_string($db_username)
   validate_string($db_password)
   validate_bool($import_schema)
+  validate_bool($kickstart)
 
   icingaweb2::config::resource { 'icingaweb2-module-director':
     type        => 'db',
@@ -109,7 +110,7 @@ class icingaweb2::module::director(
   }
 
   if $import_schema {
-    exec { 'director-db-migration':
+    exec { 'director-migration':
       command => 'icingacli director migration run',
       onlyif  => 'icingacli director migration pending',
     }
@@ -138,7 +139,7 @@ class icingaweb2::module::director(
       exec { 'director-kickstart':
         command => 'icingacli director kickstart run',
         onlyif  => 'icingacli director kickstart required',
-        require => [ Exec['director-db-migration'], Icingaweb2::Module['director'] ]
+        require => [ Exec['director-migration'], Icingaweb2::Module['director'] ]
       }
     }
   }
