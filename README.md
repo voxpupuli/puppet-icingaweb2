@@ -329,6 +329,35 @@ class {'icingaweb2::module::monitoring':
 ```
 
 #### Director
+The Director is used to manage Icinga 2 configuration through the web interface Icinga Web 2. The module requires its
+database. The module is installed by cloning the git repository, therefore you need to set `git_revision` to either a
+git branch or tag, eg. `master` or `v1.3.2`. 
+
+The Director has some dependencies that you have to fulfill manually currently:
+* Icinga 2 (>= 2.6.0)
+* Icinga Web 2 (>= 2.4.1)
+* A MySQL or PostgreSQL database
+* PHP (>= 5.4)
+* php-curl
+
+Example:
+``` puppet
+class {'icingaweb2::module::director':
+  git_revision  => 'v1.3.2',
+  db_host       => 'localhost',
+  db_name       => 'director',
+  db_username   => 'director',
+  db_password   => 'director',
+  import_schema => true,
+  kickstart     => true,
+  endpoint      => 'puppet-icingaweb2.localdomain',
+  api_username  => 'root',
+  api_password  => 'icinga',
+  require       => Mysql::Db['director']
+}
+```
+
+To run the kickstart mechanism, it's required to set `import_schema` to `true`.
 
 #### Business Process
 
@@ -339,6 +368,7 @@ class {'icingaweb2::module::monitoring':
 - [**Public classes**](#public-classes)
     - [Class: icingaweb2](#class-icingaweb2)
     - [Class: icingaweb2::module::monitoring](#class-icingaweb2modulemonitoring)
+    - [Class: icingaweb2::module::director](#class-icingaweb2moduledirector)
 - [**Private classes**](#private-classes)
     - [Class: icingaweb2::config](#class-icingaweb2config)
     - [Class: icingaweb2::install](#class-icingaweb2install)
@@ -430,6 +460,55 @@ object configured in Icinga 2.
 
 ##### `api_password`
 Password of the API user.
+
+#### Class: `icingaweb2::module::director`
+Install and configure the director module.
+
+##### `ensure`
+Enable or disable module. Defaults to `present`
+
+##### `git_revision`
+The director module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master` or
+`v1.3.2`.
+
+##### `db_type`
+Type of your database. Either `mysql` or `pgsql`. Defaults to `mysql`
+
+##### `db_host`
+Hostname of the database.
+
+##### `db_port`
+Port of the database. Defaults to `3306`
+
+##### `db_name`
+Name of the database.
+
+##### `db_username`
+Username for DB connection.
+
+##### `db_password`
+Password for DB connection.
+
+##### `import_schema`
+Import database schema. Defaults to `false`
+
+##### `kickstart`
+Run kickstart command after database migration. This requires `import_schema` to be `true`. Defaults to `false`
+
+##### `endpoint`
+Endpoint object name of Icinga 2 API. This setting is only valid if `kickstart` is `true`.
+
+##### `api_host`
+Icinga 2 API hostname. This setting is only valid if `kickstart` is `true`. Defaults to `localhost`
+
+##### `api_port`
+Icinga 2 API port. This setting is only valid if `kickstart` is `true`. Defaults to `5665`
+
+##### `api_username`
+Icinga 2 API username. This setting is only valid if `kickstart` is `true`.
+
+##### `api_password`
+Icinga 2 API password. This setting is only valid if `kickstart` is `true`.
 
 ### Private Classes
 

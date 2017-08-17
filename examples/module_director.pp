@@ -1,12 +1,12 @@
 include ::mysql::server
 
-mysql::db { 'icingaweb2':
-  user     => 'icingaweb2',
-  password => 'icingaweb2',
+mysql::db { 'director':
+  user     => 'director',
+  password => 'director',
   host     => 'localhost',
+  charset  => 'utf8',
   grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER', 'REFERENCES'],
 }
-
 
 class {'icingaweb2':
   manage_repo   => true,
@@ -16,7 +16,6 @@ class {'icingaweb2':
   db_port       => '3306',
   db_username   => 'icingaweb2',
   db_password   => 'icingaweb2',
-  require       => Mysql::Db['icingaweb2'],
 }
 
 class {'icingaweb2::module::monitoring':
@@ -26,4 +25,18 @@ class {'icingaweb2::module::monitoring':
   ido_db_password => 'supersecret',
   api_username    => 'icinga',
   api_password    => 'root',
+}
+
+class {'icingaweb2::module::director':
+  git_revision  => 'v1.3.2',
+  db_host       => 'localhost',
+  db_name       => 'director',
+  db_username   => 'director',
+  db_password   => 'director',
+  import_schema => true,
+  kickstart     => true,
+  endpoint      => 'puppet-icingaweb2.localdomain',
+  api_username  => 'root',
+  api_password  => 'icinga',
+  require       => Mysql::Db['director']
 }
