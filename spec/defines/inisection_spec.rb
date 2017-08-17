@@ -16,7 +16,7 @@ describe('icingaweb2::inisection', :type => :define) do
 
       it { is_expected.to contain_concat('/foo/bar') }
 
-      it { is_expected.to contain_concat__fragment('test')
+      it { is_expected.to contain_concat__fragment('foo-test-01')
         .with_target('/foo/bar')
         .with_order('01')
         .with_content(/\[test\]/)
