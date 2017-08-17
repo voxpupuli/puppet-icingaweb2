@@ -56,7 +56,7 @@ define icingaweb2::inisection(
     }
   }
 
-  concat::fragment { $section_name:
+  concat::fragment { "${title}-${section_name}-${order}":
     target  =>  $target,
     content => template('icingaweb2/inisection.erb'),
     order   => $order,
