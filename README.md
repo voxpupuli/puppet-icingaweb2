@@ -415,7 +415,7 @@ If 'logging' is set to `file`, this is the target log file. Defaults to `/var/lo
 ##### `logging_level`
 Logging verbosity. Possible values are `ERROR`, `WARNING`, `INFO` and `DEBUG`. Defaults to `INFO`
 
-##### `enable_stacktraces`
+##### `show_stacktraces`
 Whether to display stacktraces in the web interface or not. Defaults to `false`
 
 ##### `module_path`
@@ -424,8 +424,8 @@ Path to module sources. Multiple paths must be separated by colon. Defaults to `
 ##### `theme`
 The default theme setting. Users may override this settings. Defaults to `icinga`.
 
-##### `theme_access`
-Whether users can change themes or not. Defaults to `true`.
+##### `theme_disabled`
+Whether users can change themes or not. Defaults to `false`.
 
 ##### `manage_repo`
 When set to true this module will install the packages.icinga.com repository. With this official repo you can get the

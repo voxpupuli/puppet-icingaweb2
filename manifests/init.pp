@@ -40,10 +40,10 @@ class icingaweb2 (
   $logging            = 'file',
   $logging_file       = '/var/log/icingaweb2/icingaweb2.log',
   $logging_level      = 'INFO',
-  $enable_stacktraces = false,
+  $show_stacktraces   = false,
   $module_path        = $::icingaweb2::params::module_path,
   $theme              = 'Icinga',
-  $theme_access       = true,
+  $theme_disabled     = false,
   $manage_repo        = false,
   $manage_package     = true,
   $import_schema      = false,
@@ -60,10 +60,10 @@ class icingaweb2 (
   validate_absolute_path($logging_file)
   validate_re($logging_level, [ 'ERROR', 'WARNING', 'INFO', 'DEBUG' ],
     "${logging_level} isn't supported. Valid values are 'ERROR', 'WARNING', 'INFO' and 'DEBUG'.")
-  validate_bool($enable_stacktraces)
+  validate_bool($show_stacktraces)
   validate_absolute_path($module_path)
   validate_string($theme)
-  validate_bool($theme_access)
+  validate_bool($theme_disabled)
   validate_bool($manage_repo)
   validate_bool($manage_package)
   validate_bool($import_schema)
@@ -74,16 +74,6 @@ class icingaweb2 (
     validate_string($db_name)
     validate_string($db_username)
     validate_string($db_password)
-  }
-
-  $show_stacktraces = $enable_stacktraces ? {
-    true    => '1',
-    default => '0',
-  }
-
-  $theme_disabled = $theme_access ? {
-    true    => '1',
-    default => '0'
   }
 
   class { '::icingaweb2::repo': }
