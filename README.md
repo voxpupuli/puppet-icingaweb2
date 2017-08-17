@@ -359,6 +359,21 @@ class {'icingaweb2::module::director':
 
 To run the kickstart mechanism, it's required to set `import_schema` to `true`.
 
+#### Doc
+The doc module provides an interface to the icinga2 documentation.
+
+Example:
+``` puppet
+include ::icingaweb2::module::doc
+```
+
+To disable:
+``` puppet
+class {'::icingaweb2::module::doc':
+  ensure => absent
+}
+```
+
 #### Business Process
 
 #### Cube
@@ -369,6 +384,7 @@ To run the kickstart mechanism, it's required to set `import_schema` to `true`.
     - [Class: icingaweb2](#class-icingaweb2)
     - [Class: icingaweb2::module::monitoring](#class-icingaweb2modulemonitoring)
     - [Class: icingaweb2::module::director](#class-icingaweb2moduledirector)
+    - [Class: icingaweb2::module::doc](#class-icingaweb2moduledoc)
 - [**Private classes**](#private-classes)
     - [Class: icingaweb2::config](#class-icingaweb2config)
     - [Class: icingaweb2::install](#class-icingaweb2install)
@@ -509,6 +525,12 @@ Icinga 2 API username. This setting is only valid if `kickstart` is `true`.
 
 ##### `api_password`
 Icinga 2 API password. This setting is only valid if `kickstart` is `true`.
+
+#### Class: `icingaweb2::module::doc`
+Install and configure the doc module.
+
+##### `ensure`
+Enable or disable module. Defaults to `present`
 
 ### Private Classes
 
