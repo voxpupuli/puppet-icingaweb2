@@ -53,7 +53,7 @@
 define icingaweb2::module(
   $ensure         = 'present',
   $module         = $title,
-  $module_dir     = undef,
+  $module_dir     = "${::icingaweb2::params::module_path}/${title}",
   $install_method = 'git',
   $git_repository = undef,
   $git_revision   = 'master',
@@ -65,7 +65,7 @@ define icingaweb2::module(
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($module_dir)
+  validate_absolute_path($module_dir)
   validate_re($install_method, [ '^git$', '^none$' ],
     "${install_method} isn't supported. Valid values are 'git' and 'none'.")
   validate_string($module_name)

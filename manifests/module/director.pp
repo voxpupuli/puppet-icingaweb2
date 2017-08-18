@@ -68,7 +68,6 @@ class icingaweb2::module::director(
   $api_password  = undef,
 ){
   $conf_dir        = $::icingaweb2::params::conf_dir
-  $module_dir      = "${::icingaweb2::params::module_path}/director"
   $module_conf_dir = "${conf_dir}/modules/director"
 
   Exec {
@@ -153,7 +152,6 @@ class icingaweb2::module::director(
     ensure         => $ensure,
     git_repository => 'https://github.com/Icinga/icingaweb2-module-director.git',
     git_revision   => $git_revision,
-    module_dir     => $module_dir,
     settings       => merge($db_settings, $kickstart_settings),
   }
 }
