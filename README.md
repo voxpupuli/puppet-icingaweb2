@@ -391,6 +391,15 @@ class { 'icingaweb2::module::businessprocess':
 ```
 
 #### Cube
+The Cube module is like a extended filtering tool. It visualizes host statistics (count and health state) grouped by
+various custom variables in multiple dimensions.
+
+Example:
+``` puppet
+class { 'icingaweb2::module::cube':
+  git_revision => 'v1.0.0'
+}
+```
 
 ## Reference
 
@@ -400,6 +409,7 @@ class { 'icingaweb2::module::businessprocess':
     - [Class: icingaweb2::module::director](#class-icingaweb2moduledirector)
     - [Class: icingaweb2::module::doc](#class-icingaweb2moduledoc)
     - [Class: icingaweb2::module::businessprocess](#class-icingaweb2modulebusinessprocess)
+    - [Class: icingaweb2::module::cube](#class-icingaweb2modulecube)
 - [**Private classes**](#private-classes)
     - [Class: icingaweb2::config](#class-icingaweb2config)
     - [Class: icingaweb2::install](#class-icingaweb2install)
@@ -564,6 +574,18 @@ Enable or disable module. Defaults to `present`
 ##### `git_revision`
 The businessprocess module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master`
 or `v2.1.0`.
+
+#### Class: `icingaweb2::module::cube`
+Install and enable the cube module.
+
+**Parameters of `icingaweb2::module::cube`:**
+
+##### `ensure`
+Enable or disable module. Defaults to `present`
+
+##### `git_revision`
+The cube module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master`
+or `v1.0.0`.
 
 ### Private Classes
 
