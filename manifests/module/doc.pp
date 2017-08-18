@@ -1,4 +1,4 @@
-# == Define: icingaweb2::module::doc
+# == Class: icingaweb2::module::doc
 #
 # Install and configure the doc module.
 #

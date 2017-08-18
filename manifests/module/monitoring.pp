@@ -1,4 +1,4 @@
-# == Define: icingaweb2::module::monitoring
+# == Class: icingaweb2::module::monitoring
 #
 # Manage the monitoring module. This module is mandatory for probably every setup.
 #

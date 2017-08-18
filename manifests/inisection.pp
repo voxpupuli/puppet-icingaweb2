@@ -22,7 +22,7 @@
 # 'global'
 #
 # include icingawebeb2
-# icingaweb2::inifile {"/path/to/config.ini":
+# icingaweb2::inisection {"/path/to/config.ini":
 #   settings => {
 #     'global' => {
 #       'setting1' => 'value',

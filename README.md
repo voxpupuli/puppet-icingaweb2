@@ -392,12 +392,30 @@ class { 'icingaweb2::module::businessprocess':
 
 #### Cube
 The Cube module is like a extended filtering tool. It visualizes host statistics (count and health state) grouped by
-various custom variables in multiple dimensions.
+various custom variables in multiple dimensions. The module is installed by cloning the git repository, therefore you
+need to set `git_revision` to either a git branch or tag, eg. `master` or `v1.0.0`. 
 
 Example:
 ``` puppet
 class { 'icingaweb2::module::cube':
   git_revision => 'v1.0.0'
+}
+```
+
+#### GenericTTS
+The GenericTTS module matches ticket pattern and replaces them with a link to your ticketsystem. The module is installed
+by cloning the git repository, therefore you need to set `git_revision` to either a git branch or tag, eg. `master`
+or `v2.0.0`.
+ 
+Example:
+``` puppet
+class { 'icingaweb2::module::generictts':
+  git_revision  => 'v2.0.0',
+  ticketsystems => {
+    'my-ticket-system' => {
+      pattern => '/#([0-9]{4,6})/',
+      url     => 'https://my.ticket.system/tickets/id=$1',
+    }
 }
 ```
 
@@ -410,6 +428,7 @@ class { 'icingaweb2::module::cube':
     - [Class: icingaweb2::module::doc](#class-icingaweb2moduledoc)
     - [Class: icingaweb2::module::businessprocess](#class-icingaweb2modulebusinessprocess)
     - [Class: icingaweb2::module::cube](#class-icingaweb2modulecube)
+    - [Class: icingaweb2::module::generictts](#class-icingaweb2modulegenerictts)
 - [**Private classes**](#private-classes)
     - [Class: icingaweb2::config](#class-icingaweb2config)
     - [Class: icingaweb2::install](#class-icingaweb2install)
@@ -423,6 +442,7 @@ class { 'icingaweb2::module::cube':
     - [Defined type: icingaweb2::config::groupbackend](#defined-type-icingaweb2configgroupbackend)
     - [Defined type: icingaweb2::module](#defined-type-icingaweb2module)
 - [**Private defined types**](#private-defined-types)
+    - [Defined type: icingaweb2::module::generictts::ticketsystem](#defined-type-icingaweb2modulegenericttsticketsystem)
 
 ### Public Classes
 
@@ -576,7 +596,7 @@ The businessprocess module is installed by cloning the git repository. Set eithe
 or `v2.1.0`.
 
 #### Class: `icingaweb2::module::cube`
-Install and enable the cube module.
+Install and configure the cube module.
 
 **Parameters of `icingaweb2::module::cube`:**
 
@@ -586,6 +606,35 @@ Enable or disable module. Defaults to `present`
 ##### `git_revision`
 The cube module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master`
 or `v1.0.0`.
+
+#### Class: `icingaweb2::module::generictts`
+Install and enable the generictts module.
+
+**Parameters of `icingaweb2::module::generictts`:**
+
+##### `ensure`
+Enable or disable module. Defaults to `present`
+
+##### `git_revision`
+The generictts module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master` or
+`v2.0.0`.
+
+##### `ticketsystems`
+A hash of ticketsystems. The hash expects a `patten` and a `url` for each ticketsystem. The regex pattern is to match
+the ticket ID, eg. `/#([0-9]{4,6})/`. Place the ticket ID in the URL, eg. `https://my.ticket.system/tickets/id=$1`
+
+Example:
+``` puppet 
+ticketsystems => {
+  system1 => {
+    pattern => '/#([0-9]{4,6})/',
+    url     => 'https://my.ticket.system/tickets/id=$1'
+  }
+}
+```
+
+##### `ensure`
+Enable or disable module. Defaults to `present`
 
 ### Private Classes
 
@@ -818,6 +867,20 @@ Example:
 ```
 
 ### Private Defined Types
+
+#### Defined type: `icingaweb2::module::generictts::ticketsystem`
+Manage ticketsystem configuration for the generictts module.
+
+**Parameters of `icingaweb2::module::generictts::ticketsystem`:**
+
+##### `ticketsystem`
+The name of the ticketsystem.
+
+##### `pattern`
+A regex pattern to match ticket numbers, eg. `/#([0-9]{4,6})/`
+
+##### `url`
+The URL to your ticketsystem. Place the ticket ID in the URL, eg. `https://my.ticket.system/tickets/id=$1`
 
 ## Development
 A roadmap of this project is located at https://github.com/Icinga/puppet-icingaweb2/milestones. Please consider

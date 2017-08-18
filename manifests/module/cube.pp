@@ -1,4 +1,4 @@
-# == Define: icingaweb2::module::cube
+# == Class: icingaweb2::module::cube
 #
 # Install and enable the cube module.
 #

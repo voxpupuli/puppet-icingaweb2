@@ -1,4 +1,4 @@
-# == Define: icingaweb2::module::businessprocess
+# == Class: icingaweb2::module::businessprocess
 #
 # Install and enable the businessprocess module.
 #

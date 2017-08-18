@@ -10,7 +10,7 @@ describe('icingaweb2::module::businessprocess', :type => :class) do
       facts
     end
 
-    context "with git_revision 'v2.1.0'" do
+    context "#{os} with git_revision 'v2.1.0'" do
       let(:params) { { :git_revision => 'v2.1.0', } }
 
       it { is_expected.to contain_icingaweb2__module('businessprocess')

@@ -1,4 +1,4 @@
-# == Define: icingaweb2::module::director
+# == Class: icingaweb2::module::director
 #
 # Install and configure the director module.
 #
