@@ -76,8 +76,10 @@ class icingaweb2 (
     validate_string($db_password)
   }
 
-  class { '::icingaweb2::repo': }
+  anchor { '::icingaweb2::begin': }
+  -> class { '::icingaweb2::repo': }
   -> class { '::icingaweb2::install': }
   -> class { '::icingaweb2::config': }
+  -> anchor { '::icingaweb2::end': }
 
 }
