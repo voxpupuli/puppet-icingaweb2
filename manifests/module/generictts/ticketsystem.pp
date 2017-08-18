@@ -31,8 +31,8 @@ define icingaweb2::module::generictts::ticketsystem(
     section_name => $ticketsystem,
     target       => "${module_conf_dir}/config.ini",
     settings     => {
-      'pattern'  => $pattern,
-      'url'      => $url,
+      'pattern' => $pattern,
+      'url'     => $url,
     }
   }
 }
