@@ -375,6 +375,20 @@ class {'::icingaweb2::module::doc':
 ```
 
 #### Business Process
+The Business Process module allows you to visualize and monitor business processes based on hosts and services monitored
+by Icinga 2. The module is installed by cloning the git repository, therefore you need to set `git_revision` to either a
+git branch or tag, eg. `master` or `v2.1.0`. 
+
+This module has the following dependecies:
+* Icinga Web 2 (>= 2.4.1)
+* PHP (>= 5.3 or 7.x)
+
+Example:
+``` puppet
+class { 'icingaweb2::module::businessprocess':
+  git_revision => 'v2.1.0'
+}
+```
 
 #### Cube
 
@@ -385,6 +399,7 @@ class {'::icingaweb2::module::doc':
     - [Class: icingaweb2::module::monitoring](#class-icingaweb2modulemonitoring)
     - [Class: icingaweb2::module::director](#class-icingaweb2moduledirector)
     - [Class: icingaweb2::module::doc](#class-icingaweb2moduledoc)
+    - [Class: icingaweb2::module::businessprocess](#class-icingaweb2modulebusinessprocess)
 - [**Private classes**](#private-classes)
     - [Class: icingaweb2::config](#class-icingaweb2config)
     - [Class: icingaweb2::install](#class-icingaweb2install)
@@ -439,6 +454,8 @@ If set to false packages aren't managed. Defaults to `true`
 #### Class: `icingaweb2::module::monitoring`
 Manage the monitoring module. This module is mandatory for probably every setup.
 
+**Parameters of `icingaweb2::module::monitoring`:**
+
 ##### `ensure`
 Enable or disable module. Defaults to `present`
 
@@ -479,6 +496,8 @@ Password of the API user.
 
 #### Class: `icingaweb2::module::director`
 Install and configure the director module.
+
+**Parameters of `icingaweb2::module::director`:**
 
 ##### `ensure`
 Enable or disable module. Defaults to `present`
@@ -529,8 +548,22 @@ Icinga 2 API password. This setting is only valid if `kickstart` is `true`.
 #### Class: `icingaweb2::module::doc`
 Install and configure the doc module.
 
+**Parameters of `icingaweb2::module::doc`:**
+
 ##### `ensure`
 Enable or disable module. Defaults to `present`
+
+#### Class: `icingaweb2::module::businessprocess`
+Install and enable the businessprocess module.
+
+**Parameters of `icingaweb2::module::businessprocess`:**
+
+##### `ensure`
+Enable or disable module. Defaults to `present`
+
+##### `git_revision`
+The businessprocess module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master`
+or `v2.1.0`.
 
 ### Private Classes
 
