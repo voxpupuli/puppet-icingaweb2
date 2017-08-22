@@ -4,7 +4,7 @@ fixtures:
     vcsrepo: "puppetlabs/vcsrepo"
     concat:
       repo: "puppetlabs/concat"
-      ref: "2.2.1"
+      ref: "4.0.1"
     apt:
       repo: "puppetlabs/apt"
       ref: "2.4.0"
