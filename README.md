@@ -511,18 +511,8 @@ Username for IDO DB connection.
 ##### `ido_db_password`
 Password for IDO DB connection.
 
-##### `api_host`
-The API host is your Icinga 2.
-
-##### `api_port`
-Port of your Icinga 2 API. Defaults to `5665`
-
-##### `api_username`
-API username. This is needed to send commands to the Icinga 2 core Make sure you have a proper `ApiUser` configuration
-object configured in Icinga 2.
-
-##### `api_password`
-Password of the API user.
+##### `commandtransports`
+A hash of command transports.
 
 #### Class: `icingaweb2::module::director`
 Install and configure the director module.
