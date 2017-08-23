@@ -29,18 +29,8 @@
 # [*ido_db_password*]
 #   Password for IDO DB connection.
 #
-# [*api_host*]
-#   The API host is your Icinga 2.
-#
-# [*api_port*]
-#   Port of your Icinga 2 API. Defaults to `5665`
-#
-# [*api_username*]
-#   API username. This is needed to send commands to the Icinga 2 core Make sure you have a proper `ApiUser`
-#   configuration object configured in Icinga 2.
-#
-# [*api_password*]
-#   Password of the API user.
+# [*commandtransports*]
+#   A hash of command transports.
 #
 class icingaweb2::module::monitoring(
   $ensure               = 'present',
@@ -51,10 +41,7 @@ class icingaweb2::module::monitoring(
   $ido_db_name          = undef,
   $ido_db_username      = undef,
   $ido_db_password      = undef,
-  $api_host             = 'localhost',
-  $api_port             = 5665,
-  $api_username         = undef,
-  $api_password         = undef,
+  $commandtransports    = undef,
 ){
 
   $conf_dir        = $::icingaweb2::params::conf_dir
@@ -70,10 +57,6 @@ class icingaweb2::module::monitoring(
   validate_string($ido_db_name)
   validate_string($ido_db_username)
   validate_string($ido_db_password)
-  validate_string($api_host)
-  validate_numeric($api_port)
-  validate_string($api_username)
-  validate_string($api_password)
 
   icingaweb2::config::resource { 'icingaweb2-module-monitoring':
     type        => 'db',
@@ -90,14 +73,6 @@ class icingaweb2::module::monitoring(
     'resource' => 'icingaweb2-module-monitoring',
   }
 
-  $commandtransport_settings = {
-    'transport' => 'api',
-    'host'      => $api_host,
-    'port'      => $api_port,
-    'username'  => $api_username,
-    'password'  => $api_password,
-  }
-
   $config_settings = {
     'protected_customvars' => $protected_customvars
   }
@@ -108,16 +83,16 @@ class icingaweb2::module::monitoring(
       'target'       => "${module_conf_dir}/backends.ini",
       'settings'     => delete_undef_values($backend_settings)
     },
-    'module-monitoring-commandtransports' => {
-      'section_name' => 'commandtransports',
-      'target'       => "${module_conf_dir}/commandtransports.ini",
-      'settings'     => delete_undef_values($commandtransport_settings)
-    },
     'module-monitoring-config' => {
       'section_name' => 'config',
       'target'       => "${module_conf_dir}/config.ini",
       'settings'     => delete_undef_values($config_settings)
     }
+  }
+
+  if $commandtransports {
+    validate_hash($commandtransports)
+    create_resources('icingaweb2::module::monitoring::commandtransport', $commandtransports)
   }
 
   icingaweb2::module {'monitoring':
