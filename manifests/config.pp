@@ -81,6 +81,10 @@ class icingaweb2::config {
     },
   }
 
+  file { "${conf_dir}/modules":
+    ensure => 'directory'
+  }
+
   file { "${conf_dir}/enabledModules":
     ensure => 'directory'
   }

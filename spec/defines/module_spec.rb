@@ -19,6 +19,7 @@ describe('icingaweb2::module', :type => :define) do
 
       it { is_expected.to contain_file('/etc/icingaweb2/enabledModules') }
       it { is_expected.to contain_file('/etc/icingaweb2/enabledModules/foo') }
+      it { is_expected.to contain_file('/etc/icingaweb2/modules') }
       it { is_expected.to contain_file('/etc/icingaweb2/modules/foo') }
 
       it { is_expected.to contain_icingaweb2__inisection('section1')
@@ -35,6 +36,7 @@ describe('icingaweb2::module', :type => :define) do
 
       it { is_expected.to contain_file('/etc/icingaweb2/enabledModules') }
       it { is_expected.to contain_file('/etc/icingaweb2/enabledModules/foo') }
+      it { is_expected.to contain_file('/etc/icingaweb2/modules') }
       it { is_expected.to contain_file('/etc/icingaweb2/modules/foo') }
 
       it { is_expected.to contain_vcsrepo('/usr/local/icingaweb2-modules/foo')
