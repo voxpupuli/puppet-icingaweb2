@@ -71,7 +71,6 @@ define icingaweb2::module::monitoring::commandtransport(
     }
   }
 
-
   icingaweb2::inisection { "monitoring-commandtransport-${commandtransport}":
     section_name => $commandtransport,
     target       => "${module_conf_dir}/commandtransports.ini",

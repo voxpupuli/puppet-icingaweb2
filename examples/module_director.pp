@@ -23,8 +23,6 @@ class {'icingaweb2::module::monitoring':
   ido_db_name     => 'icinga2',
   ido_db_username => 'icinga2',
   ido_db_password => 'supersecret',
-  api_username    => 'icinga',
-  api_password    => 'root',
 }
 
 class {'icingaweb2::module::director':

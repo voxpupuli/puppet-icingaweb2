@@ -323,8 +323,13 @@ class {'icingaweb2::module::monitoring':
   ido_db_name     => 'icinga2',
   ido_db_username => 'icinga2',
   ido_db_password => 'supersecret',
-  api_username    => 'icinga',
-  api_password    => 'root',
+  commandtransports => {
+    icinga2 => {
+      transport => 'api',
+      username  => 'root',
+      password  => 'icinga',
+    }
+  }
 }
 ```
 
@@ -443,6 +448,7 @@ class { 'icingaweb2::module::generictts':
     - [Defined type: icingaweb2::module](#defined-type-icingaweb2module)
 - [**Private defined types**](#private-defined-types)
     - [Defined type: icingaweb2::module::generictts::ticketsystem](#defined-type-icingaweb2modulegenericttsticketsystem)
+    - [Defined type: icingaweb2::module::monitoring::commandtransport](#defined-type-modulemonitoringcommandtransport)
 
 ### Public Classes
 
@@ -513,6 +519,17 @@ Password for IDO DB connection.
 
 ##### `commandtransports`
 A hash of command transports.
+
+Example:
+``` puppet
+  commandtransports => {
+    icinga2 => {
+      transport => 'api',
+      username  => 'root',
+      password  => 'icinga',
+    }
+  }
+```
 
 #### Class: `icingaweb2::module::director`
 Install and configure the director module.
@@ -871,6 +888,32 @@ A regex pattern to match ticket numbers, eg. `/#([0-9]{4,6})/`
 
 ##### `url`
 The URL to your ticketsystem. Place the ticket ID in the URL, eg. `https://my.ticket.system/tickets/id=$1`
+
+#### Defined type: `icingaweb2::module::monitoring::commandtransport`
+Manage commandtransports for the monitoring module.
+
+**Parameters of `icingaweb2::module::monitoring::commandtransport`:**
+
+##### `commandtransport`
+The name of the commandtransport.
+
+##### `transport`
+The transport type you wish to use. Either `api` or `local`. Defaults to `api`
+
+##### `host`
+Hostname/ip for the transport. Only needed for api transport. Defaults to `localhost`
+
+##### `port`
+Port for the transport. Only needed for api transport. Defaults to `5665`
+
+##### `username`
+Username for the transport. Only needed for api transport.
+
+##### `password`
+Password for the transport. Only needed for api transport.
+
+##### `path`
+Path for the transport. Only needed for local transport. Defaults to `/var/run/icinga2/cmd/icinga2.cmd`
 
 ## Development
 A roadmap of this project is located at https://github.com/Icinga/puppet-icingaweb2/milestones. Please consider
