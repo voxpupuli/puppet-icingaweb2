@@ -37,6 +37,8 @@ define icingaweb2::module::puppetdb::certificate(
   $ssl_cacert,
   $ensure = 'present',
 ){
+  assert_private("You're not supposed to use this defined type manually.")
+
   $certificate_dir = "${::icingaweb2::module::puppetdb::ssl_dir}/${title}"
   $conf_user       = $::icingaweb2::params::conf_user
   $conf_group      = $::icingaweb2::params::conf_group
@@ -59,14 +61,7 @@ define icingaweb2::module::puppetdb::certificate(
     $ensure_dir = 'absent'
   }
 
-  file {$certificate_dir:
-    ensure  => $ensure_dir,
-    purge   => true,
-    force   => true,
-    recurse => true,
-  }
-
-  file {"${certificate_dir}/private_keys":
+  file { [$certificate_dir, "${certificate_dir}/private_keys", "${certificate_dir}/certs"]:
     ensure  => $ensure_dir,
     purge   => true,
     force   => true,
@@ -76,13 +71,6 @@ define icingaweb2::module::puppetdb::certificate(
   file {"${certificate_dir}/private_keys/${title}_combined.pem":
     ensure  => $ensure,
     content => $ssl_key,
-  }
-
-  file {"${certificate_dir}/certs":
-    ensure  => $ensure_dir,
-    purge   => true,
-    force   => true,
-    recurse => true,
   }
 
   file {"${certificate_dir}/certs/ca.pem":

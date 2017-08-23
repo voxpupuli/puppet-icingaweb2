@@ -9,20 +9,21 @@
 #   Enable or disable module. Defaults to `present`
 #
 # [*git_revision*]
-#   The puppetdb module is installed by cloning the git repository. Set either a 
+#   The puppetdb module is installed by cloning the git repository. Set either a
 #   branch or a tag name, eg. `master` or `v1.3.2`.
 #
 # [*ssl*]
-#   How to set up ssl certificates.  Defaults to `none`.  Other option is `puppet` 
+#   How to set up ssl certificates. To copy certificates from the local puppet installation, use `puppet`. Defaults to
+#   `none`
 #
 # [*certificates*]
-#   Hash with icingaweb2::module::puppetdb::monitoring resources.  Defaults to {}
+#   Hash with icingaweb2::module::puppetdb::monitoring resources.
 #
 class icingaweb2::module::puppetdb(
   $ensure        = 'present',
   $git_revision  = undef,
   $ssl           = 'none',
-  $certificates  = {},
+  $certificates  = undef,
 ){
   $conf_dir   = "${::icingaweb2::params::conf_dir}/modules/puppetdb"
   $ssl_dir    = "${conf_dir}/ssl"
@@ -34,14 +35,6 @@ class icingaweb2::module::puppetdb(
   validate_string($git_revision)
   validate_re($ssl, [ '^none$', '^puppet$' ],
     "${ssl} isn't supported. Valid values are 'none' and 'puppet'.")
-  validate_hash($certificates)
-
-  icingaweb2::module {'puppetdb':
-    ensure         => $ensure,
-    git_repository => 'https://github.com/Icinga/icingaweb2-module-puppetdb.git',
-    git_revision   => $git_revision,
-    module_dir     => '/usr/share/icingaweb2/modules/puppetdb',
-  }
 
   file { $ssl_dir:
     ensure  => 'directory',
@@ -58,30 +51,9 @@ class icingaweb2::module::puppetdb(
     'puppet': {
 
       $my_certname     = $::fqdn
-      # Dir where to install the puppet certificates
       $puppetdb_ssldir = "${ssl_dir}/puppetdb"
 
-      file { $puppetdb_ssldir:
-        ensure  => 'directory',
-        group   => $conf_group,
-        owner   => $conf_user,
-        mode    => '2740',
-        purge   => true,
-        force   => true,
-        recurse => true,
-      }
-
-      file { "${puppetdb_ssldir}/private_keys":
-        ensure  => 'directory',
-        group   => $conf_group,
-        owner   => $conf_user,
-        mode    => '2740',
-        purge   => true,
-        force   => true,
-        recurse => true,
-      }
-
-      file { "${puppetdb_ssldir}/certs":
+      file { [$puppetdb_ssldir, "${puppetdb_ssldir}/private_keys", "${puppetdb_ssldir}/certs"]:
         ensure  => 'directory',
         group   => $conf_group,
         owner   => $conf_user,
@@ -123,14 +95,18 @@ class icingaweb2::module::puppetdb(
       }
 
     } # puppet
-
-    'none': {
-    } # none
-
-    default: {
-    } # default
+    'none': { }
+    default: { }
   } # case ssl
 
-  create_resources('icingaweb2::module::puppetdb::certificate',$certificates)
+  if $certificates {
+    validate_hash($certificates)
+    create_resources('icingaweb2::module::puppetdb::certificate',$certificates)
+  }
 
+  icingaweb2::module {'puppetdb':
+    ensure         => $ensure,
+    git_repository => 'https://github.com/Icinga/icingaweb2-module-puppetdb.git',
+    git_revision   => $git_revision,
+  }
 }

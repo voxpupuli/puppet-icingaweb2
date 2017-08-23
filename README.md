@@ -392,7 +392,7 @@ $certificates = {'pupdb1' => {
                    :ssl_cacert => '-----BEGIN RSA PRIVATE KEY----- wvur...', },
                 }
 class {'::icingaweb2::module::puppetdb':
-  git_revision => 'fdfbe11989171840f0a228ac1b1eef6c5808bd77',
+  git_revision => 'master',
   ssl          => 'none',
   certificates => $certificates,
 }
@@ -401,29 +401,22 @@ class {'::icingaweb2::module::puppetdb':
 Example: set up puppetdb module and configure puppet SSL key
 ``` puppet
 class {'::icingaweb2::module::puppetdb':
-  git_revision => 'fdfbe11989171840f0a228ac1b1eef6c5808bd77',
+  git_revision => 'master',
   ssl          => 'puppet',
 }
 ```
 
 Example: set up puppetdb module and configure one SSL key *and* puppet SSL key
 ``` puppet
-$certificates = {'pupdb1' => {
-                   :ssl_key => '-----BEGIN RSA PRIVATE KEY----- abc...',
-                   :ssl_cacert => '-----BEGIN RSA PRIVATE KEY----- def...', },
-                }
 class {'::icingaweb2::module::puppetdb':
-  git_revision => 'fdfbe11989171840f0a228ac1b1eef6c5808bd77',
-  ssl          => 'puppet',
-  certificates => $certificates,
-}
-```
-
-Example: add extra certificates with with icingaweb2::module::puppetdb::certificate:
-``` puppet
-icingaweb2::module::puppetdb::certificate { 'mypuppetdbhost.example.com':
-  ssl_cacert  => '-----BEGIN CERTIFICATE----- ...',
-  ssl_key     => '-----BEGIN RSA PRIVATE KEY----- ...',
+  git_revision => 'master',
+  ssl          => 'none',
+  certificates => {
+    puppetdb1 => {
+      ssl_key    => '-----BEGIN RSA PRIVATE KEY----- abc...',
+      ssl_cacert => '-----BEGIN RSA PRIVATE KEY----- def...',
+    }
+  }
 }
 ```
 
@@ -495,10 +488,10 @@ class { 'icingaweb2::module::generictts':
     - [Defined type: icingaweb2::config::role](#defined-type-icingaweb2configrole)
     - [Defined type: icingaweb2::config::groupbackend](#defined-type-icingaweb2configgroupbackend)
     - [Defined type: icingaweb2::module](#defined-type-icingaweb2module)
-    - [Defined type: icingaweb2::module::puppetdb::certificate](#defined-type-icingaweb2modulepuppetdbcertificate)
 - [**Private defined types**](#private-defined-types)
     - [Defined type: icingaweb2::module::generictts::ticketsystem](#defined-type-icingaweb2modulegenericttsticketsystem)
     - [Defined type: icingaweb2::module::monitoring::commandtransport](#defined-type-modulemonitoringcommandtransport)
+    - [Defined type: icingaweb2::module::puppetdb::certificate](#defined-type-icingaweb2modulepuppetdbcertificate)
 
 ### Public Classes
 
@@ -708,8 +701,8 @@ The puppetdb module is installed by cloning the git repository. Set either a bra
 or `v1.3.2`.
 
 ##### `ssl`
-How to configure the SSL certificates.  Defaults to `none`.  Other option is `puppet`.  See also `certificates`
-parameter
+How to set up ssl certificates. To copy certificates from the local puppet installation, use `puppet`. Defaults to
+`none`
 
 ##### `certificates`
 Hash with SSL certificates to configure.  See `icingaweb2::module::puppetdb::certificate`.
@@ -945,21 +938,6 @@ Example:
  }
 ```
 
-#### Defined type: `icingaweb2::module::puppetdb::certificate`
-
-Add extra certificates to the puppetdb module
-
-**Parameters of `icingaweb2::module::puppetdb::certificate`:**
-
-##### `ensure`
-Enable or disable certificate. Defaults to `present`
-
-##### `ssl_key`
-Contents of the combined SSL key.
-
-##### `ssl_cacert`
-CA certificate
-
 ### Private Defined Types
 
 #### Defined type: `icingaweb2::module::generictts::ticketsystem`
@@ -1001,6 +979,21 @@ Password for the transport. Only needed for api transport.
 
 ##### `path`
 Path for the transport. Only needed for local transport. Defaults to `/var/run/icinga2/cmd/icinga2.cmd`
+
+#### Defined type: `icingaweb2::module::puppetdb::certificate`
+
+Add extra certificates to the puppetdb module
+
+**Parameters of `icingaweb2::module::puppetdb::certificate`:**
+
+##### `ensure`
+Enable or disable certificate. Defaults to `present`
+
+##### `ssl_key`
+Contents of the combined SSL key.
+
+##### `ssl_cacert`
+CA certificate
 
 ## Development
 A roadmap of this project is located at https://github.com/Icinga/puppet-icingaweb2/milestones. Please consider
