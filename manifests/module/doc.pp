@@ -14,8 +14,20 @@ class icingaweb2::module::doc(
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
 
+  case $::osfamily {
+    'Debian': {
+      $install_method = 'package'
+      $package_name   = 'icingaweb2-module-doc'
+    }
+    default: {
+      $install_method = 'none'
+      $package_name   = undef
+    }
+  }
+
   icingaweb2::module { 'doc':
     ensure         => $ensure,
-    install_method => 'none',
+    install_method => $install_method,
+    package_name   => $package_name,
   }
 }

@@ -24,6 +24,9 @@
 # [*git_revision*]
 #   Tag or branch of the git repository. This setting is only valid in combination with the installation method `git`.
 #
+# [*package_name*]
+#   Package name of the module. This setting is only valid in combination with the installation method `package`.
+#
 # [*settings*]
 #   A hash with the module settings. Multiple configuration files with ini sections can be configured with this hash.
 #   The `module_name` should be used as target directory for the configuration files.
@@ -57,6 +60,7 @@ define icingaweb2::module(
   $install_method = 'git',
   $git_repository = undef,
   $git_revision   = 'master',
+  $package_name   = undef,
   $settings       = {},
 ){
   $conf_dir   = $::icingaweb2::params::conf_dir
@@ -66,8 +70,8 @@ define icingaweb2::module(
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
   validate_absolute_path($module_dir)
-  validate_re($install_method, [ '^git$', '^none$' ],
-    "${install_method} isn't supported. Valid values are 'git' and 'none'.")
+  validate_re($install_method, [ '^git$', '^none$', '^package$' ],
+    "${install_method} isn't supported. Valid values are 'git', 'none' and 'package'.")
   validate_string($module_name)
   if $settings { validate_hash($settings) }
 
@@ -90,7 +94,7 @@ define icingaweb2::module(
 
   file {"${conf_dir}/enabledModules/${module}":
     ensure => $ensure_module_enabled,
-    target => "${module_dir}",
+    target => $module_dir,
   }
 
   file {"${conf_dir}/modules/${module}":
@@ -104,7 +108,7 @@ define icingaweb2::module(
       validate_string($git_repository)
       validate_string($git_revision)
 
-      vcsrepo { "${module_dir}":
+      vcsrepo { $module_dir:
         ensure   => $ensure_vcsrepo,
         provider => 'git',
         source   => $git_repository,
@@ -112,6 +116,13 @@ define icingaweb2::module(
       }
     }
     'none': { }
+    'package': {
+      validate_string($package_name)
+
+      package { $package_name:
+        ensure => $ensure,
+      }
+    }
     default: {
       fail('The installation method you provided is not supported.')
     }

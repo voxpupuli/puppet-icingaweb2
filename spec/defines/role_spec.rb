@@ -7,26 +7,28 @@ describe('icingaweb2::config::role', :type => :define) do
   ] }
 
   on_supported_os.each do |os, facts|
-    let :facts do
-      facts
-    end
+    context "on #{os}" do
+      let :facts do
+        facts
+      end
 
-    context "#{os} with users => 'bob, pete' and permissions => '*'" do
-      let(:params) { { :users => 'bob, pete', :permissions => '*' } }
+      context "#{os} with users => 'bob, pete' and permissions => '*'" do
+        let(:params) { { :users => 'bob, pete', :permissions => '*' } }
 
-      it { is_expected.to contain_icingaweb2__inisection('myrole')
-                              .with_target('/etc/icingaweb2/roles.ini')
-                              .with_settings({'users'=>'bob, pete', 'permissions' => '*'}) }
+        it { is_expected.to contain_icingaweb2__inisection('myrole')
+                                .with_target('/etc/icingaweb2/roles.ini')
+                                .with_settings({'users'=>'bob, pete', 'permissions' => '*'}) }
 
-    end
+      end
 
-    context "#{os} with users => 'bob, pete', permissions => 'module/monitoring', filters => {'monitoring/filter/objects' => 'host_name=linux-*'}" do
-      let(:params) { { :users => 'bob, pete', :permissions => 'module/monitoring', :filters => {'monitoring/filter/objects' => 'host_name=linux-*'} } }
+      context "#{os} with users => 'bob, pete', permissions => 'module/monitoring', filters => {'monitoring/filter/objects' => 'host_name=linux-*'}" do
+        let(:params) { { :users => 'bob, pete', :permissions => 'module/monitoring', :filters => {'monitoring/filter/objects' => 'host_name=linux-*'} } }
 
-      it { is_expected.to contain_icingaweb2__inisection('myrole')
-                              .with_target('/etc/icingaweb2/roles.ini')
-                              .with_settings({'users'=>'bob, pete', 'permissions'=>'module/monitoring', 'monitoring/filter/objects'=>'host_name=linux-*'}) }
+        it { is_expected.to contain_icingaweb2__inisection('myrole')
+                                .with_target('/etc/icingaweb2/roles.ini')
+                                .with_settings({'users'=>'bob, pete', 'permissions'=>'module/monitoring', 'monitoring/filter/objects'=>'host_name=linux-*'}) }
 
+      end
     end
   end
 end
