@@ -16,7 +16,7 @@ describe('icingaweb2::config::resource', :type => :define) do
         let(:params) { {
             :type => 'db',
             :host => 'localhost',
-            :port => 3306,
+            :port => '3306',
             :db_type => 'mysql',
             :db_name => 'foo',
             :db_username => 'bar',
@@ -32,7 +32,7 @@ describe('icingaweb2::config::resource', :type => :define) do
         let(:params) { {
             :type => 'ldap',
             :host => 'localhost',
-            :port => 389,
+            :port => '389',
             :ldap_root_dn => 'cn=foo,dc=bar',
             :ldap_bind_dn => 'cn=root,dc=bar',
             :ldap_bind_pw => 'secret' } }
@@ -47,7 +47,6 @@ describe('icingaweb2::config::resource', :type => :define) do
         let(:params) { {
             :type => 'foobar',
             :host => 'localhost',
-            :port => 3306 } }
 
         it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['db', 'ldap'\]/) }
       end

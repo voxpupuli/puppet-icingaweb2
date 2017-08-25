@@ -11,6 +11,19 @@ describe('icingaweb2::module::monitoring', :type => :class) do
         facts
       end
 
+      case facts[:osfamily]
+        when 'Debian'
+          before(:all) do
+            @install_method = 'package'
+            @package_name   = 'icingaweb2-module-monitoring'
+          end
+        else
+          before(:all) do
+            @install_method = 'none'
+            @package_name   = nil
+          end
+      end
+
       context "#{os} with ido_type 'mysql' and commandtransport 'api'" do
         let(:params) { { :ido_type => 'mysql',
                          :ido_host => 'localhost',
@@ -26,7 +39,8 @@ describe('icingaweb2::module::monitoring', :type => :class) do
 
 
         it { is_expected.to contain_icingaweb2__module('monitoring')
-          .with_install_method('none')
+          .with_install_method(@install_method)
+          .with_package_name(@package_name)
           .with_module_dir('/usr/share/icingaweb2/modules/monitoring')
           .with_settings({
                              'module-monitoring-backends'=>{
@@ -50,7 +64,7 @@ describe('icingaweb2::module::monitoring', :type => :class) do
           .with_type('db')
           .with_db_type('mysql')
           .with_host('localhost')
-          .with_port(3306)
+          .with_port('3306')
           .with_db_name('icinga2')
           .with_db_username('icinga2')
           .with_db_password('icinga2')
@@ -76,7 +90,8 @@ describe('icingaweb2::module::monitoring', :type => :class) do
                          } } }
 
         it { is_expected.to contain_icingaweb2__module('monitoring')
-          .with_install_method('none')
+          .with_install_method(@install_method)
+          .with_package_name(@package_name)
           .with_module_dir('/usr/share/icingaweb2/modules/monitoring')
           .with_settings({
                              'module-monitoring-backends'=>{
@@ -105,6 +120,10 @@ describe('icingaweb2::module::monitoring', :type => :class) do
           .with_db_username('icinga2')
           .with_db_password('icinga2')
         }
+
+        if facts[:osfamily] == 'Debian'
+          it { is_expected.to contain_package('icingaweb2-module-monitoring').with({ 'ensure' => 'present' }) }
+        end
 
         it { is_expected.to contain_icingaweb2__module__monitoring__commandtransport('foo')
           .with_transport('local')
