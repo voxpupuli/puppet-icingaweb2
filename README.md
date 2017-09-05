@@ -582,6 +582,9 @@ Install and configure the director module.
 ##### `ensure`
 Enable or disable module. Defaults to `present`
 
+##### `git_repository`
+The director module is installed by cloning the git repository. Set a git repository URL. Defaults to github.
+
 ##### `git_revision`
 The director module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master` or
 `v1.3.2`.
@@ -641,6 +644,9 @@ Install and enable the businessprocess module.
 ##### `ensure`
 Enable or disable module. Defaults to `present`
 
+##### `git_repository`
+The businessprocess module is installed by cloning the git repository. Set a git repository URL. Defaults to github.
+
 ##### `git_revision`
 The businessprocess module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master`
 or `v2.1.0`.
@@ -655,6 +661,9 @@ or `v1.0.0`.
 ##### `ensure`
 Enable or disable module. Defaults to `present`
 
+##### `git_repository`
+The cube module is installed by cloning the git repository. Set a git repository URL. Defaults to github.
+
 ##### `git_revision`
 The cube module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master`
 or `v1.0.0`.
@@ -666,6 +675,9 @@ Install and enable the generictts module.
 
 ##### `ensure`
 Enable or disable module. Defaults to `present`
+
+##### `git_repository`
+The generictts module is installed by cloning the git repository. Set a git repository URL. Defaults to github.
 
 ##### `git_revision`
 The generictts module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master` or
@@ -695,6 +707,9 @@ Install and configure the puppetdb module.
 
 ##### `ensure`
 Enable or disable module. Defaults to `present`
+
+##### `git_repository`
+The puppetdb module is installed by cloning the git repository. Set a git repository URL. Defaults to github.
 
 ##### `git_revision`
 The puppetdb module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master`
