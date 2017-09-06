@@ -13,9 +13,9 @@ describe('icingaweb2::config', :type => :class) do
         end
 
         it { is_expected.to contain_icingaweb2__inisection('logging') }
-        it { is_expected.to contain_icingaweb2__inisection('preferences') }
-        it { is_expected.to contain_icingaweb2__inisection('logging') }
-        it { is_expected.to contain_icingaweb2__inisection('global') }
+        it { is_expected.to contain_icingaweb2__inisection('global')
+          .with_settings({ 'show_stacktraces' => false, 'module_path' => '/usr/share/icingaweb2/modules', 'config_backend' => 'ini' })
+        }
         it { is_expected.to contain_icingaweb2__inisection('themes') }
       end
 
@@ -59,6 +59,26 @@ describe('icingaweb2::config', :type => :class) do
         it { is_expected.not_to contain_exec('import schema')}
         it { is_expected.not_to contain_exec('create default user')}
         it { is_expected.not_to contain_icingaweb2__config__role('default admin user')}
+      end
+
+      context 'with config_backend => db' do
+        let :pre_condition do
+          "class { 'icingaweb2': config_backend => 'db' }"
+        end
+
+        it { is_expected.to contain_icingaweb2__inisection('global')
+          .with_settings({ 'show_stacktraces' => false, 'module_path' => '/usr/share/icingaweb2/modules', 'config_backend' => 'db', 'config_resource' => 'mysql-icingaweb2' })
+        }
+
+        it { is_expected.to contain_icingaweb2__config__resource('mysql-icingaweb2')}
+      end
+
+      context 'with invalid config_backend' do
+        let :pre_condition do
+          "class { 'icingaweb2': config_backend => 'foobar' }"
+        end
+
+        it { is_expected.to raise_error(Puppet::Error, /foobar isn't supported/) }
       end
     end
   end

@@ -12,29 +12,33 @@
 #
 class icingaweb2::config {
 
-  $conf_dir         = $::icingaweb2::params::conf_dir
-  $conf_user        = $::icingaweb2::params::conf_user
-  $conf_group       = $::icingaweb2::params::conf_group
+  $conf_dir             = $::icingaweb2::params::conf_dir
+  $conf_user            = $::icingaweb2::params::conf_user
+  $conf_group           = $::icingaweb2::params::conf_group
 
-  $logging          = $::icingaweb2::logging
-  $logging_file     = $::icingaweb2::logging_file
-  $logging_level    = $::icingaweb2::logging_level
-  $preferences_type = 'ini'
-  $show_stacktraces = $::icingaweb2::show_stacktraces
-  $module_path      = $::icingaweb2::module_path
+  $logging              = $::icingaweb2::logging
+  $logging_file         = $::icingaweb2::logging_file
+  $logging_level        = $::icingaweb2::logging_level
+  $show_stacktraces     = $::icingaweb2::show_stacktraces
+  $module_path          = $::icingaweb2::module_path
   # TODO: $config_backend can be 'db', however in this case it requires a valid resource at 'config_resource'
-  $config_backend   = 'ini'
-  $theme            = $::icingaweb2::theme
-  $theme_disabled   = $::icingaweb2::theme_disabled
+  $theme                = $::icingaweb2::theme
+  $theme_disabled       = $::icingaweb2::theme_disabled
 
-  $import_schema    = $::icingaweb2::import_schema
-  $schema_dir       = $::icingaweb2::params::schema_dir
-  $db_name          = $::icingaweb2::db_name
-  $db_host          = $::icingaweb2::db_host
-  $db_port          = $::icingaweb2::db_port
-  $db_type          = $::icingaweb2::db_type
-  $db_username      = $::icingaweb2::db_username
-  $db_password      = $::icingaweb2::db_password
+  $import_schema        = $::icingaweb2::import_schema
+  $schema_dir           = $::icingaweb2::params::schema_dir
+  $db_name              = $::icingaweb2::db_name
+  $db_host              = $::icingaweb2::db_host
+  $db_port              = $::icingaweb2::db_port
+  $db_type              = $::icingaweb2::db_type
+  $db_username          = $::icingaweb2::db_username
+  $db_password          = $::icingaweb2::db_password
+
+  $config_backend       = $::icingaweb2::config_backend
+  $config_resource      = $::icingaweb2::config_backend ? {
+    'ini' => undef,
+    'db'  => "${db_type}-icingaweb2",
+  }
 
   File {
     mode  => '0660',
@@ -56,21 +60,17 @@ class icingaweb2::config {
     },
   }
 
-  icingaweb2::inisection {'preferences':
-    target   => "${conf_dir}/config.ini",
-    settings => {
-      'type' => $preferences_type
-    },
+  $settings = {
+    'show_stacktraces' => $show_stacktraces,
+    'module_path'      => $module_path,
+    'config_backend'   => $config_backend,
+    'config_resource'  => $config_resource,
   }
+
 
   icingaweb2::inisection {'global':
     target   => "${conf_dir}/config.ini",
-    settings => {
-      'show_stacktraces' => $show_stacktraces,
-      'module_path'      => $module_path,
-      'config_backend'   => $config_backend,
-      #'config_resource'  => $foobar
-    },
+    settings => delete_undef_values($settings),
   }
 
   icingaweb2::inisection {'themes':
@@ -89,7 +89,7 @@ class icingaweb2::config {
     ensure => 'directory'
   }
 
-  if $import_schema {
+  if $import_schema or $config_backend == 'db' {
     icingaweb2::config::resource { "${db_type}-icingaweb2":
       type        => 'db',
       host        => $db_host,
@@ -99,7 +99,9 @@ class icingaweb2::config {
       db_username => $db_username,
       db_password => $db_password,
     }
+  }
 
+  if $import_schema {
     icingaweb2::config::authmethod { "${db_type}-auth":
       backend  => 'db',
       resource => "${db_type}-icingaweb2"
