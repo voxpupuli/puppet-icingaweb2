@@ -583,11 +583,10 @@ Install and configure the director module.
 Enable or disable module. Defaults to `present`
 
 ##### `git_repository`
-The director module is installed by cloning the git repository. Set a git repository URL. Defaults to github.
+Set a git repository URL. Defaults to github.
 
 ##### `git_revision`
-The director module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master` or
-`v1.3.2`.
+Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 
 ##### `db_type`
 Type of your database. Either `mysql` or `pgsql`. Defaults to `mysql`
@@ -645,11 +644,10 @@ Install and enable the businessprocess module.
 Enable or disable module. Defaults to `present`
 
 ##### `git_repository`
-The businessprocess module is installed by cloning the git repository. Set a git repository URL. Defaults to github.
+Set a git repository URL. Defaults to github.
 
 ##### `git_revision`
-The businessprocess module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master`
-or `v2.1.0`.
+Set either a branch or a tag name, eg. `master` or `v2.1.0`.
 
 #### Class: `icingaweb2::module::cube`
 Install and configure the cube module.
@@ -662,11 +660,10 @@ or `v1.0.0`.
 Enable or disable module. Defaults to `present`
 
 ##### `git_repository`
-The cube module is installed by cloning the git repository. Set a git repository URL. Defaults to github.
+Set a git repository URL. Defaults to github.
 
 ##### `git_revision`
-The cube module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master`
-or `v1.0.0`.
+Set either a branch or a tag name, eg. `master` or `v1.0.0`.
 
 #### Class: `icingaweb2::module::generictts`
 Install and enable the generictts module.
@@ -677,11 +674,10 @@ Install and enable the generictts module.
 Enable or disable module. Defaults to `present`
 
 ##### `git_repository`
-The generictts module is installed by cloning the git repository. Set a git repository URL. Defaults to github.
+Set a git repository URL. Defaults to github.
 
 ##### `git_revision`
-The generictts module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master` or
-`v2.0.0`.
+Set either a branch or a tag name, eg. `master` or `v2.0.0`.
 
 ##### `ticketsystems`
 A hash of ticketsystems. The hash expects a `patten` and a `url` for each ticketsystem. The regex pattern is to match
@@ -709,11 +705,10 @@ Install and configure the puppetdb module.
 Enable or disable module. Defaults to `present`
 
 ##### `git_repository`
-The puppetdb module is installed by cloning the git repository. Set a git repository URL. Defaults to github.
+Set a git repository URL. Defaults to github.
 
 ##### `git_revision`
-The puppetdb module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master`
-or `v1.3.2`.
+Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 
 ##### `ssl`
 How to set up ssl certificates. To copy certificates from the local puppet installation, use `puppet`. Defaults to

@@ -8,11 +8,10 @@
 #   Enable or disable module. Defaults to `present`
 #
 # [*git_repository*]
-#   The director module is installed by cloning the git repository. Set a git repository URL. Defaults to github.
+#   Set a git repository URL. Defaults to github.
 #
 # [*git_revision*]
-#   The generictts module is installed by cloning the git repository. Set either a branch or a tag name, eg.
-#   `master` or `v2.0.0`.
+#   Set either a branch or a tag name, eg. `master` or `v2.0.0`.
 #
 # [*ticketsystems*]
 #   A hash of ticketsystems. The hash expects a `patten` and a `url` for each ticketsystem. The regex pattern is to

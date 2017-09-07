@@ -8,11 +8,10 @@
 #   Enable or disable module. Defaults to `present`
 #
 # [*git_repository*]
-#   The director module is installed by cloning the git repository. Set a git repository URL. Defaults to github.
+#   Set a git repository URL. Defaults to github.
 #
 # [*git_revision*]
-#   The director module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master` or
-#   `v1.3.2`.
+#   Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 #
 # [*db_type*]
 #   Type of your database. Either `mysql` or `pgsql`. Defaults to `mysql`
