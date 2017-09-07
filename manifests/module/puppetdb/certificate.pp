@@ -33,21 +33,15 @@
 # Make sure you pass the contents combination of the private and key!
 #
 define icingaweb2::module::puppetdb::certificate(
-  $ssl_key,
-  $ssl_cacert,
-  $ensure = 'present',
+  String                    $ssl_key,
+  String                    $ssl_cacert,
+  Enum['absent', 'present'] $ensure = 'present',
 ){
   assert_private("You're not supposed to use this defined type manually.")
 
   $certificate_dir = "${::icingaweb2::module::puppetdb::ssl_dir}/${title}"
   $conf_user       = $::icingaweb2::params::conf_user
   $conf_group      = $::icingaweb2::params::conf_group
-
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($ssl_key)
-  validate_string($ssl_cacert)
-  validate_absolute_path($certificate_dir)
 
   File {
     owner => $conf_user,

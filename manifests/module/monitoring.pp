@@ -33,30 +33,19 @@
 #   A hash of command transports.
 #
 class icingaweb2::module::monitoring(
-  $ensure               = 'present',
-  $protected_customvars = '*pw*, *pass*, community',
-  $ido_type             = 'mysql',
-  $ido_host             = undef,
-  $ido_port             = 3306,
-  $ido_db_name          = undef,
-  $ido_db_username      = undef,
-  $ido_db_password      = undef,
-  $commandtransports    = undef,
+  Enum['absent', 'present'] $ensure               = 'present',
+  String                    $protected_customvars = '*pw*, *pass*, community',
+  Enum['mysql', 'pgsql']    $ido_type             = 'mysql',
+  Optional[String]          $ido_host             = undef,
+  Integer[1,65535]          $ido_port             = 3306,
+  Optional[String]          $ido_db_name          = undef,
+  Optional[String]          $ido_db_username      = undef,
+  Optional[String]          $ido_db_password      = undef,
+  Hash                      $commandtransports    = undef,
 ){
 
   $conf_dir        = $::icingaweb2::params::conf_dir
   $module_conf_dir = "${conf_dir}/modules/monitoring"
-
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($protected_customvars)
-  validate_re($ido_type, [ 'mysql', 'pgsql' ],
-    "${ido_type} isn't supported. Valid values are 'mysql' and 'pgsql'.")
-  validate_string($ido_host)
-  validate_numeric($ido_port)
-  validate_string($ido_db_name)
-  validate_string($ido_db_username)
-  validate_string($ido_db_password)
 
   icingaweb2::config::resource { 'icingaweb2-module-monitoring':
     type        => 'db',
@@ -90,10 +79,7 @@ class icingaweb2::module::monitoring(
     }
   }
 
-  if $commandtransports {
-    validate_hash($commandtransports)
-    create_resources('icingaweb2::module::monitoring::commandtransport', $commandtransports)
-  }
+  create_resources('icingaweb2::module::monitoring::commandtransport', $commandtransports)
 
   icingaweb2::module {'monitoring':
     ensure         => $ensure,

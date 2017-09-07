@@ -61,38 +61,25 @@
 #
 #
 define icingaweb2::config::resource(
-  $resource_name   = $title,
-  $type            = undef,
-  $host            = undef,
-  $port            = undef,
-  $db_type         = undef,
-  $db_name         = undef,
-  $db_username     = undef,
-  $db_password     = undef,
-  $db_charset      = undef,
-  $ldap_root_dn    = undef,
-  $ldap_bind_dn    = undef,
-  $ldap_bind_pw    = undef,
-  $ldap_encryption = 'none',
+  String                                      $resource_name   = $title,
+  Enum['db', 'ldap']                          $type            = undef,
+  String                                      $host            = undef,
+  Integer[1,65535]                            $port            = undef,
+  Optional[Enum['mysql', 'pgsql']]            $db_type         = undef,
+  Optional[String]                            $db_name         = undef,
+  Optional[String]                            $db_username     = undef,
+  Optional[String]                            $db_password     = undef,
+  Optional[String]                            $db_charset      = undef,
+  Optional[String]                            $ldap_root_dn    = undef,
+  Optional[String]                            $ldap_bind_dn    = undef,
+  Optional[String]                            $ldap_bind_pw    = undef,
+  Optional[Enum['none', 'starttls', 'ldaps']] $ldap_encryption = 'none',
 ) {
 
   $conf_dir = $::icingaweb2::params::conf_dir
 
-  validate_string($name)
-  validate_re($type, [ 'db', 'ldap' ],
-    "${type} isn't supported. Valid values are 'db' and 'ldap'.")
-  validate_string($host)
-  validate_integer($port)
-
   case $type {
     'db': {
-      validate_re($db_type, [ 'mysql', 'pgsql' ],
-        "${db_type} isn't supported. Valid values are 'mysql' and 'pgsql'.")
-      validate_string($db_username)
-      validate_string($db_password)
-      validate_string($db_name)
-      if $db_charset { validate_string($db_charset) }
-
       $settings = {
         'type'     => $type,
         'db'       => $db_type,
@@ -105,12 +92,6 @@ define icingaweb2::config::resource(
       }
     }
     'ldap': {
-      validate_string($ldap_root_dn)
-      validate_string($ldap_bind_dn)
-      validate_string($ldap_bind_pw)
-      validate_re($ldap_encryption, [ 'none', 'starttls', 'ldaps' ],
-        "${ldap_encryption} isn't supported. Valid values are 'none', 'starttls' and 'ldaps'.")
-
       $settings = {
         'type'       => $type,
         'hostname'   => $host,

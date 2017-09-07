@@ -32,19 +32,14 @@
 # }
 #
 define icingaweb2::inisection(
-  $target,
-  $section_name  = $title,
-  $settings      = {},
-  $order         = '01',
+  Stdlib::Absolutepath $target,
+  String               $section_name  = $title,
+  Hash                 $settings      = {},
+  Pattern[/^\d+$/]     $order         = '01',
 ){
 
   $conf_user      = $::icingaweb2::params::conf_user
   $conf_group     = $::icingaweb2::params::conf_group
-
-  validate_string($section_name)
-  validate_absolute_path($target)
-  validate_hash($settings)
-  validate_string($order)
 
   if !defined(Concat[$target]) {
     concat { $target:

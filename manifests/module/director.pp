@@ -53,22 +53,22 @@
 #   Icinga 2 API password. This setting is only valid if `kickstart` is `true`.
 #
 class icingaweb2::module::director(
-  $ensure         = 'present',
-  $git_repository = 'https://github.com/Icinga/icingaweb2-module-director.git',
-  $git_revision   = undef,
-  $db_type        = 'mysql',
-  $db_host        = undef,
-  $db_port        = 3306,
-  $db_name        = undef,
-  $db_username    = undef,
-  $db_password    = undef,
-  $import_schema  = false,
-  $kickstart      = false,
-  $endpoint       = undef,
-  $api_host       = 'localhost',
-  $api_port       = 5665,
-  $api_username   = undef,
-  $api_password   = undef,
+  Enum['absent', 'present'] $ensure         = 'present',
+  String                    $git_repository = 'https://github.com/Icinga/icingaweb2-module-director.git',
+  Optional[String]          $git_revision   = undef,
+  Enum['mysql', 'pgsql']    $db_type        = 'mysql',
+  Optional[String]          $db_host        = undef,
+  Integer[1,65535]          $db_port        = 3306,
+  Optional[String]          $db_name        = undef,
+  Optional[String]          $db_username    = undef,
+  Optional[String]          $db_password    = undef,
+  Optional[Boolean]         $import_schema  = false,
+  Optional[Boolean]         $kickstart      = false,
+  Optional[String]          $endpoint       = undef,
+  String                    $api_host       = 'localhost',
+  Integer[1,65535]          $api_port       = 5665,
+  Optional[String]          $api_username   = undef,
+  Optional[String]          $api_password   = undef,
 ){
   $conf_dir        = $::icingaweb2::params::conf_dir
   $module_conf_dir = "${conf_dir}/modules/director"
@@ -77,20 +77,6 @@ class icingaweb2::module::director(
     user => 'root',
     path => $::path,
   }
-
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($git_repository)
-  validate_string($git_revision)
-  validate_re($db_type, [ 'mysql', 'pgsql' ],
-    "${db_type} isn't supported. Valid values are 'mysql' and 'pgsql'.")
-  validate_string($db_host)
-  validate_numeric($db_port)
-  validate_string($db_name)
-  validate_string($db_username)
-  validate_string($db_password)
-  validate_bool($import_schema)
-  validate_bool($kickstart)
 
   icingaweb2::config::resource { 'icingaweb2-module-director':
     type        => 'db',
@@ -120,12 +106,6 @@ class icingaweb2::module::director(
     }
 
     if $kickstart {
-      validate_string($endpoint)
-      validate_string($api_host)
-      validate_numeric($api_port)
-      validate_string($api_username)
-      validate_string($api_password)
-
       $kickstart_settings = {
         'module-director-config' => {
           'section_name' => 'config',
