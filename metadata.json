@@ -8,7 +8,7 @@
   "project_page": "https://github.com/Icinga/puppet-icingaweb2",
   "issues_url": "https://github.com/Icinga/puppet-icingaweb2/issues",
   "requirements": [
-    { "name": "puppet", "version_requirement": ">= 3.8.0 < 5.0.0" }
+    { "name": "puppet", "version_requirement": ">= 4.7.0 < 6.0.0" }
   ],
   "dependencies": [
     { "name":"puppetlabs/apache","version_requirement":">= 1.2.0 < 2.0.0" },
