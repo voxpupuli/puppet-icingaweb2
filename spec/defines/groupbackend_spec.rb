@@ -40,7 +40,7 @@ describe('icingaweb2::config::groupbackend', :type => :define) do
       context "#{os} with invalid backend" do
         let(:params) { { :backend => 'foobar' } }
 
-        it { is_expected.to raise_error(Puppet::Error, /foobar isn't supported/) }
+        it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['db', 'ldap', 'msldap'\]/) }
       end
     end
   end
