@@ -7,9 +7,11 @@
 # [*ensure*]
 #   Enable or disable module. Defaults to `present`
 #
+# [*git_repository*]
+#   Set a git repository URL. Defaults to github.
+#
 # [*git_revision*]
-#   The generictts module is installed by cloning the git repository. Set either a branch or a tag name, eg.
-#   `master` or `v2.0.0`.
+#   Set either a branch or a tag name, eg. `master` or `v2.0.0`.
 #
 # [*ticketsystems*]
 #   A hash of ticketsystems. The hash expects a `patten` and a `url` for each ticketsystem. The regex pattern is to
@@ -25,13 +27,15 @@
 #   }
 #
 class icingaweb2::module::generictts(
-  $ensure        = 'present',
-  $git_revision  = undef,
-  $ticketsystems = undef,
+  $ensure         = 'present',
+  $git_repository = 'https://github.com/Icinga/icingaweb2-module-generictts.git',
+  $git_revision   = undef,
+  $ticketsystems  = undef,
 ){
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($git_repository)
   validate_string($git_revision)
 
   if $ticketsystems {
@@ -41,7 +45,7 @@ class icingaweb2::module::generictts(
 
   icingaweb2::module {'generictts':
     ensure         => $ensure,
-    git_repository => 'https://github.com/Icinga/icingaweb2-module-generictts.git',
+    git_repository => $git_repository,
     git_revision   => $git_revision,
   }
 }

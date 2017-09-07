@@ -7,9 +7,11 @@
 # [*ensure*]
 #   Enable or disable module. Defaults to `present`
 #
+# [*git_repository*]
+#   Set a git repository URL. Defaults to github.
+#
 # [*git_revision*]
-#   The director module is installed by cloning the git repository. Set either a branch or a tag name, eg. `master` or
-#   `v1.3.2`.
+#   Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 #
 # [*db_type*]
 #   Type of your database. Either `mysql` or `pgsql`. Defaults to `mysql`
@@ -51,21 +53,22 @@
 #   Icinga 2 API password. This setting is only valid if `kickstart` is `true`.
 #
 class icingaweb2::module::director(
-  $ensure        = 'present',
-  $git_revision  = undef,
-  $db_type       = 'mysql',
-  $db_host       = undef,
-  $db_port       = 3306,
-  $db_name       = undef,
-  $db_username   = undef,
-  $db_password   = undef,
-  $import_schema = false,
-  $kickstart     = false,
-  $endpoint      = undef,
-  $api_host      = 'localhost',
-  $api_port      = 5665,
-  $api_username  = undef,
-  $api_password  = undef,
+  $ensure         = 'present',
+  $git_repository = 'https://github.com/Icinga/icingaweb2-module-director.git',
+  $git_revision   = undef,
+  $db_type        = 'mysql',
+  $db_host        = undef,
+  $db_port        = 3306,
+  $db_name        = undef,
+  $db_username    = undef,
+  $db_password    = undef,
+  $import_schema  = false,
+  $kickstart      = false,
+  $endpoint       = undef,
+  $api_host       = 'localhost',
+  $api_port       = 5665,
+  $api_username   = undef,
+  $api_password   = undef,
 ){
   $conf_dir        = $::icingaweb2::params::conf_dir
   $module_conf_dir = "${conf_dir}/modules/director"
@@ -77,6 +80,7 @@ class icingaweb2::module::director(
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($git_repository)
   validate_string($git_revision)
   validate_re($db_type, [ 'mysql', 'pgsql' ],
     "${db_type} isn't supported. Valid values are 'mysql' and 'pgsql'.")
@@ -150,7 +154,7 @@ class icingaweb2::module::director(
 
   icingaweb2::module {'director':
     ensure         => $ensure,
-    git_repository => 'https://github.com/Icinga/icingaweb2-module-director.git',
+    git_repository => $git_repository,
     git_revision   => $git_revision,
     settings       => merge($db_settings, $kickstart_settings),
   }

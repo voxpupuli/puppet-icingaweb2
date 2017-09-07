@@ -8,9 +8,11 @@
 # [*ensure*]
 #   Enable or disable module. Defaults to `present`
 #
+# [*git_repository*]
+#   Set a git repository URL. Defaults to github.
+#
 # [*git_revision*]
-#   The puppetdb module is installed by cloning the git repository. Set either a
-#   branch or a tag name, eg. `master` or `v1.3.2`.
+#   Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 #
 # [*ssl*]
 #   How to set up ssl certificates. To copy certificates from the local puppet installation, use `puppet`. Defaults to
@@ -20,10 +22,11 @@
 #   Hash with icingaweb2::module::puppetdb::monitoring resources.
 #
 class icingaweb2::module::puppetdb(
-  $ensure        = 'present',
-  $git_revision  = undef,
-  $ssl           = 'none',
-  $certificates  = undef,
+  $ensure         = 'present',
+  $git_repository = 'https://github.com/Icinga/icingaweb2-module-puppetdb.git',
+  $git_revision   = undef,
+  $ssl            = 'none',
+  $certificates   = undef,
 ){
   $conf_dir   = "${::icingaweb2::params::conf_dir}/modules/puppetdb"
   $ssl_dir    = "${conf_dir}/ssl"
@@ -32,6 +35,7 @@ class icingaweb2::module::puppetdb(
 
   validate_re($ensure, [ '^present$', '^absent$' ],
     "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
+  validate_string($git_repository)
   validate_string($git_revision)
   validate_re($ssl, [ '^none$', '^puppet$' ],
     "${ssl} isn't supported. Valid values are 'none' and 'puppet'.")
@@ -106,7 +110,7 @@ class icingaweb2::module::puppetdb(
 
   icingaweb2::module {'puppetdb':
     ensure         => $ensure,
-    git_repository => 'https://github.com/Icinga/icingaweb2-module-puppetdb.git',
+    git_repository => $git_repository,
     git_revision   => $git_revision,
   }
 }
