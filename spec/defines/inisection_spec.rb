@@ -7,19 +7,21 @@ describe('icingaweb2::inisection', :type => :define) do
   ] }
 
   on_supported_os.each do |os, facts|
-    let :facts do
-      facts
-    end
+    context "on #{os}" do
+      let :facts do
+        facts
+      end
 
-    context "#{os} with valid params" do
-      let(:params) { {:target => '/foo/bar', :section_name => 'test', :settings =>  {'setting1' => 'value1', 'setting2' => 'value2'}  } }
+      context "#{os} with valid params" do
+        let(:params) { {:target => '/foo/bar', :section_name => 'test', :settings =>  {'setting1' => 'value1', 'setting2' => 'value2'}  } }
 
-      it { is_expected.to contain_concat('/foo/bar') }
+        it { is_expected.to contain_concat('/foo/bar') }
 
-      it { is_expected.to contain_concat__fragment('foo-test-01')
-        .with_target('/foo/bar')
-        .with_order('01')
-        .with_content(/\[test\]\nsetting1 = \"value1\"\nsetting2 = \"value2\"\n\n/) }
+        it { is_expected.to contain_concat__fragment('foo-test-01')
+          .with_target('/foo/bar')
+          .with_order('01')
+          .with_content(/\[test\]\nsetting1 = \"value1\"\nsetting2 = \"value2\"\n\n/) }
+      end
     end
   end
 end

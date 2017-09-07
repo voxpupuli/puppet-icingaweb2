@@ -58,6 +58,17 @@ class icingaweb2::module::monitoring(
   validate_string($ido_db_username)
   validate_string($ido_db_password)
 
+  case $::osfamily {
+    'Debian': {
+      $install_method = 'package'
+      $package_name   = 'icingaweb2-module-monitoring'
+    }
+    default: {
+      $install_method = 'none'
+      $package_name   = undef
+    }
+  }
+
   icingaweb2::config::resource { 'icingaweb2-module-monitoring':
     type        => 'db',
     db_type     => $ido_type,
@@ -97,7 +108,8 @@ class icingaweb2::module::monitoring(
 
   icingaweb2::module {'monitoring':
     ensure         => $ensure,
-    install_method => 'none',
+    install_method => $install_method,
+    package_name   => $package_name,
     settings       => $settings,
   }
 }

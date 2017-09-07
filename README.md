@@ -910,6 +910,9 @@ Git repository of the module. This setting is only valid in combination with the
 ##### `git_revision`
 Tag or branch of the git repository. This setting is only valid in combination with the installation method `git`.
 
+#### `package_name`
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
 ##### `settings`
 A hash with the module settings. Multiple configuration files with ini sections can be configured with this hash. The
 `module_name` should be used as target directory for the configuration files.
