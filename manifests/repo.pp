@@ -14,9 +14,7 @@
 #
 class icingaweb2::repo {
 
-  if defined($caller_module_name) and $module_name != $caller_module_name {
-    fail("icingaweb2::repo is a private class of the module icingaweb2, you're not permitted to use it.")
-  }
+  assert_private("You're not supposed to use this defined type manually.")
 
   if $::icingaweb2::manage_repo and $::icingaweb2::manage_package {
 

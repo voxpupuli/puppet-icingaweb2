@@ -51,25 +51,17 @@
 #     }
 #
 define icingaweb2::module(
-  $ensure         = 'present',
-  $module         = $title,
-  $module_dir     = "${::icingaweb2::params::module_path}/${title}",
-  $install_method = 'git',
-  $git_repository = undef,
-  $git_revision   = 'master',
-  $settings       = {},
+  Enum['absent', 'present'] $ensure         = 'present',
+  String                    $module         = $title,
+  Stdlib::Absolutepath      $module_dir     = "${::icingaweb2::params::module_path}/${title}",
+  Enum['git', 'none']       $install_method = 'git',
+  Optional[String]          $git_repository = undef,
+  String                    $git_revision   = 'master',
+  Hash                      $settings       = {},
 ){
   $conf_dir   = $::icingaweb2::params::conf_dir
   $conf_user  = $::icingaweb2::params::conf_user
   $conf_group = $::icingaweb2::params::conf_group
-
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_absolute_path($module_dir)
-  validate_re($install_method, [ '^git$', '^none$' ],
-    "${install_method} isn't supported. Valid values are 'git' and 'none'.")
-  validate_string($module_name)
-  if $settings { validate_hash($settings) }
 
   File {
     owner => $conf_user,
@@ -90,7 +82,7 @@ define icingaweb2::module(
 
   file {"${conf_dir}/enabledModules/${module}":
     ensure => $ensure_module_enabled,
-    target => "${module_dir}",
+    target => $module_dir,
   }
 
   file {"${conf_dir}/modules/${module}":
@@ -101,10 +93,7 @@ define icingaweb2::module(
 
   case $install_method {
     'git': {
-      validate_string($git_repository)
-      validate_string($git_revision)
-
-      vcsrepo { "${module_dir}":
+      vcsrepo { $module_dir:
         ensure   => $ensure_vcsrepo,
         provider => 'git',
         source   => $git_repository,
