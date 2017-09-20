@@ -18,6 +18,7 @@ class icingaweb2::config {
 
   $logging              = $::icingaweb2::logging
   $logging_file         = $::icingaweb2::logging_file
+  $logging_dir          = dirname($::icingaweb2::logging_file)
   $logging_level        = $::icingaweb2::logging_level
   $show_stacktraces     = $::icingaweb2::show_stacktraces
   $module_path          = $::icingaweb2::module_path
@@ -49,6 +50,15 @@ class icingaweb2::config {
   Exec {
     user => 'root',
     path => $::path,
+  }
+
+  file { $logging_dir:
+    ensure => directory,
+    mode   => '0750',
+  }
+  file { $logging_file:
+    ensure => file,
+    mode   => '0640',
   }
 
   icingaweb2::inisection {'logging':
