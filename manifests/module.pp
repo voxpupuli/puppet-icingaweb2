@@ -24,6 +24,9 @@
 # [*git_revision*]
 #   Tag or branch of the git repository. This setting is only valid in combination with the installation method `git`.
 #
+# [*package_name*]
+#   Package name of the module. This setting is only valid in combination with the installation method `package`.
+#
 # [*settings*]
 #   A hash with the module settings. Multiple configuration files with ini sections can be configured with this hash.
 #   The `module_name` should be used as target directory for the configuration files.
@@ -51,13 +54,14 @@
 #     }
 #
 define icingaweb2::module(
-  Enum['absent', 'present'] $ensure         = 'present',
-  String                    $module         = $title,
-  Stdlib::Absolutepath      $module_dir     = "${::icingaweb2::params::module_path}/${title}",
-  Enum['git', 'none']       $install_method = 'git',
-  Optional[String]          $git_repository = undef,
-  String                    $git_revision   = 'master',
-  Hash                      $settings       = {},
+  Enum['absent', 'present']         $ensure         = 'present',
+  String                            $module         = $title,
+  Stdlib::Absolutepath              $module_dir     = "${::icingaweb2::params::module_path}/${title}",
+  Enum['git', 'none', 'package']    $install_method = 'git',
+  Optional[String]                  $git_repository = undef,
+  String                            $git_revision   = 'master',
+  Optional[String]                  $package_name   = undef,
+  Hash                              $settings       = {},
 ){
   $conf_dir   = $::icingaweb2::params::conf_dir
   $conf_user  = $::icingaweb2::params::conf_user
@@ -101,6 +105,11 @@ define icingaweb2::module(
       }
     }
     'none': { }
+    'package': {
+      package { $package_name:
+        ensure => $ensure,
+      }
+    }
     default: {
       fail('The installation method you provided is not supported.')
     }

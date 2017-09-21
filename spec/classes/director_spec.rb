@@ -27,7 +27,7 @@ describe('icingaweb2::module::director', :type => :class) do
           .with_type('db')
           .with_db_type('mysql')
           .with_host('localhost')
-          .with_port(3306)
+          .with_port('3306')
           .with_db_name('director')
           .with_db_username('director')
           .with_db_password('director')
@@ -51,7 +51,7 @@ describe('icingaweb2::module::director', :type => :class) do
                                   'settings'=>{
                                       'endpoint'=>'foobar',
                                       'host'=>'localhost',
-                                      'port'=>5665,
+                                      'port'=>'5665',
                                       'username'=>'root',
                                       'password'=>'secret'}
                               }
@@ -74,7 +74,7 @@ describe('icingaweb2::module::director', :type => :class) do
           .with_type('db')
           .with_db_type('mysql')
           .with_host('localhost')
-          .with_port(3306)
+          .with_port('3306')
           .with_db_name('director')
           .with_db_username('director')
           .with_db_password('director')
