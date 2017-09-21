@@ -19,21 +19,24 @@ class icingaweb2::params {
 
   case $::osfamily {
     'redhat': {
-      $conf_user  = 'apache'
-      $conf_group = 'icingaweb2'
-      $schema_dir = '/usr/share/doc/icingaweb2/schema'
+      $conf_user            = 'apache'
+      $conf_group           = 'icingaweb2'
+      $schema_dir           = '/usr/share/doc/icingaweb2/schema'
+      $gettext_package_name = 'gettext'
     } # RedHat
 
     'debian': {
-      $conf_user  = 'www-data'
-      $conf_group = 'icingaweb2'
-      $schema_dir = '/usr/share/icingaweb2/etc/schema'
+      $conf_user            = 'www-data'
+      $conf_group           = 'icingaweb2'
+      $schema_dir           = '/usr/share/icingaweb2/etc/schema'
+      $gettext_package_name = 'gettext'
     } # Debian
 
     'suse': {
-      $conf_user  = 'wwwrun'
-      $conf_group = 'icingaweb2'
-      $schema_dir = '/usr/share/doc/icingaweb2/schema'
+      $conf_user            = 'wwwrun'
+      $conf_group           = 'icingaweb2'
+      $schema_dir           = '/usr/share/doc/icingaweb2/schema'
+      $gettext_package_name = 'gettext-tools'
     } # Suse
 
     default: {
