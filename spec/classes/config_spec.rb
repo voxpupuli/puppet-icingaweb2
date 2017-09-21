@@ -48,7 +48,7 @@ describe('icingaweb2::config', :type => :class) do
           "class { 'icingaweb2': import_schema => true, db_type => 'foobar'}"
         end
 
-        it { is_expected.to raise_error(Puppet::Error, /foobar isn't supported/) }
+        it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['mysql', 'pgsql'\]/) }
       end
 
       context 'with import_schema => false' do

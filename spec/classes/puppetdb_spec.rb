@@ -40,7 +40,7 @@ describe('icingaweb2::module::puppetdb', :type => :class) do
       context "with ensure foo" do
         let(:params) { { :ensure => 'foo' } }
 
-        it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+        it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['absent', 'present'\]/) }
       end
 
       context "with ensure absent" do
@@ -187,7 +187,7 @@ describe('icingaweb2::module::puppetdb', :type => :class) do
       context "with ssl set to foo" do
         let(:params) { { :ssl => 'foo' } }
 
-        it { is_expected.to raise_error(Puppet::Error, /foo isn't supported/) }
+        it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['none', 'puppet'\]/) }
       end
     end
   end

@@ -22,23 +22,16 @@
 #   Hash with icingaweb2::module::puppetdb::monitoring resources.
 #
 class icingaweb2::module::puppetdb(
-  $ensure         = 'present',
-  $git_repository = 'https://github.com/Icinga/icingaweb2-module-puppetdb.git',
-  $git_revision   = undef,
-  $ssl            = 'none',
-  $certificates   = undef,
+  Enum['absent', 'present'] $ensure         = 'present',
+  String                    $git_repository = 'https://github.com/Icinga/icingaweb2-module-puppetdb.git',
+  Optional[String]          $git_revision   = undef,
+  Enum['none', 'puppet']    $ssl            = 'none',
+  Hash                      $certificates   = {},
 ){
   $conf_dir   = "${::icingaweb2::params::conf_dir}/modules/puppetdb"
   $ssl_dir    = "${conf_dir}/ssl"
   $conf_user  = $::icingaweb2::params::conf_user
   $conf_group = $::icingaweb2::params::conf_group
-
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
-  validate_string($git_repository)
-  validate_string($git_revision)
-  validate_re($ssl, [ '^none$', '^puppet$' ],
-    "${ssl} isn't supported. Valid values are 'none' and 'puppet'.")
 
   file { $ssl_dir:
     ensure  => 'directory',
@@ -103,10 +96,7 @@ class icingaweb2::module::puppetdb(
     default: { }
   } # case ssl
 
-  if $certificates {
-    validate_hash($certificates)
-    create_resources('icingaweb2::module::puppetdb::certificate',$certificates)
-  }
+  create_resources('icingaweb2::module::puppetdb::certificate',$certificates)
 
   icingaweb2::module {'puppetdb':
     ensure         => $ensure,

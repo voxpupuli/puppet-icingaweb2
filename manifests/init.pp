@@ -37,47 +37,24 @@
 #
 #
 class icingaweb2 (
-  $logging              = 'file',
-  $logging_file         = '/var/log/icingaweb2/icingaweb2.log',
-  $logging_level        = 'INFO',
-  $show_stacktraces     = false,
-  $module_path          = $::icingaweb2::params::module_path,
-  $theme                = 'Icinga',
-  $theme_disabled       = false,
-  $manage_repo          = false,
-  $manage_package       = true,
-  $import_schema        = false,
-  $db_type              = 'mysql',
-  $db_host              = 'localhost',
-  $db_port              = '3306',
-  $db_name              = 'icingaweb2',
-  $db_username          = undef,
-  $db_password          = undef,
-  $config_backend       = 'ini',
+  Enum['file', 'syslog', 'none']            $logging          = 'file',
+  Stdlib::Absolutepath                      $logging_file     = '/var/log/icingaweb2/icingaweb2.log',
+  Enum['ERROR', 'WARNING', 'INFO', 'DEBUG'] $logging_level    = 'INFO',
+  Boolean                                   $show_stacktraces = false,
+  Stdlib::Absolutepath                      $module_path      = $::icingaweb2::params::module_path,
+  String                                    $theme            = 'Icinga',
+  Boolean                                   $theme_disabled   = false,
+  Boolean                                   $manage_repo      = false,
+  Boolean                                   $manage_package   = true,
+  Boolean                                   $import_schema    = false,
+  Enum['mysql', 'pgsql']                    $db_type          = 'mysql',
+  String                                    $db_host          = 'localhost',
+  Integer[1,65535]                          $db_port          = 3306,
+  String                                    $db_name          = 'icingaweb2',
+  Optional[String]                          $db_username      = undef,
+  Optional[String]                          $db_password      = undef,
+  Enum['ini', 'db']                         $config_backend   = 'ini',
 ) inherits ::icingaweb2::params {
-
-  validate_re($logging, [ 'file', 'syslog', 'none' ],
-    "${logging} isn't supported. Valid values are 'file', 'syslog' and 'none'.")
-  validate_absolute_path($logging_file)
-  validate_re($logging_level, [ 'ERROR', 'WARNING', 'INFO', 'DEBUG' ],
-    "${logging_level} isn't supported. Valid values are 'ERROR', 'WARNING', 'INFO' and 'DEBUG'.")
-  validate_bool($show_stacktraces)
-  validate_absolute_path($module_path)
-  validate_string($theme)
-  validate_bool($theme_disabled)
-  validate_bool($manage_repo)
-  validate_bool($manage_package)
-  validate_re($config_backend, ['ini', 'db'],
-    "${config_backend} isn't supported. Valid values are 'ini' and 'db'.")
-  validate_bool($import_schema)
-
-  if $import_schema or $config_backend == 'db' {
-    validate_re($db_type, [ 'mysql', 'pgsql' ],
-      "${db_type} isn't supported. Valid values are 'mysql' and 'pgsql'.")
-    validate_string($db_name)
-    validate_string($db_username)
-    validate_string($db_password)
-  }
 
   anchor { '::icingaweb2::begin': }
   -> class { '::icingaweb2::repo': }

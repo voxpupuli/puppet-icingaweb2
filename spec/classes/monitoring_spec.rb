@@ -50,7 +50,7 @@ describe('icingaweb2::module::monitoring', :type => :class) do
           .with_type('db')
           .with_db_type('mysql')
           .with_host('localhost')
-          .with_port('3306')
+          .with_port(3306)
           .with_db_name('icinga2')
           .with_db_username('icinga2')
           .with_db_password('icinga2')
@@ -114,7 +114,7 @@ describe('icingaweb2::module::monitoring', :type => :class) do
       context "#{os} with invalid ido_type" do
         let(:params) { { :ido_type => 'foobar' } }
 
-        it { is_expected.to raise_error(Puppet::Error, /foobar isn't supported/) }
+        it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['mysql', 'pgsql'\]/) }
       end
     end
   end

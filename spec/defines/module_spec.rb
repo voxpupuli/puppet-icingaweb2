@@ -55,7 +55,7 @@ describe('icingaweb2::module', :type => :define) do
                          :module_dir => '/usr/local/icingaweb2-modules/foo',
                          :install_method => 'foobar' } }
 
-        it { is_expected.to raise_error(Puppet::Error, /foobar isn't supported/) }
+        it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['git', 'none'\]/) }
       end
     end
   end
