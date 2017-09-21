@@ -37,22 +37,23 @@
 #
 #
 class icingaweb2 (
-  $logging            = 'file',
-  $logging_file       = '/var/log/icingaweb2/icingaweb2.log',
-  $logging_level      = 'INFO',
-  $show_stacktraces   = false,
-  $module_path        = $::icingaweb2::params::module_path,
-  $theme              = 'Icinga',
-  $theme_disabled     = false,
-  $manage_repo        = false,
-  $manage_package     = true,
-  $import_schema      = false,
-  $db_type            = 'mysql',
-  $db_host            = 'localhost',
-  $db_port            = '3306',
-  $db_name            = 'icingaweb2',
-  $db_username        = undef,
-  $db_password        = undef,
+  $logging              = 'file',
+  $logging_file         = '/var/log/icingaweb2/icingaweb2.log',
+  $logging_level        = 'INFO',
+  $show_stacktraces     = false,
+  $module_path          = $::icingaweb2::params::module_path,
+  $theme                = 'Icinga',
+  $theme_disabled       = false,
+  $manage_repo          = false,
+  $manage_package       = true,
+  $import_schema        = false,
+  $db_type              = 'mysql',
+  $db_host              = 'localhost',
+  $db_port              = '3306',
+  $db_name              = 'icingaweb2',
+  $db_username          = undef,
+  $db_password          = undef,
+  $config_backend       = 'ini',
 ) inherits ::icingaweb2::params {
 
   validate_re($logging, [ 'file', 'syslog', 'none' ],
@@ -66,9 +67,11 @@ class icingaweb2 (
   validate_bool($theme_disabled)
   validate_bool($manage_repo)
   validate_bool($manage_package)
+  validate_re($config_backend, ['ini', 'db'],
+    "${config_backend} isn't supported. Valid values are 'ini' and 'db'.")
   validate_bool($import_schema)
 
-  if $import_schema {
+  if $import_schema or $config_backend == 'db' {
     validate_re($db_type, [ 'mysql', 'pgsql' ],
       "${db_type} isn't supported. Valid values are 'mysql' and 'pgsql'.")
     validate_string($db_name)
