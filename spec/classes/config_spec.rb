@@ -78,7 +78,7 @@ describe('icingaweb2::config', :type => :class) do
           "class { 'icingaweb2': config_backend => 'foobar' }"
         end
 
-        it { is_expected.to raise_error(Puppet::Error, /foobar isn't supported/) }
+        it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['db', 'ini'\]/) }
       end
     end
   end

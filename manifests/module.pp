@@ -54,15 +54,14 @@
 #     }
 #
 define icingaweb2::module(
-<<<<<<< HEAD
-  Enum['absent', 'present'] $ensure         = 'present',
-  String                    $module         = $title,
-  Stdlib::Absolutepath      $module_dir     = "${::icingaweb2::params::module_path}/${title}",
-  Enum['git', 'none']       $install_method = 'git',
-  Optional[String]          $git_repository = undef,
-  String                    $git_revision   = 'master',
-  Optional[String]          $package_name   = undef,
-  Hash                      $settings       = {},
+  Enum['absent', 'present']         $ensure         = 'present',
+  String                            $module         = $title,
+  Stdlib::Absolutepath              $module_dir     = "${::icingaweb2::params::module_path}/${title}",
+  Enum['git', 'none', 'package']    $install_method = 'git',
+  Optional[String]                  $git_repository = undef,
+  String                            $git_revision   = 'master',
+  Optional[String]                  $package_name   = undef,
+  Hash                              $settings       = {},
 ){
   $conf_dir   = $::icingaweb2::params::conf_dir
   $conf_user  = $::icingaweb2::params::conf_user
