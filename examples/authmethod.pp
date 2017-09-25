@@ -9,7 +9,7 @@ icingaweb2::config::resource{'my-sql':
   type        => 'db',
   db_type     => 'mysql',
   host        => 'localhost',
-  port        => '3306',
+  port        => 3306,
   db_name     => 'icingaweb2',
   db_username => 'root',
   db_password => 'supersecret',

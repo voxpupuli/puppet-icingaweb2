@@ -41,6 +41,22 @@ rake spec
 With integration tests this module is tested on multiple platforms to check the complete installation process. We define
 these tests with [ServerSpec] and run them on VMs by using [Beaker].
 
+Run all tests:
+```
+bundle exec rake acceptance
+```
+
+Run a single test:
+``` 
+bundle exec rake beaker:ubuntu-server-1604-x64
+```
+
+Don't destroy VM after tests:
+```
+export BEAKER_destroy=no
+bundle exec rake beaker:ubuntu-server-1604-x64
+```
+
 ### Run tests
 All available ServerSpec tests are listed in the `spec/acceptance/` directory.
 
