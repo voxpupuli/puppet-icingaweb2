@@ -100,9 +100,12 @@ class icingaweb2::module::director(
   }
 
   if $import_schema {
+    ensure_packages(['icingacli'], { 'ensure' => 'present' })
+
     exec { 'director-migration':
       command => 'icingacli director migration run',
       onlyif  => 'icingacli director migration pending',
+      require => [ Package['icingacli'], Icingaweb2::Module['director'] ]
     }
 
     if $kickstart {
@@ -123,7 +126,7 @@ class icingaweb2::module::director(
       exec { 'director-kickstart':
         command => 'icingacli director kickstart run',
         onlyif  => 'icingacli director kickstart required',
-        require => [ Exec['director-migration'], Icingaweb2::Module['director'] ]
+        require => Exec['director-migration']
       }
     } else {
       $kickstart_settings = {}
