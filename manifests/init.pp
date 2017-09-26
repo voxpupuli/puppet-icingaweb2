@@ -54,6 +54,7 @@ class icingaweb2 (
   Optional[String]                          $db_username      = undef,
   Optional[String]                          $db_password      = undef,
   Enum['ini', 'db']                         $config_backend   = 'ini',
+  String                                    $conf_user        = $icingaweb2::params::conf_user,
 ) inherits ::icingaweb2::params {
 
   anchor { '::icingaweb2::begin': }

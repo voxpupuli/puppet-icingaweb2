@@ -38,7 +38,7 @@ define icingaweb2::inisection(
   Pattern[/^\d+$/]     $order         = '01',
 ){
 
-  $conf_user      = $::icingaweb2::params::conf_user
+  $conf_user      = $::icingaweb2::conf_user
   $conf_group     = $::icingaweb2::params::conf_group
 
   if !defined(Concat[$target]) {

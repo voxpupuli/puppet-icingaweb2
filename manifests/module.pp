@@ -64,7 +64,7 @@ define icingaweb2::module(
   Hash                              $settings       = {},
 ){
   $conf_dir   = $::icingaweb2::params::conf_dir
-  $conf_user  = $::icingaweb2::params::conf_user
+  $conf_user  = $::icingaweb2::conf_user
   $conf_group = $::icingaweb2::params::conf_group
 
   File {

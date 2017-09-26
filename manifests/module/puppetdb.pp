@@ -30,7 +30,7 @@ class icingaweb2::module::puppetdb(
 ){
   $conf_dir   = "${::icingaweb2::params::conf_dir}/modules/puppetdb"
   $ssl_dir    = "${conf_dir}/ssl"
-  $conf_user  = $::icingaweb2::params::conf_user
+  $conf_user  = $::icingaweb2::conf_user
   $conf_group = $::icingaweb2::params::conf_group
 
   file { $ssl_dir:

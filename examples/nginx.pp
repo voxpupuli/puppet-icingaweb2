@@ -71,6 +71,7 @@ class {'icingaweb2':
   db_port       => 3306,
   db_username   => 'icingaweb2',
   db_password   => 'icingaweb2',
+  conf_user     => 'nginx',
   require       => Mysql::Db['icingaweb2'],
 }
 

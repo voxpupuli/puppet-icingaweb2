@@ -40,7 +40,7 @@ define icingaweb2::module::puppetdb::certificate(
   assert_private("You're not supposed to use this defined type manually.")
 
   $certificate_dir = "${::icingaweb2::module::puppetdb::ssl_dir}/${title}"
-  $conf_user       = $::icingaweb2::params::conf_user
+  $conf_user       = $::icingaweb2::conf_user
   $conf_group      = $::icingaweb2::params::conf_group
 
   File {
