@@ -3,12 +3,25 @@ class { 'apache':
 }
 
 class { 'apache::mod::php': }
-class { 'apache::mod::rewrite': }
 
-file {'/etc/apache2/conf.d/icingaweb2.conf':
-  source  => 'puppet:///modules/icingaweb2/examples/apache2/icingaweb2.conf',
-  require => Class['apache'],
-  notify  => Service['apache2'],
+case $::osfamily {
+  'redhat': {
+    package { 'php-mysql': }
+    file {'/etc/httpd/conf.d/icingaweb2.conf':
+      source  => 'puppet:///modules/icingaweb2/examples/apache2/icingaweb2.conf',
+      require => Class['apache'],
+      notify  => Service['httpd'],
+    }
+  }
+  'debian': {
+    class { 'apache::mod::rewrite': }
+
+    file {'/etc/apache2/conf.d/icingaweb2.conf':
+      source  => 'puppet:///modules/icingaweb2/examples/apache2/icingaweb2.conf',
+      require => Class['apache'],
+      notify  => Service['apache2'],
+    }
+  }
 }
 
 include ::mysql::server
