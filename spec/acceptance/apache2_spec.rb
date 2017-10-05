@@ -12,7 +12,6 @@ describe 'icingaweb2 with apache2' do
 
         case $::osfamily {
           'redhat': {
-            package { 'php-mysql': }
             file {'/etc/httpd/conf.d/icingaweb2.conf':
               source  => 'puppet:///modules/icingaweb2/examples/apache2/icingaweb2.conf',
               require => Class['apache'],
