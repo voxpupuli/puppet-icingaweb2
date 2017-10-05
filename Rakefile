@@ -17,7 +17,10 @@ exclude_paths = %w(
   .vendor/**/*
 )
 
-PuppetLint.configuration.ignore_paths = exclude_paths
+PuppetLint::RakeTask.new :lint do |config|
+  config.ignore_paths = exclude_paths
+end
+
 PuppetSyntax.exclude_paths = exclude_paths
 
 desc 'Run acceptance tests'
