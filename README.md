@@ -26,9 +26,9 @@ configuration of Icinga Web 2 and its modules on multiple operating systems.
 This module installs and configures Icinga Web 2 on your Linux host by using the official packages from
 [packages.icinga.com]. Dependend packages are installed as they are defined in the Icinga Web 2 package.
 
-The module can manage all configurations files of Icinga Web 2 and import an initial database schema. It can install and
-manage all official [modules](https://www.icinga.com/products/icinga-web-2-modules/) by cloning the repositories.
-Community driven modules can be installed but not managed.
+This module can manage all configurations files of Icinga Web 2 and import an initial database schema. It can install and
+manage all official [modules](https://www.icinga.com/products/icinga-web-2-modules/) as well as modules developed by the
+community.
 
 ## Setup
 
@@ -86,11 +86,11 @@ If you want to manage the version of Icinga Web 2, you have to disable the packa
 packages in your own Puppet code.
 
 ``` puppet
-package { 'icinga2':
+package { 'icingaweb2':
   ensure => latest,
 }
 
-class { '::icinga2':
+class { '::icingaweb2':
   manage_package => false,
 }
 ```
@@ -103,7 +103,8 @@ Use the [monitoring](#monitoring) class to connect the web interface to Icinga 2
 This module does not provide functionality to install and configure any web server, see the following examples how to
 install Icinga Web 2 with differen web servers:
 
-* [Apache2](examples/apache2/apache2.pp)
+* [Apache2](examples/apache2.pp)
+* [Nginx](examplex/nginx.pp)
 
 ### Manage Resources
 Icinga Web 2 resources are managed with the `icingaweb2::config::resource` defined type. Supported resource types
@@ -365,7 +366,7 @@ class {'icingaweb2::module::director':
 To run the kickstart mechanism, it's required to set `import_schema` to `true`.
 
 #### Doc
-The doc module provides an interface to the icinga2 documentation.
+The doc module provides an interface to the Icinga 2 and Icinga Web 2 documentation.
 
 Example:
 ``` puppet
@@ -529,6 +530,44 @@ latest version of Icinga Web. When set to false the operating systems default wi
 
 ##### `manage_package`
 If set to false packages aren't managed. Defaults to `true`
+
+##### `manage_dependencies
+If set to `false` dependencies aren't managed. Defaults to `true`
+
+##### `import_schema``
+Import database scheme. Make sure you have an existing database if you use this option. Defaults to `false`
+
+##### `db_type`
+Database type, can be either `mysql` or `pgsql`. This parameter is only used if `import_schema` is `true` or
+`config_backend` is `db`. Defaults to `mysql`
+
+##### `db_host`
+Database hostname. This parameter is only used if `import_schema` is `true` or
+`config_backend` is `db`. Defaults to `localhost`
+
+##### `db_port`
+Port of database host. This parameter is only used if `import_schema` is `true` or
+`config_backend` is `db`. Defaults to `3306`
+
+##### `db_name`
+Database name. This parameter is only used if `import_schema` is `true` or
+`config_backend` is `db`. Defaults to `icingaweb2`
+
+##### `db_username`
+Username for database access. This parameter is only used if `import_schema` is `true` or
+`config_backend` is `db`.
+
+##### `db_password`
+Password for database access. This parameter is only used if `import_schema` is `true` or
+`config_backend` is `db`.
+
+##### `config_backend`
+The global Icinga Web 2 preferences can either be stored in a database or in ini files. This parameter can either
+be set to `db` or `ini`. Defaults to `ini`
+
+##### `conf_user`
+By default this module expects Apache2 on the server. You can change the owner of the config files with this
+parameter. Default is dependent on the platform
 
 #### Class: `icingaweb2::module::monitoring`
 Manage the monitoring module. This module is mandatory for probably every setup.
@@ -740,11 +779,11 @@ Manage settings in INI configuration files.
 
 **Parameters of `icingaweb2::inisection`:**
 
-##### `section_name`
-Name of the target section. Settings are set under `[$section_name]`
-
 ##### `target`
 Absolute path to the configuration file.
+
+##### `section_name`
+Name of the target section. Settings are set under `[$section_name]`
 
 ##### `settings`
 A hash of settings and their settings. Single settings may be set to absent.
@@ -907,12 +946,11 @@ Enable or disable module. Defaults to `present`
 ##### `module`
 Name of the module.
 
-##### `install_method`
-Currently only `git` and `none` is supported as installation method. Other methods, such as `package`, may follow in 
-future releases. Defaults to `git`
-
 ##### `module_dir`
 Target directory of the module.
+
+##### `install_method`
+Install methods are `git`, `package` and `none` is supported as installation method. Defaults to `git`
 
 ##### `git_repository`
 Git repository of the module. This setting is only valid in combination with the installation method `git`.

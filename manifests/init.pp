@@ -22,8 +22,8 @@
 # [*theme*]
 #   The default theme setting. Users may override this settings. Defaults to 'icinga'.
 #
-# [*theme_access*]
-#   Whether users can change themes or not. Defaults to 'true'.
+# [*theme_disabled*]
+#   Whether users can change themes or not. Defaults to `false`.
 #
 # [*manage_repo*]
 #   When set to true this module will install the packages.icinga.com repository. With this official repo you can get
@@ -31,7 +31,45 @@
 #   NOTE: will be ignored if manage_package is set to false.
 #
 # [*manage_package*]
-#   If set to false packages aren't managed. Defaults to true.
+#   If set to `false` packages aren't managed. Defaults to `true`.
+#
+# [*manage_dependencies*]
+#  If set to `false` dependencies aren't managed. Defaults to `true`
+#
+# [*import_schema*]
+#  Import database scheme. Make sure you have an existing database if you use this option. Defaults to `false`
+#
+# [*db_type*]
+#  Database type, can be either `mysql` or `pgsql`. This parameter is only used if `import_schema` is `true` or
+#  `config_backend` is `db`. Defaults to `mysql`
+#
+# [*db_host*]
+#  Database hostname. This parameter is only used if `import_schema` is `true` or
+#  `config_backend` is `db`. Defaults to `localhost`
+#
+# [*db_port*]
+#  Port of database host. This parameter is only used if `import_schema` is `true` or
+#  `config_backend` is `db`. Defaults to `3306`
+#
+# [*db_name*]
+#  Database name. This parameter is only used if `import_schema` is `true` or
+#  `config_backend` is `db`. Defaults to `icingaweb2`
+#
+# [*db_username*]
+#  Username for database access. This parameter is only used if `import_schema` is `true` or
+#  `config_backend` is `db`.
+#
+# [*db_password*]
+#  Password for database access. This parameter is only used if `import_schema` is `true` or
+#  `config_backend` is `db`.
+#
+# [*config_backend*]
+#  The global Icinga Web 2 preferences can either be stored in a database or in ini files. This parameter can either
+#  be set to `db` or `ini`. Defaults to `ini`
+#
+# [*conf_user*]
+#  By default this module expects Apache2 on the server. You can change the owner of the config files with this
+#  parameter. Default is dependent on the platform
 #
 # === Examples
 #

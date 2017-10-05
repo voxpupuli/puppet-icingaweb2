@@ -8,14 +8,11 @@
 #   Enable or disable module. Defaults to `present`
 #
 class icingaweb2::module::translation(
-  $ensure        = 'present',
+  Enum['absent', 'present'] $ensure = 'present',
 ){
 
   $conf_dir        = $::icingaweb2::params::conf_dir
   $module_conf_dir = "${conf_dir}/modules/translation"
-
-  validate_re($ensure, [ '^present$', '^absent$' ],
-    "${ensure} isn't supported. Valid values are 'present' and 'absent'.")
 
   # gettext-tools SUSE
   package { $::icingaweb2::params::gettext_package_name:

@@ -1,6 +1,6 @@
 # == Class: icingaweb2::module::doc
 #
-# Install and configure the doc module.
+# The doc module provides an interface to the Icinga 2 and Icinga Web 2 documentation.
 #
 # === Parameters
 #

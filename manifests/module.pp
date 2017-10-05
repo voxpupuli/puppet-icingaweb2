@@ -15,8 +15,7 @@
 #   Target directory of the module.
 #
 # [*install_method*]
-#   Currently only `git` and `none` is supported as installation method. Other methods, such as `package`, may follow in
-#   future releases. Defaults to `git`
+#   Install methods are `git`, `package` and `none` is supported as installation method. Defaults to `git`
 #
 # [*git_repository*]
 #   Git repository of the module. This setting is only valid in combination with the installation method `git`.

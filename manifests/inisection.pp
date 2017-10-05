@@ -4,11 +4,11 @@
 #
 # === Parameters
 #
-# [*section_name*]
-#   Name of the target section. Settings are set under [$section_name]
-#
 # [*target*]
 #   Absolute path to the configuration file.
+#
+# [*section_name*]
+#   Name of the target section. Settings are set under [$section_name]
 #
 # [*settings*]
 #   A hash of settings and their settings. Single settings may be set to absent.

@@ -61,7 +61,7 @@ describe('icingaweb2::module::translation', :type => :class) do
       context "with ensure foobar" do
         let(:params) { { :ensure => 'foobar' } }
 
-        it { is_expected.to raise_error(Puppet::Error, /foobar isn't supported/) }
+        it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['absent', 'present'\]/) }
       end
     end
   end
