@@ -7,7 +7,7 @@ class { 'icingaweb2::module::generictts':
       pattern => '/#([0-9]{4,6})/',
       url     => 'https://my.ticket.system/tickets/id=$1',
     },
-    'TTS' => {
+    'TTS'              => {
       pattern => '/this-wont-match/',
       url     => 'https://icinga.com/tickets/id=$1'
     }

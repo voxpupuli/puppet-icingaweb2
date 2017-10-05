@@ -22,6 +22,9 @@ case $::osfamily {
       notify  => Service['apache2'],
     }
   }
+  default: {
+    fail("Your plattform ${::osfamily} is not supported by this example.")
+  }
 }
 
 include ::mysql::server
