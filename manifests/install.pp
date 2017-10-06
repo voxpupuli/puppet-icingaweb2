@@ -16,8 +16,7 @@ class icingaweb2::install {
 
   $package             = $::icingaweb2::params::package
   $manage_package      = $::icingaweb2::manage_package
-  $dependent_packages  = $::icingaweb2::params::dependent_packages
-  $manage_dependencies = $::icingaweb2::manage_dependencies
+  $extra_packages      = $::icingaweb2::extra_packages
 
   if $manage_package {
     package { $package:
@@ -25,7 +24,7 @@ class icingaweb2::install {
     }
   }
 
-  if $manage_dependencies {
-    ensure_packages($dependent_packages, { 'ensure' => 'present' })
+  if $extra_packages {
+    ensure_packages($extra_packages, { 'ensure' => 'present' })
   }
 }

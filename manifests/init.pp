@@ -33,8 +33,8 @@
 # [*manage_package*]
 #   If set to `false` packages aren't managed. Defaults to `true`.
 #
-# [*manage_dependencies*]
-#  If set to `false` dependencies aren't managed. Defaults to `true`
+# [*extra_pacakges*]
+#  An array of packages to install additionally.
 #
 # [*import_schema*]
 #  Import database scheme. Make sure you have an existing database if you use this option. Defaults to `false`
@@ -84,7 +84,7 @@ class icingaweb2 (
   Boolean                                   $theme_disabled      = false,
   Boolean                                   $manage_repo         = false,
   Boolean                                   $manage_package      = true,
-  Boolean                                   $manage_dependencies = true,
+  Optional[Array[String]]                   $extra_packages      = undef,
   Boolean                                   $import_schema       = false,
   Enum['mysql', 'pgsql']                    $db_type             = 'mysql',
   String                                    $db_host             = 'localhost',

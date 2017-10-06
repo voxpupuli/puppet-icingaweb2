@@ -531,8 +531,8 @@ latest version of Icinga Web. When set to false the operating systems default wi
 ##### `manage_package`
 If set to false packages aren't managed. Defaults to `true`
 
-##### `manage_dependencies
-If set to `false` dependencies aren't managed. Defaults to `true`
+##### `extra_pacakges`
+An array of packages to install additionally.
 
 ##### `import_schema``
 Import database scheme. Make sure you have an existing database if you use this option. Defaults to `false`

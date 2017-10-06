@@ -18,12 +18,12 @@ class icingaweb2::repo {
 
   if $::icingaweb2::manage_repo and $::icingaweb2::manage_package {
 
-    case $facts['os']['family'] {
+    case $::facts['os']['family'] {
       'redhat': {
-        case $facts['os']['name'] {
+        case $::facts['os']['name'] {
           'centos', 'redhat': {
             yumrepo { 'icinga-stable-release':
-              baseurl  => "http://packages.icinga.com/epel/${facts['os']['release']['major']}/release/",
+              baseurl  => "http://packages.icinga.com/epel/${::facts['os']['release']['major']}/release/",
               descr    => 'ICINGA (stable release for epel)',
               enabled  => 1,
               gpgcheck => 1,
@@ -36,12 +36,12 @@ class icingaweb2::repo {
         }
       }
       'debian': {
-        case $facts['os']['name'] {
+        case $::facts['os']['name'] {
           'debian': {
             include ::apt, ::apt::backports
             apt::source { 'icinga-stable-release':
               location => 'http://packages.icinga.com/debian',
-              release  => "icinga-${facts['os']['distro']['codename']}",
+              release  => "icinga-${::facts['lsbdistcodename']}",
               repos    => 'main',
               key      => {
                 id     => 'F51A91A5EE001AA5D77D53C4C6E319C334410682',
@@ -53,7 +53,7 @@ class icingaweb2::repo {
             include ::apt
             apt::source { 'icinga-stable-release':
               location => 'http://packages.icinga.com/ubuntu',
-              release  => "icinga-${facts['os']['distro']['codename']}",
+              release  => "icinga-${::facts['lsbdistcodename']}",
               repos    => 'main',
               key      => {
                 id     => 'F51A91A5EE001AA5D77D53C4C6E319C334410682',
@@ -82,10 +82,10 @@ class icingaweb2::repo {
           logoutput => 'on_failure',
         }
 
-        case $facts['os']['name'] {
+        case $::facts['os']['name'] {
           'SLES': {
             zypprepo { 'icinga-stable-release':
-              baseurl  => "http://packages.icinga.com/SUSE/${facts['os']['release']['full']}/release/",
+              baseurl  => "http://packages.icinga.com/SUSE/${::facts['os']['release']['full']}/release/",
               enabled  => 1,
               gpgcheck => 1,
               require  => Exec['import icinga gpg key']
