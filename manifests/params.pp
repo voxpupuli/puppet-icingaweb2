@@ -48,7 +48,7 @@ class icingaweb2::params {
     } # Suse
 
     default: {
-      fail("Your plattform ${::osfamily} is not supported, yet.")
+      fail("Your plattform ${facts['os']['family']} is not supported, yet.")
     }
   } # case $::osfamily
 }
