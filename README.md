@@ -858,6 +858,9 @@ LDAP attribute which contains the username. Only valid if `backend` is `ldap`.
 ##### `ldap_filter`
 LDAP search filter. Only valid if `backend` is `ldap`.
 
+##### `ldap_base_dn`
+LDAP base DN. Only valid if `backend` is `ldap`.
+
 ##### `order`
 Multiple authentication methods can be chained. The order of entries in the authentication configuration determines
 the order of the authentication methods. Defaults to `01`
