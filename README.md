@@ -190,9 +190,9 @@ mysql::db { 'icingaweb2':
 class {'icingaweb2':
   manage_repo   => true,
   import_schema => true,
-  db_type       => 'pgsql',
+  db_type       => 'mysql',
   db_host       => 'localhost',
-  db_port       => '5432',
+  db_port       => 3306,
   db_username   => 'icingaweb2',
   db_password   => 'icingaweb2',
   require       => Mysql::Db['icingaweb2'],
