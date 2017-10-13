@@ -103,8 +103,8 @@ Use the [monitoring](#monitoring) class to connect the web interface to Icinga 2
 This module does not provide functionality to install and configure any web server, see the following examples how to
 install Icinga Web 2 with differen web servers:
 
-* [Apache2](examples/apache2.pp)
-* [Nginx](examplex/nginx.pp)
+* [Apache2](https://github.com/Icinga/puppet-icingaweb2/blob/master/examples/apache2.pp)
+* [Nginx](https://github.com/Icinga/puppet-icingaweb2/blob/master/examples/nginx.pp)
 
 ### Manage Resources
 Icinga Web 2 resources are managed with the `icingaweb2::config::resource` defined type. Supported resource types
