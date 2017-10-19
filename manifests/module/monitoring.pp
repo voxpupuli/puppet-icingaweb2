@@ -73,7 +73,7 @@ class icingaweb2::module::monitoring(
     'resource' => 'icingaweb2-module-monitoring',
   }
 
-  $config_settings = {
+  $security_settings = {
     'protected_customvars' => $protected_customvars
   }
 
@@ -83,10 +83,10 @@ class icingaweb2::module::monitoring(
       'target'       => "${module_conf_dir}/backends.ini",
       'settings'     => delete_undef_values($backend_settings)
     },
-    'module-monitoring-config' => {
-      'section_name' => 'config',
-      'target'       => "${module_conf_dir}/config.ini",
-      'settings'     => delete_undef_values($config_settings)
+    'module-monitoring-security' => {
+      'section_name' => 'security',
+      'target'       => "${module_conf_dir}/security.ini",
+      'settings'     => delete_undef_values($security_settings)
     }
   }
 

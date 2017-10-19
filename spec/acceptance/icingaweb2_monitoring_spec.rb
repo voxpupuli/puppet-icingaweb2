@@ -46,9 +46,9 @@ describe 'icingaweb2::module::monitoring class:' do
     it { is_expected.to be_symlink }
   end
 
-  describe file('/etc/icingaweb2/modules/monitoring/config.ini') do
+  describe file('/etc/icingaweb2/modules/monitoring/security.ini') do
     it { is_expected.to be_file }
-    it { is_expected.to contain '[config]' }
+    it { is_expected.to contain '[security]' }
     it { is_expected.to contain 'protected_customvars = "*pw*, *pass*, community"' }
   end
 
