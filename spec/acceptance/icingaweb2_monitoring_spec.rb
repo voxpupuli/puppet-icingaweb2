@@ -49,7 +49,7 @@ describe 'icingaweb2::module::monitoring class:' do
   describe file('/etc/icingaweb2/modules/monitoring/security.ini') do
     it { is_expected.to be_file }
     it { is_expected.to contain '[security]' }
-    it { is_expected.to contain 'protected_customvars = "*pw*, *pass*, community"' }
+    it { is_expected.to contain 'protected_customvars = "*pw*,*pass*,community"' }
   end
 
   describe file('/etc/icingaweb2/modules/monitoring/backends.ini') do

@@ -9,7 +9,7 @@
 #
 # [*pretected_customvars*]
 #   Custom variables in Icinga 2 may contain sensible information. Set patterns for custom variables that should be
-#   hidden in the web interface. Defaults to `*pw*, *pass*, community`
+#   hidden in the web interface. Defaults to `*pw*,*pass*,community`
 #
 # [*ido_type*]
 #   Type of your IDO database. Either `mysql` or `pgsql`. Defaults to `mysql`
@@ -34,7 +34,7 @@
 #
 class icingaweb2::module::monitoring(
   Enum['absent', 'present'] $ensure               = 'present',
-  String                    $protected_customvars = '*pw*, *pass*, community',
+  String                    $protected_customvars = '*pw*,*pass*,community',
   Enum['mysql', 'pgsql']    $ido_type             = 'mysql',
   Optional[String]          $ido_host             = undef,
   Integer[1,65535]          $ido_port             = 3306,

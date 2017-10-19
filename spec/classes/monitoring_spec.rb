@@ -55,7 +55,7 @@ describe('icingaweb2::module::monitoring', :type => :class) do
                                  'section_name' => 'security',
                                  'target'=>'/etc/icingaweb2/modules/monitoring/security.ini',
                                  'settings'=>{
-                                     'protected_customvars'=>'*pw*, *pass*, community'
+                                     'protected_customvars'=>'*pw*,*pass*,community'
                                  }
                              }
                          }) }
@@ -106,7 +106,7 @@ describe('icingaweb2::module::monitoring', :type => :class) do
                                  'section_name' => 'security',
                                  'target'=>'/etc/icingaweb2/modules/monitoring/security.ini',
                                  'settings'=>{
-                                     'protected_customvars'=>'*pw*, *pass*, community'
+                                     'protected_customvars'=>'*pw*,*pass*,community'
                                  }
                              }
                          }) }
