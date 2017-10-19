@@ -135,6 +135,39 @@ describe('icingaweb2::module::monitoring', :type => :class) do
 
         it { is_expected.to raise_error(Puppet::Error, /expects a match for Enum\['mysql', 'pgsql'\]/) }
       end
+
+      context "#{os} with array protected_customvars" do
+        let(:params) { {  :ido_type => 'mysql',
+                          :ido_host => 'localhost',
+                          :ido_db_name => 'icinga2',
+                          :ido_db_username => 'icinga2',
+                          :ido_db_password => 'icinga2',
+                          :commandtransports => {
+                           'foo' => {
+                             'transport' => 'local',
+                           }
+                         },
+                         :protected_customvars => ['foo', 'bar', '*baz*'] } }
+
+        it { is_expected.to contain_icingaweb2__module('monitoring')
+          .with_settings({
+                             'module-monitoring-backends'=>{
+                                 'section_name' => 'backends',
+                                 'target'=>'/etc/icingaweb2/modules/monitoring/backends.ini',
+                                 'settings'=>{
+                                     'type'=>'ido',
+                                     'resource'=>'icingaweb2-module-monitoring'
+                                 }
+                             },
+                             'module-monitoring-security'=>{
+                                 'section_name' => 'security',
+                                 'target'=>'/etc/icingaweb2/modules/monitoring/security.ini',
+                                 'settings'=>{
+                                     'protected_customvars'=>'foo,bar,*baz*'
+                                 }
+                             }
+                         }) }
+      end
     end
   end
 end

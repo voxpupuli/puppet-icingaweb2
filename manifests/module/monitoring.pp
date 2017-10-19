@@ -33,15 +33,15 @@
 #   A hash of command transports.
 #
 class icingaweb2::module::monitoring(
-  Enum['absent', 'present'] $ensure               = 'present',
-  String                    $protected_customvars = '*pw*,*pass*,community',
-  Enum['mysql', 'pgsql']    $ido_type             = 'mysql',
-  Optional[String]          $ido_host             = undef,
-  Integer[1,65535]          $ido_port             = 3306,
-  Optional[String]          $ido_db_name          = undef,
-  Optional[String]          $ido_db_username      = undef,
-  Optional[String]          $ido_db_password      = undef,
-  Hash                      $commandtransports    = undef,
+  Enum['absent', 'present']      $ensure               = 'present',
+  Variant[String, Array[String]] $protected_customvars = '*pw*,*pass*,community',
+  Enum['mysql', 'pgsql']         $ido_type             = 'mysql',
+  Optional[String]               $ido_host             = undef,
+  Integer[1,65535]               $ido_port             = 3306,
+  Optional[String]               $ido_db_name          = undef,
+  Optional[String]               $ido_db_username      = undef,
+  Optional[String]               $ido_db_password      = undef,
+  Hash                           $commandtransports    = undef,
 ){
 
   $conf_dir        = $::icingaweb2::params::conf_dir
@@ -74,7 +74,10 @@ class icingaweb2::module::monitoring(
   }
 
   $security_settings = {
-    'protected_customvars' => $protected_customvars
+    'protected_customvars' => $protected_customvars ? {
+      String        => $protected_customvars,
+      Array[String] => join($protected_customvars, ','),
+    }
   }
 
   $settings = {
