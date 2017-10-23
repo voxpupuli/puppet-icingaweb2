@@ -7,9 +7,9 @@
 # [*ensure*]
 #   Enable or disable module. Defaults to `present`
 #
-# [*pretected_customvars*]
+# [*protected_customvars*]
 #   Custom variables in Icinga 2 may contain sensible information. Set patterns for custom variables that should be
-#   hidden in the web interface. Defaults to `*pw*, *pass*, community`
+#   hidden in the web interface. Defaults to `*pw*,*pass*,community`
 #
 # [*ido_type*]
 #   Type of your IDO database. Either `mysql` or `pgsql`. Defaults to `mysql`
@@ -33,15 +33,15 @@
 #   A hash of command transports.
 #
 class icingaweb2::module::monitoring(
-  Enum['absent', 'present'] $ensure               = 'present',
-  String                    $protected_customvars = '*pw*, *pass*, community',
-  Enum['mysql', 'pgsql']    $ido_type             = 'mysql',
-  Optional[String]          $ido_host             = undef,
-  Integer[1,65535]          $ido_port             = 3306,
-  Optional[String]          $ido_db_name          = undef,
-  Optional[String]          $ido_db_username      = undef,
-  Optional[String]          $ido_db_password      = undef,
-  Hash                      $commandtransports    = undef,
+  Enum['absent', 'present']      $ensure               = 'present',
+  Variant[String, Array[String]] $protected_customvars = '*pw*,*pass*,community',
+  Enum['mysql', 'pgsql']         $ido_type             = 'mysql',
+  Optional[String]               $ido_host             = undef,
+  Integer[1,65535]               $ido_port             = 3306,
+  Optional[String]               $ido_db_name          = undef,
+  Optional[String]               $ido_db_username      = undef,
+  Optional[String]               $ido_db_password      = undef,
+  Hash                           $commandtransports    = undef,
 ){
 
   $conf_dir        = $::icingaweb2::params::conf_dir
@@ -73,8 +73,11 @@ class icingaweb2::module::monitoring(
     'resource' => 'icingaweb2-module-monitoring',
   }
 
-  $config_settings = {
-    'protected_customvars' => $protected_customvars
+  $security_settings = {
+    'protected_customvars' => $protected_customvars ? {
+      String        => $protected_customvars,
+      Array[String] => join($protected_customvars, ','),
+    }
   }
 
   $settings = {
@@ -83,10 +86,10 @@ class icingaweb2::module::monitoring(
       'target'       => "${module_conf_dir}/backends.ini",
       'settings'     => delete_undef_values($backend_settings)
     },
-    'module-monitoring-config' => {
-      'section_name' => 'config',
-      'target'       => "${module_conf_dir}/config.ini",
-      'settings'     => delete_undef_values($config_settings)
+    'module-monitoring-security' => {
+      'section_name' => 'security',
+      'target'       => "${module_conf_dir}/security.ini",
+      'settings'     => delete_undef_values($security_settings)
     }
   }
 

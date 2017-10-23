@@ -577,9 +577,9 @@ Manage the monitoring module. This module is mandatory for probably every setup.
 ##### `ensure`
 Enable or disable module. Defaults to `present`
 
-##### `pretected_customvars`
+##### `protected_customvars`
 Custom variables in Icinga 2 may contain sensible information. Set patterns for custom variables that should be hidden
-in the web interface. Defaults to `*pw*, *pass*, community`
+in the web interface. Defaults to `*pw*,*pass*,community`
 
 ##### `ido_type`
 Type of your IDO database. Either `mysql` or `pgsql`. Defaults to `mysql`
