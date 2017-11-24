@@ -142,16 +142,18 @@ class icingaweb2::config {
       }
       'pgsql': {
         exec { 'import schema':
-          environment => ["PGPASSWORD=\"${db_password}\""],
+          environment => ["PGPASSWORD=${db_password}"],
           command     => "psql -h '${db_host}' -U '${db_username}' -d '${db_name}' -w -f ${schema_dir}/pgsql.schema.sql",
           unless      => "psql -h '${db_host}' -U '${db_username}' -d '${db_name}' -w -c 'SELECT 1 FROM icingaweb_user'",
           notify      => Exec['create default user'],
+          provider    => shell,
         }
 
         exec { 'create default user':
-          environment => ["PGPASSWORD=\"${db_password}\""],
+          environment => ["PGPASSWORD=${db_password}"],
           command     => "psql -h '${db_host}' -U '${db_username}' -d '${db_name}' -w -c \"INSERT INTO icingaweb_user(name, active, password_hash) VALUES ('icinga', 1, '\\\$1\\\$3no6eqZp\\\$FlcHQDdnxGPqKadmfVcCU.')\"",
           refreshonly => true,
+          provider    => shell,
         }
       }
       default: {
