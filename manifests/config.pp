@@ -42,9 +42,10 @@ class icingaweb2::config {
   }
 
   File {
-    mode  => '0660',
-    owner => $conf_user,
-    group => $conf_group
+    mode    => '0660',
+    owner   => $conf_user,
+    group   => $conf_group,
+    require => Group[$conf_group],
   }
 
   Exec {
@@ -59,6 +60,10 @@ class icingaweb2::config {
   file { $logging_file:
     ensure => file,
     mode   => '0640',
+  }
+
+  group { $conf_group:
+    ensure => present,
   }
 
   icingaweb2::inisection {'logging':
