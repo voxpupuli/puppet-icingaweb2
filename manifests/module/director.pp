@@ -110,7 +110,7 @@ class icingaweb2::module::director(
       path    =>  ['/bin','/sbin','/usr/bin','/usr/sbin','/usr/local/bin','/usr/local/sbin','/usr/local/www/icingaweb2/bin'],
       command => 'icingacli director migration run',
       onlyif  => 'icingacli director migration pending',
-      require => [ Package['icingacli'], Icingaweb2::Module['director'] ]
+      require => [ Package[$icingaclipkg], Icingaweb2::Module['director'] ]
     }
 
     if $kickstart {
