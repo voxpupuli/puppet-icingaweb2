@@ -69,8 +69,9 @@ class icingaweb2::module::director(
   Integer[1,65535]          $api_port       = 5665,
   Optional[String]          $api_username   = undef,
   Optional[String]          $api_password   = undef,
-  Optional[String]          $icingaclipkg   = $::icingaweb2::params::icingaclipkg,
 ){
+
+  $icingaclipkg    = $::icingaweb2::params::icingaclipkg
   $conf_dir        = $::icingaweb2::params::conf_dir
   $module_conf_dir = "${conf_dir}/modules/director"
 
