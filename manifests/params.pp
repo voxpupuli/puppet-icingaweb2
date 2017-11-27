@@ -23,6 +23,7 @@ class icingaweb2::params {
       $module_path           = '/usr/share/icingaweb2/modules'
       $schema_dir            = '/usr/share/doc/icingaweb2/schema'
       $gettext_package_name  = 'gettext'
+      $icingaclipkg          = 'icingacli'
     } # RedHat
 
     'debian': {
@@ -32,6 +33,7 @@ class icingaweb2::params {
       $module_path          = '/usr/share/icingaweb2/modules'
       $schema_dir           = '/usr/share/icingaweb2/etc/schema'
       $gettext_package_name = 'gettext'
+      $icingaclipkg         = 'icingacli'
     } # Debian
 
     'suse': {
@@ -41,6 +43,7 @@ class icingaweb2::params {
       $module_path          = '/usr/share/icingaweb2/modules'
       $schema_dir           = '/usr/share/doc/icingaweb2/schema'
       $gettext_package_name = 'gettext-tools'
+      $icingaclipkg         = 'icingacli'
     } # Suse
 
     'FreeBSD': {
@@ -50,6 +53,7 @@ class icingaweb2::params {
       $module_path          = '/usr/local/www/icingaweb2/modules'
       $schema_dir           = '/usr/local/www/icingaweb2/etc/schema'
       $gettext_package_name = 'gettext-runtime'
+      $icingaclipkg         = Undef
     } # FreeBSD
 
     default: {
