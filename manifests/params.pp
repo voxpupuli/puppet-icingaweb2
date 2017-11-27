@@ -53,7 +53,7 @@ class icingaweb2::params {
       $module_path          = '/usr/local/www/icingaweb2/modules'
       $schema_dir           = '/usr/local/www/icingaweb2/etc/schema'
       $gettext_package_name = 'gettext-runtime'
-      $icingaclipkg         = Undef
+      $icingaclipkg         = $package
     } # FreeBSD
 
     default: {

@@ -102,9 +102,7 @@ class icingaweb2::module::director(
   }
 
   if $import_schema {
-    if $icingaclipkg {
-      ensure_packages([$icingaclipkg], { 'ensure' => 'present' })
-    }
+    ensure_packages([$icingaclipkg], { 'ensure' => 'present' })
 
     exec { 'director-migration':
       path    =>  ['/bin','/sbin','/usr/bin','/usr/sbin','/usr/local/bin','/usr/local/sbin','/usr/local/www/icingaweb2/bin'],
