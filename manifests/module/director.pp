@@ -69,6 +69,7 @@ class icingaweb2::module::director(
   Integer[1,65535]          $api_port       = 5665,
   Optional[String]          $api_username   = undef,
   Optional[String]          $api_password   = undef,
+  String                    $path           = $::path,
 ){
 
   $icingaclipkg    = $::icingaweb2::params::icingaclipkg
@@ -77,7 +78,7 @@ class icingaweb2::module::director(
 
   Exec {
     user => 'root',
-    path => $::path,
+    path => "${path}:/usr/local/www/icingaweb2/bin",
   }
 
   icingaweb2::config::resource { 'icingaweb2-module-director':
@@ -105,7 +106,6 @@ class icingaweb2::module::director(
     ensure_packages([$icingaclipkg], { 'ensure' => 'present' })
 
     exec { 'director-migration':
-      path    =>  ['/bin','/sbin','/usr/bin','/usr/sbin','/usr/local/bin','/usr/local/sbin','/usr/local/www/icingaweb2/bin'],
       command => 'icingacli director migration run',
       onlyif  => 'icingacli director migration pending',
       require => [ Package[$icingaclipkg], Icingaweb2::Module['director'] ]
@@ -127,7 +127,6 @@ class icingaweb2::module::director(
       }
 
       exec { 'director-kickstart':
-        path    => ['/bin','/sbin','/usr/bin','/usr/sbin','/usr/local/bin','/usr/local/sbin','/usr/local/www/icingaweb2/bin'],
         command => 'icingacli director kickstart run',
         onlyif  => 'icingacli director kickstart required',
         require => Exec['director-migration']
