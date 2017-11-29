@@ -77,8 +77,9 @@ class icingaweb2::module::director(
   $module_conf_dir = "${conf_dir}/modules/director"
 
   Exec {
-    user => 'root',
-    path => "${path}:/usr/local/www/icingaweb2/bin",
+    user        => 'root',
+    path        => "${path}:/usr/local/www/icingaweb2/bin",
+    environment => ["ICINGAWEB_CONFIGDIR=${conf_dir}"],
   }
 
   icingaweb2::config::resource { 'icingaweb2-module-director':
@@ -105,10 +106,15 @@ class icingaweb2::module::director(
   if $import_schema {
     ensure_packages([$icingaclipkg], { 'ensure' => 'present' })
 
+    exec { 'enable-director':
+      command     => 'icingacli module enable director',
+      provider    => shell
+    }
+
     exec { 'director-migration':
       command => 'icingacli director migration run',
       onlyif  => 'icingacli director migration pending',
-      require => [ Package[$icingaclipkg], Icingaweb2::Module['director'] ]
+      require => [ Package[$icingaclipkg], Icingaweb2::Module['director'], Exec['enable-director'] ]
     }
 
     if $kickstart {
