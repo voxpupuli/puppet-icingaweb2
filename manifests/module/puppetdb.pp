@@ -48,7 +48,7 @@ class icingaweb2::module::puppetdb(
     'puppet': {
 
       $my_certname     = $::fqdn
-      $puppetdb_ssldir = "${ssl_dir}/puppetdb"
+      $puppetdb_ssldir = "${ssl_dir}/${my_certname}"
 
       file { [$puppetdb_ssldir, "${puppetdb_ssldir}/private_keys", "${puppetdb_ssldir}/certs"]:
         ensure  => 'directory',
