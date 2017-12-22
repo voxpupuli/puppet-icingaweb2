@@ -60,12 +60,23 @@ class icingaweb2::module::puppetdb(
         recurse => true,
       }
 
+      if $::puppet_ssldir {
+        # fact exists only when puppetlabs/puppet_agent is used
+        $_puppet_ssldir = $::puppet_ssldir
+      } elsif $::settings::ssldir {
+        $_puppet_ssldir = $::settings::ssldir
+      }
+      else {
+        # default from puppet agent < 4
+        $_puppet_ssldir = '/var/lib/puppet/ssl'
+      }
+
       file { "${puppetdb_ssldir}/certs/ca.pem":
         ensure => 'present',
         group  => $conf_group,
         owner  => $conf_user,
         mode   => '0640',
-        source => "${::settings::ssldir}/certs/ca.pem",
+        source => "${_puppet_ssldir}/certs/ca.pem",
       }
 
       # Combined SSL key path (private+public key)
@@ -81,13 +92,13 @@ class icingaweb2::module::puppetdb(
 
       concat::fragment { 'private_key':
         target => $combinedkey_path,
-        source => "${::settings::ssldir}/private_keys/${my_certname}.pem",
+        source => "${_puppet_ssldir}/private_keys/${my_certname}.pem",
         order  => 1,
       }
 
       concat::fragment { 'public_key':
         target => $combinedkey_path,
-        source => "${::settings::ssldir}/certs/${my_certname}.pem",
+        source => "${_puppet_ssldir}/certs/${my_certname}.pem",
         order  => 2,
       }
 
