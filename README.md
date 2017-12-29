@@ -462,7 +462,8 @@ class { 'icingaweb2::module::generictts':
     'my-ticket-system' => {
       pattern => '/#([0-9]{4,6})/',
       url     => 'https://my.ticket.system/tickets/id=$1',
-    }
+    },
+  },
 }
 ```
 
