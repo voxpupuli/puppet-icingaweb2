@@ -23,6 +23,9 @@
 # [*ldap_base_dn*]
 #   LDAP base DN. Only valid if `backend` is `ldap`.
 #
+# [*domain*]
+#   Domain for domain-aware authentication
+#
 # [*order*]
 #   Multiple authentication methods can be chained. The order of entries in the authentication configuration determines
 #   the order of the authentication methods. Defaults to `01`
@@ -44,6 +47,7 @@ define icingaweb2::config::authmethod(
   Optional[String]                         $ldap_user_name_attribute = undef,
   Optional[String]                         $ldap_filter              = undef,
   Optional[String]                         $ldap_base_dn             = undef,
+  Optional[String]                         $domain                   = undef,
   Pattern[/^\d+$/]                         $order                    = '01',
 ) {
 
@@ -63,12 +67,14 @@ define icingaweb2::config::authmethod(
         'user_name_attribute' => $ldap_user_name_attribute,
         'filter'              => $ldap_filter,
         'base_dn'             => $ldap_base_dn,
+        'domain'              => $domain,
       }
     }
     'msldap', 'db': {
       $settings = {
         'backend'  => $backend,
         'resource' => $resource,
+        'domain'   => $domain,
       }
     }
     default: {
