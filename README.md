@@ -534,7 +534,7 @@ If set to false packages aren't managed. Defaults to `true`
 ##### `extra_pacakges`
 An array of packages to install additionally.
 
-##### `import_schema``
+##### `import_schema`
 Import database scheme. Make sure you have an existing database if you use this option. Defaults to `false`
 
 ##### `db_type`
@@ -568,6 +568,9 @@ be set to `db` or `ini`. Defaults to `ini`
 ##### `conf_user`
 By default this module expects Apache2 on the server. You can change the owner of the config files with this
 parameter. Default is dependent on the platform
+
+##### `default_domain`
+When using domain-aware authentication, you can set a default domain here.
 
 #### Class: `icingaweb2::module::monitoring`
 Manage the monitoring module. This module is mandatory for probably every setup.
@@ -860,6 +863,9 @@ LDAP search filter. Only valid if `backend` is `ldap`.
 
 ##### `ldap_base_dn`
 LDAP base DN. Only valid if `backend` is `ldap`.
+
+##### `domain`
+Domain for domain-aware authentication.
 
 ##### `order`
 Multiple authentication methods can be chained. The order of entries in the authentication configuration determines

@@ -71,6 +71,9 @@
 #  By default this module expects Apache2 on the server. You can change the owner of the config files with this
 #  parameter. Default is dependent on the platform
 #
+# [*default_domain*]
+#  When using domain-aware authentication, you can set a default domain here.
+#
 # === Examples
 #
 #
@@ -94,6 +97,7 @@ class icingaweb2 (
   Optional[String]                          $db_password         = undef,
   Enum['ini', 'db']                         $config_backend      = 'ini',
   String                                    $conf_user           = $icingaweb2::params::conf_user,
+  Optional[String]                          $default_domain      = undef,
 ) inherits ::icingaweb2::params {
 
   anchor { '::icingaweb2::begin': }

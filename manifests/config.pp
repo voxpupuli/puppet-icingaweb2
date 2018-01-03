@@ -22,7 +22,7 @@ class icingaweb2::config {
   $logging_level        = $::icingaweb2::logging_level
   $show_stacktraces     = $::icingaweb2::show_stacktraces
   $module_path          = $::icingaweb2::module_path
-  # TODO: $config_backend can be 'db', however in this case it requires a valid resource at 'config_resource'
+
   $theme                = $::icingaweb2::theme
   $theme_disabled       = $::icingaweb2::theme_disabled
 
@@ -34,6 +34,7 @@ class icingaweb2::config {
   $db_type              = $::icingaweb2::db_type
   $db_username          = $::icingaweb2::db_username
   $db_password          = $::icingaweb2::db_password
+  $default_domain       = $::icingaweb2::default_domain
 
   $config_backend       = $::icingaweb2::config_backend
   $config_resource      = $::icingaweb2::config_backend ? {
@@ -81,6 +82,15 @@ class icingaweb2::config {
   icingaweb2::inisection {'global':
     target   => "${conf_dir}/config.ini",
     settings => delete_undef_values($settings),
+  }
+
+  if $default_domain {
+    icingaweb2::inisection {'authentication':
+      target   => "${conf_dir}/config.ini",
+      settings => {
+        'default_domain' => $default_domain,
+      }
+    }
   }
 
   icingaweb2::inisection {'themes':

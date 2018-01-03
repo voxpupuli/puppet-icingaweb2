@@ -24,7 +24,7 @@
 #   LDAP base DN. Only valid if `backend` is `ldap`.
 #
 # [*domain*]
-#   Domain for ldap and msldap domain-aware authentication
+#   Domain for domain-aware authentication
 #
 # [*order*]
 #   Multiple authentication methods can be chained. The order of entries in the authentication configuration determines
