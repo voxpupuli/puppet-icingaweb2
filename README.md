@@ -380,10 +380,10 @@ class {'::icingaweb2::module::doc':
 }
 ```
 
-#### Puppetdb
-You can configure director to query one or more PuppetDB servers.
+#### PuppetDB
+You can configure Director to query one or more PuppetDB servers.
 
-Example: set up puppetdb module and configure two SSL keys
+Example: Set up the PuppetDB module and configure two custom SSL keys
 ``` puppet
 $certificates = {'pupdb1' => {
                    :ssl_key => '-----BEGIN RSA PRIVATE KEY----- abc...',
@@ -392,6 +392,7 @@ $certificates = {'pupdb1' => {
                    :ssl_key => '-----BEGIN RSA PRIVATE KEY----- zyx...',
                    :ssl_cacert => '-----BEGIN RSA PRIVATE KEY----- wvur...', },
                 }
+
 class {'::icingaweb2::module::puppetdb':
   git_revision => 'master',
   ssl          => 'none',
@@ -399,25 +400,12 @@ class {'::icingaweb2::module::puppetdb':
 }
 ```
 
-Example: set up puppetdb module and configure puppet SSL key
+Example: Set up the PuppetDB module and configure the hosts SSL key to connect to the PuppetDB host
 ``` puppet
 class {'::icingaweb2::module::puppetdb':
   git_revision => 'master',
   ssl          => 'puppet',
-}
-```
-
-Example: set up puppetdb module and configure one SSL key *and* puppet SSL key
-``` puppet
-class {'::icingaweb2::module::puppetdb':
-  git_revision => 'master',
-  ssl          => 'none',
-  certificates => {
-    puppetdb1 => {
-      ssl_key    => '-----BEGIN RSA PRIVATE KEY----- abc...',
-      ssl_cacert => '-----BEGIN RSA PRIVATE KEY----- def...',
-    }
-  }
+  host         => 'puppetdb.example.com',
 }
 ```
 
@@ -780,6 +768,9 @@ Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 ##### `ssl`
 How to set up ssl certificates. To copy certificates from the local puppet installation, use `puppet`. Defaults to
 `none`
+
+##### `host`
+Hostname of the server where PuppetDB is running. The `ssl` parameter needs to be set to `puppet`.
 
 ##### `certificates`
 Hash with SSL certificates to configure.  See `icingaweb2::module::puppetdb::certificate`.
