@@ -81,7 +81,7 @@ describe('icingaweb2::module::puppetdb', :type => :class) do
         let(:params) { { :ssl => 'none',
                          :certificates => { 'pupdb1' =>
                                               { 'ssl_key' => 'mysslkey1', 'ssl_cacert' => 'mycacert1'},
-                                            'pupdb2' => 
+                                            'pupdb2' =>
                                               { 'ssl_key' => 'mysslkey2', 'ssl_cacert' => 'mycacert2'},
                                           }
                          } }
@@ -101,26 +101,26 @@ describe('icingaweb2::module::puppetdb', :type => :class) do
                          }
       end
 
-      context "with ssl set to puppet and no extra certificates" do
-        let(:params) { { :ssl => 'puppet',
-                        } }
+      context "with ssl set to puppet and host to puppetdb.example.com" do
+        let(:params) { { :ssl => 'puppet', :host => 'puppetdb.example.com' } }
+        let(:facts) { facts.merge({ :fqdn => 'puppetdb' }) }
 
         it { is_expected.to contain_icingaweb2__module('puppetdb') }
 
         it { is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl')
           .with_ensure('directory')
                          }
-        it { is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb')
+        it { is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com')
           .with_ensure('directory')
                          }
-        it { is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb/private_keys')
+        it { is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys')
           .with_ensure('directory')
                          }
-        it { is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb/certs')
+        it { is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/certs')
           .with_ensure('directory')
                          }
 
-        it { is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb/certs/ca.pem')
+        it { is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/certs/ca.pem')
           .with_ensure('present')
           .with_mode('0640')
           .with_source('/etc/puppet/ssl/certs/ca.pem')
@@ -128,7 +128,7 @@ describe('icingaweb2::module::puppetdb', :type => :class) do
 
         it { is_expected.to have_icingaweb2__module__puppetdb__certificate_resource_count(0) }
 
-        it { is_expected.to contain_concat('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb/private_keys/puppetdb_combined.pem')
+        it { is_expected.to contain_concat('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/puppetdb_combined.pem')
           .with_ensure('present')
           .with_warn('false')
           .with_mode('0640')
@@ -136,24 +136,27 @@ describe('icingaweb2::module::puppetdb', :type => :class) do
                         }
 
         it { is_expected.to contain_concat__fragment('private_key')
-          .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb/private_keys/puppetdb_combined.pem')
-          .with_source('/etc/puppet/ssl/private_keys/foo.example.com.pem')
+          .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/puppetdb_combined.pem')
+          .with_source('/etc/puppet/ssl/private_keys/puppetdb.pem')
           .with_order('1')
                         }
 
         it { is_expected.to contain_concat__fragment('public_key')
-          .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb/private_keys/puppetdb_combined.pem')
-          .with_source('/etc/puppet/ssl/certs/foo.example.com.pem')
+          .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/puppetdb_combined.pem')
+          .with_source('/etc/puppet/ssl/certs/puppetdb.pem')
           .with_order('2')
                         }
       end
 
       context "with ssl set to puppet and one extra certificate" do
         let(:params) { { :ssl => 'puppet',
+                         :host => 'puppetdb.example.com',
                          :certificates => { 'pupdb1' =>
                                               { 'ssl_key' => 'mysslkey1', 'ssl_cacert' => 'mycacert1'},
                                           },
                          } }
+
+        let(:facts) { facts.merge({ :fqdn => 'puppetdb' }) }
 
         it { is_expected.to contain_icingaweb2__module('puppetdb') }
         it { is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl')
@@ -166,7 +169,7 @@ describe('icingaweb2::module::puppetdb', :type => :class) do
           .with_ssl_cacert('mycacert1')
                          }
 
-        it { is_expected.to contain_concat('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb/private_keys/puppetdb_combined.pem')
+        it { is_expected.to contain_concat('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/puppetdb_combined.pem')
           .with_ensure('present')
           .with_warn('false')
           .with_mode('0640')
@@ -174,12 +177,12 @@ describe('icingaweb2::module::puppetdb', :type => :class) do
                         }
 
         it { is_expected.to contain_concat__fragment('private_key')
-          .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb/private_keys/puppetdb_combined.pem')
+          .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/puppetdb_combined.pem')
           .with_order('1')
                         }
 
         it { is_expected.to contain_concat__fragment('public_key')
-          .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb/private_keys/puppetdb_combined.pem')
+          .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/puppetdb_combined.pem')
           .with_order('2')
                         }
       end

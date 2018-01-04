@@ -18,14 +18,18 @@
 #   How to set up ssl certificates. To copy certificates from the local puppet installation, use `puppet`. Defaults to
 #   `none`
 #
+# [*host*]
+#   Hostname of the server where PuppetDB is running. The `ssl` parameter needs to be set to `puppet`.
+#
 # [*certificates*]
-#   Hash with icingaweb2::module::puppetdb::monitoring resources.
+#   Hash with icingaweb2::module::puppetdb::certificate resources.
 #
 class icingaweb2::module::puppetdb(
   Enum['absent', 'present'] $ensure         = 'present',
   String                    $git_repository = 'https://github.com/Icinga/icingaweb2-module-puppetdb.git',
   Optional[String]          $git_revision   = undef,
   Enum['none', 'puppet']    $ssl            = 'none',
+  Optional[String]          $host           = undef,
   Hash                      $certificates   = {},
 ){
   $conf_dir   = "${::icingaweb2::params::conf_dir}/modules/puppetdb"
@@ -43,12 +47,10 @@ class icingaweb2::module::puppetdb(
     recurse => true,
   }
 
-  # handle the certificate's stuff
   case $ssl {
     'puppet': {
 
-      $my_certname     = $::fqdn
-      $puppetdb_ssldir = "${ssl_dir}/puppetdb"
+      $puppetdb_ssldir = "${ssl_dir}/${host}"
 
       file { [$puppetdb_ssldir, "${puppetdb_ssldir}/private_keys", "${puppetdb_ssldir}/certs"]:
         ensure  => 'directory',
@@ -68,8 +70,10 @@ class icingaweb2::module::puppetdb(
         source => "${::settings::ssldir}/certs/ca.pem",
       }
 
-      # Combined SSL key path (private+public key)
-      $combinedkey_path = "${puppetdb_ssldir}/private_keys/puppetdb_combined.pem"
+      $combinedkey_path = "${puppetdb_ssldir}/private_keys/${::fqdn}_combined.pem"
+
+      notice("${::settings::ssldir}")
+
       concat { $combinedkey_path:
         ensure         => present,
         warn           => false,
@@ -81,13 +85,13 @@ class icingaweb2::module::puppetdb(
 
       concat::fragment { 'private_key':
         target => $combinedkey_path,
-        source => "${::settings::ssldir}/private_keys/${my_certname}.pem",
+        source => "${::settings::ssldir}/private_keys/${::fqdn}.pem",
         order  => 1,
       }
 
       concat::fragment { 'public_key':
         target => $combinedkey_path,
-        source => "${::settings::ssldir}/certs/${my_certname}.pem",
+        source => "${::settings::ssldir}/certs/${::fqdn}.pem",
         order  => 2,
       }
 
