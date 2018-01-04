@@ -27,7 +27,7 @@ define icingaweb2::module::fileshipper::directory(
   $conf_dir        = $::icingaweb2::params::conf_dir
   $module_conf_dir = "${conf_dir}/modules/fileshipper"
 
-  icingaweb2::inisection { "fileshipper-basedir-${identifier}":
+  icingaweb2::inisection { "fileshipper-directory-${identifier}":
     section_name => $identifier,
     target       => "${module_conf_dir}/directories.ini",
     settings     => {
