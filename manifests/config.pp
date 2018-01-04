@@ -141,7 +141,7 @@ class icingaweb2::config {
         }
 
         exec { 'create default user':
-          command     => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' -Ns -e 'INSERT INTO icingaweb_user (name, active, password_hash) VALUES (\"icinga\", 1, \"\$1\$3no6eqZp\$FlcHQDdnxGPqKadmfVcCU.\")'",
+          command     => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' -Ns -e 'INSERT INTO icingaweb_user (name, active, password_hash) VALUES (\"icingaadmin\", 1, \"\$1\$3no6eqZp\$FlcHQDdnxGPqKadmfVcCU.\")'",
           refreshonly => true,
         }
       }
@@ -155,7 +155,7 @@ class icingaweb2::config {
 
         exec { 'create default user':
           environment => ["PGPASSWORD=${db_password}"],
-          command     => "psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}' -w -c \"INSERT INTO icingaweb_user(name, active, password_hash) VALUES ('icinga', 1, '\\\$1\\\$3no6eqZp\\\$FlcHQDdnxGPqKadmfVcCU.')\"",
+          command     => "psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}' -w -c \"INSERT INTO icingaweb_user(name, active, password_hash) VALUES ('icingaadmin', 1, '\\\$1\\\$3no6eqZp\\\$FlcHQDdnxGPqKadmfVcCU.')\"",
           refreshonly => true,
         }
       }
