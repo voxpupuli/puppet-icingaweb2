@@ -467,6 +467,27 @@ class { 'icingaweb2::module::generictts':
 }
 ```
 
+#### Fileshipper
+The main purpose of this module is to extend Icinga Director using some of it's exported hooks. Based on them it offers 
+an `Import Source` able to deal with `CSV`, `JSON`, `YAML` and `XML` files. It also offers the possibility to deploy
+hand-crafted Icinga 2 config files through the Icinga Director.
+
+Example:
+``` puppet
+class { 'icingaweb2::module::fileshipper':
+  git_revision => 'v1.0.1',
+  base_directories => {
+    temp => '/tmp'
+  },
+  directories      => {
+    'test' => {
+      'source'     => '/tmp/source',
+      'target'     => '/tmp/target',
+    }
+  }
+}
+```
+
 ## Reference
 
 - [**Public classes**](#public-classes)
@@ -478,6 +499,7 @@ class { 'icingaweb2::module::generictts':
     - [Class: icingaweb2::module::cube](#class-icingaweb2modulecube)
     - [Class: icingaweb2::module::generictts](#class-icingaweb2modulegenerictts)
     - [Class: icingaweb2::module::puppetdb](#class-icingaweb2modulepuppetdb)
+    - [Class: icingaweb2::module::fileshipper](#class-icingaweb2modulefileshipper)
 - [**Private classes**](#private-classes)
     - [Class: icingaweb2::config](#class-icingaweb2config)
     - [Class: icingaweb2::install](#class-icingaweb2install)
@@ -494,6 +516,8 @@ class { 'icingaweb2::module::generictts':
     - [Defined type: icingaweb2::module::generictts::ticketsystem](#defined-type-icingaweb2modulegenericttsticketsystem)
     - [Defined type: icingaweb2::module::monitoring::commandtransport](#defined-type-modulemonitoringcommandtransport)
     - [Defined type: icingaweb2::module::puppetdb::certificate](#defined-type-icingaweb2modulepuppetdbcertificate)
+    - [Defined type: icingaweb2::module::fileshhipper::basedir](#defined-type-icingaweb2modulefileshipperbasedir)
+    - [Defined type: icingaweb2::module::fileshipper::directory](#defined-type-icingaweb2modulefileshipperdirectory)
 
 ### Public Classes
 
@@ -759,7 +783,21 @@ How to set up ssl certificates. To copy certificates from the local puppet insta
 
 ##### `certificates`
 Hash with SSL certificates to configure.  See `icingaweb2::module::puppetdb::certificate`.
->>>>>>> Implement icingaweb2::module::puppetdb class and icingaweb2::module::puppetdb::certificate type
+
+
+#### Class: `icingaweb2::module::fileshipper`
+The fileshipper module extends the Director. It offers import sources to deal with CSV, JSON, YAML and XML files.
+
+**Parameters of `icingaweb2::module::fileshipper`:**
+
+##### `ensure`
+Enable or disable module. Defaults to `present`
+
+##### `base_directories`
+Hash of base directories. These directories can later be selected in the import source (Director).
+
+##### `directories`
+Deploy plain Icinga 2 configuration files through the Director to your Icinga 2 master.
 
 ### Private Classes
 
@@ -1055,6 +1093,36 @@ Contents of the combined SSL key.
 
 ##### `ssl_cacert`
 CA certificate
+
+#### Defined type: `icingaweb2::module::fileshipper::basedir`
+
+Manage base directories for the fileshipper module
+
+**Parameters of `icingaweb2::module::fileshipper::basedir`:**
+
+##### `identifier`
+Identifier of the base directory
+
+##### `basedir`
+Absolute path of a direcory
+
+#### Defined type: `icingaweb2::module::fileshipper::directory`
+
+Manage directories with plain Icinga 2 configuration files
+
+**Parameters of `icingaweb2::module::fileshipper::directory`:**
+
+##### `identifier`
+Identifier of the base directory
+
+##### `source`
+Absolute path of the source direcory
+
+##### `target`
+Absolute path of the target direcory
+
+##### `extensions`
+Only files with these extensions will be synced. Defaults to `.conf`
 
 ## Development
 A roadmap of this project is located at https://github.com/Icinga/puppet-icingaweb2/milestones. Please consider
