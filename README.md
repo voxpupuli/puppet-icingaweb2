@@ -497,6 +497,17 @@ class { 'icingaweb2::module::vsphere':
 }
 ```
 
+#### Graphite
+This module integrates an existing Graphite installation in your Icinga Web 2 frontend.
+
+Example:
+``` puppet
+class { 'icingaweb2::module::graphite':
+  git_revision => 'v0.9.0',
+  url          => 'https://localhost:8080'
+}
+```
+
 ## Reference
 
 - [**Public classes**](#public-classes)
@@ -510,6 +521,7 @@ class { 'icingaweb2::module::vsphere':
     - [Class: icingaweb2::module::puppetdb](#class-icingaweb2modulepuppetdb)
     - [Class: icingaweb2::module::fileshipper](#class-icingaweb2modulefileshipper)
     - [Class: icingaweb2::module::vsphere](#class-icingaweb2modulevsphere)
+    - [Class: icingaweb2::module::graphite](#class-icingaweb2modulegraphite)
 - [**Private classes**](#private-classes)
     - [Class: icingaweb2::config](#class-icingaweb2config)
     - [Class: icingaweb2::install](#class-icingaweb2install)
@@ -820,6 +832,29 @@ vSphere.
 
 ##### `ensure`
 Enable or disable module. Defaults to `present`
+
+#### Class: `icingaweb2::module::graphite`
+The Graphite module draws graphs out of time series data stored in Graphite.
+
+**Parameters of `icingaweb2::module::graphite`:**
+
+##### `ensure`
+Enable or disable module. Defaults to `present`
+
+##### `url`
+URL to your Graphite Web
+
+##### `user`
+A user with access to your Graphite Web via HTTP basic authentication
+
+##### `password`
+The users password
+
+##### `graphite_writer_host_name_template`
+The value of your Icinga 2 GraphiteWriter's attribute `host_name_template` (if specified)
+
+##### `graphite_writer_service_name_template`
+The value of your icinga 2 GraphiteWriter's attribute `service_name_template` (if specified)
 
 ### Private Classes
 
