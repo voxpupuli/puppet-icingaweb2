@@ -62,6 +62,8 @@ This module has been tested on:
 * Ubuntu 14.04, 16.04
 * SLES 12
 
+* PHP >= 5.6
+
 Other operating systems or versions may work but have not been tested.
 
 ## Usage
@@ -459,6 +461,10 @@ class { 'icingaweb2::module::generictts':
 The main purpose of this module is to extend Icinga Director using some of it's exported hooks. Based on them it offers 
 an `Import Source` able to deal with `CSV`, `JSON`, `YAML` and `XML` files. It also offers the possibility to deploy
 hand-crafted Icinga 2 config files through the Icinga Director.
+
+The fileshipper module has some optional requirements:
+* `php-xml` for optional XML file support
+* `php-yaml` for optional YAML file support
 
 Example:
 ``` puppet
