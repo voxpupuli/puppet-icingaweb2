@@ -482,6 +482,21 @@ class { 'icingaweb2::module::fileshipper':
 }
 ```
 
+#### vSphere
+This module extends the Director module. It allows you to have an automated import of virtual maschines and physical
+hosts from vSphere.
+
+The module needs some extra PHP extensions that you need to install:
+* `php-posix`
+* `php-soap`
+
+Example:
+``` puppet
+class { 'icingaweb2::module::vsphere':
+  git_revision => 'v1.1.0',
+}
+```
+
 ## Reference
 
 - [**Public classes**](#public-classes)
@@ -494,6 +509,7 @@ class { 'icingaweb2::module::fileshipper':
     - [Class: icingaweb2::module::generictts](#class-icingaweb2modulegenerictts)
     - [Class: icingaweb2::module::puppetdb](#class-icingaweb2modulepuppetdb)
     - [Class: icingaweb2::module::fileshipper](#class-icingaweb2modulefileshipper)
+    - [Class: icingaweb2::module::vsphere](#class-icingaweb2modulevsphere)
 - [**Private classes**](#private-classes)
     - [Class: icingaweb2::config](#class-icingaweb2config)
     - [Class: icingaweb2::install](#class-icingaweb2install)
@@ -795,6 +811,15 @@ Hash of base directories. These directories can later be selected in the import 
 
 ##### `directories`
 Deploy plain Icinga 2 configuration files through the Director to your Icinga 2 master.
+
+#### Class: `icingaweb2::module::vsphere`
+The vSphere module extends the Director. It provides import sources for virtual machines and physical hosts from
+vSphere.
+
+**Parameters of `icingaweb2::module::vsphere`:**
+
+##### `ensure`
+Enable or disable module. Defaults to `present`
 
 ### Private Classes
 
