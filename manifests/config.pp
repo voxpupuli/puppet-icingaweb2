@@ -132,6 +132,11 @@ class icingaweb2::config {
       permissions => '*',
     }
 
+    icingaweb2::config::groupbackend { "${db_type}-group":
+      backend  => 'db',
+      resource => "${db_type}-icingaweb2"
+    }
+
     case $db_type {
       'mysql': {
         exec { 'import schema':
