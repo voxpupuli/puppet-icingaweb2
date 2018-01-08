@@ -508,6 +508,31 @@ class { 'icingaweb2::module::graphite':
 }
 ```
 
+#### Elasticsearch
+The Elasticsearch module displays events from data stored in Elasticsearch.
+
+Example:
+``` puppet
+class { 'icingaweb2::module::elasticsearch':
+  git_revision => 'v0.9.0',
+  instances    => {
+    'elastic'  => {
+      uri      => 'http://localhost:9200',
+      user     => 'foo',
+      password => 'bar',
+    }
+  },
+  eventtypes   => {
+    'filebeat' => {
+      instance => 'elastic',
+      index    => 'filebeat-*',
+      filter   => 'beat.hostname={host.name}',
+      fields   => 'input_type, source, message',
+    }
+  }
+}
+```
+
 ## Reference
 
 - [**Public classes**](#public-classes)
@@ -522,6 +547,7 @@ class { 'icingaweb2::module::graphite':
     - [Class: icingaweb2::module::fileshipper](#class-icingaweb2modulefileshipper)
     - [Class: icingaweb2::module::vsphere](#class-icingaweb2modulevsphere)
     - [Class: icingaweb2::module::graphite](#class-icingaweb2modulegraphite)
+    - [Class: icingaweb2::module::elasticsearch](#class-icingaweb2moduleelasticsearch)
 - [**Private classes**](#private-classes)
     - [Class: icingaweb2::config](#class-icingaweb2config)
     - [Class: icingaweb2::install](#class-icingaweb2install)
@@ -540,6 +566,8 @@ class { 'icingaweb2::module::graphite':
     - [Defined type: icingaweb2::module::puppetdb::certificate](#defined-type-icingaweb2modulepuppetdbcertificate)
     - [Defined type: icingaweb2::module::fileshhipper::basedir](#defined-type-icingaweb2modulefileshipperbasedir)
     - [Defined type: icingaweb2::module::fileshipper::directory](#defined-type-icingaweb2modulefileshipperdirectory)
+    - [Defined type: icingaweb2::module::elasticsearch::instance](#defined-type-icingaweb2moduleelasticsearchinstance)
+    - [Defined type: icingaweb2::module::elasticsearch::eventtype](#defined-type-icingaweb2moduleelasticsearcheventtype)
 
 ### Public Classes
 
@@ -855,6 +883,22 @@ The value of your Icinga 2 GraphiteWriter's attribute `host_name_template` (if s
 
 ##### `graphite_writer_service_name_template`
 The value of your icinga 2 GraphiteWriter's attribute `service_name_template` (if specified)
+
+#### Class: `icingaweb2::module::elasticsearch`
+The Elasticsearch module displays events from data stored in Elasticsearch.
+
+**Parameters of `icingaweb2::module::elasticsearch`:**
+
+##### `ensure`
+Enable or disable module. Defaults to `present`
+
+##### `instances`
+A hash that configures one or more Elasticsearch instances that this module connects to. The defined type
+`icingaweb2::module::elasticsearch::instance` is used to create the instance configuration.
+
+##### `eventtypes`
+A hash oft ypes of events that should be displayed. Event types are always connected to instances. The defined type
+`icingaweb2::module::elasticsearch::eventtype` is used to create the event types.
 
 ### Private Classes
 
@@ -1180,6 +1224,55 @@ Absolute path of the target direcory
 
 ##### `extensions`
 Only files with these extensions will be synced. Defaults to `.conf`
+
+#### Defined type: `icingaweb2::module::elasticsearch::instance`
+Manage an Elasticsearch instance
+
+**Parameters of `icingaweb2::module::elasticsearch::instance`:**
+
+##### `name`
+Name of the Elasticsearch instance
+
+##### `uri`
+URI to the Elasticsearch instance
+
+##### `user`
+The user to use for authentication
+
+##### `password`
+The password to use for authentication
+
+##### `ca`
+The path of the file containing one or more certificates to verify the peer with or the path to the directory
+that holds multiple CA certificates.
+
+##### `client_certificate`
+The path of the client certificates
+
+##### `client_private_key`
+The path of the client private key
+
+#### Defined type: `icingaweb2::module::elasticsearch::eventtype`
+Manage an Elasticsearch event type
+
+**Parameters of `icingaweb2::module::elasticsearch::eventtype`:**
+
+##### `name*]
+Name of the event type.
+
+##### `instance*]
+Elasticsearch instance to connect to.
+
+##### `index*]
+Elasticsearch index pattern, e.g. `filebeat-*`.
+
+##### `filter*]
+Elasticsearch filter in the Icinga Web 2 URL filter format. Host macros are evaluated if you encapsulate them in
+curly braces, e.g. `host={host.name}&location={_host_location}`.
+
+##### `fields*]
+Comma-separated list of field names to display. One or more wildcard asterisk (`*`) patterns are also accepted.
+Note that the `@timestamp` field is always respected.
 
 ## Development
 A roadmap of this project is located at https://github.com/Icinga/puppet-icingaweb2/milestones. Please consider
