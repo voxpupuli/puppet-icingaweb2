@@ -944,6 +944,9 @@ Base DN that is searched for groups. Only valid with backend `ldap` with `msldap
 ##### `ldap_nested_group_search`
 Search for groups in groups. Only valid with backend `msldap`.
 
+##### `domain`
+Domain for domain-aware authentication.
+
 #### Defined type: `icingaweb2::module`
 Download, enable and configure Icinga Web 2 modules. This is a public defined type and is meant to be used to install
 modules developed by the community as well.
