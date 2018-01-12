@@ -336,6 +336,8 @@ class {'icingaweb2::module::monitoring':
 }
 ```
 
+[Monitoring module documentation](https://www.icinga.com/docs/icingaweb2/latest/modules/monitoring/doc/01-About/)
+
 #### Director
 The Director is used to manage Icinga 2 configuration through the web interface Icinga Web 2. The module requires its
 database. The module is installed by cloning the git repository, therefore you need to set `git_revision` to either a
@@ -365,6 +367,8 @@ class {'icingaweb2::module::director':
 }
 ```
 
+[Director module documentation](https://www.icinga.com/docs/director/latest/)
+
 To run the kickstart mechanism, it's required to set `import_schema` to `true`.
 
 #### Doc
@@ -381,6 +385,8 @@ class {'::icingaweb2::module::doc':
   ensure => absent
 }
 ```
+
+[Doc module documentation](https://www.icinga.com/docs/icingaweb2/latest/modules/doc/doc/01-About/)
 
 #### PuppetDB
 You can configure Director to query one or more PuppetDB servers.
@@ -411,6 +417,8 @@ class {'::icingaweb2::module::puppetdb':
 }
 ```
 
+[PuppetDB module documentation](https://www.icinga.com/docs/director/latest/puppetdb/doc/01-Installation/)
+
 #### Business Process
 The Business Process module allows you to visualize and monitor business processes based on hosts and services monitored
 by Icinga 2. The module is installed by cloning the git repository, therefore you need to set `git_revision` to either a
@@ -426,6 +434,8 @@ class { 'icingaweb2::module::businessprocess':
   git_revision => 'v2.1.0'
 }
 ```
+
+[Business Process mdoule documentation](https://www.icinga.com/docs/businessprocess/latest/)
 
 #### Cube
 The Cube module is like a extended filtering tool. It visualizes host statistics (count and health state) grouped by
@@ -482,6 +492,8 @@ class { 'icingaweb2::module::fileshipper':
 }
 ```
 
+[Fileshipper module documentation](https://www.icinga.com/docs/director/latest/fileshipper/doc/02-Installation/)
+
 #### vSphere
 This module extends the Director module. It allows you to have an automated import of virtual maschines and physical
 hosts from vSphere.
@@ -497,6 +509,8 @@ class { 'icingaweb2::module::vsphere':
 }
 ```
 
+[vSphere module documentation](https://www.icinga.com/docs/director/latest/vsphere/doc/01-Installation/)
+
 #### Graphite
 This module integrates an existing Graphite installation in your Icinga Web 2 frontend.
 
@@ -507,6 +521,8 @@ class { 'icingaweb2::module::graphite':
   url          => 'https://localhost:8080'
 }
 ```
+
+[Graphite module documentation](https://www.icinga.com/docs/graphite/latest/)
 
 #### Elasticsearch
 The Elasticsearch module displays events from data stored in Elasticsearch.
@@ -532,6 +548,8 @@ class { 'icingaweb2::module::elasticsearch':
   }
 }
 ```
+
+[Elasticsearch module documentation](https://www.icinga.com/docs/graphite/latest/)
 
 ## Reference
 
