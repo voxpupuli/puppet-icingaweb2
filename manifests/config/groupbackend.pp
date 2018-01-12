@@ -37,6 +37,9 @@
 # [*ldap_nested_group_search*]
 #   Search for groups in groups. Only valid with backend `msldap`.
 #
+# [*domain*]
+#   Domain for domain-aware authentication
+#
 # === Examples
 #
 # A group backend for groups stored in LDAP:
@@ -47,7 +50,8 @@
 #   ldap_group_class            => 'groupofnames',
 #   ldap_group_name_attribute   => 'cn',
 #   ldap_group_member_attribute => 'member',
-#   ldap_base_dn                => 'ou=groups,dc=icinga,dc=com'
+#   ldap_base_dn                => 'ou=groups,dc=icinga,dc=com',
+#   domain                      => 'icinga.com',
 # }
 #
 #
@@ -62,6 +66,7 @@ define icingaweb2::config::groupbackend(
   Optional[String]             $ldap_group_member_attribute = undef,
   Optional[String]             $ldap_base_dn                = undef,
   Optional[Boolean]            $ldap_nested_group_search    = undef,
+  Optional[String]             $domain                      = undef,
 ) {
 
   $conf_dir = $::icingaweb2::params::conf_dir
@@ -71,6 +76,7 @@ define icingaweb2::config::groupbackend(
       $settings = {
         'backend'  => $backend,
         'resource' => $resource,
+        'domain'   => $domain,
       }
     }
     'ldap': {
@@ -83,6 +89,7 @@ define icingaweb2::config::groupbackend(
         'group_name_attribute'   => $ldap_group_name_attribute,
         'group_member_attribute' => $ldap_group_member_attribute,
         'base_dn'                => $ldap_base_dn,
+        'domain'                 => $domain,
       }
     }
     'msldap': {
@@ -98,6 +105,7 @@ define icingaweb2::config::groupbackend(
         'nested_group_search' => $ldap_nested_group_search_as_string,
         'group_filter'        => $ldap_group_filter,
         'base_dn'             => $ldap_base_dn,
+        'domain'              => $domain,
       }
     }
     default: {
