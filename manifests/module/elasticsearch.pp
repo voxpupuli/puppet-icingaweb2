@@ -37,7 +37,6 @@ class icingaweb2::module::elasticsearch(
   }
 
   if $eventtypes {
-    notice("eventtypes called")
     $eventtypes.each |$name, $setting| {
       icingaweb2::module::elasticsearch::eventtype { $name:
         instance => $setting['instance'],
