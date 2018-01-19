@@ -57,7 +57,7 @@ Depending on your setup following modules may also be required:
 
 This module has been tested on:
 
-* Debian 7, 8
+* Debian 7, 8, 9
 * CentOS/RHEL 6, 7
   * Requires [Software Collections Repository](https://wiki.centos.org/AdditionalResources/Repositories/SCL)
 * Ubuntu 14.04, 16.04
