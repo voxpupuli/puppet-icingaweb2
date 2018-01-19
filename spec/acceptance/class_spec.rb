@@ -4,6 +4,14 @@ require 'spec_helper_acceptance'
 describe 'icingaweb2 class:' do
   it 'runs successfully' do
     pp = "
+      case $::osfamily {
+        'redhat': {
+          package { 'centos-release-scl':
+            before => Class['icingaweb2']
+          }
+        }
+      }
+
       class { '::icingaweb2':
         manage_repo    => true,
       }

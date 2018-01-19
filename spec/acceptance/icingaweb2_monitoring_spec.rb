@@ -4,6 +4,14 @@ require 'spec_helper_acceptance'
 describe 'icingaweb2::module::monitoring class:' do
   it 'runs successfully' do
     pp = "
+      case $::osfamily {
+        'redhat': {
+          package { 'centos-release-scl':
+            before => Class['icingaweb2']
+          }
+        }
+      }
+
       include ::mysql::server
 
       mysql::db { 'icingaweb2':

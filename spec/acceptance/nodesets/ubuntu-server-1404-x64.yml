@@ -4,7 +4,7 @@ HOSTS:
     roles:
       - master
     platform: ubuntu-14.04-amd64
-    box: puppetlabs/ubuntu-14.04-64-nocm
+    box: bento/ubuntu-14.04
     hypervisor: vagrant
 CONFIG:
   type: foss

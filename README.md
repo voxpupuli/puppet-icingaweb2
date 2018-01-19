@@ -59,6 +59,7 @@ This module has been tested on:
 
 * Debian 7, 8
 * CentOS/RHEL 6, 7
+  * Requires [Software Collections Repository](https://wiki.centos.org/AdditionalResources/Repositories/SCL)
 * Ubuntu 14.04, 16.04
 * SLES 12
 
