@@ -64,5 +64,6 @@ define icingaweb2::module::monitoring::commandtransport(
     section_name => $commandtransport,
     target       => "${module_conf_dir}/commandtransports.ini",
     settings     => delete_undef_values($commandtransport_settings),
+    require      => Icingaweb2::Module['monitoring'],
   }
 }

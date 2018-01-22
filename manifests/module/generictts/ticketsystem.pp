@@ -29,6 +29,7 @@ define icingaweb2::module::generictts::ticketsystem(
     settings     => {
       'pattern' => $pattern,
       'url'     => $url,
-    }
+    },
+    require      => Icingaweb2::Module['generictts'],
   }
 }
