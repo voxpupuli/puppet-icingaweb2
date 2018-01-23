@@ -1,5 +1,29 @@
 # Change Log
 
+## [v2.1.0](https://github.com/Icinga/puppet-icingaweb2/tree/v2.1.0) (2018-01-23)
+[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.0.1...v2.1.0)
+
+**Implemented enhancements:**
+
+- missing domain attribute for icingaweb2::config::authmethod [\#203](https://github.com/Icinga/puppet-icingaweb2/issues/203)
+- Add elasticsearch module [\#193](https://github.com/Icinga/puppet-icingaweb2/issues/193)
+- Add graphite module [\#192](https://github.com/Icinga/puppet-icingaweb2/issues/192)
+- Update apache2 example [\#191](https://github.com/Icinga/puppet-icingaweb2/issues/191)
+- Add default backend in groups.ini [\#188](https://github.com/Icinga/puppet-icingaweb2/issues/188)
+- Add vSphere module [\#183](https://github.com/Icinga/puppet-icingaweb2/issues/183)
+- Add fileshipper module [\#182](https://github.com/Icinga/puppet-icingaweb2/issues/182)
+
+**Fixed bugs:**
+
+- protected\_customvars handled incorrectly? [\#206](https://github.com/Icinga/puppet-icingaweb2/issues/206)
+- puppetdb: issue if host does not resolve to puppetdb [\#197](https://github.com/Icinga/puppet-icingaweb2/issues/197)
+- Setting up icingaweb2 with postgresql on a different port than 5432 leads to an error [\#195](https://github.com/Icinga/puppet-icingaweb2/issues/195)
+
+**Merged pull requests:**
+
+- added domain attribute to icingaweb2::config::groupbackend [\#205](https://github.com/Icinga/puppet-icingaweb2/pull/205) ([spaolo](https://github.com/spaolo))
+- added domain attribute to icingaweb2::config::authmethod [\#204](https://github.com/Icinga/puppet-icingaweb2/pull/204) ([spaolo](https://github.com/spaolo))
+
 ## [v2.0.1](https://github.com/Icinga/puppet-icingaweb2/tree/v2.0.1) (2017-12-28)
 [Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.0.0...v2.0.1)
 
@@ -11,6 +35,9 @@
 **Merged pull requests:**
 
 - fix \#201 Suppoet fcgi as example for apache [\#202](https://github.com/Icinga/puppet-icingaweb2/pull/202) ([lbetz](https://github.com/lbetz))
+- Provide specific port to mysql and postgresql [\#196](https://github.com/Icinga/puppet-icingaweb2/pull/196) ([Faffnir](https://github.com/Faffnir))
+- Rename default administrative user to 'icingaadmin' [\#194](https://github.com/Icinga/puppet-icingaweb2/pull/194) ([dnsmichi](https://github.com/dnsmichi))
+- Add missing curly bracket and trailing commas [\#189](https://github.com/Icinga/puppet-icingaweb2/pull/189) ([rgevaert](https://github.com/rgevaert))
 - Fix protected\_customvars bugs and papercuts [\#186](https://github.com/Icinga/puppet-icingaweb2/pull/186) ([olasd](https://github.com/olasd))
 - Fix typos on README.md [\#184](https://github.com/Icinga/puppet-icingaweb2/pull/184) ([Tokynet](https://github.com/Tokynet))
 
