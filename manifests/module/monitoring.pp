@@ -41,6 +41,7 @@ class icingaweb2::module::monitoring(
   Optional[String]               $ido_db_name          = undef,
   Optional[String]               $ido_db_username      = undef,
   Optional[String]               $ido_db_password      = undef,
+  Optional[String]               $ido_db_charset       = undef,
   Hash                           $commandtransports    = undef,
 ){
 
@@ -66,6 +67,7 @@ class icingaweb2::module::monitoring(
     db_name     => $ido_db_name,
     db_username => $ido_db_username,
     db_password => $ido_db_password,
+    db_charset  => $ido_db_charset,
   }
 
   $backend_settings = {
