@@ -22,7 +22,7 @@ class icingaweb2::config {
   $logging_level        = $::icingaweb2::logging_level
   $show_stacktraces     = $::icingaweb2::show_stacktraces
   $module_path          = $::icingaweb2::module_path
-  # TODO: $config_backend can be 'db', however in this case it requires a valid resource at 'config_resource'
+
   $theme                = $::icingaweb2::theme
   $theme_disabled       = $::icingaweb2::theme_disabled
 
@@ -34,6 +34,7 @@ class icingaweb2::config {
   $db_type              = $::icingaweb2::db_type
   $db_username          = $::icingaweb2::db_username
   $db_password          = $::icingaweb2::db_password
+  $default_domain       = $::icingaweb2::default_domain
 
   $config_backend       = $::icingaweb2::config_backend
   $config_resource      = $::icingaweb2::config_backend ? {
@@ -88,6 +89,15 @@ class icingaweb2::config {
     settings => delete_undef_values($settings),
   }
 
+  if $default_domain {
+    icingaweb2::inisection {'authentication':
+      target   => "${conf_dir}/config.ini",
+      settings => {
+        'default_domain' => $default_domain,
+      }
+    }
+  }
+
   icingaweb2::inisection {'themes':
     target   => "${conf_dir}/config.ini",
     settings => {
@@ -123,35 +133,40 @@ class icingaweb2::config {
     }
 
     icingaweb2::config::role { 'default admin user':
-      users       => 'icinga',
+      users       => 'icingaadmin',
       permissions => '*',
+    }
+
+    icingaweb2::config::groupbackend { "${db_type}-group":
+      backend  => 'db',
+      resource => "${db_type}-icingaweb2"
     }
 
     case $db_type {
       'mysql': {
         exec { 'import schema':
-          command => "mysql -h '${db_host}' -u '${db_username}' -p'${db_password}' '${db_name}' < '${schema_dir}/mysql.schema.sql'",
-          unless  => "mysql -h '${db_host}' -u '${db_username}' -p'${db_password}' '${db_name}' -Ns -e 'SELECT 1 FROM icingaweb_user'",
+          command => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' < '${schema_dir}/mysql.schema.sql'",
+          unless  => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' -Ns -e 'SELECT 1 FROM icingaweb_user'",
           notify  => Exec['create default user'],
         }
 
         exec { 'create default user':
-          command     => "mysql -h '${db_host}' -u '${db_username}' -p'${db_password}' '${db_name}' -Ns -e 'INSERT INTO icingaweb_user (name, active, password_hash) VALUES (\"icinga\", 1, \"\$1\$3no6eqZp\$FlcHQDdnxGPqKadmfVcCU.\")'",
+          command     => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' -Ns -e 'INSERT INTO icingaweb_user (name, active, password_hash) VALUES (\"icingaadmin\", 1, \"\$1\$3no6eqZp\$FlcHQDdnxGPqKadmfVcCU.\")'",
           refreshonly => true,
         }
       }
       'pgsql': {
         exec { 'import schema':
           environment => ["PGPASSWORD=${db_password}"],
-          command     => "psql -h '${db_host}' -U '${db_username}' -d '${db_name}' -w -f ${schema_dir}/pgsql.schema.sql",
-          unless      => "psql -h '${db_host}' -U '${db_username}' -d '${db_name}' -w -c 'SELECT 1 FROM icingaweb_user'",
+          command     => "psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}' -w -f ${schema_dir}/pgsql.schema.sql",
+          unless      => "psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}' -w -c 'SELECT 1 FROM icingaweb_user'",
           notify      => Exec['create default user'],
           provider    => shell,
         }
 
         exec { 'create default user':
           environment => ["PGPASSWORD=${db_password}"],
-          command     => "psql -h '${db_host}' -U '${db_username}' -d '${db_name}' -w -c \"INSERT INTO icingaweb_user(name, active, password_hash) VALUES ('icinga', 1, '\\\$1\\\$3no6eqZp\\\$FlcHQDdnxGPqKadmfVcCU.')\"",
+          command     => "psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}' -w -c \"INSERT INTO icingaweb_user(name, active, password_hash) VALUES ('icingaadmin', 1, '\\\$1\\\$3no6eqZp\\\$FlcHQDdnxGPqKadmfVcCU.')\"",
           refreshonly => true,
           provider    => shell,
         }

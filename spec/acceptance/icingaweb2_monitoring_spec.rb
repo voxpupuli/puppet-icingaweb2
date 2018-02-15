@@ -4,6 +4,14 @@ require 'spec_helper_acceptance'
 describe 'icingaweb2::module::monitoring class:' do
   it 'runs successfully' do
     pp = "
+      case $::osfamily {
+        'redhat': {
+          package { 'centos-release-scl':
+            before => Class['icingaweb2']
+          }
+        }
+      }
+
       include ::mysql::server
 
       mysql::db { 'icingaweb2':
@@ -46,7 +54,7 @@ describe 'icingaweb2::module::monitoring class:' do
     it { is_expected.to be_symlink }
   end
 
-  describe file('/etc/icingaweb2/modules/monitoring/security.ini') do
+  describe file('/etc/icingaweb2/modules/monitoring/config.ini') do
     it { is_expected.to be_file }
     it { is_expected.to contain '[security]' }
     it { is_expected.to contain 'protected_customvars = "*pw*,*pass*,community"' }
@@ -100,11 +108,11 @@ describe 'icingaweb2::module::monitoring class:' do
   describe file('/etc/icingaweb2/roles.ini') do
     it { is_expected.to be_file }
     it { is_expected.to contain '[default admin user]' }
-    it { is_expected.to contain 'users = "icinga"' }
+    it { is_expected.to contain 'users = "icingaadmin"' }
     it { is_expected.to contain 'permissions = "*"' }
   end
 
   describe command('mysql -e "select name from icingaweb2.icingaweb_user"') do
-    its(:stdout) { should match(%r{icinga}) }
+    its(:stdout) { should match(%r{icingaadmin}) }
   end
 end

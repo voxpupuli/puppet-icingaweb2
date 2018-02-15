@@ -4,7 +4,7 @@ HOSTS:
     roles:
       - master
     platform: el-6-x86_64
-    box: centos/6
+    box: bento/centos-6
     hypervisor: vagrant
 CONFIG:
   type: aio

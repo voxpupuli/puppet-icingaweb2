@@ -24,6 +24,7 @@ class {'icingaweb2::module::monitoring':
   ido_db_name       => 'icinga2',
   ido_db_username   => 'icinga2',
   ido_db_password   => 'supersecret',
+  protected_customvars => ['*pw*', '*pass*', 'community', 'testabc'],
   commandtransports => {
     icinga2 => {
       transport => 'api',

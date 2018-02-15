@@ -34,7 +34,7 @@
 #
 class icingaweb2::module::monitoring(
   Enum['absent', 'present']      $ensure               = 'present',
-  Variant[String, Array[String]] $protected_customvars = '*pw*,*pass*,community',
+  Variant[String, Array[String]] $protected_customvars = ['*pw*', '*pass*', 'community'],
   Enum['mysql', 'pgsql']         $ido_type             = 'mysql',
   Optional[String]               $ido_host             = undef,
   Integer[1,65535]               $ido_port             = 3306,
@@ -88,7 +88,7 @@ class icingaweb2::module::monitoring(
     },
     'module-monitoring-security' => {
       'section_name' => 'security',
-      'target'       => "${module_conf_dir}/security.ini",
+      'target'       => "${module_conf_dir}/config.ini",
       'settings'     => delete_undef_values($security_settings)
     }
   }

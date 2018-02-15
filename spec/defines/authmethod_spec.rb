@@ -23,11 +23,11 @@ describe('icingaweb2::config::authmethod', :type => :define) do
       end
 
       context "#{os} with backend 'ldap'" do
-        let(:params) { { :backend => 'ldap', :resource => 'myresource', :ldap_user_class => 'users', :ldap_user_name_attribute => 'uid', :ldap_filter => 'foobar', :order => '10' } }
+        let(:params) { { :backend => 'ldap', :resource => 'myresource', :ldap_user_class => 'users', :ldap_user_name_attribute => 'uid', :ldap_filter => 'foobar', :domain => 'icinga.com', :order => '10' } }
 
         it { is_expected.to contain_icingaweb2__inisection('myauthmethod')
           .with_target('/etc/icingaweb2/authentication.ini')
-          .with_settings({'backend'=>'ldap', 'resource'=>'myresource', 'user_class'=>'users', 'user_name_attribute'=>'uid', 'filter'=>'foobar'})
+          .with_settings({'backend'=>'ldap', 'resource'=>'myresource', 'user_class'=>'users', 'user_name_attribute'=>'uid', 'filter'=>'foobar', 'domain'=>'icinga.com' },  )
           .with_order('10')}
       end
 

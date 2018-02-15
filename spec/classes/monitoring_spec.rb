@@ -53,7 +53,7 @@ describe('icingaweb2::module::monitoring', :type => :class) do
                              },
                              'module-monitoring-security'=>{
                                  'section_name' => 'security',
-                                 'target'=>'/etc/icingaweb2/modules/monitoring/security.ini',
+                                 'target'=>'/etc/icingaweb2/modules/monitoring/config.ini',
                                  'settings'=>{
                                      'protected_customvars'=>'*pw*,*pass*,community'
                                  }
@@ -104,7 +104,7 @@ describe('icingaweb2::module::monitoring', :type => :class) do
                              },
                              'module-monitoring-security'=>{
                                  'section_name' => 'security',
-                                 'target'=>'/etc/icingaweb2/modules/monitoring/security.ini',
+                                 'target'=>'/etc/icingaweb2/modules/monitoring/config.ini',
                                  'settings'=>{
                                      'protected_customvars'=>'*pw*,*pass*,community'
                                  }
@@ -161,7 +161,7 @@ describe('icingaweb2::module::monitoring', :type => :class) do
                              },
                              'module-monitoring-security'=>{
                                  'section_name' => 'security',
-                                 'target'=>'/etc/icingaweb2/modules/monitoring/security.ini',
+                                 'target'=>'/etc/icingaweb2/modules/monitoring/config.ini',
                                  'settings'=>{
                                      'protected_customvars'=>'foo,bar,*baz*'
                                  }

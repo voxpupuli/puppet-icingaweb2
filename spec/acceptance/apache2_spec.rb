@@ -17,6 +17,10 @@ describe 'icingaweb2 with apache2' do
               require => Class['apache'],
               notify  => Service['httpd'],
             }
+
+            package { 'centos-release-scl':
+              before => Class['icingaweb2']
+            }
           }
           'debian': {
             class { 'apache::mod::rewrite': }

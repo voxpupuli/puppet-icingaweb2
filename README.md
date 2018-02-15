@@ -57,10 +57,13 @@ Depending on your setup following modules may also be required:
 
 This module has been tested on:
 
-* Debian 7, 8
+* Debian 7, 8, 9
 * CentOS/RHEL 6, 7
+  * Requires [Software Collections Repository](https://wiki.centos.org/AdditionalResources/Repositories/SCL)
 * Ubuntu 14.04, 16.04
 * SLES 12
+
+* PHP >= 5.6
 
 Other operating systems or versions may work but have not been tested.
 
@@ -172,7 +175,7 @@ generated.
 The module does not support the creation of databases, we encourage you to use either the [puppetlabs/mysql] or the
 [puppetlabs/puppetlabs-postgresql] module.
 
-:bulb: Default credentials are: **User:** `icinga` **Password**: `icinga`
+:bulb: Default credentials are: **User:** `icingaadmin` **Password**: `icinga`
 
 ##### MySQL
 Use MySQL as backend for user authentication in Icinga Web 2:
@@ -334,6 +337,8 @@ class {'icingaweb2::module::monitoring':
 }
 ```
 
+[Monitoring module documentation](https://www.icinga.com/docs/icingaweb2/latest/modules/monitoring/doc/01-About/)
+
 #### Director
 The Director is used to manage Icinga 2 configuration through the web interface Icinga Web 2. The module requires its
 database. The module is installed by cloning the git repository, therefore you need to set `git_revision` to either a
@@ -363,6 +368,8 @@ class {'icingaweb2::module::director':
 }
 ```
 
+[Director module documentation](https://www.icinga.com/docs/director/latest/)
+
 To run the kickstart mechanism, it's required to set `import_schema` to `true`.
 
 #### Doc
@@ -380,10 +387,12 @@ class {'::icingaweb2::module::doc':
 }
 ```
 
-#### Puppetdb
-You can configure director to query one or more PuppetDB servers.
+[Doc module documentation](https://www.icinga.com/docs/icingaweb2/latest/modules/doc/doc/01-About/)
 
-Example: set up puppetdb module and configure two SSL keys
+#### PuppetDB
+You can configure Director to query one or more PuppetDB servers.
+
+Example: Set up the PuppetDB module and configure two custom SSL keys
 ``` puppet
 $certificates = {'pupdb1' => {
                    :ssl_key => '-----BEGIN RSA PRIVATE KEY----- abc...',
@@ -392,6 +401,7 @@ $certificates = {'pupdb1' => {
                    :ssl_key => '-----BEGIN RSA PRIVATE KEY----- zyx...',
                    :ssl_cacert => '-----BEGIN RSA PRIVATE KEY----- wvur...', },
                 }
+
 class {'::icingaweb2::module::puppetdb':
   git_revision => 'master',
   ssl          => 'none',
@@ -399,27 +409,16 @@ class {'::icingaweb2::module::puppetdb':
 }
 ```
 
-Example: set up puppetdb module and configure puppet SSL key
+Example: Set up the PuppetDB module and configure the hosts SSL key to connect to the PuppetDB host
 ``` puppet
 class {'::icingaweb2::module::puppetdb':
   git_revision => 'master',
   ssl          => 'puppet',
+  host         => 'puppetdb.example.com',
 }
 ```
 
-Example: set up puppetdb module and configure one SSL key *and* puppet SSL key
-``` puppet
-class {'::icingaweb2::module::puppetdb':
-  git_revision => 'master',
-  ssl          => 'none',
-  certificates => {
-    puppetdb1 => {
-      ssl_key    => '-----BEGIN RSA PRIVATE KEY----- abc...',
-      ssl_cacert => '-----BEGIN RSA PRIVATE KEY----- def...',
-    }
-  }
-}
-```
+[PuppetDB module documentation](https://www.icinga.com/docs/director/latest/puppetdb/doc/01-Installation/)
 
 #### Business Process
 The Business Process module allows you to visualize and monitor business processes based on hosts and services monitored
@@ -436,6 +435,8 @@ class { 'icingaweb2::module::businessprocess':
   git_revision => 'v2.1.0'
 }
 ```
+
+[Business Process mdoule documentation](https://www.icinga.com/docs/businessprocess/latest/)
 
 #### Cube
 The Cube module is like a extended filtering tool. It visualizes host statistics (count and health state) grouped by
@@ -462,9 +463,94 @@ class { 'icingaweb2::module::generictts':
     'my-ticket-system' => {
       pattern => '/#([0-9]{4,6})/',
       url     => 'https://my.ticket.system/tickets/id=$1',
-    }
+    },
+  },
 }
 ```
+
+#### Fileshipper
+The main purpose of this module is to extend Icinga Director using some of it's exported hooks. Based on them it offers 
+an `Import Source` able to deal with `CSV`, `JSON`, `YAML` and `XML` files. It also offers the possibility to deploy
+hand-crafted Icinga 2 config files through the Icinga Director.
+
+The fileshipper module has some optional requirements:
+* `php-xml` for optional XML file support
+* `php-yaml` for optional YAML file support
+
+Example:
+``` puppet
+class { 'icingaweb2::module::fileshipper':
+  git_revision => 'v1.0.1',
+  base_directories => {
+    temp => '/tmp'
+  },
+  directories      => {
+    'test' => {
+      'source'     => '/tmp/source',
+      'target'     => '/tmp/target',
+    }
+  }
+}
+```
+
+[Fileshipper module documentation](https://www.icinga.com/docs/director/latest/fileshipper/doc/02-Installation/)
+
+#### vSphere
+This module extends the Director module. It allows you to have an automated import of virtual maschines and physical
+hosts from vSphere.
+
+The module needs some extra PHP extensions that you need to install:
+* `php-posix`
+* `php-soap`
+
+Example:
+``` puppet
+class { 'icingaweb2::module::vsphere':
+  git_revision => 'v1.1.0',
+}
+```
+
+[vSphere module documentation](https://www.icinga.com/docs/director/latest/vsphere/doc/01-Installation/)
+
+#### Graphite
+This module integrates an existing Graphite installation in your Icinga Web 2 frontend.
+
+Example:
+``` puppet
+class { 'icingaweb2::module::graphite':
+  git_revision => 'v0.9.0',
+  url          => 'https://localhost:8080'
+}
+```
+
+[Graphite module documentation](https://www.icinga.com/docs/graphite/latest/)
+
+#### Elasticsearch
+The Elasticsearch module displays events from data stored in Elasticsearch.
+
+Example:
+``` puppet
+class { 'icingaweb2::module::elasticsearch':
+  git_revision => 'v0.9.0',
+  instances    => {
+    'elastic'  => {
+      uri      => 'http://localhost:9200',
+      user     => 'foo',
+      password => 'bar',
+    }
+  },
+  eventtypes   => {
+    'filebeat' => {
+      instance => 'elastic',
+      index    => 'filebeat-*',
+      filter   => 'beat.hostname={host.name}',
+      fields   => 'input_type, source, message',
+    }
+  }
+}
+```
+
+[Elasticsearch module documentation](https://www.icinga.com/docs/graphite/latest/)
 
 ## Reference
 
@@ -477,6 +563,10 @@ class { 'icingaweb2::module::generictts':
     - [Class: icingaweb2::module::cube](#class-icingaweb2modulecube)
     - [Class: icingaweb2::module::generictts](#class-icingaweb2modulegenerictts)
     - [Class: icingaweb2::module::puppetdb](#class-icingaweb2modulepuppetdb)
+    - [Class: icingaweb2::module::fileshipper](#class-icingaweb2modulefileshipper)
+    - [Class: icingaweb2::module::vsphere](#class-icingaweb2modulevsphere)
+    - [Class: icingaweb2::module::graphite](#class-icingaweb2modulegraphite)
+    - [Class: icingaweb2::module::elasticsearch](#class-icingaweb2moduleelasticsearch)
 - [**Private classes**](#private-classes)
     - [Class: icingaweb2::config](#class-icingaweb2config)
     - [Class: icingaweb2::install](#class-icingaweb2install)
@@ -493,6 +583,10 @@ class { 'icingaweb2::module::generictts':
     - [Defined type: icingaweb2::module::generictts::ticketsystem](#defined-type-icingaweb2modulegenericttsticketsystem)
     - [Defined type: icingaweb2::module::monitoring::commandtransport](#defined-type-modulemonitoringcommandtransport)
     - [Defined type: icingaweb2::module::puppetdb::certificate](#defined-type-icingaweb2modulepuppetdbcertificate)
+    - [Defined type: icingaweb2::module::fileshhipper::basedir](#defined-type-icingaweb2modulefileshipperbasedir)
+    - [Defined type: icingaweb2::module::fileshipper::directory](#defined-type-icingaweb2modulefileshipperdirectory)
+    - [Defined type: icingaweb2::module::elasticsearch::instance](#defined-type-icingaweb2moduleelasticsearchinstance)
+    - [Defined type: icingaweb2::module::elasticsearch::eventtype](#defined-type-icingaweb2moduleelasticsearcheventtype)
 
 ### Public Classes
 
@@ -534,7 +628,7 @@ If set to false packages aren't managed. Defaults to `true`
 ##### `extra_pacakges`
 An array of packages to install additionally.
 
-##### `import_schema``
+##### `import_schema`
 Import database scheme. Make sure you have an existing database if you use this option. Defaults to `false`
 
 ##### `db_type`
@@ -568,6 +662,9 @@ be set to `db` or `ini`. Defaults to `ini`
 ##### `conf_user`
 By default this module expects Apache2 on the server. You can change the owner of the config files with this
 parameter. Default is dependent on the platform
+
+##### `default_domain`
+When using domain-aware authentication, you can set a default domain here.
 
 #### Class: `icingaweb2::module::monitoring`
 Manage the monitoring module. This module is mandatory for probably every setup.
@@ -753,9 +850,74 @@ Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 How to set up ssl certificates. To copy certificates from the local puppet installation, use `puppet`. Defaults to
 `none`
 
+##### `host`
+Hostname of the server where PuppetDB is running. The `ssl` parameter needs to be set to `puppet`.
+
 ##### `certificates`
 Hash with SSL certificates to configure.  See `icingaweb2::module::puppetdb::certificate`.
->>>>>>> Implement icingaweb2::module::puppetdb class and icingaweb2::module::puppetdb::certificate type
+
+
+#### Class: `icingaweb2::module::fileshipper`
+The fileshipper module extends the Director. It offers import sources to deal with CSV, JSON, YAML and XML files.
+
+**Parameters of `icingaweb2::module::fileshipper`:**
+
+##### `ensure`
+Enable or disable module. Defaults to `present`
+
+##### `base_directories`
+Hash of base directories. These directories can later be selected in the import source (Director).
+
+##### `directories`
+Deploy plain Icinga 2 configuration files through the Director to your Icinga 2 master.
+
+#### Class: `icingaweb2::module::vsphere`
+The vSphere module extends the Director. It provides import sources for virtual machines and physical hosts from
+vSphere.
+
+**Parameters of `icingaweb2::module::vsphere`:**
+
+##### `ensure`
+Enable or disable module. Defaults to `present`
+
+#### Class: `icingaweb2::module::graphite`
+The Graphite module draws graphs out of time series data stored in Graphite.
+
+**Parameters of `icingaweb2::module::graphite`:**
+
+##### `ensure`
+Enable or disable module. Defaults to `present`
+
+##### `url`
+URL to your Graphite Web
+
+##### `user`
+A user with access to your Graphite Web via HTTP basic authentication
+
+##### `password`
+The users password
+
+##### `graphite_writer_host_name_template`
+The value of your Icinga 2 GraphiteWriter's attribute `host_name_template` (if specified)
+
+##### `graphite_writer_service_name_template`
+The value of your icinga 2 GraphiteWriter's attribute `service_name_template` (if specified)
+
+#### Class: `icingaweb2::module::elasticsearch`
+The Elasticsearch module displays events from data stored in Elasticsearch.
+
+**Parameters of `icingaweb2::module::elasticsearch`:**
+
+##### `ensure`
+Enable or disable module. Defaults to `present`
+
+##### `instances`
+A hash that configures one or more Elasticsearch instances that this module connects to. The defined type
+`icingaweb2::module::elasticsearch::instance` is used to create the instance configuration.
+
+##### `eventtypes`
+A hash oft ypes of events that should be displayed. Event types are always connected to instances. The defined type
+`icingaweb2::module::elasticsearch::eventtype` is used to create the event types.
 
 ### Private Classes
 
@@ -861,6 +1023,9 @@ LDAP search filter. Only valid if `backend` is `ldap`.
 ##### `ldap_base_dn`
 LDAP base DN. Only valid if `backend` is `ldap`.
 
+##### `domain`
+Domain for domain-aware authentication.
+
 ##### `order`
 Multiple authentication methods can be chained. The order of entries in the authentication configuration determines
 the order of the authentication methods. Defaults to `01`
@@ -936,6 +1101,9 @@ Base DN that is searched for groups. Only valid with backend `ldap` with `msldap
 
 ##### `ldap_nested_group_search`
 Search for groups in groups. Only valid with backend `msldap`.
+
+##### `domain`
+Domain for domain-aware authentication.
 
 #### Defined type: `icingaweb2::module`
 Download, enable and configure Icinga Web 2 modules. This is a public defined type and is meant to be used to install
@@ -1048,6 +1216,85 @@ Contents of the combined SSL key.
 
 ##### `ssl_cacert`
 CA certificate
+
+#### Defined type: `icingaweb2::module::fileshipper::basedir`
+
+Manage base directories for the fileshipper module
+
+**Parameters of `icingaweb2::module::fileshipper::basedir`:**
+
+##### `identifier`
+Identifier of the base directory
+
+##### `basedir`
+Absolute path of a direcory
+
+#### Defined type: `icingaweb2::module::fileshipper::directory`
+
+Manage directories with plain Icinga 2 configuration files
+
+**Parameters of `icingaweb2::module::fileshipper::directory`:**
+
+##### `identifier`
+Identifier of the base directory
+
+##### `source`
+Absolute path of the source direcory
+
+##### `target`
+Absolute path of the target direcory
+
+##### `extensions`
+Only files with these extensions will be synced. Defaults to `.conf`
+
+#### Defined type: `icingaweb2::module::elasticsearch::instance`
+Manage an Elasticsearch instance
+
+**Parameters of `icingaweb2::module::elasticsearch::instance`:**
+
+##### `name`
+Name of the Elasticsearch instance
+
+##### `uri`
+URI to the Elasticsearch instance
+
+##### `user`
+The user to use for authentication
+
+##### `password`
+The password to use for authentication
+
+##### `ca`
+The path of the file containing one or more certificates to verify the peer with or the path to the directory
+that holds multiple CA certificates.
+
+##### `client_certificate`
+The path of the client certificates
+
+##### `client_private_key`
+The path of the client private key
+
+#### Defined type: `icingaweb2::module::elasticsearch::eventtype`
+Manage an Elasticsearch event type
+
+**Parameters of `icingaweb2::module::elasticsearch::eventtype`:**
+
+##### `name*]
+Name of the event type.
+
+##### `instance*]
+Elasticsearch instance to connect to.
+
+##### `index*]
+Elasticsearch index pattern, e.g. `filebeat-*`.
+
+##### `filter*]
+Elasticsearch filter in the Icinga Web 2 URL filter format. Host macros are evaluated if you encapsulate them in
+curly braces, e.g. `host={host.name}&location={_host_location}`.
+
+##### `fields*]
+Comma-separated list of field names to display. One or more wildcard asterisk (`*`) patterns are also accepted.
+Note that the `@timestamp` field is always respected.
 
 ## Development
 A roadmap of this project is located at https://github.com/Icinga/puppet-icingaweb2/milestones. Please consider
