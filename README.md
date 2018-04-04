@@ -696,6 +696,9 @@ Username for IDO DB connection.
 ##### `ido_db_password`
 Password for IDO DB connection.
 
+##### `ido_db_charset`
+The character set to use for the database connection.
+
 ##### `commandtransports`
 A hash of command transports.
 
@@ -741,6 +744,9 @@ Username for DB connection.
 
 ##### `db_password`
 Password for DB connection.
+
+##### `ido_db_charset`
+The character set to use for the database connection.
 
 ##### `import_schema`
 Import database schema. Defaults to `false`

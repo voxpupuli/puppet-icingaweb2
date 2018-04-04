@@ -62,6 +62,7 @@ class icingaweb2::module::director(
   Optional[String]          $db_name        = undef,
   Optional[String]          $db_username    = undef,
   Optional[String]          $db_password    = undef,
+  Optional[String]          $db_charset     = 'utf8',
   Optional[Boolean]         $import_schema  = false,
   Optional[Boolean]         $kickstart      = false,
   Optional[String]          $endpoint       = undef,
@@ -86,7 +87,7 @@ class icingaweb2::module::director(
     db_name     => $db_name,
     db_username => $db_username,
     db_password => $db_password,
-    db_charset  => 'utf8',
+    db_charset  => $db_charset,
   }
 
   $db_settings = {
