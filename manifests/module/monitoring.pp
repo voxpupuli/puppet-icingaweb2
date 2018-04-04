@@ -29,6 +29,9 @@
 # [*ido_db_password*]
 #   Password for IDO DB connection.
 #
+# [*ido_db_charset*]
+#   The character set to use for the database connection.
+#
 # [*commandtransports*]
 #   A hash of command transports.
 #
