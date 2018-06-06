@@ -23,6 +23,7 @@ class icingaweb2::params {
       $conf_group            = 'icingaweb2'
       $schema_dir            = '/usr/share/doc/icingaweb2/schema'
       $gettext_package_name  = 'gettext'
+      $icingaclipkg          = 'icingacli'
     } # RedHat
 
     'debian': {
@@ -30,6 +31,7 @@ class icingaweb2::params {
       $conf_group           = 'icingaweb2'
       $schema_dir           = '/usr/share/icingaweb2/etc/schema'
       $gettext_package_name = 'gettext'
+      $icingaclipkg         = 'icingacli'
     } # Debian
 
     'suse': {
@@ -37,6 +39,7 @@ class icingaweb2::params {
       $conf_group           = 'icingaweb2'
       $schema_dir           = '/usr/share/doc/icingaweb2/schema'
       $gettext_package_name = 'gettext-tools'
+      $icingaclipkg         = 'icingaweb2-icingacli'
     } # Suse
 
     default: {
@@ -44,4 +47,3 @@ class icingaweb2::params {
     }
   } # case $::osfamily
 }
-
