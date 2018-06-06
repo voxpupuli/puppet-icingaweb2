@@ -71,6 +71,7 @@ class icingaweb2::module::director(
   Optional[String]          $api_username   = undef,
   Optional[String]          $api_password   = undef,
 ){
+  $icingaclipkg    = $::icingaweb2::params::icingaclipkg
   $conf_dir        = $::icingaweb2::params::conf_dir
   $module_conf_dir = "${conf_dir}/modules/director"
 
@@ -101,12 +102,12 @@ class icingaweb2::module::director(
   }
 
   if $import_schema {
-    ensure_packages(['icingacli'], { 'ensure' => 'present' })
+    ensure_packages([$icingaclipkg], { 'ensure' => 'present' })
 
     exec { 'director-migration':
       command => 'icingacli director migration run',
       onlyif  => 'icingacli director migration pending',
-      require => [ Package['icingacli'], Icingaweb2::Module['director'] ]
+      require => [ Package[$icingaclipkg], Icingaweb2::Module['director'] ]
     }
 
     if $kickstart {
