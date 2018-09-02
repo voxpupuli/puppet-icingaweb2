@@ -64,7 +64,7 @@ define icingaweb2::config::resource(
   String                                      $resource_name   = $title,
   Enum['db', 'ldap']                          $type            = undef,
   String                                      $host            = undef,
-  Integer[1,65535]                            $port            = undef,
+  Optional[Integer[1,65535]]                  $port            = undef,
   Optional[Enum['mysql', 'pgsql']]            $db_type         = undef,
   Optional[String]                            $db_name         = undef,
   Optional[String]                            $db_username     = undef,
