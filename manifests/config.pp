@@ -62,9 +62,10 @@ class icingaweb2::config {
     mode   => '0640',
   }
 
-  icingaweb2::inisection {'logging':
-    target   => "${conf_dir}/config.ini",
-    settings => {
+  icingaweb2::inisection { 'config-logging':
+    section_name => 'logging',
+    target       => "${conf_dir}/config.ini",
+    settings     => {
       'log'   => $logging,
       'file'  => $logging_file,
       'level' => $logging_level
@@ -79,23 +80,26 @@ class icingaweb2::config {
   }
 
 
-  icingaweb2::inisection {'global':
-    target   => "${conf_dir}/config.ini",
-    settings => delete_undef_values($settings),
+  icingaweb2::inisection { 'config-global':
+    section_name => 'global',
+    target       => "${conf_dir}/config.ini",
+    settings     => delete_undef_values($settings),
   }
 
   if $default_domain {
-    icingaweb2::inisection {'authentication':
-      target   => "${conf_dir}/config.ini",
-      settings => {
+    icingaweb2::inisection { 'config-authentication':
+      section_name => 'authentication',
+      target       => "${conf_dir}/config.ini",
+      settings     => {
         'default_domain' => $default_domain,
       }
     }
   }
 
-  icingaweb2::inisection {'themes':
-    target   => "${conf_dir}/config.ini",
-    settings => {
+  icingaweb2::inisection { 'config-themes':
+    section_name => 'themes',
+    target       => "${conf_dir}/config.ini",
+    settings     => {
       'default'  => $theme,
       'disabled' => $theme_disabled,
     },

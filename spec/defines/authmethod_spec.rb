@@ -15,7 +15,7 @@ describe('icingaweb2::config::authmethod', :type => :define) do
       context "#{os} with backend 'external'" do
         let(:params) { { :backend => 'external', :order => '10' } }
 
-        it { is_expected.to contain_icingaweb2__inisection('myauthmethod')
+        it { is_expected.to contain_icingaweb2__inisection('authmethod-myauthmethod')
           .with_target('/etc/icingaweb2/authentication.ini')
           .with_settings({'backend'=>'external'})
           .with_order('10')}
@@ -25,7 +25,7 @@ describe('icingaweb2::config::authmethod', :type => :define) do
       context "#{os} with backend 'ldap'" do
         let(:params) { { :backend => 'ldap', :resource => 'myresource', :ldap_user_class => 'users', :ldap_user_name_attribute => 'uid', :ldap_filter => 'foobar', :domain => 'icinga.com', :order => '10' } }
 
-        it { is_expected.to contain_icingaweb2__inisection('myauthmethod')
+        it { is_expected.to contain_icingaweb2__inisection('authmethod-myauthmethod')
           .with_target('/etc/icingaweb2/authentication.ini')
           .with_settings({'backend'=>'ldap', 'resource'=>'myresource', 'user_class'=>'users', 'user_name_attribute'=>'uid', 'filter'=>'foobar', 'domain'=>'icinga.com' },  )
           .with_order('10')}
@@ -34,7 +34,7 @@ describe('icingaweb2::config::authmethod', :type => :define) do
       context "#{os} with backend 'msldap'" do
         let(:params) { { :backend => 'msldap', :resource => 'myresource', :order => '10' } }
 
-        it { is_expected.to contain_icingaweb2__inisection('myauthmethod')
+        it { is_expected.to contain_icingaweb2__inisection('authmethod-myauthmethod')
           .with_target('/etc/icingaweb2/authentication.ini')
           .with_settings({'backend'=>'msldap', 'resource'=>'myresource'})
           .with_order('10')}
@@ -43,7 +43,7 @@ describe('icingaweb2::config::authmethod', :type => :define) do
       context "#{os} with backend 'db'" do
         let(:params) { { :backend => 'db', :resource => 'myresource', :order => '10' } }
 
-        it { is_expected.to contain_icingaweb2__inisection('myauthmethod')
+        it { is_expected.to contain_icingaweb2__inisection('authmethod-myauthmethod')
           .with_target('/etc/icingaweb2/authentication.ini')
           .with_settings({'backend'=>'db', 'resource'=>'myresource'})
           .with_order('10')}

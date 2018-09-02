@@ -107,8 +107,9 @@ define icingaweb2::config::resource(
     }
   }
 
-  icingaweb2::inisection { $resource_name:
-    target   => "${conf_dir}/resources.ini",
-    settings => delete_undef_values($settings),
+  icingaweb2::inisection { "resource-${resource_name}":
+    section_name => $resource_name,
+    target       => "${conf_dir}/resources.ini",
+    settings     => delete_undef_values($settings),
   }
 }
