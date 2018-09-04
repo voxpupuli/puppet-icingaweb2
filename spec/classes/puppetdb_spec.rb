@@ -123,7 +123,7 @@ describe('icingaweb2::module::puppetdb', :type => :class) do
         it { is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/certs/ca.pem')
           .with_ensure('present')
           .with_mode('0640')
-          .with_source('/etc/puppet/ssl/certs/ca.pem')
+          .with_source("#{Puppet.settings['ssldir']}/certs/ca.pem")
                          }
 
         it { is_expected.to have_icingaweb2__module__puppetdb__certificate_resource_count(0) }
@@ -137,13 +137,13 @@ describe('icingaweb2::module::puppetdb', :type => :class) do
 
         it { is_expected.to contain_concat__fragment('private_key')
           .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/puppetdb_combined.pem')
-          .with_source('/etc/puppet/ssl/private_keys/puppetdb.pem')
+          .with_source("#{Puppet.settings['ssldir']}/private_keys/puppetdb.pem")
           .with_order('1')
                         }
 
         it { is_expected.to contain_concat__fragment('public_key')
           .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/puppetdb_combined.pem')
-          .with_source('/etc/puppet/ssl/certs/puppetdb.pem')
+          .with_source("#{Puppet.settings['ssldir']}/certs/puppetdb.pem")
           .with_order('2')
                         }
       end
