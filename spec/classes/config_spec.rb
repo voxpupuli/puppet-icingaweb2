@@ -12,11 +12,11 @@ describe('icingaweb2::config', :type => :class) do
           "class { 'icingaweb2': }"
         end
 
-        it { is_expected.to contain_icingaweb2__inisection('logging') }
-        it { is_expected.to contain_icingaweb2__inisection('global')
+        it { is_expected.to contain_icingaweb2__inisection('config-logging') }
+        it { is_expected.to contain_icingaweb2__inisection('config-global')
           .with_settings({ 'show_stacktraces' => false, 'module_path' => '/usr/share/icingaweb2/modules', 'config_backend' => 'ini' })
         }
-        it { is_expected.to contain_icingaweb2__inisection('themes') }
+        it { is_expected.to contain_icingaweb2__inisection('config-themes') }
         it { is_expected.to contain_file('/var/log/icingaweb2')
           .with_ensure('directory')
           .with_mode('0750')
@@ -74,7 +74,7 @@ describe('icingaweb2::config', :type => :class) do
           "class { 'icingaweb2': config_backend => 'db' }"
         end
 
-        it { is_expected.to contain_icingaweb2__inisection('global')
+        it { is_expected.to contain_icingaweb2__inisection('config-global')
           .with_settings({ 'show_stacktraces' => false, 'module_path' => '/usr/share/icingaweb2/modules', 'config_backend' => 'db', 'config_resource' => 'mysql-icingaweb2' })
         }
 

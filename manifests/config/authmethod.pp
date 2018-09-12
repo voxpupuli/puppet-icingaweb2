@@ -82,9 +82,10 @@ define icingaweb2::config::authmethod(
     }
   }
 
-  icingaweb2::inisection { $title:
-    target   => "${conf_dir}/authentication.ini",
-    settings => delete_undef_values($settings),
-    order    => $order,
+  icingaweb2::inisection { "authmethod-${title}":
+    section_name => $title,
+    target       => "${conf_dir}/authentication.ini",
+    settings     => delete_undef_values($settings),
+    order        => $order,
   }
 }

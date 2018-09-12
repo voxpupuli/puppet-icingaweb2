@@ -22,7 +22,7 @@ describe('icingaweb2::config::resource', :type => :define) do
             :db_username => 'bar',
             :db_password => 'secret' } }
 
-        it { is_expected.to contain_icingaweb2__inisection('myresource')
+        it { is_expected.to contain_icingaweb2__inisection('resource-myresource')
           .with_target('/etc/icingaweb2/resources.ini')
           .with_settings({'type'=>'db', 'db'=>'mysql', 'host'=>'localhost', 'port'=>'3306', 'dbname'=>'foo', 'username'=>'bar', 'password'=>'secret'}) }
 
@@ -37,7 +37,7 @@ describe('icingaweb2::config::resource', :type => :define) do
             :ldap_bind_dn => 'cn=root,dc=bar',
             :ldap_bind_pw => 'secret' } }
 
-        it { is_expected.to contain_icingaweb2__inisection('myresource')
+        it { is_expected.to contain_icingaweb2__inisection('resource-myresource')
           .with_target('/etc/icingaweb2/resources.ini')
           .with_settings({'type'=>'ldap', 'hostname'=>'localhost', 'port'=>'389', 'root_dn'=>'cn=foo,dc=bar', 'bind_dn'=>'cn=root,dc=bar', 'bind_pw'=>'secret', 'encryption'=>'none'})}
 

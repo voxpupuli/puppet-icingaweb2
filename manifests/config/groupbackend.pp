@@ -113,8 +113,9 @@ define icingaweb2::config::groupbackend(
     }
   }
 
-  icingaweb2::inisection { $title:
-    target   => "${conf_dir}/groups.ini",
-    settings => delete_undef_values($settings),
+  icingaweb2::inisection { "groupbackend-${title}":
+    section_name => $title,
+    target       => "${conf_dir}/groups.ini",
+    settings     => delete_undef_values($settings),
   }
 }
