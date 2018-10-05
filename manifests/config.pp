@@ -26,6 +26,8 @@ class icingaweb2::config {
   $theme                = $::icingaweb2::theme
   $theme_disabled       = $::icingaweb2::theme_disabled
 
+  $cookie_path          = $::icingaweb2::cookie_path
+
   $import_schema        = $::icingaweb2::import_schema
   $schema_dir           = $::icingaweb2::params::schema_dir
   $db_name              = $::icingaweb2::db_name
@@ -102,6 +104,14 @@ class icingaweb2::config {
     settings     => {
       'default'  => $theme,
       'disabled' => $theme_disabled,
+    },
+  }
+
+  icingaweb2::inisection {'config-cookie':
+    section_name => 'cookie',
+    target       => "${conf_dir}/config.ini",
+    settings     => {
+      'path'     => $cookie_path,
     },
   }
 
