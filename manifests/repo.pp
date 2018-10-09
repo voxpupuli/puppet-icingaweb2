@@ -88,6 +88,7 @@ class icingaweb2::repo {
               baseurl  => "http://packages.icinga.com/SUSE/${::facts['os']['release']['full']}/release/",
               enabled  => 1,
               gpgcheck => 1,
+              priority => 98,
               require  => Exec['import icinga gpg key']
             }
           }
