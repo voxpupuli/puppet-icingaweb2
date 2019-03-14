@@ -48,9 +48,10 @@ This module depends on
 * [puppetlabs/vcsrepo] >= 1.3.0
 * [puppetlabs/concat] >= 2.0.1
 
-Depending on your setup following modules may also be required:
+Depending on your setup the following modules may also be required:
 
 * [puppetlabs/apt] >= 2.0.0
+* [puppetlabs/yumrepo_core] >= 1.0.0
 * [puppet/zypprepo] >= 2.0.0
 
 ### Limitations
@@ -937,8 +938,8 @@ Handles the installation of the Icinga Web 2 package.
 Stores all default parameters for the Icinga Web 2 installation.
 
 #### Class: `icingaweb2::repo`
-Installs the [packages.icinga.com] repository. Depending on your operating system [puppetlabs/apt] or
-[puppet/zypprepo] are required.
+Installs the [packages.icinga.com] repository. Depending on your operating system and Puppet version [puppetlabs/apt],
+[puppetlabs/yumrepo_core], or [puppet/zypprepo] is required.
 
 ### Public Defined Types
 
@@ -1328,6 +1329,7 @@ See also [CHANGELOG.md]
 [Icinga Web 2]: https://www.icinga.com/products/icinga-web-2/
 
 [puppetlabs/apt]: https://github.com/puppetlabs/puppetlabs-apt
+[puppetlabs/yumrepo_core]: https://github.com/puppetlabs/puppetlabs-yumrepo_core 
 [puppet/zypprepo]: https://forge.puppet.com/puppet/zypprepo
 [puppetlabs/stdlib]: https://github.com/puppetlabs/puppetlabs-stdlib
 [puppetlabs/concat]: https://github.com/puppetlabs/puppetlabs-concat

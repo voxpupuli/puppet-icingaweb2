@@ -14,6 +14,7 @@ RSpec.configure do |c|
   install_module_from_forge('puppetlabs-apache', '>= 1.11.0 <= 3.0.0')
   install_module_from_forge('puppet-zypprepo', '>= 2.0.0 <= 3.0.0')
   install_module_from_forge('puppetlabs-apt', '>= 2.0.0 <= 3.0.0')
+  install_module_from_forge('puppetlabs-yumrepo_core', '>= 1.0.0 <= 2.0.0')
 
   c.before :suite do
     hosts.each do |host|
