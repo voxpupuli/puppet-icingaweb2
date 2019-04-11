@@ -13,6 +13,12 @@
 # [*logging_level*]
 #   Logging verbosity. Possible values are 'ERROR', 'WARNING', 'INFO' and 'DEBUG'. Defaults to 'INFO'.
 #
+# [*logging_facility*]
+#   Logging facility when using syslog. Possible values are 'user' or 'local0' to 'local7'.
+#
+# [*logging_application*]
+#   Logging application name when using syslog.
+#
 # [*enable_stacktraces*]
 #   Whether to display stacktraces in the web interface or not. Defaults to 'false'.
 #
@@ -81,6 +87,8 @@ class icingaweb2 (
   Enum['file', 'syslog', 'none']            $logging             = 'file',
   Stdlib::Absolutepath                      $logging_file        = '/var/log/icingaweb2/icingaweb2.log',
   Enum['ERROR', 'WARNING', 'INFO', 'DEBUG'] $logging_level       = 'INFO',
+  Pattern[/user|local[0-7]/]                $logging_facility    = 'user',
+  String                                    $logging_application = 'icingaweb2',
   Boolean                                   $show_stacktraces    = false,
   Stdlib::Absolutepath                      $module_path         = $::icingaweb2::params::module_path,
   String                                    $theme               = 'Icinga',
