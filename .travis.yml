@@ -14,23 +14,13 @@ script:
 matrix:
   fast_finish: true
   include:
-  - rvm: 2.4.5
-    env: PUPPET_VERSION="~> 4.0" CHECK=build DEPLOY_TO_FORGE=yes
-  - rvm: 2.5.5
+  - rvm: '2.4'
+    env: PUPPET_VERSION="~> 5.0" CHECK=build DEPLOY_TO_FORGE=yes
+  - rvm: '2.1'
     env: PUPPET_VERSION="~> 4.0" CHECK=test
-  - rvm: 2.6.2
-    env: PUPPET_VERSION="~> 4.0" CHECK=test
-  - rvm: 2.4.5
+  - rvm: '2.4'
     env: PUPPET_VERSION="~> 5.0" CHECK=test
-  - rvm: 2.5.5
-    env: PUPPET_VERSION="~> 5.0" CHECK=test
-  - rvm: 2.6.2
-    env: PUPPET_VERSION="~> 5.0" CHECK=test
-  - rvm: 2.4.5
-    env: PUPPET_VERSION="~> 6.0" CHECK=test
-  - rvm: 2.5.5
-    env: PUPPET_VERSION="~> 6.0" CHECK=test
-  - rvm: 2.6.2
+  - rvm: '2.5'
     env: PUPPET_VERSION="~> 6.0" CHECK=test
 branches:
   only:
