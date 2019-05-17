@@ -26,7 +26,7 @@ class icingaweb2::module::graphite(
   Enum['absent', 'present'] $ensure                                = 'present',
   String                    $git_repository                        = 'https://github.com/Icinga/icingaweb2-module-graphite.git',
   Optional[String]          $git_revision                          = undef,
-  String                    $url                                   = undef,
+  Optional[String]          $url                                   = undef,
   Optional[String]          $user                                  = undef,
   Optional[String]          $password                              = undef,
   Optional[String]          $graphite_writer_host_name_template    = undef,
