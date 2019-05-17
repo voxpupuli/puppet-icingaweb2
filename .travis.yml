@@ -3,29 +3,20 @@ language: ruby
 cache: bundler
 bundler_args: "--without system_tests"
 before_install:
-- bundle -v
-- rm Gemfile.lock || true
-- gem update --system
-- gem update bundler
-- gem --version
-- bundle -v
+- sh ./.travis/setup.sh
 script:
 - bundle exec rake $CHECK
 matrix:
   fast_finish: true
   include:
-  - rvm: 2.1.10
-    env: PUPPET_VERSION="~> 4.0" CHECK=build DEPLOY_TO_FORGE=yes
-  - rvm: 2.1.10
+  - rvm: '2.4'
+    env: PUPPET_VERSION="~> 5.0" CHECK=build DEPLOY_TO_FORGE=yes
+  - rvm: '2.1'
     env: PUPPET_VERSION="~> 4.0" CHECK=test
-  - rvm: 2.2.7
-    env: PUPPET_VERSION="~> 4.0" CHECK=test
-  - rvm: 2.3.4
-    env: PUPPET_VERSION="~> 4.0" CHECK=test
-  - rvm: 2.4.1
-    env: PUPPET_VERSION="~> 4.0" CHECK=test
-  - rvm: 2.4.1
+  - rvm: '2.4'
     env: PUPPET_VERSION="~> 5.0" CHECK=test
+  - rvm: '2.5'
+    env: PUPPET_VERSION="~> 6.0" CHECK=test
 branches:
   only:
   - master
