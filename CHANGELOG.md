@@ -1,12 +1,5 @@
 # Change Log
 
-## [v2.?.?](https://github.com/Icinga/puppet-icingaweb2/tree/master) (2019-0?-??)
-[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.2.0...master)
-
-**Closed issues:**
-
-- Support Puppet 6 [\#220](https://github.com/Icinga/puppet-icingaweb2/issues/220)
-
 ## [v2.2.0](https://github.com/Icinga/puppet-icingaweb2/tree/v2.2.0) (2018-05-14)
 [Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.1.0...v2.2.0)
 
