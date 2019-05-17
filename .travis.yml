@@ -3,12 +3,7 @@ language: ruby
 cache: bundler
 bundler_args: "--without system_tests"
 before_install:
-- bundle -v
-- rm Gemfile.lock || true
-- gem update --system
-- gem update bundler
-- gem --version
-- bundle -v
+- sh ./.travis/setup.sh
 script:
 - bundle exec rake $CHECK
 matrix:
