@@ -673,6 +673,9 @@ parameter. Default is dependent on the platform
 ##### `default_domain`
 When using domain-aware authentication, you can set a default domain here.
 
+##### `cookie_path`
+Set the Cookie validity path for the Icinga Web 2 sessions. Defaults to `/icingaweb2`
+
 #### Class: `icingaweb2::module::monitoring`
 Manage the monitoring module. This module is mandatory for probably every setup.
 
