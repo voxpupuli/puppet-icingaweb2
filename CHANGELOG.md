@@ -1,5 +1,30 @@
 # Change Log
 
+## [v2.3.0](https://github.com/Icinga/puppet-icingaweb2/tree/v2.3.0) (2019-05-20)
+[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.2.0...v2.3.0)
+
+**Implemented enhancements:**
+
+- Support puppet 6 [\#220](https://github.com/Icinga/puppet-icingaweb2/issues/220)
+- add logging facility and application to config [\#230](https://github.com/Icinga/puppet-icingaweb2/pull/230) ([costela](https://github.com/costela))
+- Support Puppet 6 [\#226](https://github.com/Icinga/puppet-icingaweb2/pull/226) ([wdschei](https://github.com/wdschei))
+- add config section to adjust the cookie path [\#218](https://github.com/Icinga/puppet-icingaweb2/pull/218) ([XnS](https://github.com/XnS))
+
+**Fixed bugs:**
+
+- Parameter url of module::graphite has to be optional [\#223](https://github.com/Icinga/puppet-icingaweb2/issues/223)
+- Docs: icingaweb2::config::resource 'port' requires an integer, not a string [\#231](https://github.com/Icinga/puppet-icingaweb2/pull/231) ([dnsmichi](https://github.com/dnsmichi))
+
+**Closed issues:**
+
+- support puppet/stdlib \> 5.0 [\#232](https://github.com/Icinga/puppet-icingaweb2/issues/232)
+- icingaweb2::module::puppetdb tests are failing [\#216](https://github.com/Icinga/puppet-icingaweb2/issues/216)
+
+**Merged pull requests:**
+
+- Set confdir in the rspec context \(fixes \#216\) [\#217](https://github.com/Icinga/puppet-icingaweb2/pull/217) ([johanfleury](https://github.com/johanfleury))
+- Avoid duplicate inisection declarations [\#215](https://github.com/Icinga/puppet-icingaweb2/pull/215) ([johanfleury](https://github.com/johanfleury))
+
 ## [v2.2.0](https://github.com/Icinga/puppet-icingaweb2/tree/v2.2.0) (2018-05-14)
 [Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.1.0...v2.2.0)
 
