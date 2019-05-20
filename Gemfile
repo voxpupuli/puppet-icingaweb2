@@ -16,9 +16,10 @@ group :system_tests do
   if (beaker_rspec_version = ENV['BEAKER_RSPEC_VERSION'])
     gem 'beaker-rspec', beaker_rspec_version
   else
-    gem 'beaker-rspec',  :require => false
+    gem 'beaker-rspec', require: false
   end
-  gem 'serverspec',                    :require => false
-  gem 'beaker-puppet_install_helper',  :require => false
-  gem 'beaker-module_install_helper',  :require => false
+  gem 'serverspec',                    require: false
+  gem 'beaker-puppet_install_helper',  require: false
+  gem 'beaker-module_install_helper',  require: false
+  gem 'beaker-vagrant',                require: false
 end
