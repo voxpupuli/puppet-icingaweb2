@@ -316,7 +316,7 @@ This module is mandatory for almost every setup. It connects your Icinga Web int
 history information are queried through the IDO database. Actions such as `Check Now`, `Set Downtime` or `Acknowledge`
 are send to the Icinga 2 API.
 
-Requirements: 
+Requirements:
 
 * IDO feature in Icinga 2 (MySQL or PostgreSQL)
 * `ApiUser` object in Icinga 2 with proper permissions
@@ -343,7 +343,7 @@ class {'icingaweb2::module::monitoring':
 #### Director
 The Director is used to manage Icinga 2 configuration through the web interface Icinga Web 2. The module requires its
 database. The module is installed by cloning the git repository, therefore you need to set `git_revision` to either a
-git branch or tag, eg. `master` or `v1.3.2`. 
+git branch or tag, eg. `master` or `v1.3.2`.
 
 The Director has some dependencies that you have to fulfill manually currently:
 * Icinga 2 (>= 2.6.0)
@@ -424,7 +424,7 @@ class {'::icingaweb2::module::puppetdb':
 #### Business Process
 The Business Process module allows you to visualize and monitor business processes based on hosts and services monitored
 by Icinga 2. The module is installed by cloning the git repository, therefore you need to set `git_revision` to either a
-git branch or tag, eg. `master` or `v2.1.0`. 
+git branch or tag, eg. `master` or `v2.1.0`.
 
 This module has the following dependecies:
 * Icinga Web 2 (>= 2.4.1)
@@ -442,7 +442,7 @@ class { 'icingaweb2::module::businessprocess':
 #### Cube
 The Cube module is like a extended filtering tool. It visualizes host statistics (count and health state) grouped by
 various custom variables in multiple dimensions. The module is installed by cloning the git repository, therefore you
-need to set `git_revision` to either a git branch or tag, eg. `master` or `v1.0.0`. 
+need to set `git_revision` to either a git branch or tag, eg. `master` or `v1.0.0`.
 
 Example:
 ``` puppet
@@ -455,7 +455,7 @@ class { 'icingaweb2::module::cube':
 The GenericTTS module matches ticket pattern and replaces them with a link to your ticketsystem. The module is installed
 by cloning the git repository, therefore you need to set `git_revision` to either a git branch or tag, eg. `master`
 or `v2.0.0`.
- 
+
 Example:
 ``` puppet
 class { 'icingaweb2::module::generictts':
@@ -470,7 +470,7 @@ class { 'icingaweb2::module::generictts':
 ```
 
 #### Fileshipper
-The main purpose of this module is to extend Icinga Director using some of it's exported hooks. Based on them it offers 
+The main purpose of this module is to extend Icinga Director using some of it's exported hooks. Based on them it offers
 an `Import Source` able to deal with `CSV`, `JSON`, `YAML` and `XML` files. It also offers the possibility to deploy
 hand-crafted Icinga 2 config files through the Icinga Director.
 
@@ -604,6 +604,12 @@ If 'logging' is set to `file`, this is the target log file. Defaults to `/var/lo
 
 ##### `logging_level`
 Logging verbosity. Possible values are `ERROR`, `WARNING`, `INFO` and `DEBUG`. Defaults to `INFO`
+
+##### `logging_facility`
+Logging facilty for syslog. Allowed values are `user` and `local0` through `local7`. Defaults to `user`
+
+##### `logging_application`
+Logging application name for syslog. Defaults to `icingaweb2`
 
 ##### `show_stacktraces`
 Whether to display stacktraces in the web interface or not. Defaults to `false`
@@ -827,7 +833,7 @@ A hash of ticketsystems. The hash expects a `patten` and a `url` for each ticket
 the ticket ID, eg. `/#([0-9]{4,6})/`. Place the ticket ID in the URL, eg. `https://my.ticket.system/tickets/id=$1`
 
 Example:
-``` puppet 
+``` puppet
 ticketsystems => {
   system1 => {
     pattern => '/#([0-9]{4,6})/',
@@ -1145,7 +1151,7 @@ A hash with the module settings. Multiple configuration files with ini sections 
 
 Example:
 
-``` puppet 
+``` puppet
  $conf_dir        = $::icingaweb2::params::conf_dir
  $module_conf_dir = "${conf_dir}/modules/mymodule"
 

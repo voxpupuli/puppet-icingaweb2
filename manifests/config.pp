@@ -20,6 +20,8 @@ class icingaweb2::config {
   $logging_file         = $::icingaweb2::logging_file
   $logging_dir          = dirname($::icingaweb2::logging_file)
   $logging_level        = $::icingaweb2::logging_level
+  $logging_facility     = $::icingaweb2::logging_facility
+  $logging_application  = $::icingaweb2::logging_application
   $show_stacktraces     = $::icingaweb2::show_stacktraces
   $module_path          = $::icingaweb2::module_path
 
@@ -66,9 +68,11 @@ class icingaweb2::config {
     section_name => 'logging',
     target       => "${conf_dir}/config.ini",
     settings     => {
-      'log'   => $logging,
-      'file'  => $logging_file,
-      'level' => $logging_level
+      'log'         => $logging,
+      'file'        => $logging_file,
+      'level'       => $logging_level,
+      'facility'    => $logging_facility,
+      'application' => $logging_application,
     },
   }
 
