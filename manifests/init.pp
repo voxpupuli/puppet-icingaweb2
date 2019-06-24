@@ -106,7 +106,7 @@ class icingaweb2 (
   Enum['ini', 'db']                         $config_backend      = 'ini',
   String                                    $conf_user           = $icingaweb2::params::conf_user,
   Optional[String]                          $default_domain      = undef,
-  String                                    $cookie_path         = '/icingaweb2',
+  Optional[String]                          $cookie_path         = undef,
 ) inherits ::icingaweb2::params {
 
   anchor { '::icingaweb2::begin': }
