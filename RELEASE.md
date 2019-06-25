@@ -20,7 +20,7 @@ gem install github_changelog_generator
 
 Generate [CHANGELOG.md]
 ```bash
-github_changelog_generator -t <github-access-token> --future-release=v2.0.0
+github_changelog_generator -t <github-access-token> --future-release=v2.3.1
 ```
 
 ## 3. Version
@@ -31,7 +31,7 @@ Update the version number in `metadata.json`.
 Commit all changes to the `master` branch
 
 ``` bash
-VERSION=2.3.0
+VERSION=2.3.1
 
 git commit -v -a -m "Release version $VERSION"
 git push
