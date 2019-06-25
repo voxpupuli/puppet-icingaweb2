@@ -111,12 +111,14 @@ class icingaweb2::config {
     },
   }
 
-  icingaweb2::inisection {'config-cookie':
-    section_name => 'cookie',
-    target       => "${conf_dir}/config.ini",
-    settings     => {
-      'path'     => $cookie_path,
-    },
+  if $cookie_path {
+    icingaweb2::inisection {'config-cookie':
+      section_name => 'cookie',
+      target       => "${conf_dir}/config.ini",
+      settings     => {
+        'path'     => $cookie_path,
+      },
+    }
   }
 
   file { "${conf_dir}/modules":

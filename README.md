@@ -674,7 +674,7 @@ parameter. Default is dependent on the platform
 When using domain-aware authentication, you can set a default domain here.
 
 ##### `cookie_path`
-Set the Cookie validity path for the Icinga Web 2 sessions. Defaults to `/icingaweb2`
+Set the Cookie validity path for the Icinga Web 2 sessions.
 
 #### Class: `icingaweb2::module::monitoring`
 Manage the monitoring module. This module is mandatory for probably every setup.
@@ -1338,7 +1338,7 @@ See also [CHANGELOG.md]
 [Icinga Web 2]: https://www.icinga.com/products/icinga-web-2/
 
 [puppetlabs/apt]: https://github.com/puppetlabs/puppetlabs-apt
-[puppetlabs/yumrepo_core]: https://github.com/puppetlabs/puppetlabs-yumrepo_core 
+[puppetlabs/yumrepo_core]: https://github.com/puppetlabs/puppetlabs-yumrepo_core
 [puppet/zypprepo]: https://forge.puppet.com/puppet/zypprepo
 [puppetlabs/stdlib]: https://github.com/puppetlabs/puppetlabs-stdlib
 [puppetlabs/concat]: https://github.com/puppetlabs/puppetlabs-concat

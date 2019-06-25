@@ -17,9 +17,7 @@ describe('icingaweb2::config', :type => :class) do
           .with_settings({ 'show_stacktraces' => false, 'module_path' => '/usr/share/icingaweb2/modules', 'config_backend' => 'ini' })
         }
         it { is_expected.to contain_icingaweb2__inisection('config-themes') }
-        it { is_expected.to contain_icingaweb2__inisection('config-cookie')
-          .with_settings({ 'path' => '/icingaweb2' })
-        }
+        it { is_expected.not_to contain_icingaweb2__inisection('config-cookie') }
         it { is_expected.to contain_file('/var/log/icingaweb2')
           .with_ensure('directory')
           .with_mode('0750')
