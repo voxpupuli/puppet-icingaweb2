@@ -219,7 +219,7 @@ class {'icingaweb2':
   import_schema => true,
   db_type       => 'pgsql',
   db_host       => 'localhost',
-  db_port       => '5432',
+  db_port       => 5432,
   db_username   => 'icingaweb2',
   db_password   => 'icingaweb2',
   require       => Postgresql::Server::Db['icingaweb2'],
