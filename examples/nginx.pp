@@ -50,7 +50,9 @@ nginx::resource::location { 'icingaweb':
   ssl_only       => true,
 }
 
-include ::phpfpm
+class { 'phpfpm':
+  poold_purge => true,
+}
 
 phpfpm::pool { 'main': }
 
