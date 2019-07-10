@@ -96,6 +96,10 @@ define icingaweb2::module(
 
   case $install_method {
     'git': {
+      package { 'git':
+        ensure => $ensure,
+      }
+      
       vcsrepo { $module_dir:
         ensure   => $ensure_vcsrepo,
         provider => 'git',
