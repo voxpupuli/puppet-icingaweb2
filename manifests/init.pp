@@ -84,7 +84,7 @@
 #
 #
 class icingaweb2 (
-  Enum['file', 'syslog', 'none']            $logging             = 'file',
+  Enum['file', 'syslog', 'php', 'none']     $logging             = 'file',
   Stdlib::Absolutepath                      $logging_file        = '/var/log/icingaweb2/icingaweb2.log',
   Enum['ERROR', 'WARNING', 'INFO', 'DEBUG'] $logging_level       = 'INFO',
   Pattern[/user|local[0-7]/]                $logging_facility    = 'user',
