@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*logging*]
-#   Whether Icinga Web 2 should log to 'file' or to 'syslog'. Setting 'none' disables logging. Defaults to 'file'.
+#   Whether Icinga Web 2 should log to 'file', 'syslog' or 'php' (web server's error log). Setting 'none' disables logging. Defaults to 'file'.
 #
 # [*logging_file*]
 #   If 'logging' is set to 'file', this is the target log file. Defaults to '/var/log/icingaweb2/icingaweb2.log'.
