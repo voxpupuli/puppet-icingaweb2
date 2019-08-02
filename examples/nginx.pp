@@ -33,10 +33,10 @@ nginx::resource::location { 'icingaweb2_index':
   index_files    => [],
   fastcgi        => '127.0.0.1:9000',
   fastcgi_index  => 'index.php',
-  fastcgi_script => '/usr/share/icingaweb2/public/index.php',
   fastcgi_param  => {
     'ICINGAWEB_CONFIGDIR' => '/etc/icingaweb2',
     'REMOTE_USER'         => '$remote_user',
+    'SCRIPT_FILENAME'     => '/usr/share/icingaweb2/public/index.php',
   },
 }
 
