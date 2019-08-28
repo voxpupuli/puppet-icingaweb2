@@ -13,6 +13,13 @@
 # [*git_revision*]
 #   Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 #
+# [*install_method*]
+#   Install methods are `git`, `package` and `none` is supported as installation method. Defaults to `git`
+#
+# [*package_name*]
+#   Package name of the module. This setting is only valid in combination with the installation method `package`.
+#   Defaults to `icingaweb2-module-director`
+#
 # [*db_type*]
 #   Type of your database. Either `mysql` or `pgsql`. Defaults to `mysql`
 #
@@ -53,23 +60,25 @@
 #   Icinga 2 API password. This setting is only valid if `kickstart` is `true`.
 #
 class icingaweb2::module::director(
-  Enum['absent', 'present'] $ensure         = 'present',
-  String                    $git_repository = 'https://github.com/Icinga/icingaweb2-module-director.git',
-  Optional[String]          $git_revision   = undef,
-  Enum['mysql', 'pgsql']    $db_type        = 'mysql',
-  Optional[String]          $db_host        = undef,
-  Integer[1,65535]          $db_port        = 3306,
-  Optional[String]          $db_name        = undef,
-  Optional[String]          $db_username    = undef,
-  Optional[String]          $db_password    = undef,
-  Optional[String]          $db_charset     = 'utf8',
-  Optional[Boolean]         $import_schema  = false,
-  Optional[Boolean]         $kickstart      = false,
-  Optional[String]          $endpoint       = undef,
-  String                    $api_host       = 'localhost',
-  Integer[1,65535]          $api_port       = 5665,
-  Optional[String]          $api_username   = undef,
-  Optional[String]          $api_password   = undef,
+  Enum['absent', 'present']      $ensure         = 'present',
+  String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-director.git',
+  Optional[String]               $git_revision   = undef,
+  Enum['git', 'none', 'package'] $install_method = 'git',
+  Optional[String]               $package_name   = 'icingaweb2-module-director',
+  Enum['mysql', 'pgsql']         $db_type        = 'mysql',
+  Optional[String]               $db_host        = undef,
+  Integer[1,65535]               $db_port        = 3306,
+  Optional[String]               $db_name        = undef,
+  Optional[String]               $db_username    = undef,
+  Optional[String]               $db_password    = undef,
+  Optional[String]               $db_charset     = 'utf8',
+  Optional[Boolean]              $import_schema  = false,
+  Optional[Boolean]              $kickstart      = false,
+  Optional[String]               $endpoint       = undef,
+  String                         $api_host       = 'localhost',
+  Integer[1,65535]               $api_port       = 5665,
+  Optional[String]               $api_username   = undef,
+  Optional[String]               $api_password   = undef,
 ){
   $conf_dir        = $::icingaweb2::params::conf_dir
   $module_conf_dir = "${conf_dir}/modules/director"
@@ -140,6 +149,8 @@ class icingaweb2::module::director(
     ensure         => $ensure,
     git_repository => $git_repository,
     git_revision   => $git_revision,
+    install_method => $install_method,
+    package_name   => $package_name,
     settings       => merge($db_settings, $kickstart_settings),
   }
 }
