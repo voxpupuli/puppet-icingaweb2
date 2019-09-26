@@ -20,11 +20,15 @@ class icingaweb2::config {
   $logging_file         = $::icingaweb2::logging_file
   $logging_dir          = dirname($::icingaweb2::logging_file)
   $logging_level        = $::icingaweb2::logging_level
+  $logging_facility     = $::icingaweb2::logging_facility
+  $logging_application  = $::icingaweb2::logging_application
   $show_stacktraces     = $::icingaweb2::show_stacktraces
   $module_path          = $::icingaweb2::module_path
 
   $theme                = $::icingaweb2::theme
   $theme_disabled       = $::icingaweb2::theme_disabled
+
+  $cookie_path          = $::icingaweb2::cookie_path
 
   $import_schema        = $::icingaweb2::import_schema
   $schema_dir           = $::icingaweb2::params::schema_dir
@@ -67,12 +71,15 @@ class icingaweb2::config {
     ensure => present,
   }
 
-  icingaweb2::inisection {'logging':
-    target   => "${conf_dir}/config.ini",
-    settings => {
-      'log'   => $logging,
-      'file'  => $logging_file,
-      'level' => $logging_level
+  icingaweb2::inisection { 'config-logging':
+    section_name => 'logging',
+    target       => "${conf_dir}/config.ini",
+    settings     => {
+      'log'         => $logging,
+      'file'        => $logging_file,
+      'level'       => $logging_level,
+      'facility'    => $logging_facility,
+      'application' => $logging_application,
     },
   }
 
@@ -84,26 +91,39 @@ class icingaweb2::config {
   }
 
 
-  icingaweb2::inisection {'global':
-    target   => "${conf_dir}/config.ini",
-    settings => delete_undef_values($settings),
+  icingaweb2::inisection { 'config-global':
+    section_name => 'global',
+    target       => "${conf_dir}/config.ini",
+    settings     => delete_undef_values($settings),
   }
 
   if $default_domain {
-    icingaweb2::inisection {'authentication':
-      target   => "${conf_dir}/config.ini",
-      settings => {
+    icingaweb2::inisection { 'config-authentication':
+      section_name => 'authentication',
+      target       => "${conf_dir}/config.ini",
+      settings     => {
         'default_domain' => $default_domain,
       }
     }
   }
 
-  icingaweb2::inisection {'themes':
-    target   => "${conf_dir}/config.ini",
-    settings => {
+  icingaweb2::inisection { 'config-themes':
+    section_name => 'themes',
+    target       => "${conf_dir}/config.ini",
+    settings     => {
       'default'  => $theme,
       'disabled' => $theme_disabled,
     },
+  }
+
+  if $cookie_path {
+    icingaweb2::inisection {'config-cookie':
+      section_name => 'cookie',
+      target       => "${conf_dir}/config.ini",
+      settings     => {
+        'path'     => $cookie_path,
+      },
+    }
   }
 
   file { "${conf_dir}/modules":

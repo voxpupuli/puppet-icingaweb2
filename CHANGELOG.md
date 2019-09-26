@@ -1,5 +1,58 @@
 # Change Log
 
+## [v2.3.1](https://github.com/Icinga/puppet-icingaweb2/tree/v2.3.1) (2019-06-25)
+[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.3.0...v2.3.1)
+
+**Implemented enhancements:**
+
+- metadata: Raise requirements for puppetlabs modules [\#236](https://github.com/Icinga/puppet-icingaweb2/pull/236) ([lazyfrosch](https://github.com/lazyfrosch))
+
+**Fixed bugs:**
+
+- possible regression: new cookie path parameter may break existing installs [\#235](https://github.com/Icinga/puppet-icingaweb2/issues/235)
+- config: Let cookie\_path be undef by default [\#237](https://github.com/Icinga/puppet-icingaweb2/pull/237) ([lazyfrosch](https://github.com/lazyfrosch))
+
+## [v2.3.0](https://github.com/Icinga/puppet-icingaweb2/tree/v2.3.0) (2019-05-20)
+[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.2.0...v2.3.0)
+
+**Implemented enhancements:**
+
+- Support puppet 6 [\#220](https://github.com/Icinga/puppet-icingaweb2/issues/220)
+- add logging facility and application to config [\#230](https://github.com/Icinga/puppet-icingaweb2/pull/230) ([costela](https://github.com/costela))
+- Support Puppet 6 [\#226](https://github.com/Icinga/puppet-icingaweb2/pull/226) ([wdschei](https://github.com/wdschei))
+- add config section to adjust the cookie path [\#218](https://github.com/Icinga/puppet-icingaweb2/pull/218) ([XnS](https://github.com/XnS))
+
+**Fixed bugs:**
+
+- Parameter url of module::graphite has to be optional [\#223](https://github.com/Icinga/puppet-icingaweb2/issues/223)
+- Docs: icingaweb2::config::resource 'port' requires an integer, not a string [\#231](https://github.com/Icinga/puppet-icingaweb2/pull/231) ([dnsmichi](https://github.com/dnsmichi))
+
+**Closed issues:**
+
+- support puppet/stdlib \> 5.0 [\#232](https://github.com/Icinga/puppet-icingaweb2/issues/232)
+- Error logging\_path needs to be Stdlib::Absolutepath, got String instead [\#224](https://github.com/Icinga/puppet-icingaweb2/issues/224)
+- icingaweb2::module::puppetdb tests are failing [\#216](https://github.com/Icinga/puppet-icingaweb2/issues/216)
+
+**Merged pull requests:**
+
+- Set confdir in the rspec context \(fixes \#216\) [\#217](https://github.com/Icinga/puppet-icingaweb2/pull/217) ([johanfleury](https://github.com/johanfleury))
+- Avoid duplicate inisection declarations [\#215](https://github.com/Icinga/puppet-icingaweb2/pull/215) ([johanfleury](https://github.com/johanfleury))
+
+## [v2.2.0](https://github.com/Icinga/puppet-icingaweb2/tree/v2.2.0) (2018-05-14)
+[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.1.0...v2.2.0)
+
+**Implemented enhancements:**
+
+- 'icinga-icingaweb2' \(v2.1.0\) requires 'puppetlabs-vcsrepo' \(\>= 1.3.0 \< 2.0.0\) [\#212](https://github.com/Icinga/puppet-icingaweb2/issues/212)
+
+**Closed issues:**
+
+- Should be possible to specify a relative path for icingaweb2::module::fileshipper target [\#209](https://github.com/Icinga/puppet-icingaweb2/issues/209)
+
+**Merged pull requests:**
+
+- Add param for IDO DB charset [\#208](https://github.com/Icinga/puppet-icingaweb2/pull/208) ([marcofl](https://github.com/marcofl))
+
 ## [v2.1.0](https://github.com/Icinga/puppet-icingaweb2/tree/v2.1.0) (2018-01-23)
 [Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.0.1...v2.1.0)
 
@@ -10,19 +63,24 @@
 - Add graphite module [\#192](https://github.com/Icinga/puppet-icingaweb2/issues/192)
 - Update apache2 example [\#191](https://github.com/Icinga/puppet-icingaweb2/issues/191)
 - Add default backend in groups.ini [\#188](https://github.com/Icinga/puppet-icingaweb2/issues/188)
+- Links to apache2 and nginx examples doesn't work [\#185](https://github.com/Icinga/puppet-icingaweb2/issues/185)
 - Add vSphere module [\#183](https://github.com/Icinga/puppet-icingaweb2/issues/183)
 - Add fileshipper module [\#182](https://github.com/Icinga/puppet-icingaweb2/issues/182)
 
 **Fixed bugs:**
 
+- Setting up icingaweb2 with postgresql on a different port than 5432 leads to an error [\#195](https://github.com/Icinga/puppet-icingaweb2/issues/195)
 - protected\_customvars handled incorrectly? [\#206](https://github.com/Icinga/puppet-icingaweb2/issues/206)
 - puppetdb: issue if host does not resolve to puppetdb [\#197](https://github.com/Icinga/puppet-icingaweb2/issues/197)
-- Setting up icingaweb2 with postgresql on a different port than 5432 leads to an error [\#195](https://github.com/Icinga/puppet-icingaweb2/issues/195)
 
 **Merged pull requests:**
 
 - added domain attribute to icingaweb2::config::groupbackend [\#205](https://github.com/Icinga/puppet-icingaweb2/pull/205) ([spaolo](https://github.com/spaolo))
 - added domain attribute to icingaweb2::config::authmethod [\#204](https://github.com/Icinga/puppet-icingaweb2/pull/204) ([spaolo](https://github.com/spaolo))
+- Provide specific port to mysql and postgresql [\#196](https://github.com/Icinga/puppet-icingaweb2/pull/196) ([Faffnir](https://github.com/Faffnir))
+- Rename default administrative user to 'icingaadmin' [\#194](https://github.com/Icinga/puppet-icingaweb2/pull/194) ([dnsmichi](https://github.com/dnsmichi))
+- Add missing curly bracket and trailing commas [\#189](https://github.com/Icinga/puppet-icingaweb2/pull/189) ([rgevaert](https://github.com/rgevaert))
+- Fix protected\_customvars bugs and papercuts [\#186](https://github.com/Icinga/puppet-icingaweb2/pull/186) ([olasd](https://github.com/olasd))
 
 ## [v2.0.1](https://github.com/Icinga/puppet-icingaweb2/tree/v2.0.1) (2017-12-28)
 [Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.0.0...v2.0.1)
@@ -30,15 +88,10 @@
 **Implemented enhancements:**
 
 - Support fcgi as example for apache [\#201](https://github.com/Icinga/puppet-icingaweb2/issues/201)
-- Links to apache2 and nginx examples doesn't work [\#185](https://github.com/Icinga/puppet-icingaweb2/issues/185)
 
 **Merged pull requests:**
 
 - fix \#201 Suppoet fcgi as example for apache [\#202](https://github.com/Icinga/puppet-icingaweb2/pull/202) ([lbetz](https://github.com/lbetz))
-- Provide specific port to mysql and postgresql [\#196](https://github.com/Icinga/puppet-icingaweb2/pull/196) ([Faffnir](https://github.com/Faffnir))
-- Rename default administrative user to 'icingaadmin' [\#194](https://github.com/Icinga/puppet-icingaweb2/pull/194) ([dnsmichi](https://github.com/dnsmichi))
-- Add missing curly bracket and trailing commas [\#189](https://github.com/Icinga/puppet-icingaweb2/pull/189) ([rgevaert](https://github.com/rgevaert))
-- Fix protected\_customvars bugs and papercuts [\#186](https://github.com/Icinga/puppet-icingaweb2/pull/186) ([olasd](https://github.com/olasd))
 - Fix typos on README.md [\#184](https://github.com/Icinga/puppet-icingaweb2/pull/184) ([Tokynet](https://github.com/Tokynet))
 
 ## [v2.0.0](https://github.com/Icinga/puppet-icingaweb2/tree/v2.0.0) (2017-10-11)

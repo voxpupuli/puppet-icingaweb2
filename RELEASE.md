@@ -1,5 +1,5 @@
 # Release Workflow
-Before submitting a new release, make sure all relevant pull requests and local branches have been merged to the 
+Before submitting a new release, make sure all relevant pull requests and local branches have been merged to the
 `master` branch. All tests must pass before a release is tagged.
 
 
@@ -20,25 +20,27 @@ gem install github_changelog_generator
 
 Generate [CHANGELOG.md]
 ```bash
-github_changelog_generator -t <github-access-token> --future-release=v2.0.0
+github_changelog_generator -t <github-access-token> --future-release=v2.3.1
 ```
 
 ## 3. Version
-Version numbers are incremented regarding the [SemVer 1.0.0] specification. 
+Version numbers are incremented regarding the [SemVer 1.0.0] specification.
 Update the version number in `metadata.json`.
 
 ## 4. Git Tag
 Commit all changes to the `master` branch
 
 ``` bash
-git commit -v -a -m "Release version <VERSION>"
+VERSION=2.3.1
+
+git commit -v -a -m "Release version $VERSION"
 git push
 ```
 
 Tag the release
 
 ``` bash
-git tag -m "Version <VERSION>" v<VERSION>
+git tag -m "Version $VERSION" "v$VERSION"
 ```
 
 Push tags

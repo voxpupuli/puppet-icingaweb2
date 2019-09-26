@@ -4,6 +4,7 @@ fixtures:
     concat: "puppetlabs/concat"
     vcsrepo: "puppetlabs/vcsrepo"
     apt: "puppetlabs/apt"
+    yumrepo: "puppetlabs/yumrepo_core"
     zypprepo: "puppet/zypprepo"
   symlinks:
     icingaweb2: "#{source_dir}"

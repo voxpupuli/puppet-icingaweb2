@@ -48,9 +48,10 @@ This module depends on
 * [puppetlabs/vcsrepo] >= 1.3.0
 * [puppetlabs/concat] >= 2.0.1
 
-Depending on your setup following modules may also be required:
+Depending on your setup the following modules may also be required:
 
 * [puppetlabs/apt] >= 2.0.0
+* [puppetlabs/yumrepo_core] >= 1.0.0
 * [puppet/zypprepo] >= 2.0.0
 
 ### Limitations
@@ -121,7 +122,7 @@ icingaweb2::config::resource{'my-sql':
   type        => 'db',
   db_type     => 'mysql',
   host        => 'localhost',
-  port        => '3306',
+  port        => 3306,
   db_name     => 'icingaweb2',
   db_username => 'root',
   db_password => 'supersecret',
@@ -218,7 +219,7 @@ class {'icingaweb2':
   import_schema => true,
   db_type       => 'pgsql',
   db_host       => 'localhost',
-  db_port       => '5432',
+  db_port       => 5432,
   db_username   => 'icingaweb2',
   db_password   => 'icingaweb2',
   require       => Postgresql::Server::Db['icingaweb2'],
@@ -315,7 +316,7 @@ This module is mandatory for almost every setup. It connects your Icinga Web int
 history information are queried through the IDO database. Actions such as `Check Now`, `Set Downtime` or `Acknowledge`
 are send to the Icinga 2 API.
 
-Requirements: 
+Requirements:
 
 * IDO feature in Icinga 2 (MySQL or PostgreSQL)
 * `ApiUser` object in Icinga 2 with proper permissions
@@ -342,7 +343,7 @@ class {'icingaweb2::module::monitoring':
 #### Director
 The Director is used to manage Icinga 2 configuration through the web interface Icinga Web 2. The module requires its
 database. The module is installed by cloning the git repository, therefore you need to set `git_revision` to either a
-git branch or tag, eg. `master` or `v1.3.2`. 
+git branch or tag, eg. `master` or `v1.3.2`.
 
 The Director has some dependencies that you have to fulfill manually currently:
 * Icinga 2 (>= 2.6.0)
@@ -423,7 +424,7 @@ class {'::icingaweb2::module::puppetdb':
 #### Business Process
 The Business Process module allows you to visualize and monitor business processes based on hosts and services monitored
 by Icinga 2. The module is installed by cloning the git repository, therefore you need to set `git_revision` to either a
-git branch or tag, eg. `master` or `v2.1.0`. 
+git branch or tag, eg. `master` or `v2.1.0`.
 
 This module has the following dependecies:
 * Icinga Web 2 (>= 2.4.1)
@@ -441,7 +442,7 @@ class { 'icingaweb2::module::businessprocess':
 #### Cube
 The Cube module is like a extended filtering tool. It visualizes host statistics (count and health state) grouped by
 various custom variables in multiple dimensions. The module is installed by cloning the git repository, therefore you
-need to set `git_revision` to either a git branch or tag, eg. `master` or `v1.0.0`. 
+need to set `git_revision` to either a git branch or tag, eg. `master` or `v1.0.0`.
 
 Example:
 ``` puppet
@@ -454,7 +455,7 @@ class { 'icingaweb2::module::cube':
 The GenericTTS module matches ticket pattern and replaces them with a link to your ticketsystem. The module is installed
 by cloning the git repository, therefore you need to set `git_revision` to either a git branch or tag, eg. `master`
 or `v2.0.0`.
- 
+
 Example:
 ``` puppet
 class { 'icingaweb2::module::generictts':
@@ -469,7 +470,7 @@ class { 'icingaweb2::module::generictts':
 ```
 
 #### Fileshipper
-The main purpose of this module is to extend Icinga Director using some of it's exported hooks. Based on them it offers 
+The main purpose of this module is to extend Icinga Director using some of it's exported hooks. Based on them it offers
 an `Import Source` able to deal with `CSV`, `JSON`, `YAML` and `XML` files. It also offers the possibility to deploy
 hand-crafted Icinga 2 config files through the Icinga Director.
 
@@ -604,6 +605,12 @@ If 'logging' is set to `file`, this is the target log file. Defaults to `/var/lo
 ##### `logging_level`
 Logging verbosity. Possible values are `ERROR`, `WARNING`, `INFO` and `DEBUG`. Defaults to `INFO`
 
+##### `logging_facility`
+Logging facilty for syslog. Allowed values are `user` and `local0` through `local7`. Defaults to `user`
+
+##### `logging_application`
+Logging application name for syslog. Defaults to `icingaweb2`
+
 ##### `show_stacktraces`
 Whether to display stacktraces in the web interface or not. Defaults to `false`
 
@@ -666,6 +673,9 @@ parameter. Default is dependent on the platform
 ##### `default_domain`
 When using domain-aware authentication, you can set a default domain here.
 
+##### `cookie_path`
+Set the Cookie validity path for the Icinga Web 2 sessions.
+
 #### Class: `icingaweb2::module::monitoring`
 Manage the monitoring module. This module is mandatory for probably every setup.
 
@@ -695,6 +705,9 @@ Username for IDO DB connection.
 
 ##### `ido_db_password`
 Password for IDO DB connection.
+
+##### `ido_db_charset`
+The character set to use for the database connection.
 
 ##### `commandtransports`
 A hash of command transports.
@@ -741,6 +754,9 @@ Username for DB connection.
 
 ##### `db_password`
 Password for DB connection.
+
+##### `ido_db_charset`
+The character set to use for the database connection.
 
 ##### `import_schema`
 Import database schema. Defaults to `false`
@@ -820,7 +836,7 @@ A hash of ticketsystems. The hash expects a `patten` and a `url` for each ticket
 the ticket ID, eg. `/#([0-9]{4,6})/`. Place the ticket ID in the URL, eg. `https://my.ticket.system/tickets/id=$1`
 
 Example:
-``` puppet 
+``` puppet
 ticketsystems => {
   system1 => {
     pattern => '/#([0-9]{4,6})/',
@@ -931,8 +947,8 @@ Handles the installation of the Icinga Web 2 package.
 Stores all default parameters for the Icinga Web 2 installation.
 
 #### Class: `icingaweb2::repo`
-Installs the [packages.icinga.com] repository. Depending on your operating system [puppetlabs/apt] or
-[puppet/zypprepo] are required.
+Installs the [packages.icinga.com] repository. Depending on your operating system and Puppet version [puppetlabs/apt],
+[puppetlabs/yumrepo_core], or [puppet/zypprepo] is required.
 
 ### Public Defined Types
 
@@ -1138,7 +1154,7 @@ A hash with the module settings. Multiple configuration files with ini sections 
 
 Example:
 
-``` puppet 
+``` puppet
  $conf_dir        = $::icingaweb2::params::conf_dir
  $module_conf_dir = "${conf_dir}/modules/mymodule"
 
@@ -1322,6 +1338,7 @@ See also [CHANGELOG.md]
 [Icinga Web 2]: https://www.icinga.com/products/icinga-web-2/
 
 [puppetlabs/apt]: https://github.com/puppetlabs/puppetlabs-apt
+[puppetlabs/yumrepo_core]: https://github.com/puppetlabs/puppetlabs-yumrepo_core
 [puppet/zypprepo]: https://forge.puppet.com/puppet/zypprepo
 [puppetlabs/stdlib]: https://github.com/puppetlabs/puppetlabs-stdlib
 [puppetlabs/concat]: https://github.com/puppetlabs/puppetlabs-concat
