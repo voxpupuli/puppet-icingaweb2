@@ -45,6 +45,9 @@
 # [*ldap_encryption*]
 #   Type of encryption to use: none (default), starttls, ldaps. Only valid if `type` is `ldap`.
 #
+# [*ldap_timeout*]
+#   Timeout for the ldap connection, defaults to 5.
+#
 # === Examples
 #
 # Create a 'db' resource:
@@ -74,6 +77,7 @@ define icingaweb2::config::resource(
   Optional[String]                            $ldap_bind_dn    = undef,
   Optional[String]                            $ldap_bind_pw    = undef,
   Optional[Enum['none', 'starttls', 'ldaps']] $ldap_encryption = 'none',
+  Optional[Integer]                           $ldap_timeout    = 5,
 ) {
 
   $conf_dir = $::icingaweb2::params::conf_dir
@@ -100,6 +104,7 @@ define icingaweb2::config::resource(
         'bind_dn'    => $ldap_bind_dn,
         'bind_pw'    => $ldap_bind_pw,
         'encryption' => $ldap_encryption,
+        'timeout'    => $ldap_timeout,
       }
     }
     default: {
