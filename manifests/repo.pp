@@ -77,7 +77,7 @@ class icingaweb2::repo {
         exec { 'import icinga gpg key':
           path      => '/bin:/usr/bin:/sbin:/usr/sbin',
           command   => 'rpm --import /etc/pki/GPG-KEY-icinga',
-          unless    => "rpm -q gpg-pubkey-`echo $(gpg --throw-keyids < /etc/pki/GPG-KEY-icinga) | cut --characters=11-18 | tr [A-Z] [a-z]`",
+          unless    => 'rpm -q gpg-pubkey-`echo $(gpg --throw-keyids < /etc/pki/GPG-KEY-icinga) | cut --characters=11-18 | tr [A-Z] [a-z]',
           require   => File['/etc/pki/GPG-KEY-icinga'],
           logoutput => 'on_failure',
         }
