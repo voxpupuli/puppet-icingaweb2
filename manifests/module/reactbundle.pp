@@ -14,9 +14,9 @@
 #   Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
 #
 class icingaweb2::module::reactbundle(
+  String                    $git_revision,
   Enum['absent', 'present'] $ensure         = 'present',
   String                    $git_repository = 'https://github.com/Icinga/icingaweb2-module-reactbundle.git',
-  String                    $git_revision   = undef,
 ){
 
   icingaweb2::module { 'reactbundle':
