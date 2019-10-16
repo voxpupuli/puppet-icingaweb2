@@ -70,6 +70,7 @@ class icingaweb2::module::director(
   Integer[1,65535]          $api_port       = 5665,
   Optional[String]          $api_username   = undef,
   Optional[String]          $api_password   = undef,
+  Optional[Boolean]         $service        = false,
 ){
   $conf_dir        = $::icingaweb2::params::conf_dir
   $module_conf_dir = "${conf_dir}/modules/director"
@@ -134,6 +135,22 @@ class icingaweb2::module::director(
     }
   } else {
     $kickstart_settings = {}
+  }
+
+  if $service {
+    user { 'icingadirector':
+      home       => '/var/lib/icingadirector',
+      groups     => ['icingaweb2'],
+      managehome => true,
+      shell      => '/bin/false',
+    }
+    -> systemd::unit_file { 'icinga-director.service':
+      source => "puppet:///modules/${module_name}/director/icinga-director.service",
+    }
+    ~> service {'icinga-director':
+      ensure  => 'running',
+      require => Exec['director-kickstart']
+    }
   }
 
   icingaweb2::module {'director':
