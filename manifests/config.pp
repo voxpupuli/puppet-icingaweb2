@@ -122,11 +122,13 @@ class icingaweb2::config {
   }
 
   file { "${conf_dir}/modules":
-    ensure => 'directory'
+    ensure => 'directory',
+    mode   => '2770',
   }
 
   file { "${conf_dir}/enabledModules":
-    ensure => 'directory'
+    ensure => 'directory',
+    mode   => '2770',
   }
 
   if $import_schema or $config_backend == 'db' {
