@@ -12,13 +12,13 @@
 #   The name of the resource defined in resources.ini.
 #
 # [*ldap_user_class*]
-#   LDAP user class. Only valid if `backend` is `ldap`.
+#   LDAP user class. Only valid if `backend` is `ldap` or `msldap`.
 #
 # [*ldap_user_name_attribute*]
-#   LDAP attribute which contains the username. Only valid if `backend` is `ldap`.
+#   LDAP attribute which contains the username. Only valid if `backend` is `ldap` or `msldap`.
 #
 # [*ldap_filter*]
-#   LDAP search filter. Only valid if `backend` is `ldap`.
+#   LDAP search filter. Only valid if `backend` is `ldap` or `msldap`.
 #
 # [*ldap_base_dn*]
 #   LDAP base DN. Only valid if `backend` is `ldap`.
@@ -70,7 +70,16 @@ define icingaweb2::config::authmethod(
         'domain'              => $domain,
       }
     }
-    'msldap', 'db': {
+    'msldap': {
+      $settings = {
+        'backend'             => $backend,
+        'resource'            => $resource,
+        'user_class'          => $ldap_user_class,
+        'user_name_attribute' => $ldap_user_name_attribute,
+        'filter'              => $ldap_filter,
+      }
+    }
+    'db': {
       $settings = {
         'backend'  => $backend,
         'resource' => $resource,
