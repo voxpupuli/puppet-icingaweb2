@@ -52,6 +52,9 @@
 # [*api_password*]
 #   Icinga 2 API password. This setting is only valid if `kickstart` is `true`.
 #
+# [*service*]
+#   Manage and start the icingadirector systemd service. Defaults to `false`
+#
 class icingaweb2::module::director(
   Enum['absent', 'present'] $ensure         = 'present',
   String                    $git_repository = 'https://github.com/Icinga/icingaweb2-module-director.git',
