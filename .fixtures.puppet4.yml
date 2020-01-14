@@ -13,5 +13,6 @@ fixtures:
       repo: puppetlabs/apt
       ref: 6.3.0
     zypprepo: puppet/zypprepo
+    systemd: camptocamp/systemd
   symlinks:
     icingaweb2: "#{source_dir}"
