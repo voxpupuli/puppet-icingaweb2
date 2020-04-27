@@ -1,22 +1,24 @@
-# == Class: icingaweb2::module::cube
+# @summary
+#   Installs and enables the cube module.
 #
-# Install and enable the cube module.
+# @param [Enum['absent', 'present']] ensure
+#   Enable or disable module.
 #
-# === Parameters
+# @param [String] git_repository
+#   Set a git repository URL.
 #
-# [*ensure*]
-#   Enable or disable module. Defaults to `present`
-#
-# [*git_repository*]
-#   Set a git repository URL. Defaults to github.
-#
-# [*git_revision*]
+# @param [Optional[String]] git_revision
 #   Set either a branch or a tag name, eg. `master` or `v1.0.0`.
 #
+# @example
+#   class { 'icingaweb2::module::cube':
+#     git_revision => 'v1.0.0'
+#   }
+#
 class icingaweb2::module::cube(
-  Enum['absent', 'present'] $ensure         = 'present',
-  String                    $git_repository = 'https://github.com/Icinga/icingaweb2-module-cube.git',
-  Optional[String]          $git_revision   = undef,
+  String                      $git_repository,
+  Enum['absent', 'present']   $ensure         = 'present',
+  Optional[String]            $git_revision   = undef,
 ){
   icingaweb2::module {'cube':
     ensure         => $ensure,

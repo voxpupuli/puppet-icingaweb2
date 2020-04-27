@@ -1,22 +1,19 @@
-# == Class: icingaweb2::module::incubator
+# @summary
+#   Installs and enables the incubator module.
 #
-# Install and enable the incubator module.
-#
-# === Parameters
-#
-# [*ensure*]
+# @param [Enum['absent', 'present']] ensure
 #   Enable or disable module. Defaults to `present`
 #
-# [*git_repository*]
+# @param [String] git_repository
 #   Set a git repository URL. Defaults to github.
 #
-# [*git_revision*]
+# @param [String] git_revision
 #   Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
 #
 class icingaweb2::module::incubator(
-  String                    $git_revision,
-  Enum['absent', 'present'] $ensure         = 'present',
-  String                    $git_repository = 'https://github.com/Icinga/icingaweb2-module-incubator.git',
+  String                      $git_repository,
+  String                      $git_revision,
+  Enum['absent', 'present']   $ensure         = 'present',
 ){
 
   icingaweb2::module { 'incubator':

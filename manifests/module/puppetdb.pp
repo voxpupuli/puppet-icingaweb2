@@ -1,41 +1,63 @@
-# == Define: icingaweb2::module::puppetdb
+# @summary
+# Installs and configures the puppetdb module.
 #
-# Install and configure the puppetdb module.  It is possible to let the module
-# to configure the ssl certificates to connect to one or more PuppetDBs.
+# @param [Enum['absent', 'present']] ensure
+#   Enable or disable module.
 #
-# === Parameters
+# @param [String] git_repository
+#   Set a git repository URL.
 #
-# [*ensure*]
-#   Enable or disable module. Defaults to `present`
-#
-# [*git_repository*]
-#   Set a git repository URL. Defaults to github.
-#
-# [*git_revision*]
+# @param [Optional[String]] git_revision
 #   Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 #
-# [*ssl*]
-#   How to set up ssl certificates. To copy certificates from the local puppet installation, use `puppet`. Defaults to
-#   `none`
+# @param [Enum['none', 'puppet']] ssl
+#   How to set up ssl certificates. To copy certificates from the local puppet installation, use `puppet`.
 #
-# [*host*]
+# @param [Optional[Stdlib::Host]] host
 #   Hostname of the server where PuppetDB is running. The `ssl` parameter needs to be set to `puppet`.
 #
-# [*certificates*]
+# @param [Hash] certificates
 #   Hash with icingaweb2::module::puppetdb::certificate resources.
 #
+# @note The [PuppetDB module documentation](https://www.icinga.com/docs/director/latest/puppetdb/doc/01-Installation/).
+#
+# @example Set up the PuppetDB module and configure two custom SSL keys:
+#   $certificates = {
+#     'pupdb1' => {
+#       :ssl_key => '-----BEGIN RSA PRIVATE KEY----- abc...',
+#       :ssl_cacert => '-----BEGIN RSA PRIVATE KEY----- def...',
+#      },
+#     'pupdb2' => {
+#       :ssl_key => '-----BEGIN RSA PRIVATE KEY----- zyx...',
+#       :ssl_cacert => '-----BEGIN RSA PRIVATE KEY----- wvur...',
+#     },
+#   }
+#   
+#   class { '::icingaweb2::module::puppetdb':
+#     git_revision => 'master',
+#     ssl          => 'none',
+#     certificates => $certificates,
+#   }
+#   
+# @example Set up the PuppetDB module and configure the hosts SSL key to connect to the PuppetDB host:
+#   class {'::icingaweb2::module::puppetdb':
+#     git_revision => 'master',
+#     ssl          => 'puppet',
+#     host         => 'puppetdb.example.com',
+#   }
+#
 class icingaweb2::module::puppetdb(
+  String                    $git_repository,
   Enum['absent', 'present'] $ensure         = 'present',
-  String                    $git_repository = 'https://github.com/Icinga/icingaweb2-module-puppetdb.git',
   Optional[String]          $git_revision   = undef,
   Enum['none', 'puppet']    $ssl            = 'none',
-  Optional[String]          $host           = undef,
+  Optional[Stdlib::Host]    $host           = undef,
   Hash                      $certificates   = {},
 ){
-  $conf_dir   = "${::icingaweb2::params::conf_dir}/modules/puppetdb"
+  $conf_dir   = "${::icingaweb2::globals::conf_dir}/modules/puppetdb"
   $ssl_dir    = "${conf_dir}/ssl"
   $conf_user  = $::icingaweb2::conf_user
-  $conf_group = $::icingaweb2::params::conf_group
+  $conf_group = $::icingaweb2::conf_group
 
   file { $ssl_dir:
     ensure  => 'directory',

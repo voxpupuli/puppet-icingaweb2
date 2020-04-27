@@ -1,26 +1,49 @@
-# == Class: icingaweb2::module::elasticsearch
+# @summary
+#   The Elasticsearch module displays events from data stored in Elasticsearch.
 #
-# The Elasticsearch module displays events from data stored in Elasticsearch.
+# @param [Enum['absent', 'present']] ensure
+#   Enable or disable module.
 #
-# === Parameters
+# @param [String] git_repository
+#   Set a git repository URL.
 #
-# [*ensure*]
-#   Enable or disable module. Defaults to `present`
+# @param [Optional[String]] git_revision
+#   Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 #
-# [*instances*]
+# @param [Optional[Hash]] instances
 #   A hash that configures one or more Elasticsearch instances that this module connects to. The defined type
 #   `icingaweb2::module::elasticsearch::instance` is used to create the instance configuration.
 #
-# [*eventtypes*]
+# @param [Optional[Hash]] eventtypes
 #   A hash oft ypes of events that should be displayed. Event types are always connected to instances. The defined type
 #   `icingaweb2::module::elasticsearch::eventtype` is used to create the event types.
 #
+# @example
+#   class { 'icingaweb2::module::elasticsearch':
+#     git_revision => 'v0.9.0',
+#     instances    => {
+#       'elastic'  => {
+#         uri      => 'http://localhost:9200',
+#         user     => 'foo',
+#         password => 'bar',
+#       }
+#     },
+#     eventtypes   => {
+#       'filebeat' => {
+#         instance => 'elastic',
+#         index    => 'filebeat-*',
+#         filter   => 'beat.hostname={host.name}',
+#         fields   => 'input_type, source, message',
+#       }
+#     }
+#   }
+#
 class icingaweb2::module::elasticsearch(
-  Enum['absent', 'present'] $ensure         = 'present',
-  String                    $git_repository = 'https://github.com/Icinga/icingaweb2-module-elasticsearch.git',
-  Optional[String]          $git_revision   = undef,
-  Optional[Hash]            $instances      = undef,
-  Optional[Hash]            $eventtypes     = undef,
+  String                      $git_repository,
+  Enum['absent', 'present']   $ensure         = 'present',
+  Optional[String]            $git_revision   = undef,
+  Optional[Hash]              $instances      = undef,
+  Optional[Hash]              $eventtypes     = undef,
 ){
 
   if $instances {

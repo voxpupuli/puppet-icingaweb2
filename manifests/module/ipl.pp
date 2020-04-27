@@ -1,22 +1,19 @@
-# == Class: icingaweb2::module::ipl
+# @summary
+#   Installs and enables the ipl module.
 #
-# Install and enable the ipl module.
+# @param [Enum['absent', 'present']] ensure
+#   Enable or disable module.
 #
-# === Parameters
+# @param [String] git_repository
+#   Set a git repository URL.
 #
-# [*ensure*]
-#   Enable or disable module. Defaults to `present`
-#
-# [*git_repository*]
-#   Set a git repository URL. Defaults to github.
-#
-# [*git_revision*]
+# @param [String] git_revision
 #   Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
 #
 class icingaweb2::module::ipl(
-  String                    $git_revision,
-  Enum['absent', 'present'] $ensure         = 'present',
-  String                    $git_repository = 'https://github.com/Icinga/icingaweb2-module-ipl.git',
+  String                      $git_repository,
+  String                      $git_revision,
+  Enum['absent', 'present']   $ensure         = 'present',
 ){
 
   icingaweb2::module { 'ipl':

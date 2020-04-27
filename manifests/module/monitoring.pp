@@ -1,46 +1,66 @@
-# == Class: icingaweb2::module::monitoring
+# @summary
+#   Manages the monitoring module. This module is mandatory for probably every setup.
 #
-# Manage the monitoring module. This module is mandatory for probably every setup.
+# @param [Enum['absent', 'present']] ensure
+#   Enable or disable module.
 #
-# === Parameters
+# @param [Variant[String, Array[String]]] protected_customvars
+#   Custom variables in Icinga 2 may contain sensible information. Set patterns for custom variables
+#   that should be hidden in the web interface.
 #
-# [*ensure*]
-#   Enable or disable module. Defaults to `present`
+# @param [Enum['mysql', 'pgsql']] ido_type
+#   Type of your IDO database. Either `mysql` or `pgsql`.
 #
-# [*protected_customvars*]
-#   Custom variables in Icinga 2 may contain sensible information. Set patterns for custom variables that should be
-#   hidden in the web interface. Defaults to `*pw*,*pass*,community`
-#
-# [*ido_type*]
-#   Type of your IDO database. Either `mysql` or `pgsql`. Defaults to `mysql`
-#
-# [*ido_host*]
+# @param [Optional[Stdlib::Host]] ido_host
 #   Hostname of the IDO database.
 #
-# [*ido_port*]
-#   Port of the IDO database. Defaults to `3306`
+# @param [Stdlib::Port] ido_port
+#   Port of the IDO database.
 #
-# [*ido_db_name*]
+# @param [Optional[String]] ido_db_name
 #   Name of the IDO database.
 #
-# [*ido_db_username*]
+# @param [Optional[String]] ido_db_username
 #   Username for IDO DB connection.
 #
-# [*ido_db_password*]
+# @param [Optional[String]] ido_db_password
 #   Password for IDO DB connection.
 #
-# [*ido_db_charset*]
+# @param [Optional[String]] ido_db_charset
 #   The character set to use for the database connection.
 #
-# [*commandtransports*]
+# @param [Hash] commandtransports
 #   A hash of command transports.
+#
+# @note At first have a look at the [Monitoring module documentation](https://www.icinga.com/docs/icingaweb2/latest/modules/monitoring/doc/01-About/).
+#
+# @example This module is mandatory for almost every setup. It connects your Icinga Web interface to the Icinga 2 core. Current and history information are queried through the IDO database. Actions such as `Check Now`, `Set Downtime` or `Acknowledge` are send to the Icinga 2 API.
+#
+# Requirements:
+#   * IDO feature in Icinga 2 (MySQL or PostgreSQL)
+#   * `ApiUser` object in Icinga 2 with proper permissions
+#
+#   class {'icingaweb2::module::monitoring':
+#     ido_host        => 'localhost',
+#     ido_db_type     => 'mysql',
+#     ido_db_name     => 'icinga2',
+#     ido_db_username => 'icinga2',
+#     ido_db_password => 'supersecret',
+#     commandtransports => {
+#       icinga2 => {
+#         transport => 'api',
+#         username  => 'icingaweb2',
+#         password  => 'supersecret',
+#       }
+#     }
+#   }
 #
 class icingaweb2::module::monitoring(
   Enum['absent', 'present']      $ensure               = 'present',
   Variant[String, Array[String]] $protected_customvars = ['*pw*', '*pass*', 'community'],
   Enum['mysql', 'pgsql']         $ido_type             = 'mysql',
-  Optional[String]               $ido_host             = undef,
-  Integer[1,65535]               $ido_port             = 3306,
+  Optional[Stdlib::Host]         $ido_host             = undef,
+  Stdlib::Port                   $ido_port             = 3306,
   Optional[String]               $ido_db_name          = undef,
   Optional[String]               $ido_db_username      = undef,
   Optional[String]               $ido_db_password      = undef,
@@ -48,7 +68,7 @@ class icingaweb2::module::monitoring(
   Hash                           $commandtransports    = undef,
 ){
 
-  $conf_dir        = $::icingaweb2::params::conf_dir
+  $conf_dir        = $::icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/monitoring"
 
   case $::osfamily {
