@@ -66,6 +66,8 @@ Other operating systems or versions may work but have not been tested.
 
 ## Usage
 
+NOTE: If you plan to use additional modules from git, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in `extra_packages`.
+
 The usage of this module isn't simple. That depends on how Icinga Web 2 is implemented. Monitoring is here just a module in a framework. All basic stuff like authentication, logging or authorization is done by this framework. To store user and usergroups in a MySQL database, the database has to exist:
 ```
 mysql::db { 'icingaweb2':
@@ -84,6 +86,7 @@ class {'icingaweb2':
   db_username    => 'icingaweb2',
   db_password    => 'supersecret',
   config_backend => 'db',
+  extra_packages => [ 'git' ],
   require        => Mysql::Db['icingaweb2'],
 }
 ```

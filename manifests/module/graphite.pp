@@ -1,6 +1,8 @@
 # @summary
 #   The Graphite module draws graphs out of time series data stored in Graphite.
 #
+# @note If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
+#
 # @param [Enum['absent', 'present']] ensure
 #   Enables or disables module.
 #

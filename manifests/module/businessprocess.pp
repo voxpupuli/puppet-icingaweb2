@@ -1,6 +1,8 @@
 # @summary
 #   Installs and enables the businessprocess module.
 #
+# @note If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
+#
 # @param [Enum['absent', 'present']] ensure
 #   Enable or disable module.
 #

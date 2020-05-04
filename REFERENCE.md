@@ -347,7 +347,7 @@ Data type: `String`
 
 Installs and enables the businessprocess module.
 
-* **Note** Check out the [Business Process mdoule documentation](https://www.icinga.com/docs/businessprocess/latest/) for requirements.
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 
 #### Examples
 
@@ -389,6 +389,8 @@ Default value: `undef`
 
 Installs and enables the cube module.
 
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
+
 #### Examples
 
 ##### 
@@ -429,7 +431,7 @@ Default value: `undef`
 
 Installs and configures the director module.
 
-* **Note** Please checkout the [Director module documentation](https://www.icinga.com/docs/director/latest/) for requirements.
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 
 #### Examples
 
@@ -609,6 +611,8 @@ Default value: 'present'
 
 The Elasticsearch module displays events from data stored in Elasticsearch.
 
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
+
 #### Examples
 
 ##### 
@@ -694,7 +698,7 @@ Default value: `undef`
     }
   }
 
-* **Note** To understand this modulei, please read [Fileshipper module documentation](https://www.icinga.com/docs/director/latest/fileshipper/doc/02-Installation/).
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 
 #### Parameters
 
@@ -741,6 +745,8 @@ Default value: {}
 ### icingaweb2::module::generictts
 
 Installs and enables the generictts module.
+
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 
 #### Examples
 
@@ -798,7 +804,7 @@ Default value: {}
 
 The Graphite module draws graphs out of time series data stored in Graphite.
 
-* **Note** Here the official [Graphite module documentation](https://www.icinga.com/docs/graphite/latest/) can be found.
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 
 #### Examples
 
@@ -881,6 +887,8 @@ Default value: `undef`
 
 Installs and enables the incubator module.
 
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
+
 #### Parameters
 
 The following parameters are available in the `icingaweb2::module::incubator` class.
@@ -908,6 +916,8 @@ Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
 ### icingaweb2::module::ipl
 
 Installs and enables the ipl module.
+
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 
 #### Parameters
 
@@ -1047,13 +1057,13 @@ Data type: `Hash`
 
 A hash of command transports.
 
-Default value: `undef`
+Default value: {}
 
 ### icingaweb2::module::puppetdb
 
 Installs and configures the puppetdb module.
 
-* **Note** The [PuppetDB module documentation](https://www.icinga.com/docs/director/latest/puppetdb/doc/01-Installation/).
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 
 #### Examples
 
@@ -1142,6 +1152,8 @@ Default value: {}
 
 Installs and enables the reactbundle module.
 
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
+
 #### Parameters
 
 The following parameters are available in the `icingaweb2::module::reactbundle` class.
@@ -1186,7 +1198,7 @@ Default value: 'present'
 
 The vSphere module extends the Director. It provides import sources for virtual machines and physical hosts from vSphere.
 
-* **Note** Check out the [vSphere module documentation](https://www.icinga.com/docs/director/latest/vsphere/doc/).
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 
 #### Parameters
 
@@ -1773,6 +1785,8 @@ Default value: '01'
 ### icingaweb2::module
 
 Download, enable and configure Icinga Web 2 modules.
+
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 
 #### Examples
 
