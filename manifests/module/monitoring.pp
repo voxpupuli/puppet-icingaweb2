@@ -65,7 +65,7 @@ class icingaweb2::module::monitoring(
   Optional[String]               $ido_db_username      = undef,
   Optional[String]               $ido_db_password      = undef,
   Optional[String]               $ido_db_charset       = undef,
-  Hash                           $commandtransports    = undef,
+  Hash                           $commandtransports    = {},
 ){
 
   $conf_dir        = $::icingaweb2::globals::conf_dir
