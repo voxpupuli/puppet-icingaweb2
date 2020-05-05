@@ -84,6 +84,7 @@ define icingaweb2::module(
 
   file {"${conf_dir}/modules/${module}":
     ensure  => $ensure_module_config_dir,
+    mode    => '2770',
     force   => true,
     recurse => true,
   }
