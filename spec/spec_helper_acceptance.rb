@@ -9,12 +9,15 @@ RSpec.configure do |c|
 
   c.formatter = :documentation
 
-  install_module_from_forge('puppetlabs-vcsrepo', '>= 1.3.0 <= 3.0.0')
-  install_module_from_forge('puppetlabs-mysql', '>= 2.2.0 <= 5.0.0')
-  install_module_from_forge('puppetlabs-apache', '>= 1.11.0 <= 3.0.0')
-  install_module_from_forge('puppet-zypprepo', '>= 2.0.0 <= 3.0.0')
-  install_module_from_forge('puppetlabs-apt', '>= 2.0.0 <= 3.0.0')
-  install_module_from_forge('puppetlabs-yumrepo_core', '>= 1.0.0 <= 2.0.0')
+  install_module_from_forge('puppetlabs-stdlib', '>= 4.16.0 < 6.0.0')
+  install_module_from_forge('puppetlabs-concat', '>= 2.0.1 < 6.0.0')
+  install_module_from_forge('puppetlabs-vcsrepo', '>= 1.3.0 < 3.0.0')
+
+  install_module_from_forge('puppetlabs-mysql', '>= 2.2.0')
+  install_module_from_forge('puppetlabs-apache', '>= 1.11.0')
+  install_module_from_forge('puppet-zypprepo', '>= 2.0.0')
+  install_module_from_forge('puppetlabs-apt', '>= 2.0.0')
+  install_module_from_forge('puppetlabs-yumrepo_core', '>= 1.0.0')
 
   c.before :suite do
     hosts.each do |host|
