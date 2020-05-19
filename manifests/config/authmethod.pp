@@ -8,16 +8,16 @@
 #   The name of the resource defined in resources.ini.
 #
 # @param [Optional[String]] ldap_user_class
-#   LDAP user class. Only valid if `backend` is `ldap`.
+#   LDAP user class. Only valid if `backend` is `ldap` or `msldap`.
 #
 # @param [Optional[String]] ldap_user_name_attribute
-#   LDAP attribute which contains the username. Only valid if `backend` is `ldap`.
+#   LDAP attribute which contains the username. Only valid if `backend` is `ldap` or `msldap`.
 #
 # @param [Optional[String]] ldap_filter
-#   LDAP search filter. Only valid if `backend` is `ldap`.
+#   LDAP search filter. Only valid if `backend` is `ldap` or `msladap`.
 #
 # @param [Optional[String]] ldap_base_dn
-#   LDAP base DN. Only valid if `backend` is `ldap`.
+#   LDAP base DN. Only valid if `backend` is `ldap` or `msldap`.
 #
 # @param [Optional[String]] domain
 #   Domain for domain-aware authentication
@@ -62,7 +62,7 @@ define icingaweb2::config::authmethod(
         'backend' => $backend,
       }
     }
-    'ldap': {
+    'ldap', 'msladp': {
       $settings = {
         'backend'             => $backend,
         'resource'            => $resource,
@@ -73,7 +73,7 @@ define icingaweb2::config::authmethod(
         'domain'              => $domain,
       }
     }
-    'msldap', 'db': {
+    'db': {
       $settings = {
         'backend'  => $backend,
         'resource' => $resource,
