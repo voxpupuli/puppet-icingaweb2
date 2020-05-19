@@ -1,5 +1,17 @@
 # Change Log
 
+## [v2.3.1](https://github.com/Icinga/puppet-icingaweb2/tree/v2.3.1) (2019-06-25)
+[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.3.0...v2.3.1)
+
+**Implemented enhancements:**
+
+- metadata: Raise requirements for puppetlabs modules [\#236](https://github.com/Icinga/puppet-icingaweb2/pull/236) ([lazyfrosch](https://github.com/lazyfrosch))
+
+**Fixed bugs:**
+
+- possible regression: new cookie path parameter may break existing installs [\#235](https://github.com/Icinga/puppet-icingaweb2/issues/235)
+- config: Let cookie\_path be undef by default [\#237](https://github.com/Icinga/puppet-icingaweb2/pull/237) ([lazyfrosch](https://github.com/lazyfrosch))
+
 ## [v2.3.0](https://github.com/Icinga/puppet-icingaweb2/tree/v2.3.0) (2019-05-20)
 [Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.2.0...v2.3.0)
 
@@ -18,6 +30,7 @@
 **Closed issues:**
 
 - support puppet/stdlib \> 5.0 [\#232](https://github.com/Icinga/puppet-icingaweb2/issues/232)
+- Error logging\_path needs to be Stdlib::Absolutepath, got String instead [\#224](https://github.com/Icinga/puppet-icingaweb2/issues/224)
 - icingaweb2::module::puppetdb tests are failing [\#216](https://github.com/Icinga/puppet-icingaweb2/issues/216)
 
 **Merged pull requests:**

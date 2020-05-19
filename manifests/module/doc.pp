@@ -1,14 +1,11 @@
-# == Class: icingaweb2::module::doc
+# @summary
+#   The doc module provides an interface to the Icinga 2 and Icinga Web 2 documentation.
 #
-# The doc module provides an interface to the Icinga 2 and Icinga Web 2 documentation.
-#
-# === Parameters
-#
-# [*ensure*]
+# @param [Enum['absent', 'present']] ensure
 #   Enable or disable module. Defaults to `present`
 #
 class icingaweb2::module::doc(
-  Enum['absent', 'present'] $ensure = 'present',
+  Enum['absent', 'present']   $ensure = 'present',
 ){
 
   case $::osfamily {

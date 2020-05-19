@@ -1,16 +1,7 @@
-# == Class: icingaweb2::repo
+# @summary
+#   Manages the packages.icinga.com repository based on the operating system.
 #
-# This class manages the packages.icinga.com repository based on the operating system.
-#
-# === Parameters
-#
-# This class does not provide any parameters.
-# To control the behaviour of this class, have a look at the parameters:
-# * icingaweb2::manage_repo
-#
-# === Examples
-#
-# This class is private and should not be called by others than this module.
+# @api private
 #
 class icingaweb2::repo {
 
@@ -77,7 +68,7 @@ class icingaweb2::repo {
         exec { 'import icinga gpg key':
           path      => '/bin:/usr/bin:/sbin:/usr/sbin',
           command   => 'rpm --import /etc/pki/GPG-KEY-icinga',
-          unless    => "rpm -q gpg-pubkey-`echo $(gpg --throw-keyids < /etc/pki/GPG-KEY-icinga) | cut --characters=11-18 | tr [A-Z] [a-z]`",
+          unless    => 'rpm -q gpg-pubkey-`echo $(gpg --throw-keyids < /etc/pki/GPG-KEY-icinga) | cut --characters=11-18 | tr [A-Z] [a-z]',
           require   => File['/etc/pki/GPG-KEY-icinga'],
           logoutput => 'on_failure',
         }

@@ -39,8 +39,22 @@ describe('icingaweb2::config::resource', :type => :define) do
 
         it { is_expected.to contain_icingaweb2__inisection('resource-myresource')
           .with_target('/etc/icingaweb2/resources.ini')
-          .with_settings({'type'=>'ldap', 'hostname'=>'localhost', 'port'=>'389', 'root_dn'=>'cn=foo,dc=bar', 'bind_dn'=>'cn=root,dc=bar', 'bind_pw'=>'secret', 'encryption'=>'none'})}
+          .with_settings({'type'=>'ldap', 'hostname'=>'localhost', 'port'=>'389', 'root_dn'=>'cn=foo,dc=bar', 'bind_dn'=>'cn=root,dc=bar', 'bind_pw'=>'secret', 'encryption'=>'none', 'timeout' => '5'})}
+      end
 
+      context "#{os} with type ldap and changed ldap timeout" do
+        let(:params) { {
+            :type => 'ldap',
+            :host => 'localhost',
+            :port => 389,
+            :ldap_root_dn => 'cn=foo,dc=bar',
+            :ldap_bind_dn => 'cn=root,dc=bar',
+            :ldap_bind_pw => 'secret',
+            :ldap_timeout => 60 } }
+
+        it { is_expected.to contain_icingaweb2__inisection('resource-myresource')
+                                .with_target('/etc/icingaweb2/resources.ini')
+                                .with_settings({'type'=>'ldap', 'hostname'=>'localhost', 'port'=>'389', 'root_dn'=>'cn=foo,dc=bar', 'bind_dn'=>'cn=root,dc=bar', 'bind_pw'=>'secret', 'encryption'=>'none', 'timeout' => '60'})}
       end
 
       context "#{os} with invalid type" do

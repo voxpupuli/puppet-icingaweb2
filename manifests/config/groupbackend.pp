@@ -1,59 +1,62 @@
-# == Define: icingaweb2::config::groupbackend
+# @summary
+#   Groups of users can be stored either in a database, LDAP or ActiveDirectory. This defined type configures backends
+#   that store groups.
 #
-#  Groups of users can be stored either in a database, LDAP or ActiveDirectory. This defined type configures backends
-#  that store groups.
-#
-# === Parameters
-#
-# [*group_name*]
+# @param [String] group_name
 #   Name of the resources. Resources are referenced by their name in other configuration sections.
 #
-# [*backend*]
-#   Type of backend. Valide values are: `db`, `ldap` and `msldap`. Each backend supports different settings, see the
-#   parameters for detailed information.
+# @param [Enum['db', 'ldap', 'msldap']] backend
+#   Type of backend. Valide values are: `db`, `ldap` and `msldap`. Each backend supports different settings,
+#   see the parameters for detailed information.
 #
-# [*resource*]
+# @param [String] resource
 #   The resource used to connect to the backend. The resource contains connection information.
 #
-# [*ldap_user_backend*]
-#   A group backend can be connected with an authentication method. This parameter references the auth method. Only
-#   valid with backend `ldap` or `msldap`.
+# @param [Optional[String]] ldap_user_backend
+#   A group backend can be connected with an authentication method. This parameter references the auth method.
+#   Only valid with backend `ldap` or `msldap`.
 #
-# [*ldap_group_class*]
+# @param [Optional[String]] ldap_group_class
 #   Class used to identify group objects. Only valid with backend `ldap`.
 #
-# [*ldap_group_filter*]
+# @param [Optional[String]] ldap_group_filter
 #   Use a LDAP filter to receive only certain groups. Only valid with backend `ldap` or `msldap`.
 #
-# [*ldap_group_name_attribute*]
+# @param [Optional[String]] ldap_group_name_attribute
 #   The group name attribute. Only valid with backend `ldap`.
 #
-# [*ldap_group_member_attribute*]
+# @param [Optional[String]] ldap_group_member_attribute
 #   The group member attribute. Only valid with backend `ldap`.
 #
-# [*ldap_base_dn*]
+# @param [Optional[String]] ldap_base_dn
 #   Base DN that is searched for groups. Only valid with backend `ldap` with `msldap`.
 #
-# [*ldap_nested_group_search*]
+# @param [Optional[Boolean]] ldap_nested_group_search
 #   Search for groups in groups. Only valid with backend `msldap`.
 #
-# [*domain*]
-#   Domain for domain-aware authentication
+# @param [Optional[String]] domain
+#   Domain for domain-aware authentication.
 #
-# === Examples
+# @param [Variant[String, Integer]] order
+#   Multiple authentication methods can be chained. The order of entries in the authentication
+#   configuration determines the order of the authentication methods.
 #
-# A group backend for groups stored in LDAP:
+# @example A group backend for groups stored in LDAP:
+#   icingaweb2::config::groupbackend { 'ldap-groups':
+#     backend                     => 'ldap',
+#     resource                    => 'my-ldap',
+#     ldap_group_class            => 'group',
+#     ldap_group_name_attribute   => 'cn',
+#     ldap_group_member_attribute => 'member',
+#     ldap_base_dn                => 'ou=groups,dc=icinga,dc=com',
+#     domain                      => 'icinga.com',
+#   }
 #
-# icingaweb2::config::groupbackend {'ldap-backend':
-#   backend                     => 'ldap',
-#   resource                    => 'my-ldap',
-#   ldap_group_class            => 'groupofnames',
-#   ldap_group_name_attribute   => 'cn',
-#   ldap_group_member_attribute => 'member',
-#   ldap_base_dn                => 'ou=groups,dc=icinga,dc=com',
-#   domain                      => 'icinga.com',
-# }
-#
+# @example If you have imported the database schema (parameter `import_schema`), this backend was also created automatically:
+#   icingaweb2::config::groupbackend { 'mysql-backend':
+#     backend  => 'db',
+#     resource => 'my-sql',
+#   }
 #
 define icingaweb2::config::groupbackend(
   String                       $group_name                  = $title,
@@ -67,9 +70,10 @@ define icingaweb2::config::groupbackend(
   Optional[String]             $ldap_base_dn                = undef,
   Optional[Boolean]            $ldap_nested_group_search    = undef,
   Optional[String]             $domain                      = undef,
+  Variant[String, Integer]     $order                       = '01',
 ) {
 
-  $conf_dir = $::icingaweb2::params::conf_dir
+  $conf_dir = $::icingaweb2::globals::conf_dir
 
   case $backend {
     'db': {
@@ -117,5 +121,6 @@ define icingaweb2::config::groupbackend(
     section_name => $title,
     target       => "${conf_dir}/groups.ini",
     settings     => delete_undef_values($settings),
+    order        => $order,
   }
 }
