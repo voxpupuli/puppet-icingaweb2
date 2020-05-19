@@ -16,12 +16,9 @@ describe 'icingaweb2', :type => :class do
 
         it { is_expected.to contain_class('icingaweb2::config') }
         it { is_expected.to contain_class('icingaweb2::install') }
-        it { is_expected.to contain_class('icingaweb2::params') }
         it { is_expected.to contain_class('icingaweb2::repo') }
 
         it { is_expected.to contain_package('icingaweb2').with({ 'ensure' => 'installed' }) }
-
-
 
         case facts[:osfamily]
           when 'Debian'
@@ -38,6 +35,7 @@ describe 'icingaweb2', :type => :class do
           it { is_expected.not_to contain_package('icinga2').with({ 'ensure' => 'installed' }) }
         end
       end
+
     end
   end
 end

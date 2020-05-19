@@ -1,44 +1,47 @@
-# == Define: icingaweb2::config::authmethod
+# @summary
+#   Manage Icinga Web 2 authentication methods. Auth methods may be chained by setting proper ordering.
 #
-# Manage Icinga Web 2 authentication methods. Auth methods may be chained by setting proper ordering. Some backends
-# require additional resources.
-#
-# === Parameters
-#
-# [*backend*]
+# @param [Enum['external', 'ldap', 'msldap', 'db']] backend
 #   Select between 'external', 'ldap', 'msldap' or 'db'. Each backend may require other settings.
 #
-# [*resource*]
+# @param [Optional[String]] resource
 #   The name of the resource defined in resources.ini.
 #
-# [*ldap_user_class*]
+# @param [Optional[String]] ldap_user_class
 #   LDAP user class. Only valid if `backend` is `ldap` or `msldap`.
 #
-# [*ldap_user_name_attribute*]
+# @param [Optional[String]] ldap_user_name_attribute
 #   LDAP attribute which contains the username. Only valid if `backend` is `ldap` or `msldap`.
 #
-# [*ldap_filter*]
-#   LDAP search filter. Only valid if `backend` is `ldap` or `msldap`.
+# @param [Optional[String]] ldap_filter
+#   LDAP search filter. Only valid if `backend` is `ldap` or `msladap`.
 #
-# [*ldap_base_dn*]
-#   LDAP base DN. Only valid if `backend` is `ldap`.
+# @param [Optional[String]] ldap_base_dn
+#   LDAP base DN. Only valid if `backend` is `ldap` or `msldap`.
 #
-# [*domain*]
+# @param [Optional[String]] domain
 #   Domain for domain-aware authentication
 #
-# [*order*]
-#   Multiple authentication methods can be chained. The order of entries in the authentication configuration determines
-#   the order of the authentication methods. Defaults to `01`
+# @param [Variant[String, Integer]] order
+#   Multiple authentication methods can be chained. The order of entries in the authentication
+#   configuration determines the order of the authentication methods.
 #
-# === Examples
+# @example Create an authentication method (db) and reference to a resource:
+#   icingaweb2::config::authmethod { 'db-auth':
+#     backend  => 'db',
+#     resource => 'my-sql',
+#     order    => 20,
+#   }
 #
-# Create a 'db' authentication method and reference to 'my-sql' resource:
-#
-# icingaweb2::config::authmethod {'db-auth':
-#   backend  => 'db',
-#   resource => 'my-sql',
-#   order    => '02',
-# }
+# @example Create a LDAP authmethod:
+#   icingaweb2::config::authmethod { 'ldap-auth':
+#     backend                  => 'ldap',
+#     resource                 => 'my-ldap',
+#     ldap_user_class          => 'user',
+#     ldap_filter              => '(memberof:1.2.840.113556.1.4.1941:=CN=monitoring,OU=groups,DC=icinga,DC=com)',
+#     ldap_user_name_attribute => 'userPrincipalName',
+#     order                    => '05',
+#   }
 #
 define icingaweb2::config::authmethod(
   Enum['external', 'ldap', 'msldap', 'db'] $backend                  = undef,
@@ -48,10 +51,10 @@ define icingaweb2::config::authmethod(
   Optional[String]                         $ldap_filter              = undef,
   Optional[String]                         $ldap_base_dn             = undef,
   Optional[String]                         $domain                   = undef,
-  Pattern[/^\d+$/]                         $order                    = '01',
+  Variant[String, Integer]                 $order                    = '01',
 ) {
 
-  $conf_dir = $::icingaweb2::params::conf_dir
+  $conf_dir = $::icingaweb2::globals::conf_dir
 
   case $backend {
     'external': {
@@ -59,7 +62,7 @@ define icingaweb2::config::authmethod(
         'backend' => $backend,
       }
     }
-    'ldap': {
+    'ldap', 'msladp': {
       $settings = {
         'backend'             => $backend,
         'resource'            => $resource,
@@ -68,15 +71,6 @@ define icingaweb2::config::authmethod(
         'filter'              => $ldap_filter,
         'base_dn'             => $ldap_base_dn,
         'domain'              => $domain,
-      }
-    }
-    'msldap': {
-      $settings = {
-        'backend'             => $backend,
-        'resource'            => $resource,
-        'user_class'          => $ldap_user_class,
-        'user_name_attribute' => $ldap_user_name_attribute,
-        'filter'              => $ldap_filter,
       }
     }
     'db': {
