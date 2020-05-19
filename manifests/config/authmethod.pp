@@ -62,7 +62,7 @@ define icingaweb2::config::authmethod(
         'backend' => $backend,
       }
     }
-    'ldap', 'msladp': {
+    'ldap', 'msldap': {
       $settings = {
         'backend'             => $backend,
         'resource'            => $resource,
