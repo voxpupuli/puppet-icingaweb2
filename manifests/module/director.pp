@@ -73,7 +73,7 @@ class icingaweb2::module::director(
   Enum['absent', 'present'] $ensure         = 'present',
   Optional[String]          $git_revision   = undef,
   Enum['mysql', 'pgsql']    $db_type        = 'mysql',
-  Stdlib::Host              $db_host        = undef,
+  Optional[Stdlib::Host]    $db_host        = undef,
   Stdlib::Port              $db_port        = 3306,
   Optional[String]          $db_name        = undef,
   Optional[String]          $db_username    = undef,
@@ -89,6 +89,7 @@ class icingaweb2::module::director(
 ) {
 
   $conf_dir        = $::icingaweb2::globals::conf_dir
+  $icingacli_bin   = $::icingaweb2::globals::icingacli_bin
   $module_conf_dir = "${conf_dir}/modules/director"
 
   Exec {
@@ -121,8 +122,8 @@ class icingaweb2::module::director(
     ensure_packages(['icingacli'], { 'ensure' => 'present' })
 
     exec { 'director-migration':
-      command => 'icingacli director migration run',
-      onlyif  => 'icingacli director migration pending',
+      command => "${icingacli_bin} director migration run",
+      onlyif  => "${icingacli_bin} director migration pending",
       require => [ Package['icingacli'], Icingaweb2::Module['director'] ]
     }
 
@@ -142,8 +143,8 @@ class icingaweb2::module::director(
       }
 
       exec { 'director-kickstart':
-        command => 'icingacli director kickstart run',
-        onlyif  => 'icingacli director kickstart required',
+        command => "${icingacli_bin} director kickstart run",
+        onlyif  => "${icingacli_bin} director kickstart required",
         require => Exec['director-migration']
       }
     } else {

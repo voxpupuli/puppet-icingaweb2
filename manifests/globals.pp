@@ -9,6 +9,7 @@ class icingaweb2::globals(
   Stdlib::Absolutepath   $mysql_db_schema,
   Stdlib::Absolutepath   $pgsql_db_schema,
   String                 $gettext_package_name,
+  Stdlib::Absolutepath   $icingacli_bin,
 ) {
 
 }
