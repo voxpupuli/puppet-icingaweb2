@@ -1,10 +1,11 @@
 ---
 HOSTS:
-  ubuntu-server-1804-x64:
+  iw2ubuntu18:
     roles:
-      - master
+      - agent
+      - default
     platform: ubuntu-18.04-amd64
     box: bento/ubuntu-18.04
     hypervisor: vagrant
 CONFIG:
-  type: foss
+  type: aio

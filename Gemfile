@@ -69,4 +69,18 @@ extra_gemfiles.each do |gemfile|
     eval(File.read(gemfile), binding)
   end
 end
+
+#move to .sync.yaml in the future
+gem 'puppetlabs_spec_helper', '>= 2.0'
+gem 'puppet-lint', '>= 2.0.0'
+gem 'facter', '>= 2.4.0'
+gem 'facterdb', '>= 1.0.0'
+gem 'rspec-puppet-facts', '>= 1.6.0'
+gem 'serverspec'
+gem 'r10k'
+gem 'parallel_tests', '>= 2.10.0'
+gem 'metadata-json-lint'
+gem 'beaker-rspec'
+gem 'beaker-vagrant'
+gem 'beaker-puppet_install_helper'
 # vim: syntax=ruby

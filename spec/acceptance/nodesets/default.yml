@@ -1,10 +1,11 @@
 ---
 HOSTS:
-  centos-7-x64:
+  iw2centos7:
     roles:
-      - master
+      - agent
+      - default
     platform: el-7-x86_64
-    box: bento/centos-7
     hypervisor: vagrant
+    box: bento/centos-7
 CONFIG:
   type: aio

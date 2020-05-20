@@ -1,31 +1,51 @@
 require 'beaker-rspec'
 require 'beaker/puppet_install_helper'
-require 'beaker/module_install_helper'
 
-run_puppet_install_helper
+# Install Puppet on all hosts
+install_puppet_agent_on(hosts, :puppet_collection => 'puppet5')
 
 RSpec.configure do |c|
-  proj_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+  module_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
   c.formatter = :documentation
 
-  install_module_from_forge('puppetlabs-stdlib', '>= 4.16.0 < 6.0.0')
-  install_module_from_forge('puppetlabs-concat', '>= 2.0.1 < 6.0.0')
-  install_module_from_forge('puppetlabs-vcsrepo', '>= 1.3.0 < 3.0.0')
-
-  install_module_from_forge('puppetlabs-mysql', '>= 2.2.0')
-  install_module_from_forge('puppetlabs-apache', '>= 1.11.0')
-  install_module_from_forge('puppet-zypprepo', '>= 2.0.0')
-  install_module_from_forge('puppetlabs-apt', '>= 2.0.0')
-  install_module_from_forge('puppetlabs-yumrepo_core', '>= 1.0.0')
-
   c.before :suite do
+    # Install module to all hosts
     hosts.each do |host|
-      copy_module_to(host, source: proj_root, module_name: 'icingaweb2')
-      if fact('osfamily') == 'RedHat'
-        # Soft dep on epel for Passenger
-        install_package(host, 'epel-release')
+      install_dev_puppet_module_on(host, :source => module_root, :module_name => 'icingaweb2',
+          :target_module_path => '/etc/puppetlabs/code/modules')
+
+      # Install dependencies
+      on(host, puppet('module', 'install', 'puppetlabs-stdlib'))
+      on(host, puppet('module', 'install', 'puppetlabs-concat'))
+      on(host, puppet('module', 'install', 'puppetlabs-vcsrepo'))
+
+      # Install additional modules
+      on(host, puppet('module', 'install', 'puppetlabs-mysql'))
+      on(host, puppet('module', 'install', 'puppetlabs-postgresql'))
+      on(host, puppet('module', 'install', 'puppetlabs-apache'))
+      on(host, puppet('module', 'install', 'puppet-php'))
+
+      if fact('osfamily') == 'Debian'
+        on(host, puppet('module', 'install', 'puppetlabs-apt'))
       end
+
+      if fact('osfamily') == 'Suse'
+        on(host, puppet('module', 'install', 'puppet-zypprepo'))
+      end
+
+      # Add more setup code as needed
     end
   end
 end
+
+shared_examples 'a idempotent resource' do
+  it 'applies with no errors' do
+    apply_manifest(pp, catch_failures: true)
+  end
+
+  it 'applies a second time without changes', :skip_pup_5016 do
+    apply_manifest(pp, catch_changes: true)
+  end
+end
+

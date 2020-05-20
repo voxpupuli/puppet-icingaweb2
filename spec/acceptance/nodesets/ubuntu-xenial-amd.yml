@@ -1,10 +1,11 @@
 ---
 HOSTS:
-  ubuntu-server-1604-x64:
+  iw2ubuntu16:
     roles:
-      - master
+      - agent
+      - default
     platform: ubuntu-16.04-amd64
     box: bento/ubuntu-16.04
     hypervisor: vagrant
 CONFIG:
-  type: foss
+  type: aio
