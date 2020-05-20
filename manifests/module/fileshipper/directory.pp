@@ -1,30 +1,29 @@
-# == Define: icingaweb2::module::fileshipper::directory
+# @summary
+#   Manages directories with plain Icinga 2 configuration files.
 #
-# Manage directories with plain Icinga 2 configuration files
+# @param [String] identifier
+#   Identifier of the base directory.
 #
-# === Parameters
+# @param [Optional[Stdlib::Absolutepath]] source
+#   Absolute path of the source direcory.
 #
-# [*identifier*]
-#   Identifier of the base directory
+# @param [Optional[Stdlib::Absolutepath]] target
+#   Absolute path of the target direcory.
 #
-# [*source*]
-#   Absolute path of the source direcory
-#
-# [*target*]
-#   Absolute path of the target direcory
-#
-# [*extensions*]
+# @param [String] extensions
 #   Only files with these extensions will be synced. Defaults to `.conf`
 #
+# @api private
+#
 define icingaweb2::module::fileshipper::directory(
-  String               $identifier = $title,
-  Stdlib::Absolutepath $source     = undef,
-  Stdlib::Absolutepath $target     = undef,
-  String               $extensions = '.conf',
+  String                           $identifier = $title,
+  Optional[Stdlib::Absolutepath]   $source     = undef,
+  Optional[Stdlib::Absolutepath]   $target     = undef,
+  String                           $extensions = '.conf',
 ){
   assert_private("You're not supposed to use this defined type manually.")
 
-  $conf_dir        = $::icingaweb2::params::conf_dir
+  $conf_dir        = $::icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/fileshipper"
 
   icingaweb2::inisection { "fileshipper-directory-${identifier}":

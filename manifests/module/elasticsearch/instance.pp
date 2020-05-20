@@ -1,43 +1,43 @@
-# == Define: icingaweb2::module::elasticsearch::instance
+# @summary
+#   Manages an Elasticsearch instance
 #
-# Manage an Elasticsearch instance
-#
-# === Parameters
-#
-# [*name*]
+# @param [String] instance_name
 #   Name of the Elasticsearch instance
 #
-# [*uri*]
+# @param [String] uri
 #   URI to the Elasticsearch instance
 #
-# [*user*]
+# @param [Optional[String]] user
 #   The user to use for authentication
 #
-# [*password*]
+# @param [Optional[String]] password
 #   The password to use for authentication
 #
-# [*ca*]
+# @param [Optional[Stdlib::Absolutepath]] ca
 #   The path of the file containing one or more certificates to verify the peer with or the path to the directory
 #   that holds multiple CA certificates.
 #
-# [*client_certificate*]
+# @param [Optional[Stdlib::Absolutepath]] client_certificate
 #   The path of the client certificates
 #
-# [*client_private_key*]
+# @param [Optional[Stdlib::Absolutepath]] client_private_key
 #   The path of the client private key
 #
+# @api private
 #
 define icingaweb2::module::elasticsearch::instance(
-  String                         $uri                = undef,
-  Optional[String]               $user               = undef,
-  Optional[String]               $password           = undef,
-  Optional[Stdlib::Absolutepath] $ca                 = undef,
-  Optional[Stdlib::Absolutepath] $client_certificate = undef,
-  Optional[Stdlib::Absolutepath] $client_private_key = undef,
+  String                           $instance_name      = $title,
+  String                           $uri                = undef,
+  Optional[String]                 $user               = undef,
+  Optional[String]                 $password           = undef,
+  Optional[Stdlib::Absolutepath]   $ca                 = undef,
+  Optional[Stdlib::Absolutepath]   $client_certificate = undef,
+  Optional[Stdlib::Absolutepath]   $client_private_key = undef,
 ){
+
   assert_private("You're not supposed to use this defined type manually.")
 
-  $conf_dir        = $::icingaweb2::params::conf_dir
+  $conf_dir        = $::icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/elasticsearch"
 
   $instance_settings = {
@@ -49,8 +49,8 @@ define icingaweb2::module::elasticsearch::instance(
     'client_private_key' => $client_private_key,
   }
 
-  icingaweb2::inisection { "elasticsearch-instance-${name}":
-    section_name => $name,
+  icingaweb2::inisection { "elasticsearch-instance-${instance_name}":
+    section_name => $instance_name,
     target       => "${module_conf_dir}/instances.ini",
     settings     => delete_undef_values($instance_settings)
   }

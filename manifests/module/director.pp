@@ -1,81 +1,98 @@
-# == Class: icingaweb2::module::director
+# @summary
+#   Installs and configures the director module.
 #
-# Install and configure the director module.
+# @note If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 #
-# === Parameters
+# @param [Enum['absent', 'present']] ensure
+#   Enable or disable module.
 #
-# [*ensure*]
-#   Enable or disable module. Defaults to `present`
+# @param [String] git_repository
+#   Set a git repository URL.
 #
-# [*git_repository*]
-#   Set a git repository URL. Defaults to github.
-#
-# [*git_revision*]
+# @param [Optional[String]] git_revision
 #   Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 #
-# [*db_type*]
-#   Type of your database. Either `mysql` or `pgsql`. Defaults to `mysql`
+# @param [Enum['mysql', 'pgsql']] db_type
+#   Type of your database. Either `mysql` or `pgsql`.
 #
-# [*db_host*]
+# @param [Stdlib::Host] db_host
 #   Hostname of the database.
 #
-# [*db_port*]
-#   Port of the database. Defaults to `3306`
+# @param [Stdlib::Port] db_port
+#   Port of the database.
 #
-# [*db_name*]
+# @param [Optional[String]] db_name
 #   Name of the database.
 #
-# [*db_username*]
+# @param [Optional[String]] db_username
 #   Username for DB connection.
 #
-# [*db_password*]
+# @param [Optional[String]] db_password
 #   Password for DB connection.
 #
-# [*import_schema*]
-#   Import database schema. Defaults to `false`
+# @param [Boolean] import_schema
+#   Import database schema.
 #
-# [*kickstart*]
-#   Run kickstart command after database migration. This requires `import_schema` to be `true`. Defaults to `false`
+# @param [Boolean] kickstart
+#   Run kickstart command after database migration. This requires `import_schema` to be `true`.
 #
-# [*endpoint*]
+# @param [Optional[String]] endpoint
 #   Endpoint object name of Icinga 2 API. This setting is only valid if `kickstart` is `true`.
 #
-# [*api_host*]
-#   Icinga 2 API hostname. This setting is only valid if `kickstart` is `true`. Defaults to `localhost`
+# @param [Stdlib::Host] api_host
+#   Icinga 2 API hostname. This setting is only valid if `kickstart` is `true`.
 #
-# [*api_port*]
-#   Icinga 2 API port. This setting is only valid if `kickstart` is `true`. Defaults to `5665`
+# @param [Stdlib::Port] api_port
+#   Icinga 2 API port. This setting is only valid if `kickstart` is `true`.
 #
-# [*api_username*]
+# @param [Optional[String]] api_username
 #   Icinga 2 API username. This setting is only valid if `kickstart` is `true`.
 #
-# [*api_password*]
+# @param [Optional[String]] api_password
 #   Icinga 2 API password. This setting is only valid if `kickstart` is `true`.
 #
-# [*service*]
-#   Manage and start the icingadirector systemd service. Defaults to `false`
+# @param [Optional[Boolean]] service
+#   Manage and start the icingadirector systemd service. Defaults to `false`.
+#
+# @note Please checkout the [Director module documentation](https://www.icinga.com/docs/director/latest/) for requirements.
+#
+# @example
+#   class { 'icingaweb2::module::director':
+#     git_revision  => 'v1.7.2',
+#     db_host       => 'localhost',
+#     db_name       => 'director',
+#     db_username   => 'director',
+#     db_password   => 'supersecret',
+#     import_schema => true,
+#     kickstart     => true,
+#     endpoint      => 'puppet-icingaweb2.localdomain',
+#     api_username  => 'director',
+#     api_password  => 'supersecret',
+#     require       => Mysql::Db['director']
+#   }
 #
 class icingaweb2::module::director(
+  String                    $git_repository,
   Enum['absent', 'present'] $ensure         = 'present',
-  String                    $git_repository = 'https://github.com/Icinga/icingaweb2-module-director.git',
   Optional[String]          $git_revision   = undef,
   Enum['mysql', 'pgsql']    $db_type        = 'mysql',
-  Optional[String]          $db_host        = undef,
-  Integer[1,65535]          $db_port        = 3306,
+  Stdlib::Host              $db_host        = undef,
+  Stdlib::Port              $db_port        = 3306,
   Optional[String]          $db_name        = undef,
   Optional[String]          $db_username    = undef,
   Optional[String]          $db_password    = undef,
-  Optional[String]          $db_charset     = 'utf8',
-  Optional[Boolean]         $import_schema  = false,
-  Optional[Boolean]         $kickstart      = false,
+  String                    $db_charset     = 'utf8',
+  Boolean                   $import_schema  = false,
+  Boolean                   $kickstart      = false,
   Optional[String]          $endpoint       = undef,
-  String                    $api_host       = 'localhost',
-  Integer[1,65535]          $api_port       = 5665,
+  Stdlib::Host              $api_host       = 'localhost',
+  Stdlib::Port              $api_port       = 5665,
   Optional[String]          $api_username   = undef,
   Optional[String]          $api_password   = undef,
   Optional[Boolean]         $service        = false,
-){
-  $conf_dir        = $::icingaweb2::params::conf_dir
+) {
+
+  $conf_dir        = $::icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/director"
 
   Exec {
@@ -155,7 +172,7 @@ class icingaweb2::module::director(
       require => Exec['director-kickstart']
     }
   }
-
+  
   icingaweb2::module {'director':
     ensure         => $ensure,
     git_repository => $git_repository,

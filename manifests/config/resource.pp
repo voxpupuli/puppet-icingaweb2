@@ -1,73 +1,76 @@
-# == Define: icingaweb2::config::resource
+# @summary
+#   Create and remove Icinga Web 2 resources. Resources may be referenced in other configuration sections.
 #
-# Create and remove Icinga Web 2 resources. Resources may be referenced in other configuration sections.
-#
-# === Parameters
-#
-# [*resource_name*]
+# @param [String] resource_name
 #   Name of the resources. Resources are referenced by their name in other configuration sections.
 #
-# [*type*]
+# @param [Enum['db', 'ldap']] type
 #   Supported resource types are `db` and `ldap`.
 #
-# [*host*]
+# @param [Optional[Stdlib::Host]] host
 #   Connect to the database or ldap server on the given host. For using unix domain sockets, specify 'localhost' for
 #   MySQL and the path to the unix domain socket directory for PostgreSQL. When using the 'ldap' type you can also
 #   provide multiple hosts separated by a space.
 #
-# [*port*]
+# @param [Optional[Stdlib::Port]] port
 #   Port number to use.
 #
-# [*db_type*]
+# @param [Optional[Enum['mysql', 'pgsql']]] db_type
 #   Supported DB types are `mysql` and `pgsql`.
 #
-# [*db_name*]
+# @param [Optional[String]] db_name
 #   The database to use. Only valid if `type` is `db`.
 #
-# [*db_username*]
+# @param [Optional[String]] db_username
 #   The username to use when connecting to the server. Only valid if `type` is `db`.
 #
-# [*db_password*]
+# @param [Optional[String]] db_password
 #   The password to use when connecting to the server. Only valid if `type` is `db`.
 #
-# [*db_charset*]
+# @param [Optional[String]] db_charset
 #   The character set to use for the database connection. Only valid if `type` is `db`.
 #
-# [*ldap_root_dn*]
+# @param [Optional[String]] ldap_root_dn
 #   Root object of the tree, e.g. 'ou=people,dc=icinga,dc=com'. Only valid if `type` is `ldap`.
 #
-# [*ldap_bind_dn*]
+# @param [Optional[String]] ldap_bind_dn
 #   The user to use when connecting to the server. Only valid if `type` is `ldap`.
 #
-# [*ldap_bind_pw*]
+# @param [Optional[String]] ldap_bind_pw
 #   The password to use when connecting to the server. Only valid if `type` is `ldap`.
 #
-# [*ldap_encryption*]
+# @param [Optional[Enum['none', 'starttls', 'ldaps']]] ldap_encryption
 #   Type of encryption to use: none (default), starttls, ldaps. Only valid if `type` is `ldap`.
 #
-# [*ldap_timeout*]
-#   Timeout for the ldap connection, defaults to 5.
+# @param [Integer] ldap_timeout
+#   Timeout for the ldap connection.
 #
-# === Examples
+# @example Create a MySQL DB resource:
+#   icingaweb2::config::resource{ 'my-sql':
+#     type        => 'db',
+#     db_type     => 'mysql',
+#     host        => 'localhost',
+#     port        => '3306',
+#     db_name     => 'icingaweb2',
+#     db_username => 'icingaweb2',
+#     db_password => 'supersecret',
+#   }
 #
-# Create a 'db' resource:
-#
-# icingaweb2::config::resource{'my-sql':
-#   type        => 'db',
-#   db_type     => 'mysql',
-#   host        => 'localhost',
-#   port        => '3306',
-#   db_name     => 'icingaweb2',
-#   db_username => 'root',
-#   db_password => 'supersecret',
-# }
-#
+# @example Create a LDAP resource:
+#   icingaweb2::config::resource{ 'my-ldap':
+#     type         => 'ldap',
+#     host         => 'localhost',
+#     port         => 389,
+#     ldap_root_dn => 'ou=users,dc=icinga,dc=com',
+#     ldap_bind_dn => 'cn=icingaweb2,ou=users,dc=icinga,dc=com',
+#     ldap_bind_pw => 'supersecret',
+#   }
 #
 define icingaweb2::config::resource(
+  Enum['db', 'ldap']                          $type,
   String                                      $resource_name   = $title,
-  Enum['db', 'ldap']                          $type            = undef,
-  String                                      $host            = undef,
-  Optional[Integer[1,65535]]                  $port            = undef,
+  Optional[Stdlib::Host]                      $host            = undef,
+  Optional[Stdlib::Port]                      $port            = undef,
   Optional[Enum['mysql', 'pgsql']]            $db_type         = undef,
   Optional[String]                            $db_name         = undef,
   Optional[String]                            $db_username     = undef,
@@ -77,10 +80,10 @@ define icingaweb2::config::resource(
   Optional[String]                            $ldap_bind_dn    = undef,
   Optional[String]                            $ldap_bind_pw    = undef,
   Optional[Enum['none', 'starttls', 'ldaps']] $ldap_encryption = 'none',
-  Optional[Integer]                           $ldap_timeout    = 5,
+  Integer                                     $ldap_timeout    = 5,
 ) {
 
-  $conf_dir = $::icingaweb2::params::conf_dir
+  $conf_dir = $::icingaweb2::globals::conf_dir
 
   case $type {
     'db': {
