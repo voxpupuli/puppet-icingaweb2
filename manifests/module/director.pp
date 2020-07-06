@@ -15,7 +15,7 @@
 # @param [Enum['mysql', 'pgsql']] db_type
 #   Type of your database. Either `mysql` or `pgsql`.
 #
-# @param [Stdlib::Host] db_host
+# @param [Optional[Stdlib::Host]] db_host
 #   Hostname of the database.
 #
 # @param [Stdlib::Port] db_port

@@ -12,6 +12,7 @@ _Public Classes_
 * [`icingaweb2::module::businessprocess`](#icingaweb2modulebusinessprocess): Installs and enables the businessprocess module.
 * [`icingaweb2::module::cube`](#icingaweb2modulecube): Installs and enables the cube module.
 * [`icingaweb2::module::director`](#icingaweb2moduledirector): Installs and configures the director module.
+* [`icingaweb2::module::director::service`](#icingaweb2moduledirectorservice): Installs and configures the director service.
 * [`icingaweb2::module::doc`](#icingaweb2moduledoc): The doc module provides an interface to the Icinga 2 and Icinga Web 2 documentation.
 * [`icingaweb2::module::elasticsearch`](#icingaweb2moduleelasticsearch): The Elasticsearch module displays events from data stored in Elasticsearch.
 * [`icingaweb2::module::fileshipper`](#icingaweb2modulefileshipper): The fileshipper module extends the Director. It offers import sources to deal with CSV, JSON, YAML and XML files.
@@ -343,6 +344,12 @@ Data type: `String`
 
 
 
+##### `icingacli_bin`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
 ### icingaweb2::module::businessprocess
 
 Installs and enables the businessprocess module.
@@ -489,7 +496,7 @@ Default value: 'mysql'
 
 ##### `db_host`
 
-Data type: `Stdlib::Host`
+Data type: `Optional[Stdlib::Host]`
 
 Hostname of the database.
 
@@ -590,6 +597,56 @@ Data type: `String`
 
 
 Default value: 'utf8'
+
+### icingaweb2::module::director::service
+
+Installs and configures the director service.
+
+* **Note** Only systemd is supported by the Icinga Team and this module.
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::module::director::service` class.
+
+##### `ensure`
+
+Data type: `Stdlib::Ensure::Service`
+
+Whether the director service should be running.
+
+Default value: 'running'
+
+##### `enable`
+
+Data type: `Boolean`
+
+Enable or disable the service.
+
+Default value: `true`
+
+##### `user`
+
+Data type: `String`
+
+Specifies user to run director service daemon.
+
+Default value: 'icingadirector'
+
+##### `group`
+
+Data type: `String`
+
+Specifies primary group for user to run director service daemon.
+
+Default value: 'icingaweb2'
+
+##### `manage_user`
+
+Data type: `Boolean`
+
+Whether to manage the server user resource.
+
+Default value: `true`
 
 ### icingaweb2::module::doc
 
@@ -1281,7 +1338,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-LDAP user class. Only valid if `backend` is `ldap`.
+LDAP user class. Only valid if `backend` is `ldap` or `msldap`.
 
 Default value: `undef`
 
@@ -1289,7 +1346,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-LDAP attribute which contains the username. Only valid if `backend` is `ldap`.
+LDAP attribute which contains the username. Only valid if `backend` is `ldap` or `msldap`.
 
 Default value: `undef`
 
@@ -1297,7 +1354,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-LDAP search filter. Only valid if `backend` is `ldap`.
+LDAP search filter. Only valid if `backend` is `ldap` or `msladap`.
 
 Default value: `undef`
 
@@ -1305,7 +1362,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-LDAP base DN. Only valid if `backend` is `ldap`.
+LDAP base DN. Only valid if `backend` is `ldap` or `msldap`.
 
 Default value: `undef`
 
@@ -1512,7 +1569,7 @@ Supported resource types are `db` and `ldap`.
 
 ##### `host`
 
-Data type: `Optional[Stdlib::Host]`
+Data type: `Optional[String]`
 
 Connect to the database or ldap server on the given host. For using unix domain sockets, specify 'localhost' for
 MySQL and the path to the unix domain socket directory for PostgreSQL. When using the 'ldap' type you can also
