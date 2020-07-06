@@ -7,7 +7,7 @@
 # @param [Enum['db', 'ldap']] type
 #   Supported resource types are `db` and `ldap`.
 #
-# @param [Optional[Stdlib::Host]] host
+# @param [Optional[String]] host
 #   Connect to the database or ldap server on the given host. For using unix domain sockets, specify 'localhost' for
 #   MySQL and the path to the unix domain socket directory for PostgreSQL. When using the 'ldap' type you can also
 #   provide multiple hosts separated by a space.
@@ -69,7 +69,7 @@
 define icingaweb2::config::resource(
   Enum['db', 'ldap']                          $type,
   String                                      $resource_name   = $title,
-  Optional[Stdlib::Host]                      $host            = undef,
+  Optional[String]                            $host            = undef,
   Optional[Stdlib::Port]                      $port            = undef,
   Optional[Enum['mysql', 'pgsql']]            $db_type         = undef,
   Optional[String]                            $db_name         = undef,
