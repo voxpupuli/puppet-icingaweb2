@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe('icingaweb2::repo', :type => :class) do
+describe('icingaweb2::repo', type: :class) do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let :facts do
@@ -13,12 +13,12 @@ describe('icingaweb2::repo', :type => :class) do
         end
 
         case facts[:osfamily]
-          when 'Debian'
-            it { is_expected.to contain_apt__source('icinga-stable-release') }
-          when 'RedHat'
-            it { is_expected.to contain_yumrepo('icinga-stable-release') }
-          when 'Suse'
-            it { is_expected.to contain_zypprepo('icinga-stable-release') }
+        when 'Debian'
+          it { is_expected.to contain_apt__source('icinga-stable-release') }
+        when 'RedHat'
+          it { is_expected.to contain_yumrepo('icinga-stable-release') }
+        when 'Suse'
+          it { is_expected.to contain_zypprepo('icinga-stable-release') }
         end
       end
 
@@ -27,17 +27,9 @@ describe('icingaweb2::repo', :type => :class) do
           "class { 'icingaweb2': manage_repo => false}"
         end
 
-        case facts[:osfamily]
-          when 'Debian'
-            it { is_expected.not_to contain_apt__source('icinga-stable-release') }
-            it { is_expected.not_to contain_zypprepo('icinga-stable-release') }
-          when 'RedHat'
-            it { is_expected.not_to contain_yumrepo('icinga-stable-release') }
-            it { is_expected.not_to contain_zypprepo('icinga-stable-release') }
-          when 'Suse'
-            it { is_expected.not_to contain_yumrepo('icinga-stable-release') }
-            it { is_expected.not_to contain_apt__source('icinga-stable-release') }
-        end
+        it { is_expected.not_to contain_apt__source('icinga-stable-release') }
+        it { is_expected.not_to contain_yumrepo('icinga-stable-release') }
+        it { is_expected.not_to contain_zypprepo('icinga-stable-release') }
       end
     end
   end
