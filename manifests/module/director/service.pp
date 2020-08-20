@@ -45,7 +45,7 @@ class icingaweb2::module::director::service(
   }
 
   service {'icinga-director':
-    ensure  => $ensure,
-    enable  => $enable,
+    ensure => $ensure,
+    enable => $enable,
   }
-}  
+}

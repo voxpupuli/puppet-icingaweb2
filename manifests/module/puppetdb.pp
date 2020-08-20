@@ -96,7 +96,7 @@ class icingaweb2::module::puppetdb(
 
       $combinedkey_path = "${puppetdb_ssldir}/private_keys/${::fqdn}_combined.pem"
 
-      notice("${::settings::ssldir}")
+      notice($::settings::ssldir)
 
       concat { $combinedkey_path:
         ensure         => present,
