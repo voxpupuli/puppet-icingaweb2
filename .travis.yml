@@ -47,14 +47,3 @@ branches:
     - /^v\d/
 notifications:
   email: false
-deploy:
-  provider: puppetforge
-  deploy:
-    branch: master
-  user: icinga
-  password:
-    secure: "hcGcjXH8v7mjP8bAVeJY/aUzciEjzzjhBsB3b8SKFytpH6R5kcNLVXzkAtTXgJi8nR4PVFSjKovku3o0Q7BzWnmsGaQ69UzJ5gz37oO2mxfNvVCm7FyiCCW86gp+IvpsMDRa+gqpswvb0CjzwK5SC+R7/+pzt60aPx2Gk/yteuU="
-  on:
-    tags: true
-    all_branches: true
-    condition: "$DEPLOY_TO_FORGE = yes"

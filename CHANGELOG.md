@@ -1,6 +1,24 @@
-# Change Log
+# Changelog
+
+## [v2.4.1](https://github.com/icinga/puppet-icingaweb2/tree/v2.4.1) (2020-08-31)
+
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v2.4.0...v2.4.1)
+
+**Fixed bugs:**
+
+- Release defined resource commandtransport from private [\#264](https://github.com/Icinga/puppet-icingaweb2/issues/264)
+- fix icingaweb2::module::director::service systemd::unit\_file param name error [\#273](https://github.com/Icinga/puppet-icingaweb2/pull/273) ([jhoblitt](https://github.com/jhoblitt))
+
+**Closed issues:**
+
+- icingaweb2::module::director::service systemd::unit\_file param name error [\#272](https://github.com/Icinga/puppet-icingaweb2/issues/272)
+- travis-ci rubocop check is failing on master [\#271](https://github.com/Icinga/puppet-icingaweb2/issues/271)
+- travis-ci `check:git\_ignore` check is failing on master [\#269](https://github.com/Icinga/puppet-icingaweb2/issues/269)
+- manage business process source files [\#265](https://github.com/Icinga/puppet-icingaweb2/issues/265)
+- Update Package version [\#262](https://github.com/Icinga/puppet-icingaweb2/issues/262)
 
 ## [v2.4.0](https://github.com/icinga/puppet-icingaweb2/tree/v2.4.0) (2020-07-06)
+
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v2.3.1...v2.4.0)
 
 **Implemented enhancements:**
@@ -35,6 +53,7 @@
 - Remove parameter fastcgi\_script [\#243](https://github.com/Icinga/puppet-icingaweb2/pull/243) ([dhoppe](https://github.com/dhoppe))
 
 ## [v2.3.1](https://github.com/icinga/puppet-icingaweb2/tree/v2.3.1) (2019-06-25)
+
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v2.3.0...v2.3.1)
 
 **Implemented enhancements:**
@@ -47,6 +66,7 @@
 - config: Let cookie\_path be undef by default [\#237](https://github.com/Icinga/puppet-icingaweb2/pull/237) ([lazyfrosch](https://github.com/lazyfrosch))
 
 ## [v2.3.0](https://github.com/icinga/puppet-icingaweb2/tree/v2.3.0) (2019-05-20)
+
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v2.2.0...v2.3.0)
 
 **Implemented enhancements:**
@@ -73,6 +93,7 @@
 - Avoid duplicate inisection declarations [\#215](https://github.com/Icinga/puppet-icingaweb2/pull/215) ([johanfleury](https://github.com/johanfleury))
 
 ## [v2.2.0](https://github.com/icinga/puppet-icingaweb2/tree/v2.2.0) (2018-05-14)
+
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v2.1.0...v2.2.0)
 
 **Implemented enhancements:**
@@ -88,6 +109,7 @@
 - Add param for IDO DB charset [\#208](https://github.com/Icinga/puppet-icingaweb2/pull/208) ([marcofl](https://github.com/marcofl))
 
 ## [v2.1.0](https://github.com/icinga/puppet-icingaweb2/tree/v2.1.0) (2018-01-23)
+
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v2.0.1...v2.1.0)
 
 **Implemented enhancements:**
@@ -117,6 +139,7 @@
 - Fix protected\_customvars bugs and papercuts [\#186](https://github.com/Icinga/puppet-icingaweb2/pull/186) ([olasd](https://github.com/olasd))
 
 ## [v2.0.1](https://github.com/icinga/puppet-icingaweb2/tree/v2.0.1) (2017-12-28)
+
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v2.0.0...v2.0.1)
 
 **Implemented enhancements:**
@@ -129,6 +152,7 @@
 - Fix typos on README.md [\#184](https://github.com/Icinga/puppet-icingaweb2/pull/184) ([Tokynet](https://github.com/Tokynet))
 
 ## [v2.0.0](https://github.com/icinga/puppet-icingaweb2/tree/v2.0.0) (2017-10-11)
+
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/1.0.6...v2.0.0)
 
 **Implemented enhancements:**
@@ -261,12 +285,15 @@
 - Allow multiple commandtransports [\#157](https://github.com/Icinga/puppet-icingaweb2/pull/157) ([baurmatt](https://github.com/baurmatt))
 
 ## [1.0.6](https://github.com/icinga/puppet-icingaweb2/tree/1.0.6) (2015-11-10)
+
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/1.0.5...1.0.6)
 
 ## [1.0.5](https://github.com/icinga/puppet-icingaweb2/tree/1.0.5) (2015-08-04)
+
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/1.0.4...1.0.5)
 
 ## [1.0.4](https://github.com/icinga/puppet-icingaweb2/tree/1.0.4) (2015-06-24)
+
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/1.0.3...1.0.4)
 
 **Merged pull requests:**
@@ -274,15 +301,21 @@
 - Add support for Scientific Linux in Yum repo [\#16](https://github.com/Icinga/puppet-icingaweb2/pull/16) ([joshbeard](https://github.com/joshbeard))
 
 ## [1.0.3](https://github.com/icinga/puppet-icingaweb2/tree/1.0.3) (2015-05-07)
+
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/1.0.2...1.0.3)
 
 ## [1.0.2](https://github.com/icinga/puppet-icingaweb2/tree/1.0.2) (2015-05-07)
+
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/1.0.1...1.0.2)
 
 ## [1.0.1](https://github.com/icinga/puppet-icingaweb2/tree/1.0.1) (2015-05-07)
+
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/1.0.0...1.0.1)
 
 ## [1.0.0](https://github.com/icinga/puppet-icingaweb2/tree/1.0.0) (2015-05-07)
+
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/6bc7b1ede693cebd8d86ed2ec15164ce315ac7bd...1.0.0)
+
 **Implemented enhancements:**
 
 - \[dev.icinga.com \#9158\] Add module graphite [\#55](https://github.com/Icinga/puppet-icingaweb2/issues/55)
@@ -296,4 +329,4 @@
 
 
 
-\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*

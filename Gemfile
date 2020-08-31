@@ -28,6 +28,7 @@ group :development do
   gem "puppet-module-posix-dev-r#{minor_version}", '~> 0.4',     require: false, platforms: [:ruby]
   gem "puppet-module-win-default-r#{minor_version}", '~> 0.4',   require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "puppet-module-win-dev-r#{minor_version}", '~> 0.4',       require: false, platforms: [:mswin, :mingw, :x64_mingw]
+  gem "github_changelog_generator", '~> 1.15',                   require: false if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.3.0')
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']
@@ -69,18 +70,4 @@ extra_gemfiles.each do |gemfile|
     eval(File.read(gemfile), binding)
   end
 end
-
-#move to .sync.yaml in the future
-gem 'puppetlabs_spec_helper', '>= 2.0'
-gem 'puppet-lint', '>= 2.0.0'
-gem 'facter', '>= 2.4.0'
-gem 'facterdb', '>= 1.0.0'
-gem 'rspec-puppet-facts', '>= 1.6.0'
-gem 'serverspec'
-#gem 'r10k'
-gem 'parallel_tests', '>= 2.10.0'
-gem 'metadata-json-lint'
-gem 'beaker-rspec'
-gem 'beaker-vagrant'
-gem 'beaker-puppet_install_helper'
 # vim: syntax=ruby

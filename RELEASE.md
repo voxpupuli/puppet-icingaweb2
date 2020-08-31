@@ -20,7 +20,7 @@ gem install github_changelog_generator
 
 Generate [CHANGELOG.md]
 ```bash
-github_changelog_generator -t <github-access-token> --future-release=v2.3.1
+github_changelog_generator -t <github-access-token> --future-release=v2.3.1 --project=puppet-icingaweb2 --user=icinga
 ```
 
 ## 3. References [REFERENCE.md]
