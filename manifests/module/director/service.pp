@@ -40,8 +40,8 @@ class icingaweb2::module::director::service(
   }
 
   systemd::unit_file { 'icinga-director.service':
-    source => template('icingaweb2/icinga-director.service.erb'),
-    notify => Service['icinga-director'],
+    content => template('icingaweb2/icinga-director.service.erb'),
+    notify  => Service['icinga-director'],
   }
 
   service {'icinga-director':
