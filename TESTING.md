@@ -1,13 +1,19 @@
 # TESTING
 
 ## Prerequisites
-Before starting any test, you should make sure you have installed all dependent puppet modules. Find a list of all
-dependencies in [README.md] or [metadata.json].
+Before starting any test, you should make sure you have installed the Puppet PDK and Bolt,
+also Vagrant and VirtualBox have to be installed for acceptance tests.
 
 Required gems are installed with `bundler`:
 ```
-cd puppet-icingaweb2
-bundle install
+cd puppet-icinga2
+pdk bundle install
+```
+
+Or just do an update:
+```
+cd puppet-icinga2
+pdk bundle update
 ```
 
 ## Validation tests
@@ -15,8 +21,8 @@ Validation tests will check all manifests, templates and ruby files against synt
 
 Run validation tests:
 ```
-cd puppet-icingaweb2
-rake validate
+cd puppet-icinga2
+pdk bundle exec rake validate
 ```
 
 ## Puppet lint
@@ -24,8 +30,8 @@ With puppet-lint we test if our manifests conform to the recommended style guide
 
 Run lint tests:
 ```
-cd puppet-icingaweb2
-rake lint
+cd puppet-icinga2
+pdk bundle exec rake lint
 ```
 
 ## Unit tests
@@ -33,55 +39,47 @@ For unit testing we use [RSpec]. All classes, defined resource types and functio
 
 Run unit tests:
 ```
-cd puppet-icingaweb2
-rake spec
+cd puppet-icinga2
+pdk test unit
+pdk test unit --tests=repos
 ```
 
-## Integration tests
+Or dedicated tests:
+```
+pdk test unit --tests=spec/classes/repos_spec.rb,spec/classes/redis_spec.rb
+```
+
+## Acceptance tests
 With integration tests this module is tested on multiple platforms to check the complete installation process. We define
 these tests with [ServerSpec] and run them on VMs by using [Beaker].
 
 Run all tests:
 ```
-bundle exec rake acceptance
+pdk bundle exec rake beaker
 ```
 
 Run a single test:
 ``` 
-bundle exec rake beaker:ubuntu-server-1604-x64
+cd puppet-icingaweb2
+pdk bundle exec rake beaker:ubuntu-server-1604-x64
 ```
 
 Don't destroy VM after tests:
 ```
 export BEAKER_destroy=no
-bundle exec rake beaker:ubuntu-server-1604-x64
+pdk bundle exec rake beaker:ubuntu-server-1604-x64
 ```
 
 ### Run tests
 All available ServerSpec tests are listed in the `spec/acceptance/` directory.
 
-Run all integraion tests:
-
-```
-cd puppet-icingaweb2
-rake beaker
-```
-
 List all available tasks/platforms:
 ```
 cd puppet-icingaweb2
-rake --task
+pdk exec rake --task
 ```
 
-Run integration tests for a single platform:
-```
-cd puppet-icingaweb2
-rake beaker:centos-7
-```
-
-[README.md]: README.md
 [puppet-lint]: http://puppet-lint.com/
-[metadata.json]: metadata.json
 [RSpec]: http://rspec-puppet.com/
 [Serverspec]: http://serverspec.org/
 [Beaker]: https://github.com/puppetlabs/beaker
