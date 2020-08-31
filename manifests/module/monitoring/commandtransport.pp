@@ -33,7 +33,6 @@ define icingaweb2::module::monitoring::commandtransport(
   Optional[String]     $password         = undef,
   Stdlib::Absolutepath $path             = '/var/run/icinga2/cmd/icinga2.cmd',
 ){
-  assert_private("You're not supposed to use this defined type manually.")
 
   $conf_dir        = $::icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/monitoring"
