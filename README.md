@@ -13,6 +13,7 @@
 6. [Development - Guide for contributing to the module](#development)
 
 ## Overview
+
 [Icinga Web 2] is the associated web interface for the open source
 monitoring tool [Icinga 2]. This module helps with installing and managing
 configuration of Icinga Web 2 and its modules on multiple operating systems.
@@ -25,6 +26,11 @@ This module installs and configures Icinga Web 2 on your Linux host by using the
 This module can manage all configurations files of Icinga Web 2 and import an initial database schema. It can install and
 manage all official [modules](https://www.icinga.com/products/icinga-web-2-modules/) as well as modules developed by the
 community.
+
+### What's new in version 3.0.0
+
+* The current version now uses the `icinga::repos` class from the new module `icinga` for the configuration of
+repositories including EPEL on RedHat and Backports on Debian. (see https://github.com/icinga/puppet-icinga)
 
 ## Setup
 
@@ -40,33 +46,38 @@ community.
 
 This module depends on
 
+* [icinga/ciinga] >= 1.0.0
+    * needed if `manage_repos` is set to `true`
 * [puppetlabs/stdlib] >= 4.16.0
 * [puppetlabs/vcsrepo] >= 1.3.0
 * [puppetlabs/concat] >= 2.0.1
-
-Depending on your setup the following modules may also be required:
-
-* [puppetlabs/apt] >= 2.0.0
-* [puppetlabs/yumrepo_core] >= 1.0.0
-* [puppet/zypprepo] >= 2.0.0
 
 ### Limitations
 
 This module has been tested on:
 
 * Debian 9, 10
-* CentOS/RHEL 6, 7
+* CentOS/RHEL 6, 7, 8
   * Requires [Software Collections Repository](https://wiki.centos.org/AdditionalResources/Repositories/SCL)
-* Ubuntu 16.04, 18.04
-* SLES 12
-
-* PHP >= 7.0
+* Ubuntu 16.04, 18.04, 20.04
+* SLES 12, 15
 
 Other operating systems or versions may work but have not been tested.
 
 ## Usage
 
 NOTE: If you plan to use additional modules from git, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in `extra_packages`.
+
+By default, your distribution's packages are used to install Icinga Web 2.
+
+Use the `manage_repos` parameter to configure repositories by default the official and stable [packages.icinga.com]. To configure your own
+repositories, or use the official testing or nightly snapshot stage, see https://github.com/icinga/puppet-icinga.
+
+``` puppet
+class { '::icingaweb2':
+  manage_repos => true,
+}
+```
 
 The usage of this module isn't simple. That depends on how Icinga Web 2 is implemented. Monitoring is here just a module in a framework. All basic stuff like authentication, logging or authorization is done by this framework. To store user and usergroups in a MySQL database, the database has to exist:
 ```
@@ -78,7 +89,7 @@ mysql::db { 'icingaweb2':
 }
 
 class {'icingaweb2':
-  manage_repo    => true,
+  manage_repos   => true,
   import_schema  => true,
   db_type        => 'mysql',
   db_host        => 'localhost',
@@ -95,7 +106,7 @@ If you set `import_schema` to `true` an default admin user `icingaadmin` with pa
 In case that `import_schema` is disabled or you'd like to use a different backend for authorization like LDAP, more work is required. At first we need a ressource with credentials to connect a LDAP server:
 ```
 class {'icingaweb2':
-  manage_repo    => true,
+  manage_repos   => true,
 }
 
 icingaweb2::config::resource{ 'my-ldap':
@@ -220,10 +231,8 @@ See also [CHANGELOG.md]
 
 [Icinga 2]: https://www.icinga.com/products/icinga-2/
 [Icinga Web 2]: https://www.icinga.com/products/icinga-web-2/
+[icinga/icinga]: https://github.com/icinga/puppet-icinga/
 
-[puppetlabs/apt]: https://github.com/puppetlabs/puppetlabs-apt
-[puppetlabs/yumrepo_core]: https://github.com/puppetlabs/puppetlabs-yumrepo_core
-[puppet/zypprepo]: https://forge.puppet.com/puppet/zypprepo
 [puppetlabs/stdlib]: https://github.com/puppetlabs/puppetlabs-stdlib
 [puppetlabs/concat]: https://github.com/puppetlabs/puppetlabs-concat
 [puppetlabs/vcsrepo]: https://forge.puppet.com/puppetlabs/vcsrepo

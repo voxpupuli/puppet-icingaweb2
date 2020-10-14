@@ -29,7 +29,12 @@
 #   Whether users can change themes or not.
 #
 # @param [Boolean] manage_repo
-#   When set to true this module will install the packages.icinga.com repository.
+#   Deprecated, use manage_repos.
+#
+# @param [Boolean] manage_repos
+#   When set to true this module will use the module icinga/puppet-icinga to manage repositories,
+#   e.g. the release repo on packages.icinga.com repository by default, the EPEL repository or Backports.
+#   For more information, see http://github.com/icinga/puppet-icinga.
 #
 # @param [Boolean] manage_package
 #   If set to `false` packages aren't managed.
@@ -92,7 +97,7 @@
 #   }
 #
 #   class {'icingaweb2':
-#     manage_repo   => true,
+#     manage_repos  => true,
 #     import_schema => true,
 #     db_type       => 'mysql',
 #     db_host       => 'localhost',
@@ -111,7 +116,7 @@
 #   }
 #
 #   class {'icingaweb2':
-#     manage_repo   => true,
+#     manage_repos  => true,
 #     import_schema => true,
 #     db_type       => 'pgsql',
 #     db_host       => 'localhost',
@@ -134,6 +139,7 @@ class icingaweb2 (
   String                                    $theme               = 'Icinga',
   Boolean                                   $theme_disabled      = false,
   Boolean                                   $manage_repo         = false,
+  Boolean                                   $manage_repos        = false,
   Boolean                                   $manage_package      = true,
   Optional[Array[String]]                   $extra_packages      = undef,
   Boolean                                   $import_schema       = false,
@@ -150,11 +156,16 @@ class icingaweb2 (
 
   require ::icingaweb2::globals
 
-  class { '::icingaweb2::repo': }
-  -> class { '::icingaweb2::install': }
+  if $manage_repos or $manage_repo {
+    require ::icinga::repos
+    if $manage_repo {
+      deprecation('manage_repo', 'manage_repo is deprecated and will be replaced by manage_repos in the future.')
+    }
+  }
+
+  class { '::icingaweb2::install': }
   -> class { '::icingaweb2::config': }
 
-  contain ::icingaweb2::repo
   contain ::icingaweb2::install
   contain ::icingaweb2::config
 }

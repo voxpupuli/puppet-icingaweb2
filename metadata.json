@@ -17,6 +17,10 @@
       "version_requirement": ">= 2.0.1 < 7.0.0"
     },
     {
+      "name": "icinga/icinga",
+      "version_requirement": ">= 1.0.0 < 2.0.0"
+    },
+    {
       "name": "puppetlabs/vcsrepo",
       "version_requirement": ">= 1.3.0 < 4.0.0"
     },
@@ -53,13 +57,15 @@
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
         "16.04",
-        "18.04"
+        "18.04",
+        "20.04"
       ]
     },
     {
       "operatingsystem": "SLES",
       "operatingsystemrelease": [
-        "12"
+        "12",
+        "15"
       ]
     }
   ],

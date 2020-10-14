@@ -1,3 +1,3 @@
 class { 'icingaweb2':
-  manage_repo => true,
+  manage_repos => true,
 }
