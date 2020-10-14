@@ -31,7 +31,6 @@
 
 * `icingaweb2::config`: Configures Icinga Web 2.
 * `icingaweb2::install`: Installs Icinga Web 2 and extra packages.
-* `icingaweb2::repo`: Manages the packages.icinga.com repository based on the operating system.
 
 ### Defined types
 
@@ -76,7 +75,7 @@ mysql::db { 'icingaweb2':
 }
 
 class {'icingaweb2':
-  manage_repo   => true,
+  manage_repos  => true,
   import_schema => true,
   db_type       => 'mysql',
   db_host       => 'localhost',
@@ -98,7 +97,7 @@ postgresql::server::db { 'icingaweb2':
 }
 
 class {'icingaweb2':
-  manage_repo   => true,
+  manage_repos  => true,
   import_schema => true,
   db_type       => 'pgsql',
   db_host       => 'localhost',
@@ -185,7 +184,17 @@ Default value: ``false``
 
 Data type: `Boolean`
 
-When set to true this module will install the packages.icinga.com repository.
+Deprecated, use manage_repos.
+
+Default value: ``false``
+
+##### `manage_repos`
+
+Data type: `Boolean`
+
+When set to true this module will use the module icinga/puppet-icinga to manage repositories,
+e.g. the release repo on packages.icinga.com repository by default, the EPEL repository or Backports.
+For more information, see http://github.com/icinga/puppet-icinga.
 
 Default value: ``false``
 
