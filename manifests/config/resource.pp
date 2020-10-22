@@ -15,8 +15,8 @@
 # @param [Optional[Stdlib::Port]] port
 #   Port number to use.
 #
-# @param [Optional[Enum['mysql', 'pgsql']]] db_type
-#   Supported DB types are `mysql` and `pgsql`.
+# @param [Optional[Enum['mysql', 'pgsql', 'mssql']]] db_type
+#   Supported DB types are `mysql`,`mssql` and `pgsql`.
 #
 # @param [Optional[String]] db_name
 #   The database to use. Only valid if `type` is `db`.
@@ -71,7 +71,7 @@ define icingaweb2::config::resource(
   String                                      $resource_name   = $title,
   Optional[String]                            $host            = undef,
   Optional[Stdlib::Port]                      $port            = undef,
-  Optional[Enum['mysql', 'pgsql']]            $db_type         = undef,
+  Optional[Enum['mysql', 'pgsql', 'mssql']]   $db_type         = undef,
   Optional[String]                            $db_name         = undef,
   Optional[String]                            $db_username     = undef,
   Optional[String]                            $db_password     = undef,
