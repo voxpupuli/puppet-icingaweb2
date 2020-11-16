@@ -15,8 +15,8 @@
 # @param [Optional[Stdlib::Port]] port
 #   Port number to use.
 #
-# @param [Optional[Enum['mysql', 'pgsql']]] db_type
-#   Supported DB types are `mysql` and `pgsql`.
+# @param [Optional[Enum['mysql', 'pgsql', 'mssql', 'oci', 'oracle', 'ibm', 'sqlite']]] db_type
+#   Set database type to connect.
 #
 # @param [Optional[String]] db_name
 #   The database to use. Only valid if `type` is `db`.
@@ -67,20 +67,20 @@
 #   }
 #
 define icingaweb2::config::resource(
-  Enum['db', 'ldap']                          $type,
-  String                                      $resource_name   = $title,
-  Optional[String]                            $host            = undef,
-  Optional[Stdlib::Port]                      $port            = undef,
-  Optional[Enum['mysql', 'pgsql']]            $db_type         = undef,
-  Optional[String]                            $db_name         = undef,
-  Optional[String]                            $db_username     = undef,
-  Optional[String]                            $db_password     = undef,
-  Optional[String]                            $db_charset      = undef,
-  Optional[String]                            $ldap_root_dn    = undef,
-  Optional[String]                            $ldap_bind_dn    = undef,
-  Optional[String]                            $ldap_bind_pw    = undef,
-  Optional[Enum['none', 'starttls', 'ldaps']] $ldap_encryption = 'none',
-  Integer                                     $ldap_timeout    = 5,
+  Enum['db', 'ldap']                                                           $type,
+  String                                                                       $resource_name   = $title,
+  Optional[String]                                                             $host            = undef,
+  Optional[Stdlib::Port]                                                       $port            = undef,
+  Optional[Enum['mysql', 'pgsql', 'mssql', 'oci', 'oracle', 'ibm', 'sqlite']]  $db_type         = undef,
+  Optional[String]                                                             $db_name         = undef,
+  Optional[String]                                                             $db_username     = undef,
+  Optional[String]                                                             $db_password     = undef,
+  Optional[String]                                                             $db_charset      = undef,
+  Optional[String]                                                             $ldap_root_dn    = undef,
+  Optional[String]                                                             $ldap_bind_dn    = undef,
+  Optional[String]                                                             $ldap_bind_pw    = undef,
+  Optional[Enum['none', 'starttls', 'ldaps']]                                  $ldap_encryption = 'none',
+  Integer                                                                      $ldap_timeout    = 5,
 ) {
 
   $conf_dir = $::icingaweb2::globals::conf_dir
