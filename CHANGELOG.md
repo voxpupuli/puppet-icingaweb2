@@ -1,5 +1,12 @@
 # Change Log
 
+## [v3.0.1](https://github.com/icinga/puppet-icingaweb2/tree/v3.0.1) (2020-11-16)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.0.0...v3.0.1)
+
+**Fixed bugs:**
+
+- add mssql, oci, oracle, ibmi and sqlite as new db\_types for resources [\#278](https://github.com/Icinga/puppet-icingaweb2/pull/278) ([lbetz](https://github.com/lbetz))
+
 ## [v3.0.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.0.0) (2020-10-14)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v2.4.1...v3.0.0)
 

@@ -1597,9 +1597,9 @@ Default value: ``undef``
 
 ##### `db_type`
 
-Data type: `Optional[Enum['mysql', 'pgsql']]`
+Data type: `Optional[Enum['mysql', 'pgsql', 'mssql', 'oci', 'oracle', 'ibm', 'sqlite']]`
 
-Supported DB types are `mysql` and `pgsql`.
+Set database type to connect.
 
 Default value: ``undef``
 
