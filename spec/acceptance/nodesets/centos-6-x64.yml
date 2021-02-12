@@ -1,6 +1,6 @@
 ---
 HOSTS:
-  centos-6-x64:
+  iw2centos6:
     roles:
       - master
     platform: el-6-x86_64

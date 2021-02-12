@@ -1,36 +1,24 @@
-# == Define: icingaweb2::module::puppetdb::certificate
+# @summary
+#   Installs a certificate for the Icinga Web 2 puppetdb module.
 #
-# Install a certificate for the Icinga Web 2 puppetdb module. This is a public defined type.
-#
-# === Parameters
-#
-# [*ensure*]
+# @param [Enum['absent', 'present']] ensure
 #   Enable or disable module. Defaults to `present`
 #
-# [*ssl_key*]
+# @param [String] ssl_key
 #   The combined key in a base64 encoded string.
 #
-# [*ssl_cacert*]
+# @param [String] ssl_cacert
 #   The CA root certificate in a base64 encoded string.
 #
-# === Examples
+# @note It is advised to read first something about the certiciates in the [documentation](https://github.com/Icinga/icingaweb2-module-puppetdb/blob/master/doc/01-Installation.md).
 #
-# It is advised to read about the certiciates first at
-# https://github.com/Icinga/icingaweb2-module-puppetdb/blob/master/doc/01-Installation.md
-#
-# You can set up indiviual certificates for the Icinga Web 2 director puppetdb module
-# to talk to you director like this
-#
+# @example You can set up indiviual certificates for the Icinga Web 2 director puppetdb module to talk to you director like this:
 #   icingaweb2::module::puppetdb::certificate { 'mypuppetdbhost.example.com':
 #     ssl_cacert  => '-----BEGIN CERTIFICATE----- ...',
 #     ssl_key     => '-----BEGIN RSA PRIVATE KEY----- ...',
 #   }
 #
-# That will install the following files with the specified contents
-# cacert: /etc/icingaweb2/module/puppetdb/ssl/mypuppetdbhost.example.com/certs/ca.pem
-# ssl_key: /etc/icingaweb2/module/puppetdb/ssl/mypuppetdbhost.example.com/private_keys/mypuppetdbhost.example.com_combined.pem
-#
-# Make sure you pass the contents combination of the private and key!
+# @api private
 #
 define icingaweb2::module::puppetdb::certificate(
   String                    $ssl_key,
@@ -41,7 +29,7 @@ define icingaweb2::module::puppetdb::certificate(
 
   $certificate_dir = "${::icingaweb2::module::puppetdb::ssl_dir}/${title}"
   $conf_user       = $::icingaweb2::conf_user
-  $conf_group      = $::icingaweb2::params::conf_group
+  $conf_group      = $::icingaweb2::conf_group
 
   File {
     owner => $conf_user,

@@ -1,30 +1,23 @@
-# == Class: icingaweb2::install
+# @summary
+#   Installs Icinga Web 2 and extra packages.
 #
-# This class handles the installation of the Icinga Web 2 package.
-#
-# === Parameters
-#
-# This class does not provide any parameters.
-#
-# === Examples
-#
-# This class is private and should not be called by others than this module.
+# @api private
 #
 class icingaweb2::install {
 
   assert_private("You're not supposed to use this defined type manually.")
 
-  $package             = $::icingaweb2::params::package
+  $package_name        = $::icingaweb2::globals::package_name
   $manage_package      = $::icingaweb2::manage_package
   $extra_packages      = $::icingaweb2::extra_packages
 
   if $manage_package {
-    package { $package:
+    package { $package_name:
       ensure => installed,
     }
   }
 
   if $extra_packages {
-    ensure_packages($extra_packages, { 'ensure' => 'present' })
+    ensure_packages($extra_packages, { 'ensure' => installed })
   }
 }

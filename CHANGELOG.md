@@ -1,7 +1,73 @@
 # Change Log
 
-## [v2.3.1](https://github.com/Icinga/puppet-icingaweb2/tree/v2.3.1) (2019-06-25)
-[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.3.0...v2.3.1)
+## [v3.0.1](https://github.com/icinga/puppet-icingaweb2/tree/v3.0.1) (2020-11-16)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.0.0...v3.0.1)
+
+**Fixed bugs:**
+
+- add mssql, oci, oracle, ibmi and sqlite as new db\_types for resources [\#278](https://github.com/Icinga/puppet-icingaweb2/pull/278) ([lbetz](https://github.com/lbetz))
+
+## [v3.0.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.0.0) (2020-10-14)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v2.4.1...v3.0.0)
+
+**Implemented enhancements:**
+
+- Add new param manage\_repos to replace manage\_repo in the future [\#274](https://github.com/Icinga/puppet-icingaweb2/issues/274)
+- Replace class repo with new class from module icinga [\#260](https://github.com/Icinga/puppet-icingaweb2/issues/260)
+
+## [v2.4.1](https://github.com/icinga/puppet-icingaweb2/tree/v2.4.1) (2020-08-31)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v2.4.0...v2.4.1)
+
+**Fixed bugs:**
+
+- Release defined resource commandtransport from private [\#264](https://github.com/Icinga/puppet-icingaweb2/issues/264)
+- fix icingaweb2::module::director::service systemd::unit\_file param name error [\#273](https://github.com/Icinga/puppet-icingaweb2/pull/273) ([jhoblitt](https://github.com/jhoblitt))
+- fix travis-ci failures [\#270](https://github.com/Icinga/puppet-icingaweb2/pull/270) ([jhoblitt](https://github.com/jhoblitt))
+
+**Closed issues:**
+
+- icingaweb2::module::director::service systemd::unit\_file param name error [\#272](https://github.com/Icinga/puppet-icingaweb2/issues/272)
+- travis-ci rubocop check is failing on master [\#271](https://github.com/Icinga/puppet-icingaweb2/issues/271)
+- travis-ci `check:git\_ignore` check is failing on master [\#269](https://github.com/Icinga/puppet-icingaweb2/issues/269)
+- manage business process source files [\#265](https://github.com/Icinga/puppet-icingaweb2/issues/265)
+- Update Package version [\#262](https://github.com/Icinga/puppet-icingaweb2/issues/262)
+
+## [v2.4.0](https://github.com/icinga/puppet-icingaweb2/tree/v2.4.0) (2020-07-06)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v2.3.1...v2.4.0)
+
+**Implemented enhancements:**
+
+- add pdk support [\#259](https://github.com/Icinga/puppet-icingaweb2/issues/259)
+- rework documentation [\#258](https://github.com/Icinga/puppet-icingaweb2/issues/258)
+- Rework to use module data [\#257](https://github.com/Icinga/puppet-icingaweb2/issues/257)
+- Add Support for RHEL 8 [\#255](https://github.com/Icinga/puppet-icingaweb2/issues/255)
+- Add Support for Debian 10 [\#254](https://github.com/Icinga/puppet-icingaweb2/issues/254)
+- Update params for authmethod msldap [\#252](https://github.com/Icinga/puppet-icingaweb2/pull/252) ([gomesar9](https://github.com/gomesar9))
+- Add new 1.7.x dependencies [\#248](https://github.com/Icinga/puppet-icingaweb2/pull/248) ([lbetz](https://github.com/lbetz))
+- Add timeout to ldap resource [\#245](https://github.com/Icinga/puppet-icingaweb2/pull/245) ([joernott](https://github.com/joernott))
+- Add logging config option php [\#242](https://github.com/Icinga/puppet-icingaweb2/pull/242) ([lbetz](https://github.com/lbetz))
+- Document logging config option 'php' [\#241](https://github.com/Icinga/puppet-icingaweb2/pull/241) ([lippserd](https://github.com/lippserd))
+- Add parameter poold\_purge to class phpfpm [\#239](https://github.com/Icinga/puppet-icingaweb2/pull/239) ([dhoppe](https://github.com/dhoppe))
+- Update and verify acceptance tests [\#234](https://github.com/Icinga/puppet-icingaweb2/pull/234) ([lazyfrosch](https://github.com/lazyfrosch))
+
+**Fixed bugs:**
+
+- Multiple LDAP Hosts do not work anymore [\#261](https://github.com/Icinga/puppet-icingaweb2/issues/261)
+- Class ::icingaweb2::module::monitoring doesn't work with Documentation defaults [\#253](https://github.com/Icinga/puppet-icingaweb2/issues/253)
+- Ensure config directory mode is set with setgid [\#251](https://github.com/Icinga/puppet-icingaweb2/pull/251) ([lazyfrosch](https://github.com/lazyfrosch))
+- git\_revision is a required parameter [\#249](https://github.com/Icinga/puppet-icingaweb2/pull/249) ([attachmentgenie](https://github.com/attachmentgenie))
+- Remove question marks of parameter db\_port [\#238](https://github.com/Icinga/puppet-icingaweb2/pull/238) ([dhoppe](https://github.com/dhoppe))
+
+**Closed issues:**
+
+- Add new 1.7.x dependencies for director module: ipl / reactbundle / incubator [\#247](https://github.com/Icinga/puppet-icingaweb2/issues/247)
+
+**Merged pull requests:**
+
+- Remove parameter fastcgi\_script [\#243](https://github.com/Icinga/puppet-icingaweb2/pull/243) ([dhoppe](https://github.com/dhoppe))
+
+## [v2.3.1](https://github.com/icinga/puppet-icingaweb2/tree/v2.3.1) (2019-06-25)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v2.3.0...v2.3.1)
 
 **Implemented enhancements:**
 
@@ -12,8 +78,8 @@
 - possible regression: new cookie path parameter may break existing installs [\#235](https://github.com/Icinga/puppet-icingaweb2/issues/235)
 - config: Let cookie\_path be undef by default [\#237](https://github.com/Icinga/puppet-icingaweb2/pull/237) ([lazyfrosch](https://github.com/lazyfrosch))
 
-## [v2.3.0](https://github.com/Icinga/puppet-icingaweb2/tree/v2.3.0) (2019-05-20)
-[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.2.0...v2.3.0)
+## [v2.3.0](https://github.com/icinga/puppet-icingaweb2/tree/v2.3.0) (2019-05-20)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v2.2.0...v2.3.0)
 
 **Implemented enhancements:**
 
@@ -38,8 +104,8 @@
 - Set confdir in the rspec context \(fixes \#216\) [\#217](https://github.com/Icinga/puppet-icingaweb2/pull/217) ([johanfleury](https://github.com/johanfleury))
 - Avoid duplicate inisection declarations [\#215](https://github.com/Icinga/puppet-icingaweb2/pull/215) ([johanfleury](https://github.com/johanfleury))
 
-## [v2.2.0](https://github.com/Icinga/puppet-icingaweb2/tree/v2.2.0) (2018-05-14)
-[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.1.0...v2.2.0)
+## [v2.2.0](https://github.com/icinga/puppet-icingaweb2/tree/v2.2.0) (2018-05-14)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v2.1.0...v2.2.0)
 
 **Implemented enhancements:**
 
@@ -53,8 +119,8 @@
 
 - Add param for IDO DB charset [\#208](https://github.com/Icinga/puppet-icingaweb2/pull/208) ([marcofl](https://github.com/marcofl))
 
-## [v2.1.0](https://github.com/Icinga/puppet-icingaweb2/tree/v2.1.0) (2018-01-23)
-[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.0.1...v2.1.0)
+## [v2.1.0](https://github.com/icinga/puppet-icingaweb2/tree/v2.1.0) (2018-01-23)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v2.0.1...v2.1.0)
 
 **Implemented enhancements:**
 
@@ -82,8 +148,8 @@
 - Add missing curly bracket and trailing commas [\#189](https://github.com/Icinga/puppet-icingaweb2/pull/189) ([rgevaert](https://github.com/rgevaert))
 - Fix protected\_customvars bugs and papercuts [\#186](https://github.com/Icinga/puppet-icingaweb2/pull/186) ([olasd](https://github.com/olasd))
 
-## [v2.0.1](https://github.com/Icinga/puppet-icingaweb2/tree/v2.0.1) (2017-12-28)
-[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/v2.0.0...v2.0.1)
+## [v2.0.1](https://github.com/icinga/puppet-icingaweb2/tree/v2.0.1) (2017-12-28)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v2.0.0...v2.0.1)
 
 **Implemented enhancements:**
 
@@ -94,8 +160,8 @@
 - fix \#201 Suppoet fcgi as example for apache [\#202](https://github.com/Icinga/puppet-icingaweb2/pull/202) ([lbetz](https://github.com/lbetz))
 - Fix typos on README.md [\#184](https://github.com/Icinga/puppet-icingaweb2/pull/184) ([Tokynet](https://github.com/Tokynet))
 
-## [v2.0.0](https://github.com/Icinga/puppet-icingaweb2/tree/v2.0.0) (2017-10-11)
-[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/1.0.6...v2.0.0)
+## [v2.0.0](https://github.com/icinga/puppet-icingaweb2/tree/v2.0.0) (2017-10-11)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/1.0.6...v2.0.0)
 
 **Implemented enhancements:**
 
@@ -226,29 +292,29 @@
 - Change sql\_schema\_location if using git [\#29](https://github.com/Icinga/puppet-icingaweb2/pull/29) ([petems](https://github.com/petems))
 - Allow multiple commandtransports [\#157](https://github.com/Icinga/puppet-icingaweb2/pull/157) ([baurmatt](https://github.com/baurmatt))
 
-## [1.0.6](https://github.com/Icinga/puppet-icingaweb2/tree/1.0.6) (2015-11-10)
-[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/1.0.5...1.0.6)
+## [1.0.6](https://github.com/icinga/puppet-icingaweb2/tree/1.0.6) (2015-11-10)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/1.0.5...1.0.6)
 
-## [1.0.5](https://github.com/Icinga/puppet-icingaweb2/tree/1.0.5) (2015-08-04)
-[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/1.0.4...1.0.5)
+## [1.0.5](https://github.com/icinga/puppet-icingaweb2/tree/1.0.5) (2015-08-04)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/1.0.4...1.0.5)
 
-## [1.0.4](https://github.com/Icinga/puppet-icingaweb2/tree/1.0.4) (2015-06-24)
-[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/1.0.3...1.0.4)
+## [1.0.4](https://github.com/icinga/puppet-icingaweb2/tree/1.0.4) (2015-06-24)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/1.0.3...1.0.4)
 
 **Merged pull requests:**
 
 - Add support for Scientific Linux in Yum repo [\#16](https://github.com/Icinga/puppet-icingaweb2/pull/16) ([joshbeard](https://github.com/joshbeard))
 
-## [1.0.3](https://github.com/Icinga/puppet-icingaweb2/tree/1.0.3) (2015-05-07)
-[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/1.0.2...1.0.3)
+## [1.0.3](https://github.com/icinga/puppet-icingaweb2/tree/1.0.3) (2015-05-07)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/1.0.2...1.0.3)
 
-## [1.0.2](https://github.com/Icinga/puppet-icingaweb2/tree/1.0.2) (2015-05-07)
-[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/1.0.1...1.0.2)
+## [1.0.2](https://github.com/icinga/puppet-icingaweb2/tree/1.0.2) (2015-05-07)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/1.0.1...1.0.2)
 
-## [1.0.1](https://github.com/Icinga/puppet-icingaweb2/tree/1.0.1) (2015-05-07)
-[Full Changelog](https://github.com/Icinga/puppet-icingaweb2/compare/1.0.0...1.0.1)
+## [1.0.1](https://github.com/icinga/puppet-icingaweb2/tree/1.0.1) (2015-05-07)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/1.0.0...1.0.1)
 
-## [1.0.0](https://github.com/Icinga/puppet-icingaweb2/tree/1.0.0) (2015-05-07)
+## [1.0.0](https://github.com/icinga/puppet-icingaweb2/tree/1.0.0) (2015-05-07)
 **Implemented enhancements:**
 
 - \[dev.icinga.com \#9158\] Add module graphite [\#55](https://github.com/Icinga/puppet-icingaweb2/issues/55)

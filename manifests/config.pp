@@ -1,20 +1,13 @@
-# == Class: icingaweb2::config
+# @summary
+#   Configures Icinga Web 2.
 #
-# This class manages general configuration files of Icinga Web 2.
-#
-# === Parameters
-#
-# This class does not provide any parameters.
-#
-# === Examples
-#
-# This class is private and should not be called by others than this module.
+# @api private
 #
 class icingaweb2::config {
 
-  $conf_dir             = $::icingaweb2::params::conf_dir
+  $conf_dir             = $::icingaweb2::globals::conf_dir
   $conf_user            = $::icingaweb2::conf_user
-  $conf_group           = $::icingaweb2::params::conf_group
+  $conf_group           = $::icingaweb2::conf_group
 
   $logging              = $::icingaweb2::logging
   $logging_file         = $::icingaweb2::logging_file
@@ -31,7 +24,8 @@ class icingaweb2::config {
   $cookie_path          = $::icingaweb2::cookie_path
 
   $import_schema        = $::icingaweb2::import_schema
-  $schema_dir           = $::icingaweb2::params::schema_dir
+  $mysql_db_schema      = $::icingaweb2::globals::mysql_db_schema
+  $pgsql_db_schema      = $::icingaweb2::globals::pgsql_db_schema
   $db_name              = $::icingaweb2::db_name
   $db_host              = $::icingaweb2::db_host
   $db_port              = $::icingaweb2::db_port
@@ -127,11 +121,13 @@ class icingaweb2::config {
   }
 
   file { "${conf_dir}/modules":
-    ensure => 'directory'
+    ensure => 'directory',
+    mode   => '2770',
   }
 
   file { "${conf_dir}/enabledModules":
-    ensure => 'directory'
+    ensure => 'directory',
+    mode   => '2770',
   }
 
   if $import_schema or $config_backend == 'db' {
@@ -165,7 +161,7 @@ class icingaweb2::config {
     case $db_type {
       'mysql': {
         exec { 'import schema':
-          command => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' < '${schema_dir}/mysql.schema.sql'",
+          command => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' < '${mysql_db_schema}'",
           unless  => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' -Ns -e 'SELECT 1 FROM icingaweb_user'",
           notify  => Exec['create default user'],
         }
@@ -178,7 +174,7 @@ class icingaweb2::config {
       'pgsql': {
         exec { 'import schema':
           environment => ["PGPASSWORD=${db_password}"],
-          command     => "psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}' -w -f ${schema_dir}/pgsql.schema.sql",
+          command     => "psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}' -w -f ${pgsql_db_schema}",
           unless      => "psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}' -w -c 'SELECT 1 FROM icingaweb_user'",
           notify      => Exec['create default user'],
           provider    => shell,

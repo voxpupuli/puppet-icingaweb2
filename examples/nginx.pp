@@ -26,14 +26,14 @@ nginx::resource::location { 'root':
 }
 
 nginx::resource::location { 'icingaweb2_index':
-  location       => '~ ^/icingaweb2/index\.php(.*)$',
-  server         => 'icingaweb2',
-  ssl            => true,
-  ssl_only       => true,
-  index_files    => [],
-  fastcgi        => '127.0.0.1:9000',
-  fastcgi_index  => 'index.php',
-  fastcgi_param  => {
+  location      => '~ ^/icingaweb2/index\.php(.*)$',
+  server        => 'icingaweb2',
+  ssl           => true,
+  ssl_only      => true,
+  index_files   => [],
+  fastcgi       => '127.0.0.1:9000',
+  fastcgi_index => 'index.php',
+  fastcgi_param => {
     'ICINGAWEB_CONFIGDIR' => '/etc/icingaweb2',
     'REMOTE_USER'         => '$remote_user',
     'SCRIPT_FILENAME'     => '/usr/share/icingaweb2/public/index.php',
@@ -66,7 +66,7 @@ mysql::db { 'icingaweb2':
 }
 
 class {'icingaweb2':
-  manage_repo   => true,
+  manage_repos  => true,
   import_schema => true,
   db_type       => 'mysql',
   db_host       => 'localhost',

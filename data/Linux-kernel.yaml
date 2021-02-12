@@ -1,0 +1,11 @@
+---
+icingaweb2::globals::package_name: icingaweb2
+icingaweb2::globals::conf_dir: /etc/icingaweb2
+icingaweb2::globals::mysql_db_schema: /usr/share/doc/icingaweb2/schema/mysql.schema.sql
+icingaweb2::globals::pgsql_db_schema: /usr/share/doc/icingaweb2/schema/pgsql.schema.sql
+icingaweb2::globals::gettext_package_name: gettext
+icingaweb2::globals::icingacli_bin: /usr/bin/icingacli
+
+icingaweb2::module_path: /usr/share/icingaweb2/modules
+icingaweb2::conf_group: icingaweb2
+icingaweb2::logging_file: /var/log/icingaweb2/icingaweb2.log

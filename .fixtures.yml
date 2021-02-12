@@ -6,5 +6,6 @@ fixtures:
     apt: "puppetlabs/apt"
     yumrepo: "puppetlabs/yumrepo_core"
     zypprepo: "puppet/zypprepo"
+    systemd: "camptocamp/systemd"
   symlinks:
     icingaweb2: "#{source_dir}"
