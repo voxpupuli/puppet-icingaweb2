@@ -96,6 +96,7 @@ define icingaweb2::module(
         provider => 'git',
         source   => $git_repository,
         revision => $git_revision,
+        user     => $conf_user,
       }
     }
     'none': { }
