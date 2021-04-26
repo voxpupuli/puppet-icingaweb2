@@ -1,21 +1,19 @@
-# == Class: icingaweb2::module::translation
+# @summary
+#   Installs and configures the translation module.
 #
-# Install and configure the translation module.
-#
-# === Parameters
-#
-# [*ensure*]
-#   Enable or disable module. Defaults to `present`
+# @param [Enum['absent', 'present']] ensure
+#   Enable or disable module.
 #
 class icingaweb2::module::translation(
   Enum['absent', 'present'] $ensure = 'present',
 ){
 
-  $conf_dir        = $::icingaweb2::params::conf_dir
-  $module_conf_dir = "${conf_dir}/modules/translation"
+  $conf_dir             = $::icingaweb2::globals::conf_dir
+  $gettext_package_name = $icingaweb2::globals::gettext_package_name
+  $module_conf_dir      = "${conf_dir}/modules/translation"
 
   # gettext-tools SUSE
-  package { $::icingaweb2::params::gettext_package_name:
+  package { $gettext_package_name:
     ensure => $ensure,
   }
 

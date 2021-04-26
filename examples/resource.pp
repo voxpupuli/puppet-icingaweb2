@@ -1,5 +1,5 @@
 class { 'icingaweb2':
-  manage_repo => true,
+  manage_repos => true,
 }
 
 icingaweb2::config::resource{'my-sql':

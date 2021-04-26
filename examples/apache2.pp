@@ -42,7 +42,7 @@ mysql::db { 'icingaweb2':
 }
 
 class {'icingaweb2':
-  manage_repo   => true,
+  manage_repos  => true,
   import_schema => true,
   db_type       => 'mysql',
   db_host       => 'localhost',

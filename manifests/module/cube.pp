@@ -1,31 +1,34 @@
-# == Class: icingaweb2::module::cube
+# @summary
+#   Installs and enables the cube module.
 #
-# Install and enable the cube module.
+# @note If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 #
-# === Parameters
+# @param [Enum['absent', 'present']] ensure
+#   Enable or disable module.
 #
-# [*ensure*]
-#   Enable or disable module. Defaults to `present`
+# @param [String] git_repository
+#   Set a git repository URL.
 #
-# [*git_repository*]
-#   Set a git repository URL. Defaults to github.
-#
-# [*git_revision*]
+# @param [Optional[String]] git_revision
 #   Set either a branch or a tag name, eg. `master` or `v1.0.0`.
 #
-# [*install_method*]
-#   Install methods are `git`, `package` and `none` is supported as installation method. Defaults to `git`
+# @param [Enum['git', 'none', 'package']] install_method
+#   Install methods are `git`, `package` and `none` is supported as installation method.
 #
-# [*package_name*]
+# @param [String] package_name
 #   Package name of the module. This setting is only valid in combination with the installation method `package`.
-#   Defaults to `icingaweb2-module-cube`
+#
+# @example
+#   class { 'icingaweb2::module::cube':
+#     git_revision => 'v1.0.0'
+#   }
 #
 class icingaweb2::module::cube(
   Enum['absent', 'present']      $ensure         = 'present',
   String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-cube.git',
   Optional[String]               $git_revision   = undef,
   Enum['git', 'none', 'package'] $install_method = 'git',
-  Optional[String]               $package_name   = 'icingaweb2-module-cube',
+  String.                        $package_name   = 'icingaweb2-module-cube',
 ){
   icingaweb2::module {'cube':
     ensure         => $ensure,

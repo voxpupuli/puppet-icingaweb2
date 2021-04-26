@@ -1,42 +1,58 @@
-# == Class: icingaweb2::module::fileshipper
+# @summary
+#   The fileshipper module extends the Director. It offers import sources to deal with CSV, JSON, YAML and XML files.
 #
-# The fileshipper module extends the Director. It offers import sources to deal with CSV, JSON, YAML and XML files.
+# @note If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 #
-# === Parameters
+# @param [Enum['absent', 'present']] ensure
+#   Enables or disables module.
 #
-# [*ensure*]
-#   Enable or disable module. Defaults to `present`
+# @param [String] git_repository
+#   Set a git repository URL.
 #
-# [*git_repository*]
-#   Set a git repository URL. Defaults to github.
+# @param [Enum['git', 'none', 'package']] install_method
+#   Install methods are `git`, `package` and `none` is supported as installation method.
 #
-# [*git_revision*]
+# @param [String] package_name
+#   Package name of the module. This setting is only valid in combination with the installation method `package`.
+#
+# @param [Optional[String]] git_revision
 #   Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 #
-# [*install_method*]
-#   Install methods are `git`, `package` and `none` is supported as installation method. Defaults to `git`
-#
-# [*package_name*]
-#   Package name of the module. This setting is only valid in combination with the installation method `package`.
-#   Defaults to `icingaweb2-module-fileshipper`
-#
-# [*base_directories*]
+# @param [Hash] base_directories
 #   Hash of base directories. These directories can later be selected in the import source (Director).
 #
-# [*directories*]
+# @param [Hash] directories
 #   Deploy plain Icinga 2 configuration files through the Director to your Icinga 2 master.
+#
+# @note To understand this modulei, please read [Fileshipper module documentation](https://www.icinga.com/docs/director/latest/fileshipper/doc/02-Installation/).
+#
+# @note You've to manage source and target directories yourself.
+#
+# @example:
+#   class { 'icingaweb2::module::fileshipper':
+#     git_revision => 'v1.0.1',
+#     base_directories => {
+#       temp => '/var/lib/fileshipper'
+#     },
+#     directories      => {
+#       'test' => {
+#         'source'     => '/var/lib/fileshipper/source',
+#         'target'     => '/var/lib/fileshipper/target',
+#       }
+#     }
+#   }
 #
 class icingaweb2::module::fileshipper(
   Enum['absent', 'present']      $ensure           = 'present',
   String                         $git_repository   = 'https://github.com/Icinga/icingaweb2-module-fileshipper.git',
   Optional[String]               $git_revision     = undef,
   Enum['git', 'none', 'package'] $install_method   = 'git',
-  Optional[String]               $package_name     = 'icingaweb2-module-fileshipper',
+  String                         $package_name     = 'icingaweb2-module-fileshipper',
   Hash                           $base_directories = {},
   Hash                           $directories      = {},
 ){
 
-  $conf_dir        = $::icingaweb2::params::conf_dir
+  $conf_dir        = $::icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/fileshipper"
 
   if $base_directories {

@@ -1,36 +1,37 @@
-# == Class: icingaweb2::module::generictts
+# @summary
+#   Installs and enables the generictts module.
 #
-# Install and enable the generictts module.
+# @note If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 #
-# === Parameters
+# @param [Enum['absent', 'present']] ensure
+#   Enable or disable module.
 #
-# [*ensure*]
-#   Enable or disable module. Defaults to `present`
+# @param [String] git_repository
+#   Set a git repository URL.
 #
-# [*git_repository*]
-#   Set a git repository URL. Defaults to github.
-#
-# [*git_revision*]
+# @param [Optional[String]] git_revision
 #   Set either a branch or a tag name, eg. `master` or `v2.0.0`.
 #
-# [*install_method*]
-#   Install methods are `git`, `package` and `none` is supported as installation method. Defaults to `git`
+# @parame [Enum['git', 'none', 'package'][ install_method
+#   Install methods are `git`, `package` and `none` is supported as installation method.
 #
-# [*package_name*]
+# @param [String] package_name
 #   Package name of the module. This setting is only valid in combination with the installation method `package`.
-#   Defaults to `icingaweb2-module-generictts`
 #
-# [*ticketsystems*]
-#   A hash of ticketsystems. The hash expects a `patten` and a `url` for each ticketsystem. The regex pattern is to
-#   match the ticket ID, eg. `/#([0-9]{4,6})/`. Place the ticket ID in the URL, eg.
-#   `https://my.ticket.system/tickets/id=$1`
+# @param [Hash] ticketsystems
+#   A hash of ticketsystems. The hash expects a `patten` and a `url` for each ticketsystem.
+#   The regex pattern is to match the ticket ID, eg. `/#([0-9]{4,6})/`. Place the ticket ID
+#   in the URL, eg. `https://my.ticket.system/tickets/id=$1`.
 #
-#   Example:
-#   ticketsystems => {
-#     system1 => {
-#       pattern => '/#([0-9]{4,6})/',
-#       url     => 'https://my.ticket.system/tickets/id=$1'
-#     }
+# @example
+#   class { 'icingaweb2::module::generictts':
+#     git_revision  => 'v2.0.0',
+#     ticketsystems => {
+#       'my-ticket-system' => {
+#         pattern => '/#([0-9]{4,6})/',
+#         url     => 'https://my.ticket.system/tickets/id=$1',
+#       },
+#     },
 #   }
 #
 class icingaweb2::module::generictts(
@@ -38,7 +39,7 @@ class icingaweb2::module::generictts(
   String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-generictts.git',
   Optional[String]               $git_revision   = undef,
   Enum['git', 'none', 'package'] $install_method = 'git',
-  Optional[String]               $package_name   = 'icingaweb2-module-generictts',
+  String                         $package_name   = 'icingaweb2-module-generictts',
   Hash                           $ticketsystems  = {},
 ){
   create_resources('icingaweb2::module::generictts::ticketsystem', $ticketsystems)

@@ -1,26 +1,25 @@
-# == Define: icingaweb2::module::generictts::ticketsystem
+# @summary
+#   Manages ticketsystem configuration for the generictts module.
 #
-# Manage ticketsystem configuration for the generictts module.
-#
-# === Parameters
-#
-# [*ticketsystem*]
+# @param [String] ticketsystem
 #   The name of the ticketsystem.
 #
-# [*pattern*]
+# @param [Optional[String]] pattern
 #   A regex pattern to match ticket numbers, eg. `/#([0-9]{4,6})/`
 #
-# [*url*]
+# @param [Optional[String]] url
 #   The URL to your ticketsystem. Place the ticket ID in the URL, eg. `https://my.ticket.system/tickets/id=$1`
 #
+# @api private
+#
 define icingaweb2::module::generictts::ticketsystem(
-  String $ticketsystem = $title,
-  String $pattern      = undef,
-  String $url          = undef,
+  String             $ticketsystem = $title,
+  Optional[String]   $pattern      = undef,
+  Optional[String]   $url          = undef,
 ){
   assert_private("You're not supposed to use this defined type manually.")
 
-  $conf_dir        = $::icingaweb2::params::conf_dir
+  $conf_dir        = $::icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/generictts"
 
   icingaweb2::inisection { "generictts-ticketsystem-${ticketsystem}":
