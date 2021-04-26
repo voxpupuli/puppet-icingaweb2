@@ -9,8 +9,11 @@
 # @param [String] git_repository
 #   Set a git repository URL.
 #
-# @param [Optional[String]] git_revision
-#   Set either a branch or a tag name, eg. `master` or `v1.3.2`.
+# @param [Enum['git', 'none', 'package']] install_method
+#   Install methods are `git`, `package` and `none` is supported as installation method.
+#
+# @param [String] package_name
+#   Package name of the module. This setting is only valid in combination with the installation method `package`.
 #
 # @param [Optional[String]] url
 #   URL to your Graphite Web/API.
@@ -36,14 +39,16 @@
 #   }
 #
 class icingaweb2::module::graphite(
-  String                    $git_repository,
-  Enum['absent', 'present'] $ensure                                = 'present',
-  Optional[String]          $git_revision                          = undef,
-  Optional[String]          $url                                   = undef,
-  Optional[String]          $user                                  = undef,
-  Optional[String]          $password                              = undef,
-  Optional[String]          $graphite_writer_host_name_template    = undef,
-  Optional[String]          $graphite_writer_service_name_template = undef
+  Enum['absent', 'present']      $ensure                                = 'present',
+  String                         $git_repository                        = 'https://github.com/Icinga/icingaweb2-module-graphite.git',
+  Optional[String]               $git_revision                          = undef,
+  Enum['git', 'none', 'package'] $install_method                        = 'git',
+  String                         $package_name                          = 'icingaweb2-module-graphite',
+  Optional[String]               $url                                   = undef,
+  Optional[String]               $user                                  = undef,
+  Optional[String]               $password                              = undef,
+  Optional[String]               $graphite_writer_host_name_template    = undef,
+  Optional[String]               $graphite_writer_service_name_template = undef
 ){
 
   $conf_dir        = $::icingaweb2::globals::conf_dir
@@ -77,6 +82,8 @@ class icingaweb2::module::graphite(
     ensure         => $ensure,
     git_repository => $git_repository,
     git_revision   => $git_revision,
+    install_method => $install_method,
+    package_name   => $package_name,
     settings       => $settings,
   }
 }

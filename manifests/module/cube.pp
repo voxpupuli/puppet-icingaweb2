@@ -12,19 +12,29 @@
 # @param [Optional[String]] git_revision
 #   Set either a branch or a tag name, eg. `master` or `v1.0.0`.
 #
+# @param [Enum['git', 'none', 'package']] install_method
+#   Install methods are `git`, `package` and `none` is supported as installation method.
+#
+# @param [String] package_name
+#   Package name of the module. This setting is only valid in combination with the installation method `package`.
+#
 # @example
 #   class { 'icingaweb2::module::cube':
 #     git_revision => 'v1.0.0'
 #   }
 #
 class icingaweb2::module::cube(
-  String                      $git_repository,
-  Enum['absent', 'present']   $ensure         = 'present',
-  Optional[String]            $git_revision   = undef,
+  Enum['absent', 'present']      $ensure         = 'present',
+  String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-cube.git',
+  Optional[String]               $git_revision   = undef,
+  Enum['git', 'none', 'package'] $install_method = 'git',
+  String.                        $package_name   = 'icingaweb2-module-cube',
 ){
   icingaweb2::module {'cube':
     ensure         => $ensure,
     git_repository => $git_repository,
     git_revision   => $git_revision,
+    install_method => $install_method,
+    package_name   => $package_name,
   }
 }

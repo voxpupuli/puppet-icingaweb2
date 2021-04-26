@@ -9,6 +9,12 @@
 # @param [String] git_repository
 #   Set a git repository URL.
 #
+# @param [Enum['git', 'none', 'package']] install_method
+#   Install methods are `git`, `package` and `none` is supported as installation method.
+#
+# @param [String] package_name
+#   Package name of the module. This setting is only valid in combination with the installation method `package`.
+#
 # @param [Optional[String]] git_revision
 #   Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 #
@@ -41,11 +47,13 @@
 #   }
 #
 class icingaweb2::module::elasticsearch(
-  String                      $git_repository,
-  Enum['absent', 'present']   $ensure         = 'present',
-  Optional[String]            $git_revision   = undef,
-  Optional[Hash]              $instances      = undef,
-  Optional[Hash]              $eventtypes     = undef,
+  Enum['absent', 'present']      $ensure         = 'present',
+  String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-elasticsearch.git',
+  Optional[String]               $git_revision   = undef,
+  Enum['git', 'none', 'package'] $install_method = 'git',
+  String                         $package_name   = 'icingaweb2-module-elasticsearch',
+  Optional[Hash]                 $instances      = undef,
+  Optional[Hash]                 $eventtypes     = undef,
 ){
 
   if $instances {
@@ -76,5 +84,7 @@ class icingaweb2::module::elasticsearch(
     ensure         => $ensure,
     git_repository => $git_repository,
     git_revision   => $git_revision,
+    install_method => $install_method,
+    package_name   => $package_name,
   }
 }

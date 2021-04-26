@@ -12,6 +12,12 @@
 # @param [Optional[String]] git_revision
 #   Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 #
+# @param [Enum['git', 'none', 'package']] install_method
+#   Install methods are `git`, `package` and `none` is supported as installation method.
+#
+# @param [String] package_name
+#   Package name of the module. This setting is only valid in combination with the installation method `package`.
+#
 # @param [Enum['none', 'puppet']] ssl
 #   How to set up ssl certificates. To copy certificates from the local puppet installation, use `puppet`.
 #
@@ -49,12 +55,14 @@
 #   }
 #
 class icingaweb2::module::puppetdb(
-  String                    $git_repository,
-  Enum['absent', 'present'] $ensure         = 'present',
-  Optional[String]          $git_revision   = undef,
-  Enum['none', 'puppet']    $ssl            = 'none',
-  Optional[Stdlib::Host]    $host           = undef,
-  Hash                      $certificates   = {},
+  Enum['absent', 'present']      $ensure         = 'present',
+  String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-puppetdb.git',
+  Optional[String]               $git_revision   = undef,
+  Enum['git', 'none', 'package'] $install_method = 'git',
+  String                         $package_name   = 'icingaweb2-module-puppetdb',
+  Enum['none', 'puppet']         $ssl            = 'none',
+  Optional[String]               $host           = undef,
+  Hash                           $certificates   = {},
 ){
   $conf_dir   = "${::icingaweb2::globals::conf_dir}/modules/puppetdb"
   $ssl_dir    = "${conf_dir}/ssl"
@@ -130,5 +138,7 @@ class icingaweb2::module::puppetdb(
     ensure         => $ensure,
     git_repository => $git_repository,
     git_revision   => $git_revision,
+    install_method => $install_method,
+    package_name   => $package_name,
   }
 }
