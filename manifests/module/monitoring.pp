@@ -42,7 +42,7 @@
 #
 #   class {'icingaweb2::module::monitoring':
 #     ido_host        => 'localhost',
-#     ido_db_type     => 'mysql',
+#     ido_type        => 'mysql',
 #     ido_db_name     => 'icinga2',
 #     ido_db_username => 'icinga2',
 #     ido_db_password => 'supersecret',
