@@ -28,7 +28,7 @@ class icingaweb2::module::cube(
   String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-cube.git',
   Optional[String]               $git_revision   = undef,
   Enum['git', 'none', 'package'] $install_method = 'git',
-  String.                        $package_name   = 'icingaweb2-module-cube',
+  String                         $package_name   = 'icingaweb2-module-cube',
 ){
   icingaweb2::module {'cube':
     ensure         => $ensure,

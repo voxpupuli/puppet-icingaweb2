@@ -79,7 +79,7 @@ class icingaweb2::module::director(
   String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-director.git',
   Optional[String]               $git_revision   = undef,
   Enum['git', 'package', 'none'] $install_method = 'git',
-  String.                        $package_name   = 'icingaweb2-module-director',
+  String                         $package_name   = 'icingaweb2-module-director',
   Enum['mysql', 'pgsql']         $db_type        = 'mysql',
   Optional[String]               $db_host        = undef,
   Integer[1,65535]               $db_port        = 3306,
