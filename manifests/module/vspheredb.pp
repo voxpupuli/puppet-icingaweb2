@@ -2,22 +2,37 @@
 #
 # @param Enum['absent', 'present'] ensure
 #   Ensur es the state of the vspheredb module.
+#
 # @param String git_repository
 #   The upstream module repository.
+#
 # @param Optional[String] git_revision
 #   The version of the module that needs to be used.
-# @param Enum['mysql', 'pgsql'] db_type
+#
+# @param [Enum['git', 'none', 'package']] install_method
+#   Install methods are `git`, `package` and `none` is supported as installation method.
+#
+# @param [String] package_name
+#   Package name of the module. This setting is only valid in combination with the installation method `package`.
+#
+# @param Enum['mysql''] db_type
 #   The database type. Either mysql or postgres.
+#
 # @param String db_host
 #   The host where the vspheredb-database will be running
+#
 # @param Integer[1,65535] db_port
 #   The port on which the database is accessible.
+#
 # @param String db_name
 #   The name of the database this module should use.
+#
 # @param String db_username
 #   The username needed to access the database.
+#
 # @param String db_password
 #   The password needed to access the database.
+#
 # @param String db_charset
 #   The charset the database is set to.
 #
@@ -32,16 +47,18 @@
 #   }
 #
 class icingaweb2::module::vspheredb (
-  String                    $git_repository,
-  Enum['absent', 'present'] $ensure       = 'present',
-  Optional[String]          $git_revision = undef,
-  Enum['mysql', 'pgsql']    $db_type      = 'mysql',
-  Optional[Stdlib::Host]    $db_host      = undef,
-  Stdlib::Port              $db_port      = 3306,
-  Optional[String]          $db_name      = undef,
-  Optional[String]          $db_username  = undef,
-  Optional[String]          $db_password  = undef,
-  String                    $db_charset   = 'utf8mb4',
+  Enum['absent', 'present']      $ensure         = 'present',
+  String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-vspheredb.git',
+  Optional[String]               $git_revision   = undef,
+  Enum['git', 'none', 'package'] $install_method = 'git',
+  String                         $package_name   = 'icingaweb2-module-vspheredb',
+  Enum['mysql']                  $db_type        = 'mysql',
+  Optional[Stdlib::Host]         $db_host        = undef,
+  Stdlib::Port                   $db_port        = 3306,
+  Optional[String]               $db_name        = undef,
+  Optional[String]               $db_username    = undef,
+  Optional[String]               $db_password    = undef,
+  String                         $db_charset     = 'utf8mb4',
 ){
   icingaweb2::config::resource { 'icingaweb2-module-vspheredb':
     type        => 'db',
@@ -58,6 +75,8 @@ class icingaweb2::module::vspheredb (
     ensure         => $ensure,
     git_repository => $git_repository,
     git_revision   => $git_revision,
+    install_method => $install_method,
+    package_name   => $package_name,
     settings       => {
       'icingaweb2-module-vspheredb' => {
         'section_name' => 'db',
