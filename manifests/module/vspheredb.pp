@@ -60,6 +60,9 @@ class icingaweb2::module::vspheredb (
   Optional[String]               $db_password    = undef,
   String                         $db_charset     = 'utf8mb4',
 ){
+  $conf_dir        = $::icingaweb2::globals::conf_dir
+  $module_conf_dir = "${conf_dir}/modules/vspheredb"
+
   icingaweb2::config::resource { 'icingaweb2-module-vspheredb':
     type        => 'db',
     db_type     => $db_type,
@@ -80,7 +83,7 @@ class icingaweb2::module::vspheredb (
     settings       => {
       'icingaweb2-module-vspheredb' => {
         'section_name' => 'db',
-        'target'       => "${::icingaweb2::globals::conf_dir}/modules/vspheredb",
+        'target'       => "${module_conf_dir}/config.ini",
         'settings'     => {
           'resource' => 'icingaweb2-module-vspheredb',
         },
