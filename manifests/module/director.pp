@@ -24,7 +24,7 @@
 # @param [Optional[Stdlib::Host]] db_host
 #   Hostname of the database.
 #
-# @param [Stdlib::Port] db_port
+# @param [Optional[Stdlib::Port]] db_port
 #   Port of the database.
 #
 # @param [Optional[String]] db_name
@@ -82,7 +82,7 @@ class icingaweb2::module::director(
   String                         $package_name   = 'icingaweb2-module-director',
   Enum['mysql', 'pgsql']         $db_type        = 'mysql',
   Optional[String]               $db_host        = undef,
-  Integer[1,65535]               $db_port        = 3306,
+  Optional[Stdlib::Port]         $db_port        = undef,
   Optional[String]               $db_name        = undef,
   Optional[String]               $db_username    = undef,
   Optional[String]               $db_password    = undef,
@@ -91,11 +91,11 @@ class icingaweb2::module::director(
   Optional[Boolean]              $kickstart      = false,
   Optional[String]               $endpoint       = undef,
   String                         $api_host       = 'localhost',
-  Integer[1,65535]               $api_port       = 5665,
+  Stdlib::Port                   $api_port       = 5665,
   Optional[String]               $api_username   = undef,
   Optional[String]               $api_password   = undef,
 ){
-  $conf_dir        = $::icingaweb2::params::conf_dir
+  $conf_dir        = $::icingaweb2::globals::conf_dir
   $icingacli_bin   = $::icingaweb2::globals::icingacli_bin
   $module_conf_dir = "${conf_dir}/modules/director"
 
@@ -169,4 +169,5 @@ class icingaweb2::module::director(
     package_name   => $package_name,
     settings       => merge($db_settings, $kickstart_settings),
   }
+
 }
