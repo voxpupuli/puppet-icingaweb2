@@ -61,7 +61,7 @@ class icingaweb2::module::puppetdb(
   Enum['git', 'none', 'package'] $install_method = 'git',
   String                         $package_name   = 'icingaweb2-module-puppetdb',
   Enum['none', 'puppet']         $ssl            = 'none',
-  Optional[String]               $host           = undef,
+  Optional[Stdlib::Host]         $host           = undef,
   Hash                           $certificates   = {},
 ){
   $conf_dir   = "${::icingaweb2::globals::conf_dir}/modules/puppetdb"

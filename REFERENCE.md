@@ -26,6 +26,8 @@
 * [`icingaweb2::module::reactbundle`](#icingaweb2modulereactbundle): Installs and enables the reactbundle module.
 * [`icingaweb2::module::translation`](#icingaweb2moduletranslation): Installs and configures the translation module.
 * [`icingaweb2::module::vsphere`](#icingaweb2modulevsphere): The vSphere module extends the Director. It provides import sources for virtual machines and physical hosts from vSphere.
+* [`icingaweb2::module::vspheredb`](#icingaweb2modulevspheredb): Installs the vsphereDB plugin
+* [`icingaweb2::module::vspheredb::service`](#icingaweb2modulevspheredbservice): Installs and configures the vspheredb service.
 
 #### Private Classes
 
@@ -394,6 +396,8 @@ Data type: `String`
 
 Set a git repository URL.
 
+Default value: `'https://github.com/Icinga/icingaweb2-module-businessprocess.git'`
+
 ##### `git_revision`
 
 Data type: `Optional[String]`
@@ -401,6 +405,22 @@ Data type: `Optional[String]`
 Set either a branch or a tag name, eg. `master` or `v2.1.0`.
 
 Default value: ``undef``
+
+##### `install_method`
+
+Data type: `Enum['git', 'none', 'package']`
+
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+Default value: `'git'`
+
+##### `package_name`
+
+Data type: `String`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+Default value: `'icingaweb2-module-businessprocess'`
 
 ### `icingaweb2::module::cube`
 
@@ -436,6 +456,8 @@ Data type: `String`
 
 Set a git repository URL.
 
+Default value: `'https://github.com/Icinga/icingaweb2-module-cube.git'`
+
 ##### `git_revision`
 
 Data type: `Optional[String]`
@@ -443,6 +465,22 @@ Data type: `Optional[String]`
 Set either a branch or a tag name, eg. `master` or `v1.0.0`.
 
 Default value: ``undef``
+
+##### `install_method`
+
+Data type: `Enum['git', 'none', 'package']`
+
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+Default value: `'git'`
+
+##### `package_name`
+
+Data type: `String`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+Default value: `'icingaweb2-module-cube'`
 
 ### `icingaweb2::module::director`
 
@@ -488,6 +526,8 @@ Data type: `String`
 
 Set a git repository URL.
 
+Default value: `'https://github.com/Icinga/icingaweb2-module-director.git'`
+
 ##### `git_revision`
 
 Data type: `Optional[String]`
@@ -495,6 +535,22 @@ Data type: `Optional[String]`
 Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 
 Default value: ``undef``
+
+##### `install_method`
+
+Data type: `Enum['git', 'package', 'none']`
+
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+Default value: `'git'`
+
+##### `package_name`
+
+Data type: `String`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+Default value: `'icingaweb2-module-director'`
 
 ##### `db_type`
 
@@ -514,11 +570,11 @@ Default value: ``undef``
 
 ##### `db_port`
 
-Data type: `Stdlib::Port`
+Data type: `Optional[Stdlib::Port]`
 
 Port of the database.
 
-Default value: `3306`
+Default value: ``undef``
 
 ##### `db_name`
 
@@ -602,7 +658,7 @@ Default value: ``undef``
 
 ##### `db_charset`
 
-Data type: `String`
+Data type: `Optional[String]`
 
 
 
@@ -723,6 +779,24 @@ Data type: `String`
 
 Set a git repository URL.
 
+Default value: `'https://github.com/Icinga/icingaweb2-module-elasticsearch.git'`
+
+##### `install_method`
+
+Data type: `Enum['git', 'none', 'package']`
+
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+Default value: `'git'`
+
+##### `package_name`
+
+Data type: `String`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+Default value: `'icingaweb2-module-elasticsearch'`
+
 ##### `git_revision`
 
 Data type: `Optional[String]`
@@ -784,6 +858,24 @@ Default value: `'present'`
 Data type: `String`
 
 Set a git repository URL.
+
+Default value: `'https://github.com/Icinga/icingaweb2-module-fileshipper.git'`
+
+##### `install_method`
+
+Data type: `Enum['git', 'none', 'package']`
+
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+Default value: `'git'`
+
+##### `package_name`
+
+Data type: `String`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+Default value: `'icingaweb2-module-fileshipper'`
 
 ##### `git_revision`
 
@@ -849,6 +941,8 @@ Data type: `String`
 
 Set a git repository URL.
 
+Default value: `'https://github.com/Icinga/icingaweb2-module-generictts.git'`
+
 ##### `git_revision`
 
 Data type: `Optional[String]`
@@ -856,6 +950,22 @@ Data type: `Optional[String]`
 Set either a branch or a tag name, eg. `master` or `v2.0.0`.
 
 Default value: ``undef``
+
+##### `install_method`
+
+Data type: `Enum['git', 'none', 'package']`
+
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+Default value: `'git'`
+
+##### `package_name`
+
+Data type: `String`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+Default value: `'icingaweb2-module-generictts'`
 
 ##### `ticketsystems`
 
@@ -902,13 +1012,23 @@ Data type: `String`
 
 Set a git repository URL.
 
-##### `git_revision`
+Default value: `'https://github.com/Icinga/icingaweb2-module-graphite.git'`
 
-Data type: `Optional[String]`
+##### `install_method`
 
-Set either a branch or a tag name, eg. `master` or `v1.3.2`.
+Data type: `Enum['git', 'none', 'package']`
 
-Default value: ``undef``
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+Default value: `'git'`
+
+##### `package_name`
+
+Data type: `String`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+Default value: `'icingaweb2-module-graphite'`
 
 ##### `url`
 
@@ -947,6 +1067,14 @@ Default value: ``undef``
 Data type: `Optional[String]`
 
 The value of your icinga 2 GraphiteWriter's attribute `service_name_template` (if specified).
+
+Default value: ``undef``
+
+##### `git_revision`
+
+Data type: `Optional[String]`
+
+
 
 Default value: ``undef``
 
@@ -1018,7 +1146,7 @@ Requirements:
 
   class {'icingaweb2::module::monitoring':
     ido_host        => 'localhost',
-    ido_db_type     => 'mysql',
+    ido_type        => 'mysql',
     ido_db_name     => 'icinga2',
     ido_db_username => 'icinga2',
     ido_db_password => 'supersecret',
@@ -1183,6 +1311,8 @@ Data type: `String`
 
 Set a git repository URL.
 
+Default value: `'https://github.com/Icinga/icingaweb2-module-puppetdb.git'`
+
 ##### `git_revision`
 
 Data type: `Optional[String]`
@@ -1190,6 +1320,22 @@ Data type: `Optional[String]`
 Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 
 Default value: ``undef``
+
+##### `install_method`
+
+Data type: `Enum['git', 'none', 'package']`
+
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+Default value: `'git'`
+
+##### `package_name`
+
+Data type: `String`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+Default value: `'icingaweb2-module-puppetdb'`
 
 ##### `ssl`
 
@@ -1285,6 +1431,24 @@ Data type: `String`
 
 Set a git repository URL.
 
+Default value: `'https://github.com/Icinga/icingaweb2-module-vsphere.git'`
+
+##### `install_method`
+
+Data type: `Enum['git', 'none', 'package']`
+
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+Default value: `'git'`
+
+##### `package_name`
+
+Data type: `String`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+Default value: `'icingaweb2-module-vsphere'`
+
 ##### `git_revision`
 
 Data type: `Optional[String]`
@@ -1292,6 +1456,183 @@ Data type: `Optional[String]`
 Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
 
 Default value: ``undef``
+
+### `icingaweb2::module::vspheredb`
+
+Installs the vsphereDB plugin
+
+#### Examples
+
+##### 
+
+```puppet
+class { 'icingaweb2::module::vspheredb':
+  ensure       => 'present',
+  git_revision => 'v1.1.0',
+  db_host      => 'localhost',
+  db_name      => 'vspheredb',
+  db_username  => 'vspheredb',
+  db_password  => 'supersecret',
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::module::vspheredb` class.
+
+##### `ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Ensur es the state of the vspheredb module.
+
+Default value: `'present'`
+
+##### `git_repository`
+
+Data type: `String`
+
+The upstream module repository.
+
+Default value: `'https://github.com/Icinga/icingaweb2-module-vspheredb.git'`
+
+##### `git_revision`
+
+Data type: `Optional[String]`
+
+The version of the module that needs to be used.
+
+Default value: ``undef``
+
+##### `install_method`
+
+Data type: `Enum['git', 'none', 'package']`
+
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+Default value: `'git'`
+
+##### `package_name`
+
+Data type: `String`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+Default value: `'icingaweb2-module-vspheredb'`
+
+##### `db_type`
+
+Data type: `Enum['mysql']`
+
+The database type. Either mysql or postgres.
+
+Default value: `'mysql'`
+
+##### `db_host`
+
+Data type: `Optional[Stdlib::Host]`
+
+The host where the vspheredb-database will be running
+
+Default value: ``undef``
+
+##### `db_port`
+
+Data type: `Stdlib::Port`
+
+The port on which the database is accessible.
+
+Default value: `3306`
+
+##### `db_name`
+
+Data type: `Optional[String]`
+
+The name of the database this module should use.
+
+Default value: ``undef``
+
+##### `db_username`
+
+Data type: `Optional[String]`
+
+The username needed to access the database.
+
+Default value: ``undef``
+
+##### `db_password`
+
+Data type: `Optional[String]`
+
+The password needed to access the database.
+
+Default value: ``undef``
+
+##### `db_charset`
+
+Data type: `String`
+
+The charset the database is set to.
+
+Default value: `'utf8mb4'`
+
+### `icingaweb2::module::vspheredb::service`
+
+Installs and configures the vspheredb service.
+
+* **Note** Only systemd is supported by the Icinga Team and this module.
+
+#### Examples
+
+##### 
+
+```puppet
+include icingaweb2::module::vspheredb::service
+```
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::module::vspheredb::service` class.
+
+##### `ensure`
+
+Data type: `Stdlib::Ensure::Service`
+
+Whether the vspheredb service should be running.
+
+Default value: `'running'`
+
+##### `enable`
+
+Data type: `Boolean`
+
+Enable or disable the service.
+
+Default value: ``true``
+
+##### `user`
+
+Data type: `String`
+
+Specifies the user to run the vsphere service daemon as.
+
+Default value: `'icingavspheredb'`
+
+##### `group`
+
+Data type: `String`
+
+Specifies the primary group to run the vspheredb service daemon as.
+
+Default value: `'icingaweb2'`
+
+##### `manage_user`
+
+Data type: `Boolean`
+
+Whether to manage the server user resource.
+
+Default value: ``true``
 
 ## Defined types
 

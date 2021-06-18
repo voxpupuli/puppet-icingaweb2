@@ -1,12 +1,12 @@
 # @summary Installs the vsphereDB plugin
 #
-# @param Enum['absent', 'present'] ensure
+# @param [Enum['absent', 'present']] ensure
 #   Ensur es the state of the vspheredb module.
 #
-# @param String git_repository
+# @param [String] git_repository
 #   The upstream module repository.
 #
-# @param Optional[String] git_revision
+# @param [Optional[String]] git_revision
 #   The version of the module that needs to be used.
 #
 # @param [Enum['git', 'none', 'package']] install_method
@@ -15,25 +15,25 @@
 # @param [String] package_name
 #   Package name of the module. This setting is only valid in combination with the installation method `package`.
 #
-# @param Enum['mysql''] db_type
+# @param [Enum['mysql']] db_type
 #   The database type. Either mysql or postgres.
 #
-# @param String db_host
+# @param [Optional[Stdlib::Host]] db_host
 #   The host where the vspheredb-database will be running
 #
-# @param Integer[1,65535] db_port
+# @param [Stdlib::Port] db_port
 #   The port on which the database is accessible.
 #
-# @param String db_name
+# @param [Optional[String]] db_name
 #   The name of the database this module should use.
 #
-# @param String db_username
+# @param [Optional[String]] db_username
 #   The username needed to access the database.
 #
-# @param String db_password
+# @param [Optional[String]] db_password
 #   The password needed to access the database.
 #
-# @param String db_charset
+# @param [String] db_charset
 #   The charset the database is set to.
 #
 # @example

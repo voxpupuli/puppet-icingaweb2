@@ -12,7 +12,7 @@
 # @param [Optional[String]] git_revision
 #   Set either a branch or a tag name, eg. `master` or `v2.0.0`.
 #
-# @parame [Enum['git', 'none', 'package'][ install_method
+# @param [Enum['git', 'none', 'package']] install_method
 #   Install methods are `git`, `package` and `none` is supported as installation method.
 #
 # @param [String] package_name

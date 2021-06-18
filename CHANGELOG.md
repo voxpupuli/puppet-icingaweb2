@@ -1,5 +1,26 @@
 # Change Log
 
+## [v3.1.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.1.0) (2021-06-18)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.0.1...v3.1.0)
+
+**Implemented enhancements:**
+
+- Add vpsheredb module [\#276](https://github.com/Icinga/puppet-icingaweb2/pull/276) ([JonasVerhofste](https://github.com/JonasVerhofste))
+- option to install modules as package [\#244](https://github.com/Icinga/puppet-icingaweb2/pull/244) ([pulecp](https://github.com/pulecp))
+
+**Fixed bugs:**
+
+- Wrong path of config.ini in module director [\#290](https://github.com/Icinga/puppet-icingaweb2/issues/290)
+
+**Closed issues:**
+
+- Apache SSL configuration [\#279](https://github.com/Icinga/puppet-icingaweb2/issues/279)
+
+**Merged pull requests:**
+
+- Update dependencies [\#289](https://github.com/Icinga/puppet-icingaweb2/pull/289) ([saz](https://github.com/saz))
+- Fix typo in example [\#287](https://github.com/Icinga/puppet-icingaweb2/pull/287) ([mj](https://github.com/mj))
+
 ## [v3.0.1](https://github.com/icinga/puppet-icingaweb2/tree/v3.0.1) (2020-11-16)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.0.0...v3.0.1)
 
