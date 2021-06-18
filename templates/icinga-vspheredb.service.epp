@@ -1,0 +1,23 @@
+<%- |
+  String $conf_user,
+  String $icingacli_bin,
+| -%>
+[Unit]
+Description=Icinga vSphereDB Daemon
+Documentation=https://icinga.com/docs/vsphere/latest/
+Wants=network.target
+
+[Service]
+Type=notify
+ExecStart=<%= $icingacli_bin %> vspheredb daemon run
+User=<%= $conf_user %>
+SyslogIdentifier=icingavspheredb
+
+NotifyAccess=main
+WatchdogSec=10
+
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

@@ -15,3 +15,4 @@ icingaweb2::module::puppetdb::git_repository: https://github.com/Icinga/icingawe
 icingaweb2::module::reactbundle::git_repository: https://github.com/Icinga/icingaweb2-module-reactbundle.git
 icingaweb2::module::reactbundle::git_revision: v0.7.0
 icingaweb2::module::vsphere::git_repository: https://github.com/Icinga/icingaweb2-module-vsphere.git
+icingaweb2::module::vspheredb::git_repository: https://github.com/Icinga/icingaweb2-module-vspheredb.git
