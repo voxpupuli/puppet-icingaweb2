@@ -36,6 +36,9 @@
 # @param [String] db_charset
 #   The charset the database is set to.
 #
+# @param [Boolean] import_schema,
+#   Whether to import the database schema or not.
+#
 # @example
 #   class { 'icingaweb2::module::vspheredb':
 #     ensure       => 'present',
@@ -59,9 +62,11 @@ class icingaweb2::module::vspheredb (
   Optional[String]               $db_username    = undef,
   Optional[String]               $db_password    = undef,
   String                         $db_charset     = 'utf8mb4',
-){
-  $conf_dir        = $::icingaweb2::globals::conf_dir
-  $module_conf_dir = "${conf_dir}/modules/vspheredb"
+  Boolean                        $import_schema  = false,
+) {
+  $conf_dir               = $::icingaweb2::globals::conf_dir
+  $mysql_vspheredb_schema = $::icingaweb2::globals::mysql_vspheredb_schema
+  $module_conf_dir        = "${conf_dir}/modules/vspheredb"
 
   icingaweb2::config::resource { 'icingaweb2-module-vspheredb':
     type        => 'db',
@@ -90,4 +95,21 @@ class icingaweb2::module::vspheredb (
       },
     },
   }
+
+  if $import_schema {
+    case $db_type {
+      'mysql': {
+        exec { 'import vspheredb schema':
+          user    => 'root',
+          path    => $::facts['path'],
+          command => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' < '${mysql_vspheredb_schema}'",
+          unless  => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' -Ns -e 'SELECT schema_version FROM vspheredb_schema_migration'",
+        }
+      }
+      default: {
+        fail('The database type you provided is not supported.')
+      }
+    }
+  }
+
 }
