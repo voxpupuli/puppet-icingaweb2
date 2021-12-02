@@ -86,6 +86,17 @@
 # @param [Optional[Stdlib::Absolutepath]] cookie_path
 #   Path to where cookies are stored.
 #
+# @param [Variant[Struct[{name   => String, users  => Optional[Array[String]], groups => Optional[Array[String]]}], Boolean[false]]] admin_role
+#   Manage a role for admin access.
+#
+# @param String default_admin_username
+#   Default username for initial admin access. This parameter is only used
+#   if `import_schema` is set to `true` and only during the import itself.
+#
+# @param String default_admin_password
+#   Default password for initial admin access. This parameter is only used
+#   if `import_schema` is set to `true` and only during the import itself.
+#
 # @example Use MySQL as backend for user authentication:
 #   include ::mysql::server
 #
@@ -152,6 +163,14 @@ class icingaweb2 (
   Enum['ini', 'db']                         $config_backend      = 'ini',
   Optional[String]                          $default_domain      = undef,
   Optional[Stdlib::Absolutepath]            $cookie_path         = undef,
+  Variant[
+    Struct[{
+      name   => String,
+      users  => Optional[Array[String]],
+      groups => Optional[Array[String]]
+    }], Boolean[false]]                     $admin_role,
+  String                                    $default_admin_username,
+  String                                    $default_admin_password,
 ) {
 
   require ::icingaweb2::globals

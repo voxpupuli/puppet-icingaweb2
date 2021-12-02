@@ -30,7 +30,7 @@ define icingaweb2::inisection(
   String                    $section_name  = $title,
   Hash                      $settings      = {},
   Variant[String, Integer]  $order         = '01',
-){
+) {
 
   $conf_user      = $::icingaweb2::conf_user
   $conf_group     = $::icingaweb2::conf_group
