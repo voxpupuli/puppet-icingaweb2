@@ -104,6 +104,7 @@ class icingaweb2::module::vspheredb (
           path    => $::facts['path'],
           command => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' < '${mysql_vspheredb_schema}'",
           unless  => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' -Ns -e 'SELECT schema_version FROM vspheredb_schema_migration'",
+          require => Icingaweb2::Module['vspheredb'],
         }
       }
       default: {
