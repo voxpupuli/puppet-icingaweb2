@@ -56,8 +56,8 @@ This module depends on
 
 This module has been tested on:
 
-* Debian 9, 10
-* CentOS/RHEL 6, 7, 8
+* Debian 9, 10, 11
+* CentOS/RHEL 7, 8
   * Requires [Software Collections Repository](https://wiki.centos.org/AdditionalResources/Repositories/SCL)
 * Ubuntu 16.04, 18.04, 20.04
 * SLES 12, 15
