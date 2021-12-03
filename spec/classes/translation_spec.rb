@@ -29,7 +29,8 @@ describe('icingaweb2::module::translation', type: :class) do
                                'xgettext' => '/usr/bin/xgettext',
                                'msgfmt'   => '/usr/bin/msgfmt',
                              },
-                           }) }
+                           })
+        }
 
         case facts[:osfamily]
         when 'Debian', 'RedHat'

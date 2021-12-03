@@ -56,7 +56,8 @@ describe('icingaweb2::module::monitoring', type: :class) do
                              'settings' => {
                                'protected_customvars' => '*pw*,*pass*,community',
                              },
-                           }) }
+                           })
+        }
 
         it {
           is_expected.to contain_icingaweb2__config__resource('icingaweb2-module-monitoring')
@@ -171,7 +172,8 @@ describe('icingaweb2::module::monitoring', type: :class) do
                              'settings' => {
                                'protected_customvars' => 'foo,bar,*baz*',
                              },
-                           }) }
+                           })
+        }
       end
     end
   end

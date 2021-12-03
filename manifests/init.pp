@@ -142,6 +142,14 @@ class icingaweb2 (
   Stdlib::Absolutepath                      $logging_file,
   String                                    $conf_user,
   String                                    $conf_group,
+  Variant[
+    Struct[{
+      name   => String,
+      users  => Optional[Array[String]],
+      groups => Optional[Array[String]]
+    }], Boolean[false]]                     $admin_role,
+  String                                    $default_admin_username,
+  String                                    $default_admin_password,
   Enum['file', 'syslog', 'php', 'none']     $logging             = 'file',
   Enum['ERROR', 'WARNING', 'INFO', 'DEBUG'] $logging_level       = 'INFO',
   Pattern[/user|local[0-7]/]                $logging_facility    = 'user',
@@ -163,14 +171,6 @@ class icingaweb2 (
   Enum['ini', 'db']                         $config_backend      = 'ini',
   Optional[String]                          $default_domain      = undef,
   Optional[Stdlib::Absolutepath]            $cookie_path         = undef,
-  Variant[
-    Struct[{
-      name   => String,
-      users  => Optional[Array[String]],
-      groups => Optional[Array[String]]
-    }], Boolean[false]]                     $admin_role,
-  String                                    $default_admin_username,
-  String                                    $default_admin_password,
 ) {
 
   require ::icingaweb2::globals

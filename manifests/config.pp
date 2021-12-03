@@ -143,22 +143,23 @@ class icingaweb2::config {
       backend  => 'db',
       resource => "${db_type}-icingaweb2"
     }
-  
+
     icingaweb2::config::authmethod { "${db_type}-auth":
       backend  => 'db',
       resource => "${db_type}-icingaweb2"
     }
   }
 
-  if $admin_role {
-    icingaweb2::config::role { $admin_role['name']:
-      users       => if $admin_role['users'] { join(union([$admin_username], $admin_role['users'])) } else { $admin_username },
-      groups      => if $admin_role['groups'] { join($admin_role['groups']) } else { undef },
-      permissions => '*',
-    }
-  }
-
   if $import_schema {
+
+    if $admin_role {
+      icingaweb2::config::role { $admin_role['name']:
+        users       => if $admin_role['users'] { join(union([$admin_username], $admin_role['users'])) } else { $admin_username },
+        groups      => if $admin_role['groups'] { join($admin_role['groups']) } else { undef },
+        permissions => '*',
+      }
+    }
+
     case $db_type {
       'mysql': {
         exec { 'import schema':

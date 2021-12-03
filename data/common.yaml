@@ -1,7 +1,7 @@
 ---
 icingaweb2::conf_group: icingaweb2
 icingaweb2::admin_role:
-  name: default admin users
+  name: default admin user
   users:
     - icingaadmin
 icingaweb2::default_admin_username: icingaadmin

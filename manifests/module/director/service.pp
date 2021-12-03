@@ -43,7 +43,7 @@ class icingaweb2::module::director::service(
         before => Systemd::Unit_file['icinga-director.service'],
       }
     }
-  
+
     systemd::unit_file { 'icinga-director.service':
       content => template('icingaweb2/icinga-director.service.erb'),
       notify  => Service['icinga-director'],
