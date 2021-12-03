@@ -56,6 +56,10 @@ that store groups.
 * `icingaweb2::module::monitoring::commandtransport`: Manages commandtransport configuration for the monitoring module.
 * `icingaweb2::module::puppetdb::certificate`: Installs a certificate for the Icinga Web 2 puppetdb module.
 
+### Data types
+
+* [`Icingaweb2::AdminRole`](#icingaweb2adminrole): A strict type for the default admin role
+
 ## Classes
 
 ### `icingaweb2`
@@ -316,6 +320,26 @@ Path to where cookies are stored.
 
 Default value: ``undef``
 
+##### `admin_role`
+
+Data type: `Variant[Icingaweb2::AdminRole, Boolean[false]]`
+
+Manage a role for admin access.
+
+##### `default_admin_username`
+
+Data type: `String`
+
+Default username for initial admin access. This parameter is only used
+if `import_schema` is set to `true` and only during the import itself.
+
+##### `default_admin_password`
+
+Data type: `String`
+
+Default password for initial admin access. This parameter is only used
+if `import_schema` is set to `true` and only during the import itself.
+
 ### `icingaweb2::globals`
 
 This class loads the default parameters by doing a hiera lookup.
@@ -345,6 +369,12 @@ Data type: `Stdlib::Absolutepath`
 
 
 ##### `pgsql_db_schema`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### `mysql_vspheredb_schema`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -694,7 +724,8 @@ Default value: ``true``
 
 Data type: `String`
 
-Specifies user to run director service daemon.
+Specifies user to run director service daemon. Only available if
+install_method package is not used.
 
 Default value: `'icingadirector'`
 
@@ -703,6 +734,7 @@ Default value: `'icingadirector'`
 Data type: `String`
 
 Specifies primary group for user to run director service daemon.
+ Only available if install_method package is not used.
 
 Default value: `'icingaweb2'`
 
@@ -710,7 +742,8 @@ Default value: `'icingaweb2'`
 
 Data type: `Boolean`
 
-Whether to manage the server user resource.
+Whether to manage the server user resource. Only available if
+install_method package is not used.
 
 Default value: ``true``
 
@@ -1576,6 +1609,14 @@ The charset the database is set to.
 
 Default value: `'utf8mb4'`
 
+##### `import_schema`
+
+Data type: `Boolean`
+
+Whether to import the database schema or not.
+
+Default value: ``false``
+
 ### `icingaweb2::module::vspheredb::service`
 
 Installs and configures the vspheredb service.
@@ -1615,6 +1656,7 @@ Default value: ``true``
 Data type: `String`
 
 Specifies the user to run the vsphere service daemon as.
+Only available if install_method package is not used.
 
 Default value: `'icingavspheredb'`
 
@@ -1623,6 +1665,7 @@ Default value: `'icingavspheredb'`
 Data type: `String`
 
 Specifies the primary group to run the vspheredb service daemon as.
+Only available if install_method package is not used.
 
 Default value: `'icingaweb2'`
 
@@ -1630,7 +1673,8 @@ Default value: `'icingaweb2'`
 
 Data type: `Boolean`
 
-Whether to manage the server user resource.
+Whether to manage the server user resource. Only available if
+install_method package is not used.
 
 Default value: ``true``
 
@@ -2290,4 +2334,16 @@ Data type: `Optional[String]`
 
 
 Default value: ``undef``
+
+## Data types
+
+### `Icingaweb2::AdminRole`
+
+A strict type for the default admin role
+
+Alias of `Struct[{
+  name   => String,
+  users  => Optional[Array[String]],
+  groups => Optional[Array[String]],
+}]`
 

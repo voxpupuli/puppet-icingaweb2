@@ -1,5 +1,22 @@
 # Change Log
 
+## [v3.2.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.2.0) (2021-12-03)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.1.0...v3.2.0)
+
+**Implemented enhancements:**
+
+- Add import\_schema feature to vspheredb module [\#304](https://github.com/Icinga/puppet-icingaweb2/issues/304)
+- director module manage service unit file only if no package is used [\#303](https://github.com/Icinga/puppet-icingaweb2/issues/303)
+- vspheredb module manage service unit file only if no package is used  [\#302](https://github.com/Icinga/puppet-icingaweb2/issues/302)
+- Add code to set the icingaadmin initial [\#282](https://github.com/Icinga/puppet-icingaweb2/issues/282)
+- switch from camptocamp/systemd to puppet/systemd [\#298](https://github.com/Icinga/puppet-icingaweb2/pull/298) ([saz](https://github.com/saz))
+- Update dependency requirement to minimum version [\#295](https://github.com/Icinga/puppet-icingaweb2/pull/295) ([Rubueno](https://github.com/Rubueno))
+- changed stdlib max version from \<8.0.0 to \<9.0.0 [\#294](https://github.com/Icinga/puppet-icingaweb2/pull/294) ([zilchms](https://github.com/zilchms))
+
+**Merged pull requests:**
+
+- Typo fix [\#296](https://github.com/Icinga/puppet-icingaweb2/pull/296) ([Rubueno](https://github.com/Rubueno))
+
 ## [v3.1.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.1.0) (2021-06-18)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.0.1...v3.1.0)
 

@@ -86,14 +86,14 @@
 # @param [Optional[Stdlib::Absolutepath]] cookie_path
 #   Path to where cookies are stored.
 #
-# @param [Variant[Struct[{name   => String, users  => Optional[Array[String]], groups => Optional[Array[String]]}], Boolean[false]]] admin_role
+# @param [Variant[Icingaweb2::AdminRole, Boolean[false]]] admin_role
 #   Manage a role for admin access.
 #
-# @param String default_admin_username
+# @param [String] default_admin_username
 #   Default username for initial admin access. This parameter is only used
 #   if `import_schema` is set to `true` and only during the import itself.
 #
-# @param String default_admin_password
+# @param [String] default_admin_password
 #   Default password for initial admin access. This parameter is only used
 #   if `import_schema` is set to `true` and only during the import itself.
 #
@@ -138,39 +138,34 @@
 #   }
 #
 class icingaweb2 (
-  Stdlib::Absolutepath                      $module_path,
-  Stdlib::Absolutepath                      $logging_file,
-  String                                    $conf_user,
-  String                                    $conf_group,
-  Variant[
-    Struct[{
-      name   => String,
-      users  => Optional[Array[String]],
-      groups => Optional[Array[String]]
-    }], Boolean[false]]                     $admin_role,
-  String                                    $default_admin_username,
-  String                                    $default_admin_password,
-  Enum['file', 'syslog', 'php', 'none']     $logging             = 'file',
-  Enum['ERROR', 'WARNING', 'INFO', 'DEBUG'] $logging_level       = 'INFO',
-  Pattern[/user|local[0-7]/]                $logging_facility    = 'user',
-  String                                    $logging_application = 'icingaweb2',
-  Boolean                                   $show_stacktraces    = false,
-  String                                    $theme               = 'Icinga',
-  Boolean                                   $theme_disabled      = false,
-  Boolean                                   $manage_repo         = false,
-  Boolean                                   $manage_repos        = false,
-  Boolean                                   $manage_package      = true,
-  Optional[Array[String]]                   $extra_packages      = undef,
-  Boolean                                   $import_schema       = false,
-  Enum['mysql', 'pgsql']                    $db_type             = 'mysql',
-  Stdlib::Host                              $db_host             = 'localhost',
-  Stdlib::Port                              $db_port             = 3306,
-  String                                    $db_name             = 'icingaweb2',
-  Optional[String]                          $db_username         = undef,
-  Optional[String]                          $db_password         = undef,
-  Enum['ini', 'db']                         $config_backend      = 'ini',
-  Optional[String]                          $default_domain      = undef,
-  Optional[Stdlib::Absolutepath]            $cookie_path         = undef,
+  Stdlib::Absolutepath                            $module_path,
+  Stdlib::Absolutepath                            $logging_file,
+  String                                          $conf_user,
+  String                                          $conf_group,
+  Variant[Icingaweb2::AdminRole, Boolean[false]]  $admin_role,
+  String                                          $default_admin_username,
+  String                                          $default_admin_password,
+  Enum['file', 'syslog', 'php', 'none']           $logging             = 'file',
+  Enum['ERROR', 'WARNING', 'INFO', 'DEBUG']       $logging_level       = 'INFO',
+  Pattern[/user|local[0-7]/]                      $logging_facility    = 'user',
+  String                                          $logging_application = 'icingaweb2',
+  Boolean                                         $show_stacktraces    = false,
+  String                                          $theme               = 'Icinga',
+  Boolean                                         $theme_disabled      = false,
+  Boolean                                         $manage_repo         = false,
+  Boolean                                         $manage_repos        = false,
+  Boolean                                         $manage_package      = true,
+  Optional[Array[String]]                         $extra_packages      = undef,
+  Boolean                                         $import_schema       = false,
+  Enum['mysql', 'pgsql']                          $db_type             = 'mysql',
+  Stdlib::Host                                    $db_host             = 'localhost',
+  Stdlib::Port                                    $db_port             = 3306,
+  String                                          $db_name             = 'icingaweb2',
+  Optional[String]                                $db_username         = undef,
+  Optional[String]                                $db_password         = undef,
+  Enum['ini', 'db']                               $config_backend      = 'ini',
+  Optional[String]                                $default_domain      = undef,
+  Optional[Stdlib::Absolutepath]                  $cookie_path         = undef,
 ) {
 
   require ::icingaweb2::globals

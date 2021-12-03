@@ -36,7 +36,7 @@
 # @param [String] db_charset
 #   The charset the database is set to.
 #
-# @param [Boolean] import_schema,
+# @param [Boolean] import_schema
 #   Whether to import the database schema or not.
 #
 # @example
