@@ -1,7 +1,14 @@
 # Change Log
 
-## [v3.2.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.2.0) (2021-12-03)
-[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.1.0...v3.2.0)
+## [v3.2.2](https://github.com/icinga/puppet-icingaweb2/tree/v3.2.2) (2022-01-05)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.2.1...v3.2.2)
+
+**Fixed bugs:**
+
+- Do not force permissions of module config directories [\#305](https://github.com/Icinga/puppet-icingaweb2/issues/305)
+
+## [v3.2.1](https://github.com/icinga/puppet-icingaweb2/tree/v3.2.1) (2021-12-03)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.1.0...v3.2.1)
 
 **Implemented enhancements:**
 
