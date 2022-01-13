@@ -1,5 +1,12 @@
 # Change Log
 
+## [v3.2.3](https://github.com/icinga/puppet-icingaweb2/tree/v3.2.3) (2022-01-13)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.2.2...v3.2.3)
+
+**Fixed bugs:**
+
+- Import schema does not work for postgresql [\#306](https://github.com/Icinga/puppet-icingaweb2/issues/306)
+
 ## [v3.2.2](https://github.com/icinga/puppet-icingaweb2/tree/v3.2.2) (2022-01-05)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.2.1...v3.2.2)
 
@@ -331,7 +338,7 @@
 - Fixing testing issues [\#81](https://github.com/Icinga/puppet-icingaweb2/pull/81) ([lazyfrosch](https://github.com/lazyfrosch))
 - Update URLs to GitHub [\#62](https://github.com/Icinga/puppet-icingaweb2/pull/62) ([bobapple](https://github.com/bobapple))
 - testing: Updating travis settings [\#51](https://github.com/Icinga/puppet-icingaweb2/pull/51) ([lazyfrosch](https://github.com/lazyfrosch))
-- remove dependency on concat module [\#50](https://github.com/Icinga/puppet-icingaweb2/pull/50) ([lbischof](https://github.com/lbischof))
+- remove dependency on concat module [\#50](https://github.com/Icinga/puppet-icingaweb2/pull/50) ([jyniybinc](https://github.com/jyniybinc))
 - substituting non existing parameter [\#49](https://github.com/Icinga/puppet-icingaweb2/pull/49) ([attachmentgenie](https://github.com/attachmentgenie))
 - Fix permissions [\#30](https://github.com/Icinga/puppet-icingaweb2/pull/30) ([petems](https://github.com/petems))
 - Change sql\_schema\_location if using git [\#29](https://github.com/Icinga/puppet-icingaweb2/pull/29) ([petems](https://github.com/petems))
