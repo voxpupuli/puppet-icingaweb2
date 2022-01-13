@@ -177,7 +177,7 @@ class icingaweb2::config {
         exec { 'import schema':
           environment => ["PGPASSWORD=${db_password}"],
           command     => "psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}' -w -f ${pgsql_db_schema}",
-          unless      => "echo \"INSERT INTO icingaweb_user (name, active, password_hash) VALUES (\\\"${admin_username}\\\", 1, \\\"`php -r 'echo password_hash(\"${admin_password}\", PASSWORD_DEFAULT);'`\\\")\" | psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}' -w",
+          unless      => "psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}' -w -c 'SELECT 1 FROM icingaweb_user'",
           notify      => Exec['create default admin user'],
         }
 
