@@ -1,5 +1,12 @@
 # Change Log
 
+## [v3.2.4](https://github.com/icinga/puppet-icingaweb2/tree/v3.2.4) (2022-01-29)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.2.3...v3.2.4)
+
+**Fixed bugs:**
+
+- Add parameter AddCGIPassAuth to Apache config [\#308](https://github.com/Icinga/puppet-icingaweb2/pull/308) ([RincewindsHat](https://github.com/RincewindsHat))
+
 ## [v3.2.3](https://github.com/icinga/puppet-icingaweb2/tree/v3.2.3) (2022-01-13)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.2.2...v3.2.3)
 
