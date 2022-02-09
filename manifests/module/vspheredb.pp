@@ -50,23 +50,24 @@
 #   }
 #
 class icingaweb2::module::vspheredb (
-  Enum['absent', 'present']      $ensure         = 'present',
-  String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-vspheredb.git',
-  Optional[String]               $git_revision   = undef,
-  Enum['git', 'none', 'package'] $install_method = 'git',
-  String                         $package_name   = 'icingaweb2-module-vspheredb',
-  Enum['mysql']                  $db_type        = 'mysql',
-  Optional[Stdlib::Host]         $db_host        = undef,
-  Stdlib::Port                   $db_port        = 3306,
-  Optional[String]               $db_name        = undef,
-  Optional[String]               $db_username    = undef,
-  Optional[String]               $db_password    = undef,
-  String                         $db_charset     = 'utf8mb4',
-  Boolean                        $import_schema  = false,
+  Enum['absent', 'present']                    $ensure         = 'present',
+  String                                       $git_repository = 'https://github.com/Icinga/icingaweb2-module-vspheredb.git',
+  Optional[String]                             $git_revision   = undef,
+  Enum['git', 'none', 'package']               $install_method = 'git',
+  String                                       $package_name   = 'icingaweb2-module-vspheredb',
+  Enum['mysql']                                $db_type        = 'mysql',
+  Optional[Stdlib::Host]                       $db_host        = undef,
+  Stdlib::Port                                 $db_port        = 3306,
+  Optional[String]                             $db_name        = undef,
+  Optional[String]                             $db_username    = undef,
+  Optional[Variant[String, Sensitive[String]]] $db_password    = undef,
+  String                                       $db_charset     = 'utf8mb4',
+  Boolean                                      $import_schema  = false,
 ) {
   $conf_dir               = $::icingaweb2::globals::conf_dir
   $mysql_vspheredb_schema = $::icingaweb2::globals::mysql_vspheredb_schema
   $module_conf_dir        = "${conf_dir}/modules/vspheredb"
+  $db_password_unsensitive = if $db_password =~ Sensitive { $db_password.unwrap } else { $db_password }
 
   icingaweb2::config::resource { 'icingaweb2-module-vspheredb':
     type        => 'db',
@@ -75,7 +76,7 @@ class icingaweb2::module::vspheredb (
     port        => $db_port,
     db_name     => $db_name,
     db_username => $db_username,
-    db_password => $db_password,
+    db_password => $db_password_unsensitive,
     db_charset  => $db_charset,
   }
 
@@ -102,8 +103,8 @@ class icingaweb2::module::vspheredb (
         exec { 'import vspheredb schema':
           user    => 'root',
           path    => $::facts['path'],
-          command => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' < '${mysql_vspheredb_schema}'",
-          unless  => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' -Ns -e 'SELECT schema_version FROM vspheredb_schema_migration'",
+          command => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password_unsensitive}' '${db_name}' < '${mysql_vspheredb_schema}'",
+          unless  => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password_unsensitive}' '${db_name}' -Ns -e 'SELECT schema_version FROM vspheredb_schema_migration'",
           require => Icingaweb2::Module['vspheredb'],
         }
       }

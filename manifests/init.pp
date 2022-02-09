@@ -162,7 +162,7 @@ class icingaweb2 (
   Stdlib::Port                                    $db_port             = 3306,
   String                                          $db_name             = 'icingaweb2',
   Optional[String]                                $db_username         = undef,
-  Optional[String]                                $db_password         = undef,
+  Optional[Variant[String, Sensitive[String]]]    $db_password         = undef,
   Enum['ini', 'db']                               $config_backend      = 'ini',
   Optional[String]                                $default_domain      = undef,
   Optional[Stdlib::Absolutepath]                  $cookie_path         = undef,
