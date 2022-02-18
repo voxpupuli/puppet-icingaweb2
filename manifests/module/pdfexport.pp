@@ -1,5 +1,5 @@
 # @summary
-#   Installs and enables the businessprocess module.
+#   Installs, configures and enables the pdfexport module.
 #
 # @note If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 #
@@ -18,25 +18,42 @@
 # @param [String] package_name
 #   Package name of the module. This setting is only valid in combination with the installation method `package`.
 #
-# @note Check out the [Business Process module documentation](https://www.icinga.com/docs/icinga-business-process-modelling/latest/) for requirements.
+# @param [Optional[Stdlib::Absolutepath]] chrome_binary
+#   Path of the chrome or chromium binary.
 #
 # @example
-#   class { 'icingaweb2::module::businessprocess':
-#     git_revision => 'v2.1.0'
+#   class { 'icingaweb2::module::pdfexport':
+#     git_revision  => 'v0.10.0',
+#     chrome_binary => '/usr/bin/chromium-browser',
 #   }
 #
-class icingaweb2::module::businessprocess(
+class icingaweb2::module::pdfexport(
   Enum['absent', 'present']      $ensure         = 'present',
-  String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-businessprocess.git',
+  String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-pdfexport.git',
   Optional[String]               $git_revision   = undef,
   Enum['git', 'none', 'package'] $install_method = 'git',
-  String                         $package_name   = 'icingaweb2-module-businessprocess',
-){
-  icingaweb2::module {'businessprocess':
+  String                         $package_name   = 'icingaweb2-module-pdfexport',
+  Optional[Stdlib::Absolutepath] $chrome_binary  = undef,
+) {
+
+  $conf_dir        = $::icingaweb2::globals::conf_dir
+  $module_conf_dir = "${conf_dir}/modules/pdfexport"
+
+  icingaweb2::module { 'pdfexport':
     ensure         => $ensure,
     git_repository => $git_repository,
     git_revision   => $git_revision,
     install_method => $install_method,
     package_name   => $package_name,
+    settings       => {
+      'module-pdfexport-chrome' => {
+         section_name => 'chrome',
+         target       => "${module_conf_dir}/config.ini",
+         settings     => {
+           'binary' => $chrome_binary,
+         },
+      },
+    },
   }
+
 }
