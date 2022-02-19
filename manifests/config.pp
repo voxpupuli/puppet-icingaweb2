@@ -186,7 +186,7 @@ class icingaweb2::config {
 
         exec { 'create default admin user':
           environment => ["PGPASSWORD=${_db_password}"],
-          command     => "psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}' -w -c \"INSERT INTO icingaweb_user(name, active, password_hash) VALUES ('icingaadmin', 1, '\\\$1\\\$3no6eqZp\\\$FlcHQDdnxGPqKadmfVcCU.')\"",
+          command     => "echo \"INSERT INTO icingaweb_user (name, active, password_hash) VALUES ('${admin_username}', 1, '`php -r 'echo password_hash(\"${_admin_password}\", PASSWORD_DEFAULT);'`')\" | psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}'",
           refreshonly => true,
         }
       }
