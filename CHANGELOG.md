@@ -1,5 +1,64 @@
 # Change Log
 
+## [v3.2.4](https://github.com/icinga/puppet-icingaweb2/tree/v3.2.4) (2022-01-29)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.2.3...v3.2.4)
+
+**Fixed bugs:**
+
+- Add parameter AddCGIPassAuth to Apache config [\#308](https://github.com/Icinga/puppet-icingaweb2/pull/308) ([RincewindsHat](https://github.com/RincewindsHat))
+
+## [v3.2.3](https://github.com/icinga/puppet-icingaweb2/tree/v3.2.3) (2022-01-13)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.2.2...v3.2.3)
+
+**Fixed bugs:**
+
+- Import schema does not work for postgresql [\#306](https://github.com/Icinga/puppet-icingaweb2/issues/306)
+
+## [v3.2.2](https://github.com/icinga/puppet-icingaweb2/tree/v3.2.2) (2022-01-05)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.2.1...v3.2.2)
+
+**Fixed bugs:**
+
+- Do not force permissions of module config directories [\#305](https://github.com/Icinga/puppet-icingaweb2/issues/305)
+
+## [v3.2.1](https://github.com/icinga/puppet-icingaweb2/tree/v3.2.1) (2021-12-03)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.1.0...v3.2.1)
+
+**Implemented enhancements:**
+
+- Add import\_schema feature to vspheredb module [\#304](https://github.com/Icinga/puppet-icingaweb2/issues/304)
+- director module manage service unit file only if no package is used [\#303](https://github.com/Icinga/puppet-icingaweb2/issues/303)
+- vspheredb module manage service unit file only if no package is used  [\#302](https://github.com/Icinga/puppet-icingaweb2/issues/302)
+- Add code to set the icingaadmin initial [\#282](https://github.com/Icinga/puppet-icingaweb2/issues/282)
+- switch from camptocamp/systemd to puppet/systemd [\#298](https://github.com/Icinga/puppet-icingaweb2/pull/298) ([saz](https://github.com/saz))
+- Update dependency requirement to minimum version [\#295](https://github.com/Icinga/puppet-icingaweb2/pull/295) ([Rubueno](https://github.com/Rubueno))
+- changed stdlib max version from \<8.0.0 to \<9.0.0 [\#294](https://github.com/Icinga/puppet-icingaweb2/pull/294) ([zilchms](https://github.com/zilchms))
+
+**Merged pull requests:**
+
+- Typo fix [\#296](https://github.com/Icinga/puppet-icingaweb2/pull/296) ([Rubueno](https://github.com/Rubueno))
+
+## [v3.1.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.1.0) (2021-06-18)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.0.1...v3.1.0)
+
+**Implemented enhancements:**
+
+- Add vpsheredb module [\#276](https://github.com/Icinga/puppet-icingaweb2/pull/276) ([JonasVerhofste](https://github.com/JonasVerhofste))
+- option to install modules as package [\#244](https://github.com/Icinga/puppet-icingaweb2/pull/244) ([pulecp](https://github.com/pulecp))
+
+**Fixed bugs:**
+
+- Wrong path of config.ini in module director [\#290](https://github.com/Icinga/puppet-icingaweb2/issues/290)
+
+**Closed issues:**
+
+- Apache SSL configuration [\#279](https://github.com/Icinga/puppet-icingaweb2/issues/279)
+
+**Merged pull requests:**
+
+- Update dependencies [\#289](https://github.com/Icinga/puppet-icingaweb2/pull/289) ([saz](https://github.com/saz))
+- Fix typo in example [\#287](https://github.com/Icinga/puppet-icingaweb2/pull/287) ([mj](https://github.com/mj))
+
 ## [v3.0.1](https://github.com/icinga/puppet-icingaweb2/tree/v3.0.1) (2020-11-16)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.0.0...v3.0.1)
 
@@ -286,7 +345,7 @@
 - Fixing testing issues [\#81](https://github.com/Icinga/puppet-icingaweb2/pull/81) ([lazyfrosch](https://github.com/lazyfrosch))
 - Update URLs to GitHub [\#62](https://github.com/Icinga/puppet-icingaweb2/pull/62) ([bobapple](https://github.com/bobapple))
 - testing: Updating travis settings [\#51](https://github.com/Icinga/puppet-icingaweb2/pull/51) ([lazyfrosch](https://github.com/lazyfrosch))
-- remove dependency on concat module [\#50](https://github.com/Icinga/puppet-icingaweb2/pull/50) ([lbischof](https://github.com/lbischof))
+- remove dependency on concat module [\#50](https://github.com/Icinga/puppet-icingaweb2/pull/50) ([jyniybinc](https://github.com/jyniybinc))
 - substituting non existing parameter [\#49](https://github.com/Icinga/puppet-icingaweb2/pull/49) ([attachmentgenie](https://github.com/attachmentgenie))
 - Fix permissions [\#30](https://github.com/Icinga/puppet-icingaweb2/pull/30) ([petems](https://github.com/petems))
 - Change sql\_schema\_location if using git [\#29](https://github.com/Icinga/puppet-icingaweb2/pull/29) ([petems](https://github.com/petems))

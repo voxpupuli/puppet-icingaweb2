@@ -46,9 +46,9 @@ repositories including EPEL on RedHat and Backports on Debian. (see https://gith
 
 This module depends on
 
-* [icinga/ciinga] >= 1.0.0
+* [icinga/icinga] >= 1.0.0
     * needed if `manage_repos` is set to `true`
-* [puppetlabs/stdlib] >= 4.16.0
+* [puppetlabs/stdlib] >= 4.25.0
 * [puppetlabs/vcsrepo] >= 1.3.0
 * [puppetlabs/concat] >= 2.0.1
 
@@ -56,8 +56,8 @@ This module depends on
 
 This module has been tested on:
 
-* Debian 9, 10
-* CentOS/RHEL 6, 7, 8
+* Debian 9, 10, 11
+* CentOS/RHEL 7, 8
   * Requires [Software Collections Repository](https://wiki.centos.org/AdditionalResources/Repositories/SCL)
 * Ubuntu 16.04, 18.04, 20.04
 * SLES 12, 15

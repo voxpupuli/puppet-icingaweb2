@@ -1,7 +1,7 @@
 # @summary
 #   The doc module provides an interface to the Icinga 2 and Icinga Web 2 documentation.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Enable or disable module. Defaults to `present`
 #
 class icingaweb2::module::doc(

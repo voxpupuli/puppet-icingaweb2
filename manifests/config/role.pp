@@ -1,16 +1,16 @@
 # @summary
 #   Roles define a set of permissions that may be applied to users or groups.
 #
-# @param [String] role_name
+# @param role_name
 #   Name of the role.
 #
-# @param [Optional[String]] users
+# @param users
 #   Comma separated list of users this role applies to.
 #
-# @param [Optional[String]] groups
+# @param groups
 #   Comma separated list of groups this role applies to.
 #
-# @param [Optional[String]] permissions
+# @param permissions
 #   Comma separated lsit of permissions. Each module may add it's own permissions. Examples are
 #   - Allow everything: '*'
 #   - Allow config access: 'config/*'
@@ -18,7 +18,7 @@
 #   - Allow scheduling checks: 'monitoring/command/schedule-checks'
 #   - Grant admin permissions: 'admin'
 #
-# @param [Hash] filters
+# @param filters
 #   Hash of filters. Modules may add new filter keys, some sample keys are:
 #   - application/share/users
 #   - application/share/groups
@@ -106,4 +106,5 @@ define icingaweb2::config::role(
     target       => "${conf_dir}/roles.ini",
     settings     => delete_undef_values(merge($settings,$filters))
   }
+
 }

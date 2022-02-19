@@ -3,19 +3,25 @@
 #
 # @note If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Enables or disables module.
 #
-# @param [String] git_repository
+# @param git_repository
 #   Set a git repository URL.
 #
-# @param [Optional[String]] git_revision
+# @param install_method
+#   Install methods are `git`, `package` and `none` is supported as installation method.
+#
+# @param package_name
+#   Package name of the module. This setting is only valid in combination with the installation method `package`.
+#
+# @param git_revision
 #   Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 #
-# @param [Hash] base_directories
+# @param base_directories
 #   Hash of base directories. These directories can later be selected in the import source (Director).
 #
-# @param [Hash] directories
+# @param directories
 #   Deploy plain Icinga 2 configuration files through the Director to your Icinga 2 master.
 #
 # @note To understand this modulei, please read [Fileshipper module documentation](https://www.icinga.com/docs/director/latest/fileshipper/doc/02-Installation/).
@@ -37,11 +43,13 @@
 #   }
 #
 class icingaweb2::module::fileshipper(
-  String                      $git_repository,
-  Enum['absent', 'present']   $ensure           = 'present',
-  Optional[String]            $git_revision     = undef,
-  Hash                        $base_directories = {},
-  Hash                        $directories      = {},
+  Enum['absent', 'present']      $ensure           = 'present',
+  String                         $git_repository   = 'https://github.com/Icinga/icingaweb2-module-fileshipper.git',
+  Optional[String]               $git_revision     = undef,
+  Enum['git', 'none', 'package'] $install_method   = 'git',
+  String                         $package_name     = 'icingaweb2-module-fileshipper',
+  Hash                           $base_directories = {},
+  Hash                           $directories      = {},
 ){
 
   $conf_dir        = $::icingaweb2::globals::conf_dir
@@ -69,5 +77,7 @@ class icingaweb2::module::fileshipper(
     ensure         => $ensure,
     git_repository => $git_repository,
     git_revision   => $git_revision,
+    install_method => $install_method,
+    package_name   => $package_name,
   }
 }

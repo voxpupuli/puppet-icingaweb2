@@ -29,6 +29,9 @@ describe('icingaweb2::config', type: :class) do
             .with_ensure('file')
             .with_mode('0640')
         }
+        it { is_expected.not_to contain_exec('import schema') }
+        it { is_expected.not_to contain_exec('create default admin user') }
+        it { is_expected.not_to contain_icingaweb2__config__role('default admin user') }
       end
 
       context 'with import_schema => true and db_type => mysql' do
@@ -40,7 +43,7 @@ describe('icingaweb2::config', type: :class) do
         it { is_expected.to contain_icingaweb2__config__authmethod('mysql-auth') }
         it { is_expected.to contain_icingaweb2__config__role('default admin user') }
         it { is_expected.to contain_exec('import schema') }
-        it { is_expected.to contain_exec('create default user') }
+        it { is_expected.to contain_exec('create default admin user') }
       end
 
       context 'with import_schema => true and db_type => pgsql' do
@@ -52,7 +55,7 @@ describe('icingaweb2::config', type: :class) do
         it { is_expected.to contain_icingaweb2__config__authmethod('pgsql-auth') }
         it { is_expected.to contain_icingaweb2__config__role('default admin user') }
         it { is_expected.to contain_exec('import schema') }
-        it { is_expected.to contain_exec('create default user') }
+        it { is_expected.to contain_exec('create default admin user') }
       end
 
       context 'with import_schema => true and invalid db_type' do
@@ -63,13 +66,21 @@ describe('icingaweb2::config', type: :class) do
         it { is_expected.to raise_error(Puppet::Error, %r{expects a match for Enum\['mysql', 'pgsql'\]}) }
       end
 
-      context 'with import_schema => false' do
+#      context 'with import_schema => false' do
+#        let :pre_condition do
+#          "class { 'icingaweb2': import_schema => false }"
+#        end
+#
+#        it { is_expected.not_to contain_exec('import schema') }
+#        it { is_expected.not_to contain_exec('create default admin user') }
+#        it { is_expected.to contain_icingaweb2__config__role('default admin user') }
+#      end
+
+      context 'with import_schema => true and admin_role => false' do
         let :pre_condition do
-          "class { 'icingaweb2': import_schema => false }"
+          "class { 'icingaweb2': import_schema => true, admin_role => false }"
         end
 
-        it { is_expected.not_to contain_exec('import schema') }
-        it { is_expected.not_to contain_exec('create default user') }
         it { is_expected.not_to contain_icingaweb2__config__role('default admin user') }
       end
 

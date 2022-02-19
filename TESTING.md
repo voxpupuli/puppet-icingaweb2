@@ -41,12 +41,11 @@ Run unit tests:
 ```
 cd puppet-icinga2
 pdk test unit
-pdk test unit --tests=repos
 ```
 
 Or dedicated tests:
 ```
-pdk test unit --tests=spec/classes/repos_spec.rb,spec/classes/redis_spec.rb
+pdk test unit --tests=spec/classes/vspheredb_spec.rb,spec/classes/vspeheredb_service_spec.rb
 ```
 
 ## Acceptance tests

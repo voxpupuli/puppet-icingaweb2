@@ -1,38 +1,38 @@
 # @summary
 #   Manages an Elasticsearch instance
 #
-# @param [String] instance_name
+# @param instance_name
 #   Name of the Elasticsearch instance
 #
-# @param [String] uri
+# @param uri
 #   URI to the Elasticsearch instance
 #
-# @param [Optional[String]] user
+# @param user
 #   The user to use for authentication
 #
-# @param [Optional[String]] password
+# @param password
 #   The password to use for authentication
 #
-# @param [Optional[Stdlib::Absolutepath]] ca
+# @param ca
 #   The path of the file containing one or more certificates to verify the peer with or the path to the directory
 #   that holds multiple CA certificates.
 #
-# @param [Optional[Stdlib::Absolutepath]] client_certificate
+# @param client_certificate
 #   The path of the client certificates
 #
-# @param [Optional[Stdlib::Absolutepath]] client_private_key
+# @param client_private_key
 #   The path of the client private key
 #
 # @api private
 #
 define icingaweb2::module::elasticsearch::instance(
-  String                           $instance_name      = $title,
-  String                           $uri                = undef,
-  Optional[String]                 $user               = undef,
-  Optional[String]                 $password           = undef,
-  Optional[Stdlib::Absolutepath]   $ca                 = undef,
-  Optional[Stdlib::Absolutepath]   $client_certificate = undef,
-  Optional[Stdlib::Absolutepath]   $client_private_key = undef,
+  String                          $instance_name      = $title,
+  String                          $uri                = undef,
+  Optional[String]                $user               = undef,
+  Optional[Icingaweb2::Secret]    $password           = undef,
+  Optional[Stdlib::Absolutepath]  $ca                 = undef,
+  Optional[Stdlib::Absolutepath]  $client_certificate = undef,
+  Optional[Stdlib::Absolutepath]  $client_private_key = undef,
 ){
 
   assert_private("You're not supposed to use this defined type manually.")
@@ -43,7 +43,7 @@ define icingaweb2::module::elasticsearch::instance(
   $instance_settings = {
     'uri'                => $uri,
     'user'               => $user,
-    'password'           => $password,
+    'password'           => icingaweb2::unwrap($password),
     'ca'                 => $ca,
     'client_certificate' => $client_certificate,
     'client_private_key' => $client_private_key,

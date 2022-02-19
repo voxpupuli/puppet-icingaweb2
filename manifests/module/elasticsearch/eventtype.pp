@@ -1,20 +1,20 @@
 # @summary
 #   Manages an Elasticsearch event types
 #
-# @param [String] eventtype_name
+# @param eventtype_name
 #   Name of the event type.
 #
-# @param [Optional[String]] instance
+# @param instance
 #   Elasticsearch instance to connect to.
 #
-# @param [Optional[String]] index
+# @param index
 #   Elasticsearch index pattern, e.g. `filebeat-*`.
 #
-# @param [Optional[String]] filter
+# @param filter
 #   Elasticsearch filter in the Icinga Web 2 URL filter format. Host macros are evaluated if you encapsulate them in
 #   curly braces, e.g. `host={host.name}&location={_host_location}`.
 #
-# @param [Optional[String]] fields
+# @param fields
 #   Comma-separated list of field names to display. One or more wildcard asterisk (`*`) patterns are also accepted.
 #   Note that the `@timestamp` field is always respected.
 #

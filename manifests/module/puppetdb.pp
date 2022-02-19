@@ -3,22 +3,28 @@
 #
 # @note If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Enable or disable module.
 #
-# @param [String] git_repository
+# @param git_repository
 #   Set a git repository URL.
 #
-# @param [Optional[String]] git_revision
+# @param git_revision
 #   Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 #
-# @param [Enum['none', 'puppet']] ssl
+# @param install_method
+#   Install methods are `git`, `package` and `none` is supported as installation method.
+#
+# @param package_name
+#   Package name of the module. This setting is only valid in combination with the installation method `package`.
+#
+# @param ssl
 #   How to set up ssl certificates. To copy certificates from the local puppet installation, use `puppet`.
 #
-# @param [Optional[Stdlib::Host]] host
+# @param host
 #   Hostname of the server where PuppetDB is running. The `ssl` parameter needs to be set to `puppet`.
 #
-# @param [Hash] certificates
+# @param certificates
 #   Hash with icingaweb2::module::puppetdb::certificate resources.
 #
 # @note The [PuppetDB module documentation](https://www.icinga.com/docs/director/latest/puppetdb/doc/01-Installation/).
@@ -49,13 +55,16 @@
 #   }
 #
 class icingaweb2::module::puppetdb(
-  String                    $git_repository,
-  Enum['absent', 'present'] $ensure         = 'present',
-  Optional[String]          $git_revision   = undef,
-  Enum['none', 'puppet']    $ssl            = 'none',
-  Optional[Stdlib::Host]    $host           = undef,
-  Hash                      $certificates   = {},
-){
+  Enum['absent', 'present']      $ensure         = 'present',
+  String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-puppetdb.git',
+  Optional[String]               $git_revision   = undef,
+  Enum['git', 'none', 'package'] $install_method = 'git',
+  String                         $package_name   = 'icingaweb2-module-puppetdb',
+  Enum['none', 'puppet']         $ssl            = 'none',
+  Optional[Stdlib::Host]         $host           = undef,
+  Hash                           $certificates   = {},
+) {
+
   $conf_dir   = "${::icingaweb2::globals::conf_dir}/modules/puppetdb"
   $ssl_dir    = "${conf_dir}/ssl"
   $conf_user  = $::icingaweb2::conf_user
@@ -130,5 +139,8 @@ class icingaweb2::module::puppetdb(
     ensure         => $ensure,
     git_repository => $git_repository,
     git_revision   => $git_revision,
+    install_method => $install_method,
+    package_name   => $package_name,
   }
+
 }

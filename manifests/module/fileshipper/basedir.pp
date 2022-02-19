@@ -1,10 +1,10 @@
 # @summary
 #   Manages base directories for the fileshipper module.
 #
-# @param [String] identifier
+# @param identifier
 #   Identifier of the base directory.
 #
-# @param [Optional[Stdlib::Absolutepath]] basedir
+# @param basedir
 #   Absolute path of a direcory.
 #
 # @api private

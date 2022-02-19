@@ -20,4 +20,5 @@ class icingaweb2::install {
   if $extra_packages {
     ensure_packages($extra_packages, { 'ensure' => installed })
   }
+
 }

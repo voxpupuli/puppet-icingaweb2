@@ -33,6 +33,9 @@ class icingaweb2::config {
   $db_username          = $::icingaweb2::db_username
   $db_password          = $::icingaweb2::db_password
   $default_domain       = $::icingaweb2::default_domain
+  $admin_role           = $::icingaweb2::admin_role
+  $admin_username       = $::icingaweb2::default_admin_username
+  $admin_password       = $::icingaweb2::default_admin_password
 
   $config_backend       = $::icingaweb2::config_backend
   $config_resource      = $::icingaweb2::config_backend ? {
@@ -140,49 +143,56 @@ class icingaweb2::config {
       db_username => $db_username,
       db_password => $db_password,
     }
-  }
-
-  if $import_schema {
-    icingaweb2::config::authmethod { "${db_type}-auth":
-      backend  => 'db',
-      resource => "${db_type}-icingaweb2"
-    }
-
-    icingaweb2::config::role { 'default admin user':
-      users       => 'icingaadmin',
-      permissions => '*',
-    }
 
     icingaweb2::config::groupbackend { "${db_type}-group":
       backend  => 'db',
       resource => "${db_type}-icingaweb2"
     }
 
+    icingaweb2::config::authmethod { "${db_type}-auth":
+      backend  => 'db',
+      resource => "${db_type}-icingaweb2"
+    }
+  }
+
+  if $import_schema {
+
+    $_db_password    = icingaweb2::unwrap($db_password)
+    $_admin_password = icingaweb2::unwrap($admin_password)
+
+    if $admin_role {
+      icingaweb2::config::role { $admin_role['name']:
+        users       => if $admin_role['users'] { join(union([$admin_username], $admin_role['users'])) } else { $admin_username },
+        groups      => if $admin_role['groups'] { join($admin_role['groups']) } else { undef },
+        permissions => '*',
+      }
+    }
+
     case $db_type {
       'mysql': {
         exec { 'import schema':
-          command => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' < '${mysql_db_schema}'",
-          unless  => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' -Ns -e 'SELECT 1 FROM icingaweb_user'",
-          notify  => Exec['create default user'],
+          command => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${_db_password}' '${db_name}' < '${mysql_db_schema}'",
+          unless  => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${_db_password}' '${db_name}' -Ns -e 'SELECT 1 FROM icingaweb_user'",
+          notify  => Exec['create default admin user'],
         }
 
-        exec { 'create default user':
-          command     => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' -Ns -e 'INSERT INTO icingaweb_user (name, active, password_hash) VALUES (\"icingaadmin\", 1, \"\$1\$3no6eqZp\$FlcHQDdnxGPqKadmfVcCU.\")'",
+        exec { 'create default admin user':
+          command     => "echo \"INSERT INTO icingaweb_user (name, active, password_hash) VALUES (\\\"${admin_username}\\\", 1, \\\"`php -r 'echo password_hash(\"${_admin_password}\", PASSWORD_DEFAULT);'`\\\")\" | mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${_db_password}' '${db_name}' -Ns",
           refreshonly => true,
         }
       }
       'pgsql': {
         exec { 'import schema':
-          environment => ["PGPASSWORD=${db_password}"],
+          environment => ["PGPASSWORD=${_db_password}"],
           command     => "psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}' -w -f ${pgsql_db_schema}",
           unless      => "psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}' -w -c 'SELECT 1 FROM icingaweb_user'",
-          notify      => Exec['create default user'],
           provider    => shell,
+          notify      => Exec['create default admin user'],
         }
 
-        exec { 'create default user':
-          environment => ["PGPASSWORD=${db_password}"],
-          command     => "psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}' -w -c \"INSERT INTO icingaweb_user(name, active, password_hash) VALUES ('icingaadmin', 1, '\\\$1\\\$3no6eqZp\\\$FlcHQDdnxGPqKadmfVcCU.')\"",
+        exec { 'create default admin user':
+          environment => ["PGPASSWORD=${_db_password}"],
+          command     => "echo \"INSERT INTO icingaweb_user (name, active, password_hash) VALUES ('${admin_username}', 1, '`php -r 'echo password_hash(\"${_admin_password}\", PASSWORD_DEFAULT);'`')\" | psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}'",
           refreshonly => true,
           provider    => shell,
         }
