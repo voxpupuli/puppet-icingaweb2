@@ -3,13 +3,13 @@
 #
 # @note If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Enable or disable module. Defaults to `present`
 #
-# @param [String] git_repository
+# @param git_repository
 #   Set a git repository URL. Defaults to github.
 #
-# @param [String] git_revision
+# @param git_revision
 #   Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
 #
 class icingaweb2::module::incubator(

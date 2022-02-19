@@ -3,25 +3,25 @@
 #
 # @note If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Enable or disable module.
 #
-# @param [String] module
+# @param module
 #   Name of the module.
 #
-# @param [Stdlib::Absolutepath] module_dir
+# @param module_dir
 #   Target directory of the module.
 #
 # @param [Enum['git', 'none', 'package']] install_method
 #   Install methods are `git`, `package` and `none` is supported as installation method. Defaults to `git`
 #
-# @param [String] git_revision
+# @param git_revision
 #   Tag or branch of the git repository. This setting is only valid in combination with the installation method `git`.
 #
-# @param [Optional[String]] package_name
+# @param package_name
 #   Package name of the module. This setting is only valid in combination with the installation method `package`.
 #
-# @param [Hash] settings
+# @param settings
 #   A hash with the module settings. Multiple configuration files with ini sections can be configured with this hash.
 #   The `module_name` should be used as target directory for the configuration files.
 #
@@ -55,7 +55,8 @@ define icingaweb2::module(
   String                            $git_revision   = 'master',
   Optional[String]                  $package_name   = undef,
   Hash                              $settings       = {},
-){
+) {
+
   $conf_dir   = $::icingaweb2::globals::conf_dir
   $conf_user  = $::icingaweb2::conf_user
   $conf_group = $::icingaweb2::conf_group
@@ -106,4 +107,5 @@ define icingaweb2::module(
       fail('The installation method you provided is not supported.')
     }
   }
+
 }

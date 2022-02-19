@@ -1,16 +1,16 @@
 # @summary
 #   Manages directories with plain Icinga 2 configuration files.
 #
-# @param [String] identifier
+# @param identifier
 #   Identifier of the base directory.
 #
-# @param [Optional[Stdlib::Absolutepath]] source
+# @param source
 #   Absolute path of the source direcory.
 #
-# @param [Optional[Stdlib::Absolutepath]] target
+# @param target
 #   Absolute path of the target direcory.
 #
-# @param [String] extensions
+# @param extensions
 #   Only files with these extensions will be synced. Defaults to `.conf`
 #
 # @api private

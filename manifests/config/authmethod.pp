@@ -1,28 +1,28 @@
 # @summary
 #   Manage Icinga Web 2 authentication methods. Auth methods may be chained by setting proper ordering.
 #
-# @param [Enum['external', 'ldap', 'msldap', 'db']] backend
+# @param backend
 #   Select between 'external', 'ldap', 'msldap' or 'db'. Each backend may require other settings.
 #
-# @param [Optional[String]] resource
+# @param resource
 #   The name of the resource defined in resources.ini.
 #
-# @param [Optional[String]] ldap_user_class
+# @param ldap_user_class
 #   LDAP user class. Only valid if `backend` is `ldap` or `msldap`.
 #
-# @param [Optional[String]] ldap_user_name_attribute
+# @param ldap_user_name_attribute
 #   LDAP attribute which contains the username. Only valid if `backend` is `ldap` or `msldap`.
 #
-# @param [Optional[String]] ldap_filter
+# @param ldap_filter
 #   LDAP search filter. Only valid if `backend` is `ldap` or `msladap`.
 #
-# @param [Optional[String]] ldap_base_dn
+# @param ldap_base_dn
 #   LDAP base DN. Only valid if `backend` is `ldap` or `msldap`.
 #
-# @param [Optional[String]] domain
+# @param domain
 #   Domain for domain-aware authentication
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   Multiple authentication methods can be chained. The order of entries in the authentication
 #   configuration determines the order of the authentication methods.
 #
@@ -91,4 +91,5 @@ define icingaweb2::config::authmethod(
     settings     => delete_undef_values($settings),
     order        => $order,
   }
+
 }

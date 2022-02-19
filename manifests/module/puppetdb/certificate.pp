@@ -1,13 +1,13 @@
 # @summary
 #   Installs a certificate for the Icinga Web 2 puppetdb module.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Enable or disable module. Defaults to `present`
 #
-# @param [String] ssl_key
+# @param ssl_key
 #   The combined key in a base64 encoded string.
 #
-# @param [String] ssl_cacert
+# @param ssl_cacert
 #   The CA root certificate in a base64 encoded string.
 #
 # @note It is advised to read first something about the certiciates in the [documentation](https://github.com/Icinga/icingaweb2-module-puppetdb/blob/master/doc/01-Installation.md).
@@ -24,7 +24,8 @@ define icingaweb2::module::puppetdb::certificate(
   String                    $ssl_key,
   String                    $ssl_cacert,
   Enum['absent', 'present'] $ensure = 'present',
-){
+) {
+
   assert_private("You're not supposed to use this defined type manually.")
 
   $certificate_dir = "${::icingaweb2::module::puppetdb::ssl_dir}/${title}"

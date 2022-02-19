@@ -3,26 +3,26 @@
 #
 # @note If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Enable or disable module.
 #
-# @param [String] git_repository
+# @param git_repository
 #   Set a git repository URL.
 #
-# @param [Enum['git', 'none', 'package']] install_method
+# @param install_method
 #   Install methods are `git`, `package` and `none` is supported as installation method.
 #
-# @param [String] package_name
+# @param package_name
 #   Package name of the module. This setting is only valid in combination with the installation method `package`.
 #
-# @param [Optional[String]] git_revision
+# @param git_revision
 #   Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 #
-# @param [Optional[Hash]] instances
+# @param instances
 #   A hash that configures one or more Elasticsearch instances that this module connects to. The defined type
 #   `icingaweb2::module::elasticsearch::instance` is used to create the instance configuration.
 #
-# @param [Optional[Hash]] eventtypes
+# @param eventtypes
 #   A hash oft ypes of events that should be displayed. Event types are always connected to instances. The defined type
 #   `icingaweb2::module::elasticsearch::eventtype` is used to create the event types.
 #

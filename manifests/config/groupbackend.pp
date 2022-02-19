@@ -2,42 +2,42 @@
 #   Groups of users can be stored either in a database, LDAP or ActiveDirectory. This defined type configures backends
 #   that store groups.
 #
-# @param [String] group_name
+# @param group_name
 #   Name of the resources. Resources are referenced by their name in other configuration sections.
 #
-# @param [Enum['db', 'ldap', 'msldap']] backend
+# @param backend
 #   Type of backend. Valide values are: `db`, `ldap` and `msldap`. Each backend supports different settings,
 #   see the parameters for detailed information.
 #
-# @param [String] resource
+# @param resource
 #   The resource used to connect to the backend. The resource contains connection information.
 #
-# @param [Optional[String]] ldap_user_backend
+# @param ldap_user_backend
 #   A group backend can be connected with an authentication method. This parameter references the auth method.
 #   Only valid with backend `ldap` or `msldap`.
 #
-# @param [Optional[String]] ldap_group_class
+# @param ldap_group_class
 #   Class used to identify group objects. Only valid with backend `ldap`.
 #
-# @param [Optional[String]] ldap_group_filter
+# @param ldap_group_filter
 #   Use a LDAP filter to receive only certain groups. Only valid with backend `ldap` or `msldap`.
 #
-# @param [Optional[String]] ldap_group_name_attribute
+# @param ldap_group_name_attribute
 #   The group name attribute. Only valid with backend `ldap`.
 #
-# @param [Optional[String]] ldap_group_member_attribute
+# @param ldap_group_member_attribute
 #   The group member attribute. Only valid with backend `ldap`.
 #
-# @param [Optional[String]] ldap_base_dn
+# @param ldap_base_dn
 #   Base DN that is searched for groups. Only valid with backend `ldap` with `msldap`.
 #
-# @param [Optional[Boolean]] ldap_nested_group_search
+# @param ldap_nested_group_search
 #   Search for groups in groups. Only valid with backend `msldap`.
 #
-# @param [Optional[String]] domain
+# @param domain
 #   Domain for domain-aware authentication.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   Multiple authentication methods can be chained. The order of entries in the authentication
 #   configuration determines the order of the authentication methods.
 #

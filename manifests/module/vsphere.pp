@@ -3,19 +3,19 @@
 #
 # @note If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Enable or disable module.
 #
-# @param [String] git_repository
+# @param git_repository
 #   Set a git repository URL.
 #
-# @param [Enum['git', 'none', 'package']] install_method
+# @param install_method
 #   Install methods are `git`, `package` and `none` is supported as installation method.
 #
-# @param [String] package_name
+# @param package_name
 #   Package name of the module. This setting is only valid in combination with the installation method `package`.
 #
-# @param [Optional[String]] git_revision
+# @param git_revision
 #   Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
 #
 # @note Check out the [vSphere module documentation](https://www.icinga.com/docs/director/latest/vsphere/doc/).
@@ -26,7 +26,7 @@ class icingaweb2::module::vsphere(
   Optional[String]               $git_revision   = undef,
   Enum['git', 'none', 'package'] $install_method = 'git',
   String                         $package_name   = 'icingaweb2-module-vsphere',
-){
+) {
 
   icingaweb2::module { 'vsphere':
     ensure         => $ensure,
@@ -35,4 +35,5 @@ class icingaweb2::module::vsphere(
     install_method => $install_method,
     package_name   => $package_name,
   }
+
 }

@@ -3,21 +3,21 @@
 #
 # @note Only systemd is supported by the Icinga Team and this module.
 #
-# @param [Stdlib::Ensure::Service] ensure
+# @param ensure
 #   Whether the director service should be running.
 #
-# @param [Boolean] enable
+# @param enable
 #   Enable or disable the service.
 #
-# @param [String] user
+# @param user
 #   Specifies user to run director service daemon. Only available if
 #   install_method package is not used.
 #
-# @param [String] group
+# @param group
 #   Specifies primary group for user to run director service daemon.
 #    Only available if install_method package is not used.
 #
-# @param [Boolean] manage_user
+# @param manage_user
 #   Whether to manage the server user resource. Only available if
 #   install_method package is not used.
 #

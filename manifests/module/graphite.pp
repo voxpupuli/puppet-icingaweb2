@@ -3,31 +3,31 @@
 #
 # @note If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Enables or disables module.
 #
-# @param [String] git_repository
+# @param git_repository
 #   Set a git repository URL.
 #
-# @param [Enum['git', 'none', 'package']] install_method
+# @param install_method
 #   Install methods are `git`, `package` and `none` is supported as installation method.
 #
-# @param [String] package_name
+# @param package_name
 #   Package name of the module. This setting is only valid in combination with the installation method `package`.
 #
-# @param [Optional[String]] url
+# @param url
 #   URL to your Graphite Web/API.
 #
-# @param [Optional[String]] user
+# @param user
 #   A user with access to your Graphite Web via HTTP basic authentication.
 #
-# @param [Optional[String]] password
+# @param password
 #   The users password.
 #
-# @param [Optional[String]] graphite_writer_host_name_template
+# @param graphite_writer_host_name_template
 #    The value of your Icinga 2 GraphiteWriter's attribute `host_name_template` (if specified).
 #
-# @param [Optional[String]] graphite_writer_service_name_template
+# @param graphite_writer_service_name_template
 #   The value of your icinga 2 GraphiteWriter's attribute `service_name_template` (if specified).
 #
 # @note Here the official [Graphite module documentation](https://www.icinga.com/docs/graphite/latest/) can be found.
@@ -46,10 +46,10 @@ class icingaweb2::module::graphite(
   String                         $package_name                          = 'icingaweb2-module-graphite',
   Optional[String]               $url                                   = undef,
   Optional[String]               $user                                  = undef,
-  Optional[String]               $password                              = undef,
+  Optional[Icingaweb2::Secret]   $password                              = undef,
   Optional[String]               $graphite_writer_host_name_template    = undef,
   Optional[String]               $graphite_writer_service_name_template = undef
-){
+) {
 
   $conf_dir        = $::icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/graphite"
@@ -57,7 +57,7 @@ class icingaweb2::module::graphite(
   $graphite_settings = {
     'url'      => $url,
     'user'     => $user,
-    'password' => $password,
+    'password' => icingaweb2::unwrap($password),
   }
 
   $icinga_settings = {
@@ -86,4 +86,5 @@ class icingaweb2::module::graphite(
     package_name   => $package_name,
     settings       => $settings,
   }
+
 }

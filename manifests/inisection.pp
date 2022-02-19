@@ -1,16 +1,16 @@
 # @summary
 #   Manage settings in INI configuration files.
 #
-# @param [Stdlib::Absolutepath] target
+# @param target
 #   Absolute path to the configuration file.
 #
-# @param [String] section_name
+# @param section_name
 #   Name of the target section. Settings are set under [$section_name]
 #
-# @param [Hash] settings
+# @param settings
 #   A hash of settings and their settings. Single settings may be set to absent.
 #
-# @param [Variant[String, Integer]] order
+# @param order
 #   Ordering of the INI section within a file. Defaults to `01`
 #
 # @example Create the configuration file and set two settings for the section `global`:
@@ -50,4 +50,5 @@ define icingaweb2::inisection(
     content => template('icingaweb2/inisection.erb'),
     order   => $order,
   }
+
 }

@@ -1,42 +1,42 @@
 # @summary Installs the vsphereDB plugin
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Ensur es the state of the vspheredb module.
 #
-# @param [String] git_repository
+# @param git_repository
 #   The upstream module repository.
 #
-# @param [Optional[String]] git_revision
+# @param git_revision
 #   The version of the module that needs to be used.
 #
-# @param [Enum['git', 'none', 'package']] install_method
+# @param install_method
 #   Install methods are `git`, `package` and `none` is supported as installation method.
 #
-# @param [String] package_name
+# @param package_name
 #   Package name of the module. This setting is only valid in combination with the installation method `package`.
 #
-# @param [Enum['mysql']] db_type
+# @param db_type
 #   The database type. Either mysql or postgres.
 #
-# @param [Optional[Stdlib::Host]] db_host
+# @param db_host
 #   The host where the vspheredb-database will be running
 #
-# @param [Stdlib::Port] db_port
+# @param db_port
 #   The port on which the database is accessible.
 #
-# @param [Optional[String]] db_name
+# @param db_name
 #   The name of the database this module should use.
 #
-# @param [Optional[String]] db_username
+# @param db_username
 #   The username needed to access the database.
 #
-# @param [Optional[String]] db_password
+# @param db_password
 #   The password needed to access the database.
 #
-# @param [String] db_charset
+# @param db_charset
 #   The charset the database is set to.
 #
-# @param [Boolean] import_schema
+# @param import_schema
 #   Whether to import the database schema or not.
 #
 # @example
@@ -60,10 +60,11 @@ class icingaweb2::module::vspheredb (
   Stdlib::Port                   $db_port        = 3306,
   Optional[String]               $db_name        = undef,
   Optional[String]               $db_username    = undef,
-  Optional[String]               $db_password    = undef,
+  Optional[Icingaweb2::Secret]   $db_password    = undef,
   String                         $db_charset     = 'utf8mb4',
   Boolean                        $import_schema  = false,
 ) {
+
   $conf_dir               = $::icingaweb2::globals::conf_dir
   $mysql_vspheredb_schema = $::icingaweb2::globals::mysql_vspheredb_schema
   $module_conf_dir        = "${conf_dir}/modules/vspheredb"
@@ -97,13 +98,15 @@ class icingaweb2::module::vspheredb (
   }
 
   if $import_schema {
+    $_db_password = icingaweb2::unwrap($db_password)
+
     case $db_type {
       'mysql': {
         exec { 'import vspheredb schema':
           user    => 'root',
           path    => $::facts['path'],
-          command => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' < '${mysql_vspheredb_schema}'",
-          unless  => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${db_password}' '${db_name}' -Ns -e 'SELECT schema_version FROM vspheredb_schema_migration'",
+          command => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${_db_password}' '${db_name}' < '${mysql_vspheredb_schema}'",
+          unless  => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${_db_password}' '${db_name}' -Ns -e 'SELECT schema_version FROM vspheredb_schema_migration'",
           require => Icingaweb2::Module['vspheredb'],
         }
       }

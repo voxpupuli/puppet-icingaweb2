@@ -3,22 +3,22 @@
 #
 # @note If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Enable or disable module.
 #
-# @param [String] git_repository
+# @param git_repository
 #   Set a git repository URL.
 #
-# @param [Optional[String]] git_revision
+# @param git_revision
 #   Set either a branch or a tag name, eg. `master` or `v2.0.0`.
 #
-# @param [Enum['git', 'none', 'package']] install_method
+# @param install_method
 #   Install methods are `git`, `package` and `none` is supported as installation method.
 #
-# @param [String] package_name
+# @param package_name
 #   Package name of the module. This setting is only valid in combination with the installation method `package`.
 #
-# @param [Hash] ticketsystems
+# @param ticketsystems
 #   A hash of ticketsystems. The hash expects a `patten` and a `url` for each ticketsystem.
 #   The regex pattern is to match the ticket ID, eg. `/#([0-9]{4,6})/`. Place the ticket ID
 #   in the URL, eg. `https://my.ticket.system/tickets/id=$1`.
@@ -41,7 +41,8 @@ class icingaweb2::module::generictts(
   Enum['git', 'none', 'package'] $install_method = 'git',
   String                         $package_name   = 'icingaweb2-module-generictts',
   Hash                           $ticketsystems  = {},
-){
+) {
+
   create_resources('icingaweb2::module::generictts::ticketsystem', $ticketsystems)
 
   icingaweb2::module {'generictts':
@@ -51,4 +52,5 @@ class icingaweb2::module::generictts(
     install_method => $install_method,
     package_name   => $package_name,
   }
+
 }

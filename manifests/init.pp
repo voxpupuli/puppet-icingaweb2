@@ -1,99 +1,99 @@
 # @summary
 #   Installs and configures Icinga Web 2.
 #
-# @param [Enum['file', 'syslog', 'php', 'none']] logging
+# @param logging
 #   Whether Icinga Web 2 should log to 'file', 'syslog' or 'php' (web server's error log). Setting 'none' disables logging.
 #
-# @param [Stdlib::Absolutepath] logging_file
+# @param logging_file
 #   If 'logging' is set to 'file', this is the target log file.
 #
-# @param [Enum['ERROR', 'WARNING', 'INFO', 'DEBUG']] logging_level
+# @param logging_level
 #   Logging verbosity. Possible values are 'ERROR', 'WARNING', 'INFO' and 'DEBUG'.
 #
-# @param [Pattern[/user|local[0-7]/]] logging_facility
+# @param logging_facility
 #   Logging facility when using syslog. Possible values are 'user' or 'local0' up to 'local7'.
 #
-# @param [String] logging_application
+# @param logging_application
 #   Logging application name when using syslog.
 #
-# @param [Boolean] show_stacktraces
+# @param show_stacktraces
 #   Whether to display stacktraces in the web interface or not.
 #
-# @param [Stdlib::Absolutepath] module_path
+# @param module_path
 #   Path to module sources. Multiple paths must be separated by colon.
 #
-# @param [String] theme
+# @param theme
 #   The default theme setting. Users may override this settings.
 #
-# @param [Boolean] theme_disabled
+# @param theme_disabled
 #   Whether users can change themes or not.
 #
-# @param [Boolean] manage_repo
+# @param manage_repo
 #   Deprecated, use manage_repos.
 #
-# @param [Boolean] manage_repos
+# @param manage_repos
 #   When set to true this module will use the module icinga/puppet-icinga to manage repositories,
 #   e.g. the release repo on packages.icinga.com repository by default, the EPEL repository or Backports.
 #   For more information, see http://github.com/icinga/puppet-icinga.
 #
-# @param [Boolean] manage_package
+# @param manage_package
 #   If set to `false` packages aren't managed.
 #
-# @param [Optional[Array[String]]] extra_packages
+# @param extra_packages
 #   An array of packages to install additionally.
 #
-# @param [Boolean] import_schema
+# @param import_schema
 #   Import database scheme. Make sure you have an existing database if you use this option.
 #
-# @param [Enum['mysql', 'pgsql']] db_type
+# @param db_type
 #   Database type, can be either `mysql` or `pgsql`. This parameter is only used if `import_schema` is `true` or
 #   `config_backend` is `db`.
 #
-# @param [Stdlib::Host] db_host
+# @param db_host
 #   Database hostname. This parameter is only used if `import_schema` is `true` or
 #   `config_backend` is `db`.
 #
-# @param [Stdlib::Port] db_port
+# @param db_port
 #   Port of database host. This parameter is only used if `import_schema` is `true` or
 #   `config_backend` is `db`.
 #
-# @param [String] db_name
+# @param db_name
 #   Database name. This parameter is only used if `import_schema` is `true` or
 #   `config_backend` is `db`.
 #
-# @param [Optional[String]] db_username
+# @param db_username
 #   Username for database access. This parameter is only used if `import_schema` is `true` or
 #   `config_backend` is `db`.
 #
-# @param [Optional[String]] db_password
+# @param db_password
 #   Password for database access. This parameter is only used if `import_schema` is `true` or
 #   `config_backend` is `db`.
 #
-# @param [Enum['ini', 'db']] config_backend
+# @param config_backend
 #   The global Icinga Web 2 preferences can either be stored in a database or in ini files. This parameter can either
 #   be set to `db` or `ini`.
 #
-# @param [String] conf_user
+# @param conf_user
 #   By default this module expects Apache2 on the server. You can change the owner of the config files with this
 #   parameter.
 #
-# @param [String] conf_group
+# @param conf_group
 #   Group membership of config files.
 #
-# @param [Optional[String]] default_domain
+# @param default_domain
 #   When using domain-aware authentication, you can set a default domain here.
 #
-# @param [Optional[Stdlib::Absolutepath]] cookie_path
+# @param cookie_path
 #   Path to where cookies are stored.
 #
-# @param [Variant[Icingaweb2::AdminRole, Boolean[false]]] admin_role
+# @param admin_role
 #   Manage a role for admin access.
 #
-# @param [String] default_admin_username
+# @param default_admin_username
 #   Default username for initial admin access. This parameter is only used
 #   if `import_schema` is set to `true` and only during the import itself.
 #
-# @param [String] default_admin_password
+# @param default_admin_password
 #   Default password for initial admin access. This parameter is only used
 #   if `import_schema` is set to `true` and only during the import itself.
 #
@@ -144,7 +144,7 @@ class icingaweb2 (
   String                                          $conf_group,
   Variant[Icingaweb2::AdminRole, Boolean[false]]  $admin_role,
   String                                          $default_admin_username,
-  String                                          $default_admin_password,
+  Icingaweb2::Secret                              $default_admin_password,
   Enum['file', 'syslog', 'php', 'none']           $logging             = 'file',
   Enum['ERROR', 'WARNING', 'INFO', 'DEBUG']       $logging_level       = 'INFO',
   Pattern[/user|local[0-7]/]                      $logging_facility    = 'user',
@@ -162,7 +162,7 @@ class icingaweb2 (
   Stdlib::Port                                    $db_port             = 3306,
   String                                          $db_name             = 'icingaweb2',
   Optional[String]                                $db_username         = undef,
-  Optional[String]                                $db_password         = undef,
+  Optional[Icingaweb2::Secret]                    $db_password         = undef,
   Enum['ini', 'db']                               $config_backend      = 'ini',
   Optional[String]                                $default_domain      = undef,
   Optional[Stdlib::Absolutepath]                  $cookie_path         = undef,
@@ -182,4 +182,5 @@ class icingaweb2 (
 
   contain ::icingaweb2::install
   contain ::icingaweb2::config
+
 }

@@ -1,35 +1,35 @@
 # @summary
 #   Manages the monitoring module. This module is mandatory for probably every setup.
 #
-# @param [Enum['absent', 'present']] ensure
+# @param ensure
 #   Enable or disable module.
 #
-# @param [Variant[String, Array[String]]] protected_customvars
+# @param protected_customvars
 #   Custom variables in Icinga 2 may contain sensible information. Set patterns for custom variables
 #   that should be hidden in the web interface.
 #
-# @param [Enum['mysql', 'pgsql']] ido_type
+# @param ido_type
 #   Type of your IDO database. Either `mysql` or `pgsql`.
 #
-# @param [Optional[Stdlib::Host]] ido_host
+# @param ido_host
 #   Hostname of the IDO database.
 #
-# @param [Stdlib::Port] ido_port
+# @param ido_port
 #   Port of the IDO database.
 #
-# @param [Optional[String]] ido_db_name
+# @param ido_db_name
 #   Name of the IDO database.
 #
-# @param [Optional[String]] ido_db_username
+# @param ido_db_username
 #   Username for IDO DB connection.
 #
-# @param [Optional[String]] ido_db_password
+# @param ido_db_password
 #   Password for IDO DB connection.
 #
-# @param [Optional[String]] ido_db_charset
+# @param ido_db_charset
 #   The character set to use for the database connection.
 #
-# @param [Hash] commandtransports
+# @param commandtransports
 #   A hash of command transports.
 #
 # @note At first have a look at the [Monitoring module documentation](https://www.icinga.com/docs/icingaweb2/latest/modules/monitoring/doc/01-About/).
@@ -63,10 +63,10 @@ class icingaweb2::module::monitoring(
   Stdlib::Port                   $ido_port             = 3306,
   Optional[String]               $ido_db_name          = undef,
   Optional[String]               $ido_db_username      = undef,
-  Optional[String]               $ido_db_password      = undef,
+  Optional[Icingaweb2::Secret]   $ido_db_password      = undef,
   Optional[String]               $ido_db_charset       = undef,
   Hash                           $commandtransports    = {},
-){
+) {
 
   $conf_dir        = $::icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/monitoring"
@@ -126,4 +126,5 @@ class icingaweb2::module::monitoring(
     package_name   => $package_name,
     settings       => $settings,
   }
+
 }
