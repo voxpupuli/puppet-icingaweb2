@@ -41,14 +41,19 @@ class icingaweb2::module::vspheredb::service (
         ensure => 'present',
         gid    => $group,
         shell  => '/bin/false',
-        before => Systemd::Unit_file['icinga-vspheredb.service'],
+        before => [ Systemd::Unit_file['icinga-vspheredb.service'], Systemd::Tmpfile['icinga-vspheredb.conf'] ],
       }
+    }
+
+    systemd::tmpfile { 'icinga-vspheredb.conf':
+      content => "d /run/icinga-vspheredb 0755 $user $group -",
+      before => Systemd::Unit_file['icinga-vspheredb.service'],
     }
 
     systemd::unit_file { 'icinga-vspheredb.service':
       ensure  => 'present',
       content => epp('icingaweb2/icinga-vspheredb.service.epp', {
-        'conf_user'     => $icingaweb2::conf_user,
+        'conf_user'     => $user,
         'icingacli_bin' => $icingaweb2::globals::icingacli_bin,
       }),
       notify  => Service['icinga-vspheredb'],
