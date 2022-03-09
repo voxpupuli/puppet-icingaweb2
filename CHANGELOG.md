@@ -1,5 +1,20 @@
 # Change Log
 
+## [v3.3.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.3.0) (2022-03-09)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.2.4...v3.3.0)
+
+**Implemented enhancements:**
+
+- Add apache config file whitout CGIPassAuth for apache version before 2.4.13 [\#315](https://github.com/Icinga/puppet-icingaweb2/issues/315)
+- Use Datatype Sensitive for Secrets [\#311](https://github.com/Icinga/puppet-icingaweb2/issues/311)
+- Support for module pdfexports [\#309](https://github.com/Icinga/puppet-icingaweb2/issues/309)
+- Feature/attempting to add freebsd support [\#210](https://github.com/Icinga/puppet-icingaweb2/pull/210) ([rick-pri](https://github.com/rick-pri))
+
+**Fixed bugs:**
+
+- default\_admin\_username and password are not set for postgresql database type [\#310](https://github.com/Icinga/puppet-icingaweb2/issues/310)
+- fix vspheredb service with 1.2.x [\#314](https://github.com/Icinga/puppet-icingaweb2/pull/314) ([dgoetz](https://github.com/dgoetz))
+
 ## [v3.2.4](https://github.com/icinga/puppet-icingaweb2/tree/v3.2.4) (2022-01-29)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.2.3...v3.2.4)
 

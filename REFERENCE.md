@@ -22,6 +22,7 @@
 * [`icingaweb2::module::incubator`](#icingaweb2moduleincubator): Installs and enables the incubator module.
 * [`icingaweb2::module::ipl`](#icingaweb2moduleipl): Installs and enables the ipl module.
 * [`icingaweb2::module::monitoring`](#icingaweb2modulemonitoring): Manages the monitoring module. This module is mandatory for probably every setup.
+* [`icingaweb2::module::pdfexport`](#icingaweb2modulepdfexport): Installs, configures and enables the pdfexport module.
 * [`icingaweb2::module::puppetdb`](#icingaweb2modulepuppetdb): Installs and configures the puppetdb module.
 * [`icingaweb2::module::reactbundle`](#icingaweb2modulereactbundle): Installs and enables the reactbundle module.
 * [`icingaweb2::module::translation`](#icingaweb2moduletranslation): Installs and configures the translation module.
@@ -56,9 +57,14 @@ that store groups.
 * `icingaweb2::module::monitoring::commandtransport`: Manages commandtransport configuration for the monitoring module.
 * `icingaweb2::module::puppetdb::certificate`: Installs a certificate for the Icinga Web 2 puppetdb module.
 
+### Functions
+
+* [`icingaweb2::unwrap`](#icingaweb2unwrap)
+
 ### Data types
 
 * [`Icingaweb2::AdminRole`](#icingaweb2adminrole): A strict type for the default admin role
+* [`Icingaweb2::Secret`](#icingaweb2secret): A strict type for the secrets like passwords or keys
 
 ## Classes
 
@@ -275,7 +281,7 @@ Default value: ``undef``
 
 ##### `db_password`
 
-Data type: `Optional[String]`
+Data type: `Optional[Icingaweb2::Secret]`
 
 Password for database access. This parameter is only used if `import_schema` is `true` or
 `config_backend` is `db`.
@@ -335,7 +341,7 @@ if `import_schema` is set to `true` and only during the import itself.
 
 ##### `default_admin_password`
 
-Data type: `String`
+Data type: `Icingaweb2::Secret`
 
 Default password for initial admin access. This parameter is only used
 if `import_schema` is set to `true` and only during the import itself.
@@ -624,7 +630,7 @@ Default value: ``undef``
 
 ##### `db_password`
 
-Data type: `Optional[String]`
+Data type: `Optional[Icingaweb2::Secret]`
 
 Password for DB connection.
 
@@ -680,7 +686,7 @@ Default value: ``undef``
 
 ##### `api_password`
 
-Data type: `Optional[String]`
+Data type: `Optional[Icingaweb2::Secret]`
 
 Icinga 2 API password. This setting is only valid if `kickstart` is `true`.
 
@@ -1081,7 +1087,7 @@ Default value: ``undef``
 
 ##### `password`
 
-Data type: `Optional[String]`
+Data type: `Optional[Icingaweb2::Secret]`
 
 The users password.
 
@@ -1265,7 +1271,7 @@ Default value: ``undef``
 
 ##### `ido_db_password`
 
-Data type: `Optional[String]`
+Data type: `Optional[Icingaweb2::Secret]`
 
 Password for IDO DB connection.
 
@@ -1286,6 +1292,75 @@ Data type: `Hash`
 A hash of command transports.
 
 Default value: `{}`
+
+### `icingaweb2::module::pdfexport`
+
+Installs, configures and enables the pdfexport module.
+
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
+
+#### Examples
+
+##### 
+
+```puppet
+class { 'icingaweb2::module::pdfexport':
+  git_revision  => 'v0.10.0',
+  chrome_binary => '/usr/bin/chromium-browser',
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::module::pdfexport` class.
+
+##### `ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Enable or disable module.
+
+Default value: `'present'`
+
+##### `git_repository`
+
+Data type: `String`
+
+Set a git repository URL.
+
+Default value: `'https://github.com/Icinga/icingaweb2-module-pdfexport.git'`
+
+##### `git_revision`
+
+Data type: `Optional[String]`
+
+Set either a branch or a tag name, eg. `master` or `v2.1.0`.
+
+Default value: ``undef``
+
+##### `install_method`
+
+Data type: `Enum['git', 'none', 'package']`
+
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+Default value: `'git'`
+
+##### `package_name`
+
+Data type: `String`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+Default value: `'icingaweb2-module-pdfexport'`
+
+##### `chrome_binary`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Path of the chrome or chromium binary.
+
+Default value: ``undef``
 
 ### `icingaweb2::module::puppetdb`
 
@@ -1595,7 +1670,7 @@ Default value: ``undef``
 
 ##### `db_password`
 
-Data type: `Optional[String]`
+Data type: `Optional[Icingaweb2::Secret]`
 
 The password needed to access the database.
 
@@ -1982,7 +2057,8 @@ Default value: ``undef``
 
 ##### `db_type`
 
-Data type: `Optional[Enum['mysql', 'pgsql', 'mssql', 'oci', 'oracle', 'ibm', 'sqlite']]`
+Data type: `Optional[Enum['mysql', 'pgsql', 'mssql',
+    'oci', 'oracle', 'ibm', 'sqlite']]`
 
 Set database type to connect.
 
@@ -2006,7 +2082,7 @@ Default value: ``undef``
 
 ##### `db_password`
 
-Data type: `Optional[String]`
+Data type: `Optional[Icingaweb2::Secret]`
 
 The password to use when connecting to the server. Only valid if `type` is `db`.
 
@@ -2038,7 +2114,7 @@ Default value: ``undef``
 
 ##### `ldap_bind_pw`
 
-Data type: `Optional[String]`
+Data type: `Optional[Icingaweb2::Secret]`
 
 The password to use when connecting to the server. Only valid if `type` is `ldap`.
 
@@ -2335,6 +2411,26 @@ Data type: `Optional[String]`
 
 Default value: ``undef``
 
+## Functions
+
+### `icingaweb2::unwrap`
+
+Type: Puppet Language
+
+The icingaweb2::unwrap function.
+
+#### `icingaweb2::unwrap(Optional[Variant[String, Sensitive[String]]] $arg = undef)`
+
+The icingaweb2::unwrap function.
+
+Returns: `Any`
+
+##### `arg`
+
+Data type: `Optional[Variant[String, Sensitive[String]]]`
+
+
+
 ## Data types
 
 ### `Icingaweb2::AdminRole`
@@ -2346,4 +2442,10 @@ Alias of `Struct[{
   users  => Optional[Array[String]],
   groups => Optional[Array[String]],
 }]`
+
+### `Icingaweb2::Secret`
+
+A strict type for the secrets like passwords or keys
+
+Alias of `Variant[String, Sensitive[String]]`
 
