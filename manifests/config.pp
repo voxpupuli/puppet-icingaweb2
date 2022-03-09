@@ -167,9 +167,9 @@ class icingaweb2::config {
     case $db_type {
       'mysql': {
         exec { 'import schema':
-          command  => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${_db_password}' '${db_name}' < '${mysql_db_schema}'",
-          unless   => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${_db_password}' '${db_name}' -Ns -e 'SELECT 1 FROM icingaweb_user'",
-          notify   => Exec['create default admin user'],
+          command => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${_db_password}' '${db_name}' < '${mysql_db_schema}'",
+          unless  => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${_db_password}' '${db_name}' -Ns -e 'SELECT 1 FROM icingaweb_user'",
+          notify  => Exec['create default admin user'],
         }
 
         exec { 'create default admin user':

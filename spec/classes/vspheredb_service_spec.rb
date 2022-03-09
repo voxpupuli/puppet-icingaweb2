@@ -21,7 +21,7 @@ describe('icingaweb2::module::vspheredb::service', type: :class) do
               'ensure' => 'present',
               'gid'    => 'icingaweb2',
               'shell'  => '/bin/false',
-            ).that_comes_before(['Systemd::Unit_file[icinga-vspheredb.service]','Systemd::Tmpfile[icinga-vspheredb.conf]'])
+            ).that_comes_before(['Systemd::Unit_file[icinga-vspheredb.service]', 'Systemd::Tmpfile[icinga-vspheredb.conf]'])
         end
         it do
           is_expected.to contain_systemd__tmpfile('icinga-vspheredb.conf').with(

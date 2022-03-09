@@ -47,11 +47,11 @@ class icingaweb2::module::pdfexport(
     package_name   => $package_name,
     settings       => {
       'module-pdfexport-chrome' => {
-         section_name => 'chrome',
-         target       => "${module_conf_dir}/config.ini",
-         settings     => {
-           'binary' => $chrome_binary,
-         },
+        section_name => 'chrome',
+        target       => "${module_conf_dir}/config.ini",
+        settings     => {
+          'binary' => $chrome_binary,
+        },
       },
     },
   }

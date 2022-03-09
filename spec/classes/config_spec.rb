@@ -66,15 +66,15 @@ describe('icingaweb2::config', type: :class) do
         it { is_expected.to raise_error(Puppet::Error, %r{expects a match for Enum\['mysql', 'pgsql'\]}) }
       end
 
-#      context 'with import_schema => false' do
-#        let :pre_condition do
-#          "class { 'icingaweb2': import_schema => false }"
-#        end
-#
-#        it { is_expected.not_to contain_exec('import schema') }
-#        it { is_expected.not_to contain_exec('create default admin user') }
-#        it { is_expected.to contain_icingaweb2__config__role('default admin user') }
-#      end
+      # context 'with import_schema => false' do
+      #   let :pre_condition do
+      #     "class { 'icingaweb2': import_schema => false }"
+      #   end
+
+      #   it { is_expected.not_to contain_exec('import schema') }
+      #   it { is_expected.not_to contain_exec('create default admin user') }
+      #   it { is_expected.to contain_icingaweb2__config__role('default admin user') }
+      # end
 
       context 'with import_schema => true and admin_role => false' do
         let :pre_condition do

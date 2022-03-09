@@ -46,8 +46,8 @@ class icingaweb2::module::vspheredb::service (
     }
 
     systemd::tmpfile { 'icinga-vspheredb.conf':
-      content => "d /run/icinga-vspheredb 0755 $user $group -",
-      before => Systemd::Unit_file['icinga-vspheredb.service'],
+      content => "d /run/icinga-vspheredb 0755 ${user} ${group} -",
+      before  => Systemd::Unit_file['icinga-vspheredb.service'],
     }
 
     systemd::unit_file { 'icinga-vspheredb.service':
