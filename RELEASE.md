@@ -3,7 +3,17 @@ Before submitting a new release, make sure all relevant pull requests and local 
 `master` branch. All tests must pass before a release is tagged.
 
 
-## 1. AUTHORS
+## 1. Puppet Development Kit
+If not installed, please install the PDK and do a 'bundle install'.
+``` bash
+pdk bundle install
+```
+Or if already installed do an update.
+``` bash
+pdk bundle update
+```
+
+## 2. AUTHORS
 Update the [AUTHORS] and [.mailmap] file
 
 ``` bash
@@ -12,7 +22,16 @@ git log --use-mailmap | grep ^Author: | cut -f2- -d' ' | sort | uniq > AUTHORS
 git commit -am "Update AUTHORS"
 ```
 
-## 2. Changelog
+## 3. References [REFERENCE.md]
+If it is not installed [puppet-strings]:
+``` bash
+gem install puppet-strings --no-ri --no-rdoc
+
+```bash
+puppet strings generate --format markdown --out ./REFERENCE.md
+```
+
+## 4. Changelog
 Install [github-changelog-generator]
 ```bash
 gem install github_changelog_generator
@@ -23,29 +42,22 @@ Generate [CHANGELOG.md]
 github_changelog_generator -t <github-access-token> --future-release=v2.3.1 --project=puppet-icingaweb2 --user=icinga
 ```
 
-## 3. References [REFERENCE.md]
-```bash
-puppet strings generate --format markdown --out ./REFERENCE.md
-```
-
-## 4. Version
+## 5. Version
 Version numbers are incremented regarding the [SemVer 1.0.0] specification.
 Update the version number in `metadata.json`.
 
-## 5. Git Tag
+## 6. Git Tag
 Commit all changes to the `master` branch
 
 ``` bash
-VERSION=2.3.1
-
-git commit -v -a -m "Release version $VERSION"
+git commit -v -a -m "Release version <VERSION>"
 git push
 ```
 
 Tag the release
 
 ``` bash
-git tag -m "Version $VERSION" "v$VERSION"
+git tag -m "Version <VERSION>" v<VERSION>
 ```
 
 Push tags
@@ -54,11 +66,14 @@ Push tags
 git push --tags
 ```
 
-
-## Puppet Forge
-The module is uploaded automatically to Puppet Forge by TravisCI when a new tag is set.
+## 7. Build and Upload
+``` bash
+pdk build
+```
+Upload the tarball to Puppet Forge.
 
 [github-changelog-generator]: https://github.com/skywinder/github-changelog-generator
+[Puppet Strings]: https://puppet.com/docs/puppet/5.5/puppet_strings.html
 [SemVer 1.0.0]: http://semver.org/spec/v1.0.0.html
 [CHANGELOG.md]: CHANGELOG.md
 [AUTHORS]: AUTHORS
