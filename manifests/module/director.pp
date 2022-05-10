@@ -6,6 +6,9 @@
 # @param ensure
 #   Enable or disable module.
 #
+# @param module_dir
+#   Target directory of the module.
+#
 # @param git_repository
 #   Set a git repository URL.
 #
@@ -76,6 +79,7 @@
 #
 class icingaweb2::module::director(
   Enum['absent', 'present']      $ensure         = 'present',
+  Optional[Stdlib::Absolutepath] $module_dir     = undef,
   String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-director.git',
   Optional[String]               $git_revision   = undef,
   Enum['git', 'package', 'none'] $install_method = 'git',
@@ -167,6 +171,7 @@ class icingaweb2::module::director(
     git_repository => $git_repository,
     git_revision   => $git_revision,
     install_method => $install_method,
+    module_dir     => $module_dir,
     package_name   => $package_name,
     settings       => merge($db_settings, $kickstart_settings),
   }

@@ -10,7 +10,7 @@
 #   Name of the module.
 #
 # @param module_dir
-#   Target directory of the module.
+#   Target directory of the module. Defaults to first item of `module_path`.
 #
 # @param [Enum['git', 'none', 'package']] install_method
 #   Install methods are `git`, `package` and `none` is supported as installation method. Defaults to `git`
@@ -49,7 +49,7 @@
 define icingaweb2::module(
   Enum['absent', 'present']         $ensure         = 'present',
   String                            $module         = $title,
-  Stdlib::Absolutepath              $module_dir     = "${::icingaweb2::module_path}/${title}",
+  Stdlib::Absolutepath              $module_dir     = "${::icingaweb2::globals::default_module_path}/${title}",
   Enum['git', 'none', 'package']    $install_method = 'git',
   Optional[String]                  $git_repository = undef,
   String                            $git_revision   = 'master',

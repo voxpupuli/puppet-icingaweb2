@@ -6,6 +6,9 @@
 # @param ensure
 #   Enable or disable module.
 #
+# @param module_dir
+#   Target directory of the module.
+#
 # @param git_repository
 #   Set a git repository URL.
 #
@@ -13,13 +16,15 @@
 #   Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
 #
 class icingaweb2::module::reactbundle(
-  String                    $git_repository,
-  String                    $git_revision,
-  Enum['absent', 'present'] $ensure = 'present',
+  String                         $git_repository,
+  String                         $git_revision,
+  Enum['absent', 'present']      $ensure     = 'present',
+  Optional[Stdlib::Absolutepath] $module_dir = undef,
 ) {
 
   icingaweb2::module { 'reactbundle':
     ensure         => $ensure,
+    module_dir     => $module_dir,
     git_repository => $git_repository,
     git_revision   => $git_revision,
   }

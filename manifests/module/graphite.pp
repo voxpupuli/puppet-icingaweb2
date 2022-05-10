@@ -6,6 +6,9 @@
 # @param ensure
 #   Enables or disables module.
 #
+# @param module_dir
+#   Target directory of the module.
+#
 # @param git_repository
 #   Set a git repository URL.
 #
@@ -40,6 +43,7 @@
 #
 class icingaweb2::module::graphite(
   Enum['absent', 'present']      $ensure                                = 'present',
+  Optional[Stdlib::Absolutepath] $module_dir                            = undef,
   String                         $git_repository                        = 'https://github.com/Icinga/icingaweb2-module-graphite.git',
   Optional[String]               $git_revision                          = undef,
   Enum['git', 'none', 'package'] $install_method                        = 'git',
@@ -83,6 +87,7 @@ class icingaweb2::module::graphite(
     git_repository => $git_repository,
     git_revision   => $git_revision,
     install_method => $install_method,
+    module_dir     => $module_dir,
     package_name   => $package_name,
     settings       => $settings,
   }

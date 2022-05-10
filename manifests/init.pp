@@ -20,7 +20,7 @@
 #   Whether to display stacktraces in the web interface or not.
 #
 # @param module_path
-#   Path to module sources. Multiple paths must be separated by colon.
+#   Additional path to module sources. Multiple paths must be separated by colon.
 #
 # @param theme
 #   The default theme setting. Users may override this settings.
@@ -138,13 +138,15 @@
 #   }
 #
 class icingaweb2 (
-  Stdlib::Absolutepath                            $module_path,
   Stdlib::Absolutepath                            $logging_file,
   String                                          $conf_user,
   String                                          $conf_group,
   Variant[Icingaweb2::AdminRole, Boolean[false]]  $admin_role,
   String                                          $default_admin_username,
   Icingaweb2::Secret                              $default_admin_password,
+  Optional[Variant[
+    Stdlib::Absolutepath,
+    Array[Stdlib::Absolutepath]]]                 $module_path         = undef,
   Enum['file', 'syslog', 'php', 'none']           $logging             = 'file',
   Enum['ERROR', 'WARNING', 'INFO', 'DEBUG']       $logging_level       = 'INFO',
   Pattern[/user|local[0-7]/]                      $logging_facility    = 'user',

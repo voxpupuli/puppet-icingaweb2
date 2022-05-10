@@ -6,6 +6,7 @@
 class icingaweb2::config {
 
   $conf_dir             = $::icingaweb2::globals::conf_dir
+  $default_module_path  = $::icingaweb2::globals::default_module_path
   $conf_user            = $::icingaweb2::conf_user
   $conf_group           = $::icingaweb2::conf_group
 
@@ -16,7 +17,7 @@ class icingaweb2::config {
   $logging_facility     = $::icingaweb2::logging_facility
   $logging_application  = $::icingaweb2::logging_application
   $show_stacktraces     = $::icingaweb2::show_stacktraces
-  $module_path          = $::icingaweb2::module_path
+  $module_path          = any2array($::icingaweb2::module_path)
 
   $theme                = $::icingaweb2::theme
   $theme_disabled       = $::icingaweb2::theme_disabled
@@ -78,7 +79,7 @@ class icingaweb2::config {
 
   $settings = {
     'show_stacktraces' => $show_stacktraces,
-    'module_path'      => $module_path,
+    'module_path'      => join(unique([$default_module_path] + $module_path), ':'),
     'config_backend'   => $config_backend,
     'config_resource'  => $config_resource,
   }

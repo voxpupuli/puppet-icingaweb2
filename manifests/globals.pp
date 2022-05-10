@@ -6,6 +6,7 @@
 class icingaweb2::globals(
   String                 $package_name,
   Stdlib::Absolutepath   $conf_dir,
+  Stdlib::Absolutepath   $default_module_path,
   Stdlib::Absolutepath   $mysql_db_schema,
   Stdlib::Absolutepath   $pgsql_db_schema,
   Stdlib::Absolutepath   $mysql_vspheredb_schema,

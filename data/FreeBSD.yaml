@@ -5,8 +5,8 @@ icingaweb2::globals::mysql_db_schema: /usr/local/www/icingaweb2/etc/schema/mysql
 icingaweb2::globals::pgsql_db_schema: /usr/local/www/icingaweb2/etc/schema/pgsql.schema.sql
 icingaweb2::globals::gettext_package_name: gettext-runtime
 icingaweb2::globals::icingacli_bin: /usr/local/bin/icingacli
+icingaweb2::globals::default_module_path: /usr/local/www/icingaweb2/modules
 
 icingaweb2::conf_user: www
 icingaweb2::conf_group: icingaweb2
 icingaweb2::logging_file: /var/log/icingaweb2/icingaweb2.log
-icingaweb2::module_path: /usr/local/www/icingaweb2/modules

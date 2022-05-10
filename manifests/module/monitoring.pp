@@ -120,7 +120,7 @@ class icingaweb2::module::monitoring(
 
   create_resources('icingaweb2::module::monitoring::commandtransport', $commandtransports)
 
-  icingaweb2::module {'monitoring':
+  icingaweb2::module { 'monitoring':
     ensure         => $ensure,
     install_method => $install_method,
     package_name   => $package_name,
