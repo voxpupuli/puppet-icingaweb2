@@ -1,5 +1,14 @@
 # Change Log
 
+## [v3.4.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.4.0) (2022-05-10)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.3.0...v3.4.0)
+
+**Implemented enhancements:**
+
+- Support Rocky and AlmaLinux [\#319](https://github.com/Icinga/puppet-icingaweb2/issues/319)
+- Add new parameter module\_dir to each module class [\#318](https://github.com/Icinga/puppet-icingaweb2/issues/318)
+- Parameter module\_path does not allow more than one path [\#317](https://github.com/Icinga/puppet-icingaweb2/issues/317)
+
 ## [v3.3.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.3.0) (2022-03-09)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.2.4...v3.3.0)
 

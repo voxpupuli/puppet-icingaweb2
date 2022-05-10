@@ -172,9 +172,13 @@ Default value: ``false``
 
 ##### `module_path`
 
-Data type: `Stdlib::Absolutepath`
+Data type: `Optional[Variant[
+    Stdlib::Absolutepath,
+    Array[Stdlib::Absolutepath]]]`
 
-Path to module sources. Multiple paths must be separated by colon.
+Additional path to module sources. Multiple paths must be separated by colon.
+
+Default value: ``undef``
 
 ##### `theme`
 
@@ -368,6 +372,12 @@ Data type: `Stdlib::Absolutepath`
 
 
 
+##### `default_module_path`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
 ##### `mysql_db_schema`
 
 Data type: `Stdlib::Absolutepath`
@@ -425,6 +435,14 @@ Data type: `Enum['absent', 'present']`
 Enable or disable module.
 
 Default value: `'present'`
+
+##### `module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
 
 ##### `git_repository`
 
@@ -485,6 +503,14 @@ Data type: `Enum['absent', 'present']`
 Enable or disable module.
 
 Default value: `'present'`
+
+##### `module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
 
 ##### `git_repository`
 
@@ -555,6 +581,14 @@ Data type: `Enum['absent', 'present']`
 Enable or disable module.
 
 Default value: `'present'`
+
+##### `module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
 
 ##### `git_repository`
 
@@ -812,6 +846,14 @@ Enable or disable module.
 
 Default value: `'present'`
 
+##### `module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
+
 ##### `git_repository`
 
 Data type: `String`
@@ -891,6 +933,14 @@ Data type: `Enum['absent', 'present']`
 Enables or disables module.
 
 Default value: `'present'`
+
+##### `module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
 
 ##### `git_repository`
 
@@ -974,6 +1024,14 @@ Enable or disable module.
 
 Default value: `'present'`
 
+##### `module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
+
 ##### `git_repository`
 
 Data type: `String`
@@ -1044,6 +1102,14 @@ Data type: `Enum['absent', 'present']`
 Enables or disables module.
 
 Default value: `'present'`
+
+##### `module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
 
 ##### `git_repository`
 
@@ -1135,6 +1201,14 @@ Enable or disable module. Defaults to `present`
 
 Default value: `'present'`
 
+##### `module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
+
 ##### `git_repository`
 
 Data type: `String`
@@ -1164,6 +1238,14 @@ Data type: `Enum['absent', 'present']`
 Enable or disable module.
 
 Default value: `'present'`
+
+##### `module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
 
 ##### `git_repository`
 
@@ -1322,6 +1404,14 @@ Enable or disable module.
 
 Default value: `'present'`
 
+##### `module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
+
 ##### `git_repository`
 
 Data type: `String`
@@ -1413,6 +1503,14 @@ Enable or disable module.
 
 Default value: `'present'`
 
+##### `module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
+
 ##### `git_repository`
 
 Data type: `String`
@@ -1487,6 +1585,14 @@ Enable or disable module.
 
 Default value: `'present'`
 
+##### `module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
+
 ##### `git_repository`
 
 Data type: `String`
@@ -1532,6 +1638,14 @@ Data type: `Enum['absent', 'present']`
 Enable or disable module.
 
 Default value: `'present'`
+
+##### `module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
 
 ##### `git_repository`
 
@@ -1595,6 +1709,14 @@ Data type: `Enum['absent', 'present']`
 Ensur es the state of the vspheredb module.
 
 Default value: `'present'`
+
+##### `module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
 
 ##### `git_repository`
 
@@ -2366,9 +2488,9 @@ Default value: `$title`
 
 Data type: `Stdlib::Absolutepath`
 
-Target directory of the module.
+Target directory of the module. Defaults to first item of `module_path`.
 
-Default value: `"${::icingaweb2::module_path}/${title}"`
+Default value: `"${::icingaweb2::globals::default_module_path}/${title}"`
 
 ##### `install_method`
 

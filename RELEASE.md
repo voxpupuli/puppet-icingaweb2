@@ -26,6 +26,7 @@ git commit -am "Update AUTHORS"
 If it is not installed [puppet-strings]:
 ``` bash
 gem install puppet-strings --no-ri --no-rdoc
+```
 
 ```bash
 puppet strings generate --format markdown --out ./REFERENCE.md
