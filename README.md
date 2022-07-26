@@ -57,8 +57,10 @@ This module depends on
 This module has been tested on:
 
 * Debian 9, 10, 11
-* CentOS/RHEL 7, 8
+* CentOS/RHEL 7
   * Requires [Software Collections Repository](https://wiki.centos.org/AdditionalResources/Repositories/SCL)
+* RHEL/AlmaLinux/Rocky 8
+  * Requires an [Icinga Subscription](https://icinga.com/subscription) for all versions >= 2.9.5 of Icinga Web 2.
 * Ubuntu 16.04, 18.04, 20.04
 * SLES 12, 15
 
