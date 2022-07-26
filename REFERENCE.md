@@ -59,7 +59,7 @@ that store groups.
 
 ### Functions
 
-* [`icingaweb2::unwrap`](#icingaweb2unwrap)
+* [`icingaweb2::unwrap`](#icingaweb2unwrap): This function returns an unwrap string if necessary.
 
 ### Data types
 
@@ -68,7 +68,7 @@ that store groups.
 
 ## Classes
 
-### `icingaweb2`
+### <a name="icingaweb2"></a>`icingaweb2`
 
 Installs and configures Icinga Web 2.
 
@@ -122,9 +122,38 @@ class {'icingaweb2':
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2` class.
+The following parameters are available in the `icingaweb2` class:
 
-##### `logging`
+* [`logging`](#logging)
+* [`logging_file`](#logging_file)
+* [`logging_level`](#logging_level)
+* [`logging_facility`](#logging_facility)
+* [`logging_application`](#logging_application)
+* [`show_stacktraces`](#show_stacktraces)
+* [`module_path`](#module_path)
+* [`theme`](#theme)
+* [`theme_disabled`](#theme_disabled)
+* [`manage_repo`](#manage_repo)
+* [`manage_repos`](#manage_repos)
+* [`manage_package`](#manage_package)
+* [`extra_packages`](#extra_packages)
+* [`import_schema`](#import_schema)
+* [`db_type`](#db_type)
+* [`db_host`](#db_host)
+* [`db_port`](#db_port)
+* [`db_name`](#db_name)
+* [`db_username`](#db_username)
+* [`db_password`](#db_password)
+* [`config_backend`](#config_backend)
+* [`conf_user`](#conf_user)
+* [`conf_group`](#conf_group)
+* [`default_domain`](#default_domain)
+* [`cookie_path`](#cookie_path)
+* [`admin_role`](#admin_role)
+* [`default_admin_username`](#default_admin_username)
+* [`default_admin_password`](#default_admin_password)
+
+##### <a name="logging"></a>`logging`
 
 Data type: `Enum['file', 'syslog', 'php', 'none']`
 
@@ -132,13 +161,13 @@ Whether Icinga Web 2 should log to 'file', 'syslog' or 'php' (web server's error
 
 Default value: `'file'`
 
-##### `logging_file`
+##### <a name="logging_file"></a>`logging_file`
 
 Data type: `Stdlib::Absolutepath`
 
 If 'logging' is set to 'file', this is the target log file.
 
-##### `logging_level`
+##### <a name="logging_level"></a>`logging_level`
 
 Data type: `Enum['ERROR', 'WARNING', 'INFO', 'DEBUG']`
 
@@ -146,7 +175,7 @@ Logging verbosity. Possible values are 'ERROR', 'WARNING', 'INFO' and 'DEBUG'.
 
 Default value: `'INFO'`
 
-##### `logging_facility`
+##### <a name="logging_facility"></a>`logging_facility`
 
 Data type: `Pattern[/user|local[0-7]/]`
 
@@ -154,7 +183,7 @@ Logging facility when using syslog. Possible values are 'user' or 'local0' up to
 
 Default value: `'user'`
 
-##### `logging_application`
+##### <a name="logging_application"></a>`logging_application`
 
 Data type: `String`
 
@@ -162,7 +191,7 @@ Logging application name when using syslog.
 
 Default value: `'icingaweb2'`
 
-##### `show_stacktraces`
+##### <a name="show_stacktraces"></a>`show_stacktraces`
 
 Data type: `Boolean`
 
@@ -170,7 +199,7 @@ Whether to display stacktraces in the web interface or not.
 
 Default value: ``false``
 
-##### `module_path`
+##### <a name="module_path"></a>`module_path`
 
 Data type: `Optional[Variant[
     Stdlib::Absolutepath,
@@ -180,7 +209,7 @@ Additional path to module sources. Multiple paths must be separated by colon.
 
 Default value: ``undef``
 
-##### `theme`
+##### <a name="theme"></a>`theme`
 
 Data type: `String`
 
@@ -188,7 +217,7 @@ The default theme setting. Users may override this settings.
 
 Default value: `'Icinga'`
 
-##### `theme_disabled`
+##### <a name="theme_disabled"></a>`theme_disabled`
 
 Data type: `Boolean`
 
@@ -196,7 +225,7 @@ Whether users can change themes or not.
 
 Default value: ``false``
 
-##### `manage_repo`
+##### <a name="manage_repo"></a>`manage_repo`
 
 Data type: `Boolean`
 
@@ -204,7 +233,7 @@ Deprecated, use manage_repos.
 
 Default value: ``false``
 
-##### `manage_repos`
+##### <a name="manage_repos"></a>`manage_repos`
 
 Data type: `Boolean`
 
@@ -214,7 +243,7 @@ For more information, see http://github.com/icinga/puppet-icinga.
 
 Default value: ``false``
 
-##### `manage_package`
+##### <a name="manage_package"></a>`manage_package`
 
 Data type: `Boolean`
 
@@ -222,7 +251,7 @@ If set to `false` packages aren't managed.
 
 Default value: ``true``
 
-##### `extra_packages`
+##### <a name="extra_packages"></a>`extra_packages`
 
 Data type: `Optional[Array[String]]`
 
@@ -230,7 +259,7 @@ An array of packages to install additionally.
 
 Default value: ``undef``
 
-##### `import_schema`
+##### <a name="import_schema"></a>`import_schema`
 
 Data type: `Boolean`
 
@@ -238,7 +267,7 @@ Import database scheme. Make sure you have an existing database if you use this 
 
 Default value: ``false``
 
-##### `db_type`
+##### <a name="db_type"></a>`db_type`
 
 Data type: `Enum['mysql', 'pgsql']`
 
@@ -247,7 +276,7 @@ Database type, can be either `mysql` or `pgsql`. This parameter is only used if 
 
 Default value: `'mysql'`
 
-##### `db_host`
+##### <a name="db_host"></a>`db_host`
 
 Data type: `Stdlib::Host`
 
@@ -256,7 +285,7 @@ Database hostname. This parameter is only used if `import_schema` is `true` or
 
 Default value: `'localhost'`
 
-##### `db_port`
+##### <a name="db_port"></a>`db_port`
 
 Data type: `Stdlib::Port`
 
@@ -265,7 +294,7 @@ Port of database host. This parameter is only used if `import_schema` is `true` 
 
 Default value: `3306`
 
-##### `db_name`
+##### <a name="db_name"></a>`db_name`
 
 Data type: `String`
 
@@ -274,7 +303,7 @@ Database name. This parameter is only used if `import_schema` is `true` or
 
 Default value: `'icingaweb2'`
 
-##### `db_username`
+##### <a name="db_username"></a>`db_username`
 
 Data type: `Optional[String]`
 
@@ -283,7 +312,7 @@ Username for database access. This parameter is only used if `import_schema` is 
 
 Default value: ``undef``
 
-##### `db_password`
+##### <a name="db_password"></a>`db_password`
 
 Data type: `Optional[Icingaweb2::Secret]`
 
@@ -292,7 +321,7 @@ Password for database access. This parameter is only used if `import_schema` is 
 
 Default value: ``undef``
 
-##### `config_backend`
+##### <a name="config_backend"></a>`config_backend`
 
 Data type: `Enum['ini', 'db']`
 
@@ -301,20 +330,20 @@ be set to `db` or `ini`.
 
 Default value: `'ini'`
 
-##### `conf_user`
+##### <a name="conf_user"></a>`conf_user`
 
 Data type: `String`
 
 By default this module expects Apache2 on the server. You can change the owner of the config files with this
 parameter.
 
-##### `conf_group`
+##### <a name="conf_group"></a>`conf_group`
 
 Data type: `String`
 
 Group membership of config files.
 
-##### `default_domain`
+##### <a name="default_domain"></a>`default_domain`
 
 Data type: `Optional[String]`
 
@@ -322,7 +351,7 @@ When using domain-aware authentication, you can set a default domain here.
 
 Default value: ``undef``
 
-##### `cookie_path`
+##### <a name="cookie_path"></a>`cookie_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -330,27 +359,27 @@ Path to where cookies are stored.
 
 Default value: ``undef``
 
-##### `admin_role`
+##### <a name="admin_role"></a>`admin_role`
 
 Data type: `Variant[Icingaweb2::AdminRole, Boolean[false]]`
 
 Manage a role for admin access.
 
-##### `default_admin_username`
+##### <a name="default_admin_username"></a>`default_admin_username`
 
 Data type: `String`
 
 Default username for initial admin access. This parameter is only used
 if `import_schema` is set to `true` and only during the import itself.
 
-##### `default_admin_password`
+##### <a name="default_admin_password"></a>`default_admin_password`
 
 Data type: `Icingaweb2::Secret`
 
 Default password for initial admin access. This parameter is only used
 if `import_schema` is set to `true` and only during the import itself.
 
-### `icingaweb2::globals`
+### <a name="icingaweb2globals"></a>`icingaweb2::globals`
 
 This class loads the default parameters by doing a hiera lookup.
 
@@ -358,57 +387,66 @@ This class loads the default parameters by doing a hiera lookup.
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::globals` class.
+The following parameters are available in the `icingaweb2::globals` class:
 
-##### `package_name`
+* [`package_name`](#package_name)
+* [`conf_dir`](#conf_dir)
+* [`default_module_path`](#default_module_path)
+* [`mysql_db_schema`](#mysql_db_schema)
+* [`pgsql_db_schema`](#pgsql_db_schema)
+* [`mysql_vspheredb_schema`](#mysql_vspheredb_schema)
+* [`gettext_package_name`](#gettext_package_name)
+* [`icingacli_bin`](#icingacli_bin)
 
-Data type: `String`
-
-
-
-##### `conf_dir`
-
-Data type: `Stdlib::Absolutepath`
-
-
-
-##### `default_module_path`
-
-Data type: `Stdlib::Absolutepath`
-
-
-
-##### `mysql_db_schema`
-
-Data type: `Stdlib::Absolutepath`
-
-
-
-##### `pgsql_db_schema`
-
-Data type: `Stdlib::Absolutepath`
-
-
-
-##### `mysql_vspheredb_schema`
-
-Data type: `Stdlib::Absolutepath`
-
-
-
-##### `gettext_package_name`
+##### <a name="package_name"></a>`package_name`
 
 Data type: `String`
 
 
 
-##### `icingacli_bin`
+##### <a name="conf_dir"></a>`conf_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 
 
-### `icingaweb2::module::businessprocess`
+##### <a name="default_module_path"></a>`default_module_path`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### <a name="mysql_db_schema"></a>`mysql_db_schema`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### <a name="pgsql_db_schema"></a>`pgsql_db_schema`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### <a name="mysql_vspheredb_schema"></a>`mysql_vspheredb_schema`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### <a name="gettext_package_name"></a>`gettext_package_name`
+
+Data type: `String`
+
+
+
+##### <a name="icingacli_bin"></a>`icingacli_bin`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+### <a name="icingaweb2modulebusinessprocess"></a>`icingaweb2::module::businessprocess`
 
 Installs and enables the businessprocess module.
 
@@ -426,9 +464,16 @@ class { 'icingaweb2::module::businessprocess':
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::businessprocess` class.
+The following parameters are available in the `icingaweb2::module::businessprocess` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`git_revision`](#git_revision)
+* [`install_method`](#install_method)
+* [`package_name`](#package_name)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -436,7 +481,7 @@ Enable or disable module.
 
 Default value: `'present'`
 
-##### `module_dir`
+##### <a name="module_dir"></a>`module_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -444,7 +489,7 @@ Target directory of the module.
 
 Default value: ``undef``
 
-##### `git_repository`
+##### <a name="git_repository"></a>`git_repository`
 
 Data type: `String`
 
@@ -452,7 +497,7 @@ Set a git repository URL.
 
 Default value: `'https://github.com/Icinga/icingaweb2-module-businessprocess.git'`
 
-##### `git_revision`
+##### <a name="git_revision"></a>`git_revision`
 
 Data type: `Optional[String]`
 
@@ -460,7 +505,7 @@ Set either a branch or a tag name, eg. `master` or `v2.1.0`.
 
 Default value: ``undef``
 
-##### `install_method`
+##### <a name="install_method"></a>`install_method`
 
 Data type: `Enum['git', 'none', 'package']`
 
@@ -468,7 +513,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 Default value: `'git'`
 
-##### `package_name`
+##### <a name="package_name"></a>`package_name`
 
 Data type: `String`
 
@@ -476,7 +521,7 @@ Package name of the module. This setting is only valid in combination with the i
 
 Default value: `'icingaweb2-module-businessprocess'`
 
-### `icingaweb2::module::cube`
+### <a name="icingaweb2modulecube"></a>`icingaweb2::module::cube`
 
 Installs and enables the cube module.
 
@@ -494,9 +539,16 @@ class { 'icingaweb2::module::cube':
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::cube` class.
+The following parameters are available in the `icingaweb2::module::cube` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`git_revision`](#git_revision)
+* [`install_method`](#install_method)
+* [`package_name`](#package_name)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -504,7 +556,7 @@ Enable or disable module.
 
 Default value: `'present'`
 
-##### `module_dir`
+##### <a name="module_dir"></a>`module_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -512,7 +564,7 @@ Target directory of the module.
 
 Default value: ``undef``
 
-##### `git_repository`
+##### <a name="git_repository"></a>`git_repository`
 
 Data type: `String`
 
@@ -520,7 +572,7 @@ Set a git repository URL.
 
 Default value: `'https://github.com/Icinga/icingaweb2-module-cube.git'`
 
-##### `git_revision`
+##### <a name="git_revision"></a>`git_revision`
 
 Data type: `Optional[String]`
 
@@ -528,7 +580,7 @@ Set either a branch or a tag name, eg. `master` or `v1.0.0`.
 
 Default value: ``undef``
 
-##### `install_method`
+##### <a name="install_method"></a>`install_method`
 
 Data type: `Enum['git', 'none', 'package']`
 
@@ -536,7 +588,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 Default value: `'git'`
 
-##### `package_name`
+##### <a name="package_name"></a>`package_name`
 
 Data type: `String`
 
@@ -544,7 +596,7 @@ Package name of the module. This setting is only valid in combination with the i
 
 Default value: `'icingaweb2-module-cube'`
 
-### `icingaweb2::module::director`
+### <a name="icingaweb2moduledirector"></a>`icingaweb2::module::director`
 
 Installs and configures the director module.
 
@@ -572,9 +624,30 @@ class { 'icingaweb2::module::director':
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::director` class.
+The following parameters are available in the `icingaweb2::module::director` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`git_revision`](#git_revision)
+* [`install_method`](#install_method)
+* [`package_name`](#package_name)
+* [`db_type`](#db_type)
+* [`db_host`](#db_host)
+* [`db_port`](#db_port)
+* [`db_name`](#db_name)
+* [`db_username`](#db_username)
+* [`db_password`](#db_password)
+* [`import_schema`](#import_schema)
+* [`kickstart`](#kickstart)
+* [`endpoint`](#endpoint)
+* [`api_host`](#api_host)
+* [`api_port`](#api_port)
+* [`api_username`](#api_username)
+* [`api_password`](#api_password)
+* [`db_charset`](#db_charset)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -582,7 +655,7 @@ Enable or disable module.
 
 Default value: `'present'`
 
-##### `module_dir`
+##### <a name="module_dir"></a>`module_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -590,7 +663,7 @@ Target directory of the module.
 
 Default value: ``undef``
 
-##### `git_repository`
+##### <a name="git_repository"></a>`git_repository`
 
 Data type: `String`
 
@@ -598,7 +671,7 @@ Set a git repository URL.
 
 Default value: `'https://github.com/Icinga/icingaweb2-module-director.git'`
 
-##### `git_revision`
+##### <a name="git_revision"></a>`git_revision`
 
 Data type: `Optional[String]`
 
@@ -606,7 +679,7 @@ Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 
 Default value: ``undef``
 
-##### `install_method`
+##### <a name="install_method"></a>`install_method`
 
 Data type: `Enum['git', 'package', 'none']`
 
@@ -614,7 +687,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 Default value: `'git'`
 
-##### `package_name`
+##### <a name="package_name"></a>`package_name`
 
 Data type: `String`
 
@@ -622,7 +695,7 @@ Package name of the module. This setting is only valid in combination with the i
 
 Default value: `'icingaweb2-module-director'`
 
-##### `db_type`
+##### <a name="db_type"></a>`db_type`
 
 Data type: `Enum['mysql', 'pgsql']`
 
@@ -630,7 +703,7 @@ Type of your database. Either `mysql` or `pgsql`.
 
 Default value: `'mysql'`
 
-##### `db_host`
+##### <a name="db_host"></a>`db_host`
 
 Data type: `Optional[Stdlib::Host]`
 
@@ -638,7 +711,7 @@ Hostname of the database.
 
 Default value: ``undef``
 
-##### `db_port`
+##### <a name="db_port"></a>`db_port`
 
 Data type: `Optional[Stdlib::Port]`
 
@@ -646,7 +719,7 @@ Port of the database.
 
 Default value: ``undef``
 
-##### `db_name`
+##### <a name="db_name"></a>`db_name`
 
 Data type: `Optional[String]`
 
@@ -654,7 +727,7 @@ Name of the database.
 
 Default value: ``undef``
 
-##### `db_username`
+##### <a name="db_username"></a>`db_username`
 
 Data type: `Optional[String]`
 
@@ -662,7 +735,7 @@ Username for DB connection.
 
 Default value: ``undef``
 
-##### `db_password`
+##### <a name="db_password"></a>`db_password`
 
 Data type: `Optional[Icingaweb2::Secret]`
 
@@ -670,7 +743,7 @@ Password for DB connection.
 
 Default value: ``undef``
 
-##### `import_schema`
+##### <a name="import_schema"></a>`import_schema`
 
 Data type: `Boolean`
 
@@ -678,7 +751,7 @@ Import database schema.
 
 Default value: ``false``
 
-##### `kickstart`
+##### <a name="kickstart"></a>`kickstart`
 
 Data type: `Boolean`
 
@@ -686,7 +759,7 @@ Run kickstart command after database migration. This requires `import_schema` to
 
 Default value: ``false``
 
-##### `endpoint`
+##### <a name="endpoint"></a>`endpoint`
 
 Data type: `Optional[String]`
 
@@ -694,7 +767,7 @@ Endpoint object name of Icinga 2 API. This setting is only valid if `kickstart` 
 
 Default value: ``undef``
 
-##### `api_host`
+##### <a name="api_host"></a>`api_host`
 
 Data type: `Stdlib::Host`
 
@@ -702,7 +775,7 @@ Icinga 2 API hostname. This setting is only valid if `kickstart` is `true`.
 
 Default value: `'localhost'`
 
-##### `api_port`
+##### <a name="api_port"></a>`api_port`
 
 Data type: `Stdlib::Port`
 
@@ -710,7 +783,7 @@ Icinga 2 API port. This setting is only valid if `kickstart` is `true`.
 
 Default value: `5665`
 
-##### `api_username`
+##### <a name="api_username"></a>`api_username`
 
 Data type: `Optional[String]`
 
@@ -718,7 +791,7 @@ Icinga 2 API username. This setting is only valid if `kickstart` is `true`.
 
 Default value: ``undef``
 
-##### `api_password`
+##### <a name="api_password"></a>`api_password`
 
 Data type: `Optional[Icingaweb2::Secret]`
 
@@ -726,7 +799,7 @@ Icinga 2 API password. This setting is only valid if `kickstart` is `true`.
 
 Default value: ``undef``
 
-##### `db_charset`
+##### <a name="db_charset"></a>`db_charset`
 
 Data type: `Optional[String]`
 
@@ -734,7 +807,7 @@ Data type: `Optional[String]`
 
 Default value: `'utf8'`
 
-### `icingaweb2::module::director::service`
+### <a name="icingaweb2moduledirectorservice"></a>`icingaweb2::module::director::service`
 
 Installs and configures the director service.
 
@@ -742,9 +815,15 @@ Installs and configures the director service.
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::director::service` class.
+The following parameters are available in the `icingaweb2::module::director::service` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`enable`](#enable)
+* [`user`](#user)
+* [`group`](#group)
+* [`manage_user`](#manage_user)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Stdlib::Ensure::Service`
 
@@ -752,7 +831,7 @@ Whether the director service should be running.
 
 Default value: `'running'`
 
-##### `enable`
+##### <a name="enable"></a>`enable`
 
 Data type: `Boolean`
 
@@ -760,7 +839,7 @@ Enable or disable the service.
 
 Default value: ``true``
 
-##### `user`
+##### <a name="user"></a>`user`
 
 Data type: `String`
 
@@ -769,7 +848,7 @@ install_method package is not used.
 
 Default value: `'icingadirector'`
 
-##### `group`
+##### <a name="group"></a>`group`
 
 Data type: `String`
 
@@ -778,7 +857,7 @@ Specifies primary group for user to run director service daemon.
 
 Default value: `'icingaweb2'`
 
-##### `manage_user`
+##### <a name="manage_user"></a>`manage_user`
 
 Data type: `Boolean`
 
@@ -787,15 +866,17 @@ install_method package is not used.
 
 Default value: ``true``
 
-### `icingaweb2::module::doc`
+### <a name="icingaweb2moduledoc"></a>`icingaweb2::module::doc`
 
 The doc module provides an interface to the Icinga 2 and Icinga Web 2 documentation.
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::doc` class.
+The following parameters are available in the `icingaweb2::module::doc` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -803,7 +884,7 @@ Enable or disable module. Defaults to `present`
 
 Default value: `'present'`
 
-### `icingaweb2::module::elasticsearch`
+### <a name="icingaweb2moduleelasticsearch"></a>`icingaweb2::module::elasticsearch`
 
 The Elasticsearch module displays events from data stored in Elasticsearch.
 
@@ -836,9 +917,18 @@ class { 'icingaweb2::module::elasticsearch':
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::elasticsearch` class.
+The following parameters are available in the `icingaweb2::module::elasticsearch` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`install_method`](#install_method)
+* [`package_name`](#package_name)
+* [`git_revision`](#git_revision)
+* [`instances`](#instances)
+* [`eventtypes`](#eventtypes)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -846,7 +936,7 @@ Enable or disable module.
 
 Default value: `'present'`
 
-##### `module_dir`
+##### <a name="module_dir"></a>`module_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -854,7 +944,7 @@ Target directory of the module.
 
 Default value: ``undef``
 
-##### `git_repository`
+##### <a name="git_repository"></a>`git_repository`
 
 Data type: `String`
 
@@ -862,7 +952,7 @@ Set a git repository URL.
 
 Default value: `'https://github.com/Icinga/icingaweb2-module-elasticsearch.git'`
 
-##### `install_method`
+##### <a name="install_method"></a>`install_method`
 
 Data type: `Enum['git', 'none', 'package']`
 
@@ -870,7 +960,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 Default value: `'git'`
 
-##### `package_name`
+##### <a name="package_name"></a>`package_name`
 
 Data type: `String`
 
@@ -878,7 +968,7 @@ Package name of the module. This setting is only valid in combination with the i
 
 Default value: `'icingaweb2-module-elasticsearch'`
 
-##### `git_revision`
+##### <a name="git_revision"></a>`git_revision`
 
 Data type: `Optional[String]`
 
@@ -886,7 +976,7 @@ Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 
 Default value: ``undef``
 
-##### `instances`
+##### <a name="instances"></a>`instances`
 
 Data type: `Optional[Hash]`
 
@@ -895,7 +985,7 @@ A hash that configures one or more Elasticsearch instances that this module conn
 
 Default value: ``undef``
 
-##### `eventtypes`
+##### <a name="eventtypes"></a>`eventtypes`
 
 Data type: `Optional[Hash]`
 
@@ -904,7 +994,7 @@ A hash oft ypes of events that should be displayed. Event types are always conne
 
 Default value: ``undef``
 
-### `icingaweb2::module::fileshipper`
+### <a name="icingaweb2modulefileshipper"></a>`icingaweb2::module::fileshipper`
 
 @example:
   class { 'icingaweb2::module::fileshipper':
@@ -924,9 +1014,18 @@ Default value: ``undef``
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::fileshipper` class.
+The following parameters are available in the `icingaweb2::module::fileshipper` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`install_method`](#install_method)
+* [`package_name`](#package_name)
+* [`git_revision`](#git_revision)
+* [`base_directories`](#base_directories)
+* [`directories`](#directories)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -934,7 +1033,7 @@ Enables or disables module.
 
 Default value: `'present'`
 
-##### `module_dir`
+##### <a name="module_dir"></a>`module_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -942,7 +1041,7 @@ Target directory of the module.
 
 Default value: ``undef``
 
-##### `git_repository`
+##### <a name="git_repository"></a>`git_repository`
 
 Data type: `String`
 
@@ -950,7 +1049,7 @@ Set a git repository URL.
 
 Default value: `'https://github.com/Icinga/icingaweb2-module-fileshipper.git'`
 
-##### `install_method`
+##### <a name="install_method"></a>`install_method`
 
 Data type: `Enum['git', 'none', 'package']`
 
@@ -958,7 +1057,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 Default value: `'git'`
 
-##### `package_name`
+##### <a name="package_name"></a>`package_name`
 
 Data type: `String`
 
@@ -966,7 +1065,7 @@ Package name of the module. This setting is only valid in combination with the i
 
 Default value: `'icingaweb2-module-fileshipper'`
 
-##### `git_revision`
+##### <a name="git_revision"></a>`git_revision`
 
 Data type: `Optional[String]`
 
@@ -974,7 +1073,7 @@ Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 
 Default value: ``undef``
 
-##### `base_directories`
+##### <a name="base_directories"></a>`base_directories`
 
 Data type: `Hash`
 
@@ -982,7 +1081,7 @@ Hash of base directories. These directories can later be selected in the import 
 
 Default value: `{}`
 
-##### `directories`
+##### <a name="directories"></a>`directories`
 
 Data type: `Hash`
 
@@ -990,7 +1089,7 @@ Deploy plain Icinga 2 configuration files through the Director to your Icinga 2 
 
 Default value: `{}`
 
-### `icingaweb2::module::generictts`
+### <a name="icingaweb2modulegenerictts"></a>`icingaweb2::module::generictts`
 
 Installs and enables the generictts module.
 
@@ -1014,9 +1113,17 @@ class { 'icingaweb2::module::generictts':
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::generictts` class.
+The following parameters are available in the `icingaweb2::module::generictts` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`git_revision`](#git_revision)
+* [`install_method`](#install_method)
+* [`package_name`](#package_name)
+* [`ticketsystems`](#ticketsystems)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1024,7 +1131,7 @@ Enable or disable module.
 
 Default value: `'present'`
 
-##### `module_dir`
+##### <a name="module_dir"></a>`module_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1032,7 +1139,7 @@ Target directory of the module.
 
 Default value: ``undef``
 
-##### `git_repository`
+##### <a name="git_repository"></a>`git_repository`
 
 Data type: `String`
 
@@ -1040,7 +1147,7 @@ Set a git repository URL.
 
 Default value: `'https://github.com/Icinga/icingaweb2-module-generictts.git'`
 
-##### `git_revision`
+##### <a name="git_revision"></a>`git_revision`
 
 Data type: `Optional[String]`
 
@@ -1048,7 +1155,7 @@ Set either a branch or a tag name, eg. `master` or `v2.0.0`.
 
 Default value: ``undef``
 
-##### `install_method`
+##### <a name="install_method"></a>`install_method`
 
 Data type: `Enum['git', 'none', 'package']`
 
@@ -1056,7 +1163,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 Default value: `'git'`
 
-##### `package_name`
+##### <a name="package_name"></a>`package_name`
 
 Data type: `String`
 
@@ -1064,7 +1171,7 @@ Package name of the module. This setting is only valid in combination with the i
 
 Default value: `'icingaweb2-module-generictts'`
 
-##### `ticketsystems`
+##### <a name="ticketsystems"></a>`ticketsystems`
 
 Data type: `Hash`
 
@@ -1074,7 +1181,7 @@ in the URL, eg. `https://my.ticket.system/tickets/id=$1`.
 
 Default value: `{}`
 
-### `icingaweb2::module::graphite`
+### <a name="icingaweb2modulegraphite"></a>`icingaweb2::module::graphite`
 
 The Graphite module draws graphs out of time series data stored in Graphite.
 
@@ -1093,9 +1200,21 @@ class { 'icingaweb2::module::graphite':
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::graphite` class.
+The following parameters are available in the `icingaweb2::module::graphite` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`install_method`](#install_method)
+* [`package_name`](#package_name)
+* [`url`](#url)
+* [`user`](#user)
+* [`password`](#password)
+* [`graphite_writer_host_name_template`](#graphite_writer_host_name_template)
+* [`graphite_writer_service_name_template`](#graphite_writer_service_name_template)
+* [`git_revision`](#git_revision)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1103,7 +1222,7 @@ Enables or disables module.
 
 Default value: `'present'`
 
-##### `module_dir`
+##### <a name="module_dir"></a>`module_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1111,7 +1230,7 @@ Target directory of the module.
 
 Default value: ``undef``
 
-##### `git_repository`
+##### <a name="git_repository"></a>`git_repository`
 
 Data type: `String`
 
@@ -1119,7 +1238,7 @@ Set a git repository URL.
 
 Default value: `'https://github.com/Icinga/icingaweb2-module-graphite.git'`
 
-##### `install_method`
+##### <a name="install_method"></a>`install_method`
 
 Data type: `Enum['git', 'none', 'package']`
 
@@ -1127,7 +1246,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 Default value: `'git'`
 
-##### `package_name`
+##### <a name="package_name"></a>`package_name`
 
 Data type: `String`
 
@@ -1135,7 +1254,7 @@ Package name of the module. This setting is only valid in combination with the i
 
 Default value: `'icingaweb2-module-graphite'`
 
-##### `url`
+##### <a name="url"></a>`url`
 
 Data type: `Optional[String]`
 
@@ -1143,7 +1262,7 @@ URL to your Graphite Web/API.
 
 Default value: ``undef``
 
-##### `user`
+##### <a name="user"></a>`user`
 
 Data type: `Optional[String]`
 
@@ -1151,7 +1270,7 @@ A user with access to your Graphite Web via HTTP basic authentication.
 
 Default value: ``undef``
 
-##### `password`
+##### <a name="password"></a>`password`
 
 Data type: `Optional[Icingaweb2::Secret]`
 
@@ -1159,7 +1278,7 @@ The users password.
 
 Default value: ``undef``
 
-##### `graphite_writer_host_name_template`
+##### <a name="graphite_writer_host_name_template"></a>`graphite_writer_host_name_template`
 
 Data type: `Optional[String]`
 
@@ -1167,7 +1286,7 @@ The value of your Icinga 2 GraphiteWriter's attribute `host_name_template` (if s
 
 Default value: ``undef``
 
-##### `graphite_writer_service_name_template`
+##### <a name="graphite_writer_service_name_template"></a>`graphite_writer_service_name_template`
 
 Data type: `Optional[String]`
 
@@ -1175,7 +1294,7 @@ The value of your icinga 2 GraphiteWriter's attribute `service_name_template` (i
 
 Default value: ``undef``
 
-##### `git_revision`
+##### <a name="git_revision"></a>`git_revision`
 
 Data type: `Optional[String]`
 
@@ -1183,7 +1302,7 @@ Data type: `Optional[String]`
 
 Default value: ``undef``
 
-### `icingaweb2::module::incubator`
+### <a name="icingaweb2moduleincubator"></a>`icingaweb2::module::incubator`
 
 Installs and enables the incubator module.
 
@@ -1191,9 +1310,14 @@ Installs and enables the incubator module.
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::incubator` class.
+The following parameters are available in the `icingaweb2::module::incubator` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`git_revision`](#git_revision)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1201,7 +1325,7 @@ Enable or disable module. Defaults to `present`
 
 Default value: `'present'`
 
-##### `module_dir`
+##### <a name="module_dir"></a>`module_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1209,19 +1333,19 @@ Target directory of the module.
 
 Default value: ``undef``
 
-##### `git_repository`
+##### <a name="git_repository"></a>`git_repository`
 
 Data type: `String`
 
 Set a git repository URL. Defaults to github.
 
-##### `git_revision`
+##### <a name="git_revision"></a>`git_revision`
 
 Data type: `String`
 
 Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
 
-### `icingaweb2::module::ipl`
+### <a name="icingaweb2moduleipl"></a>`icingaweb2::module::ipl`
 
 Installs and enables the ipl module.
 
@@ -1229,9 +1353,14 @@ Installs and enables the ipl module.
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::ipl` class.
+The following parameters are available in the `icingaweb2::module::ipl` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`git_revision`](#git_revision)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1239,7 +1368,7 @@ Enable or disable module.
 
 Default value: `'present'`
 
-##### `module_dir`
+##### <a name="module_dir"></a>`module_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1247,19 +1376,19 @@ Target directory of the module.
 
 Default value: ``undef``
 
-##### `git_repository`
+##### <a name="git_repository"></a>`git_repository`
 
 Data type: `String`
 
 Set a git repository URL.
 
-##### `git_revision`
+##### <a name="git_revision"></a>`git_revision`
 
 Data type: `String`
 
 Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
 
-### `icingaweb2::module::monitoring`
+### <a name="icingaweb2modulemonitoring"></a>`icingaweb2::module::monitoring`
 
 Requirements:
   * IDO feature in Icinga 2 (MySQL or PostgreSQL)
@@ -1292,9 +1421,20 @@ Requirements:
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::monitoring` class.
+The following parameters are available in the `icingaweb2::module::monitoring` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`protected_customvars`](#protected_customvars)
+* [`ido_type`](#ido_type)
+* [`ido_host`](#ido_host)
+* [`ido_port`](#ido_port)
+* [`ido_db_name`](#ido_db_name)
+* [`ido_db_username`](#ido_db_username)
+* [`ido_db_password`](#ido_db_password)
+* [`ido_db_charset`](#ido_db_charset)
+* [`commandtransports`](#commandtransports)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1302,7 +1442,7 @@ Enable or disable module.
 
 Default value: `'present'`
 
-##### `protected_customvars`
+##### <a name="protected_customvars"></a>`protected_customvars`
 
 Data type: `Variant[String, Array[String]]`
 
@@ -1311,7 +1451,7 @@ that should be hidden in the web interface.
 
 Default value: `['*pw*', '*pass*', 'community']`
 
-##### `ido_type`
+##### <a name="ido_type"></a>`ido_type`
 
 Data type: `Enum['mysql', 'pgsql']`
 
@@ -1319,7 +1459,7 @@ Type of your IDO database. Either `mysql` or `pgsql`.
 
 Default value: `'mysql'`
 
-##### `ido_host`
+##### <a name="ido_host"></a>`ido_host`
 
 Data type: `Optional[Stdlib::Host]`
 
@@ -1327,7 +1467,7 @@ Hostname of the IDO database.
 
 Default value: ``undef``
 
-##### `ido_port`
+##### <a name="ido_port"></a>`ido_port`
 
 Data type: `Stdlib::Port`
 
@@ -1335,7 +1475,7 @@ Port of the IDO database.
 
 Default value: `3306`
 
-##### `ido_db_name`
+##### <a name="ido_db_name"></a>`ido_db_name`
 
 Data type: `Optional[String]`
 
@@ -1343,7 +1483,7 @@ Name of the IDO database.
 
 Default value: ``undef``
 
-##### `ido_db_username`
+##### <a name="ido_db_username"></a>`ido_db_username`
 
 Data type: `Optional[String]`
 
@@ -1351,7 +1491,7 @@ Username for IDO DB connection.
 
 Default value: ``undef``
 
-##### `ido_db_password`
+##### <a name="ido_db_password"></a>`ido_db_password`
 
 Data type: `Optional[Icingaweb2::Secret]`
 
@@ -1359,7 +1499,7 @@ Password for IDO DB connection.
 
 Default value: ``undef``
 
-##### `ido_db_charset`
+##### <a name="ido_db_charset"></a>`ido_db_charset`
 
 Data type: `Optional[String]`
 
@@ -1367,7 +1507,7 @@ The character set to use for the database connection.
 
 Default value: ``undef``
 
-##### `commandtransports`
+##### <a name="commandtransports"></a>`commandtransports`
 
 Data type: `Hash`
 
@@ -1375,7 +1515,7 @@ A hash of command transports.
 
 Default value: `{}`
 
-### `icingaweb2::module::pdfexport`
+### <a name="icingaweb2modulepdfexport"></a>`icingaweb2::module::pdfexport`
 
 Installs, configures and enables the pdfexport module.
 
@@ -1394,9 +1534,17 @@ class { 'icingaweb2::module::pdfexport':
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::pdfexport` class.
+The following parameters are available in the `icingaweb2::module::pdfexport` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`git_revision`](#git_revision)
+* [`install_method`](#install_method)
+* [`package_name`](#package_name)
+* [`chrome_binary`](#chrome_binary)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1404,7 +1552,7 @@ Enable or disable module.
 
 Default value: `'present'`
 
-##### `module_dir`
+##### <a name="module_dir"></a>`module_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1412,7 +1560,7 @@ Target directory of the module.
 
 Default value: ``undef``
 
-##### `git_repository`
+##### <a name="git_repository"></a>`git_repository`
 
 Data type: `String`
 
@@ -1420,7 +1568,7 @@ Set a git repository URL.
 
 Default value: `'https://github.com/Icinga/icingaweb2-module-pdfexport.git'`
 
-##### `git_revision`
+##### <a name="git_revision"></a>`git_revision`
 
 Data type: `Optional[String]`
 
@@ -1428,7 +1576,7 @@ Set either a branch or a tag name, eg. `master` or `v2.1.0`.
 
 Default value: ``undef``
 
-##### `install_method`
+##### <a name="install_method"></a>`install_method`
 
 Data type: `Enum['git', 'none', 'package']`
 
@@ -1436,7 +1584,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 Default value: `'git'`
 
-##### `package_name`
+##### <a name="package_name"></a>`package_name`
 
 Data type: `String`
 
@@ -1444,7 +1592,7 @@ Package name of the module. This setting is only valid in combination with the i
 
 Default value: `'icingaweb2-module-pdfexport'`
 
-##### `chrome_binary`
+##### <a name="chrome_binary"></a>`chrome_binary`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1452,7 +1600,7 @@ Path of the chrome or chromium binary.
 
 Default value: ``undef``
 
-### `icingaweb2::module::puppetdb`
+### <a name="icingaweb2modulepuppetdb"></a>`icingaweb2::module::puppetdb`
 
 Installs and configures the puppetdb module.
 
@@ -1493,9 +1641,19 @@ class {'::icingaweb2::module::puppetdb':
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::puppetdb` class.
+The following parameters are available in the `icingaweb2::module::puppetdb` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`git_revision`](#git_revision)
+* [`install_method`](#install_method)
+* [`package_name`](#package_name)
+* [`ssl`](#ssl)
+* [`host`](#host)
+* [`certificates`](#certificates)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1503,7 +1661,7 @@ Enable or disable module.
 
 Default value: `'present'`
 
-##### `module_dir`
+##### <a name="module_dir"></a>`module_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1511,7 +1669,7 @@ Target directory of the module.
 
 Default value: ``undef``
 
-##### `git_repository`
+##### <a name="git_repository"></a>`git_repository`
 
 Data type: `String`
 
@@ -1519,7 +1677,7 @@ Set a git repository URL.
 
 Default value: `'https://github.com/Icinga/icingaweb2-module-puppetdb.git'`
 
-##### `git_revision`
+##### <a name="git_revision"></a>`git_revision`
 
 Data type: `Optional[String]`
 
@@ -1527,7 +1685,7 @@ Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 
 Default value: ``undef``
 
-##### `install_method`
+##### <a name="install_method"></a>`install_method`
 
 Data type: `Enum['git', 'none', 'package']`
 
@@ -1535,7 +1693,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 Default value: `'git'`
 
-##### `package_name`
+##### <a name="package_name"></a>`package_name`
 
 Data type: `String`
 
@@ -1543,7 +1701,7 @@ Package name of the module. This setting is only valid in combination with the i
 
 Default value: `'icingaweb2-module-puppetdb'`
 
-##### `ssl`
+##### <a name="ssl"></a>`ssl`
 
 Data type: `Enum['none', 'puppet']`
 
@@ -1551,7 +1709,7 @@ How to set up ssl certificates. To copy certificates from the local puppet insta
 
 Default value: `'none'`
 
-##### `host`
+##### <a name="host"></a>`host`
 
 Data type: `Optional[Stdlib::Host]`
 
@@ -1559,7 +1717,7 @@ Hostname of the server where PuppetDB is running. The `ssl` parameter needs to b
 
 Default value: ``undef``
 
-##### `certificates`
+##### <a name="certificates"></a>`certificates`
 
 Data type: `Hash`
 
@@ -1567,7 +1725,7 @@ Hash with icingaweb2::module::puppetdb::certificate resources.
 
 Default value: `{}`
 
-### `icingaweb2::module::reactbundle`
+### <a name="icingaweb2modulereactbundle"></a>`icingaweb2::module::reactbundle`
 
 Installs and enables the reactbundle module.
 
@@ -1575,9 +1733,14 @@ Installs and enables the reactbundle module.
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::reactbundle` class.
+The following parameters are available in the `icingaweb2::module::reactbundle` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`git_revision`](#git_revision)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1585,7 +1748,7 @@ Enable or disable module.
 
 Default value: `'present'`
 
-##### `module_dir`
+##### <a name="module_dir"></a>`module_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1593,27 +1756,29 @@ Target directory of the module.
 
 Default value: ``undef``
 
-##### `git_repository`
+##### <a name="git_repository"></a>`git_repository`
 
 Data type: `String`
 
 Set a git repository URL.
 
-##### `git_revision`
+##### <a name="git_revision"></a>`git_revision`
 
 Data type: `String`
 
 Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
 
-### `icingaweb2::module::translation`
+### <a name="icingaweb2moduletranslation"></a>`icingaweb2::module::translation`
 
 Installs and configures the translation module.
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::translation` class.
+The following parameters are available in the `icingaweb2::module::translation` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1621,7 +1786,7 @@ Enable or disable module.
 
 Default value: `'present'`
 
-### `icingaweb2::module::vsphere`
+### <a name="icingaweb2modulevsphere"></a>`icingaweb2::module::vsphere`
 
 The vSphere module extends the Director. It provides import sources for virtual machines and physical hosts from vSphere.
 
@@ -1629,9 +1794,16 @@ The vSphere module extends the Director. It provides import sources for virtual 
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::vsphere` class.
+The following parameters are available in the `icingaweb2::module::vsphere` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`install_method`](#install_method)
+* [`package_name`](#package_name)
+* [`git_revision`](#git_revision)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1639,7 +1811,7 @@ Enable or disable module.
 
 Default value: `'present'`
 
-##### `module_dir`
+##### <a name="module_dir"></a>`module_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1647,7 +1819,7 @@ Target directory of the module.
 
 Default value: ``undef``
 
-##### `git_repository`
+##### <a name="git_repository"></a>`git_repository`
 
 Data type: `String`
 
@@ -1655,7 +1827,7 @@ Set a git repository URL.
 
 Default value: `'https://github.com/Icinga/icingaweb2-module-vsphere.git'`
 
-##### `install_method`
+##### <a name="install_method"></a>`install_method`
 
 Data type: `Enum['git', 'none', 'package']`
 
@@ -1663,7 +1835,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 Default value: `'git'`
 
-##### `package_name`
+##### <a name="package_name"></a>`package_name`
 
 Data type: `String`
 
@@ -1671,7 +1843,7 @@ Package name of the module. This setting is only valid in combination with the i
 
 Default value: `'icingaweb2-module-vsphere'`
 
-##### `git_revision`
+##### <a name="git_revision"></a>`git_revision`
 
 Data type: `Optional[String]`
 
@@ -1679,7 +1851,7 @@ Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
 
 Default value: ``undef``
 
-### `icingaweb2::module::vspheredb`
+### <a name="icingaweb2modulevspheredb"></a>`icingaweb2::module::vspheredb`
 
 Installs the vsphereDB plugin
 
@@ -1700,9 +1872,24 @@ class { 'icingaweb2::module::vspheredb':
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::vspheredb` class.
+The following parameters are available in the `icingaweb2::module::vspheredb` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`git_revision`](#git_revision)
+* [`install_method`](#install_method)
+* [`package_name`](#package_name)
+* [`db_type`](#db_type)
+* [`db_host`](#db_host)
+* [`db_port`](#db_port)
+* [`db_name`](#db_name)
+* [`db_username`](#db_username)
+* [`db_password`](#db_password)
+* [`db_charset`](#db_charset)
+* [`import_schema`](#import_schema)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -1710,7 +1897,7 @@ Ensur es the state of the vspheredb module.
 
 Default value: `'present'`
 
-##### `module_dir`
+##### <a name="module_dir"></a>`module_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1718,7 +1905,7 @@ Target directory of the module.
 
 Default value: ``undef``
 
-##### `git_repository`
+##### <a name="git_repository"></a>`git_repository`
 
 Data type: `String`
 
@@ -1726,7 +1913,7 @@ The upstream module repository.
 
 Default value: `'https://github.com/Icinga/icingaweb2-module-vspheredb.git'`
 
-##### `git_revision`
+##### <a name="git_revision"></a>`git_revision`
 
 Data type: `Optional[String]`
 
@@ -1734,7 +1921,7 @@ The version of the module that needs to be used.
 
 Default value: ``undef``
 
-##### `install_method`
+##### <a name="install_method"></a>`install_method`
 
 Data type: `Enum['git', 'none', 'package']`
 
@@ -1742,7 +1929,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 Default value: `'git'`
 
-##### `package_name`
+##### <a name="package_name"></a>`package_name`
 
 Data type: `String`
 
@@ -1750,7 +1937,7 @@ Package name of the module. This setting is only valid in combination with the i
 
 Default value: `'icingaweb2-module-vspheredb'`
 
-##### `db_type`
+##### <a name="db_type"></a>`db_type`
 
 Data type: `Enum['mysql']`
 
@@ -1758,7 +1945,7 @@ The database type. Either mysql or postgres.
 
 Default value: `'mysql'`
 
-##### `db_host`
+##### <a name="db_host"></a>`db_host`
 
 Data type: `Optional[Stdlib::Host]`
 
@@ -1766,7 +1953,7 @@ The host where the vspheredb-database will be running
 
 Default value: ``undef``
 
-##### `db_port`
+##### <a name="db_port"></a>`db_port`
 
 Data type: `Stdlib::Port`
 
@@ -1774,7 +1961,7 @@ The port on which the database is accessible.
 
 Default value: `3306`
 
-##### `db_name`
+##### <a name="db_name"></a>`db_name`
 
 Data type: `Optional[String]`
 
@@ -1782,7 +1969,7 @@ The name of the database this module should use.
 
 Default value: ``undef``
 
-##### `db_username`
+##### <a name="db_username"></a>`db_username`
 
 Data type: `Optional[String]`
 
@@ -1790,7 +1977,7 @@ The username needed to access the database.
 
 Default value: ``undef``
 
-##### `db_password`
+##### <a name="db_password"></a>`db_password`
 
 Data type: `Optional[Icingaweb2::Secret]`
 
@@ -1798,7 +1985,7 @@ The password needed to access the database.
 
 Default value: ``undef``
 
-##### `db_charset`
+##### <a name="db_charset"></a>`db_charset`
 
 Data type: `String`
 
@@ -1806,7 +1993,7 @@ The charset the database is set to.
 
 Default value: `'utf8mb4'`
 
-##### `import_schema`
+##### <a name="import_schema"></a>`import_schema`
 
 Data type: `Boolean`
 
@@ -1814,7 +2001,7 @@ Whether to import the database schema or not.
 
 Default value: ``false``
 
-### `icingaweb2::module::vspheredb::service`
+### <a name="icingaweb2modulevspheredbservice"></a>`icingaweb2::module::vspheredb::service`
 
 Installs and configures the vspheredb service.
 
@@ -1830,9 +2017,15 @@ include icingaweb2::module::vspheredb::service
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module::vspheredb::service` class.
+The following parameters are available in the `icingaweb2::module::vspheredb::service` class:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`enable`](#enable)
+* [`user`](#user)
+* [`group`](#group)
+* [`manage_user`](#manage_user)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Stdlib::Ensure::Service`
 
@@ -1840,7 +2033,7 @@ Whether the vspheredb service should be running.
 
 Default value: `'running'`
 
-##### `enable`
+##### <a name="enable"></a>`enable`
 
 Data type: `Boolean`
 
@@ -1848,7 +2041,7 @@ Enable or disable the service.
 
 Default value: ``true``
 
-##### `user`
+##### <a name="user"></a>`user`
 
 Data type: `String`
 
@@ -1857,7 +2050,7 @@ Only available if install_method package is not used.
 
 Default value: `'icingavspheredb'`
 
-##### `group`
+##### <a name="group"></a>`group`
 
 Data type: `String`
 
@@ -1866,7 +2059,7 @@ Only available if install_method package is not used.
 
 Default value: `'icingaweb2'`
 
-##### `manage_user`
+##### <a name="manage_user"></a>`manage_user`
 
 Data type: `Boolean`
 
@@ -1877,7 +2070,7 @@ Default value: ``true``
 
 ## Defined types
 
-### `icingaweb2::config::authmethod`
+### <a name="icingaweb2configauthmethod"></a>`icingaweb2::config::authmethod`
 
 Manage Icinga Web 2 authentication methods. Auth methods may be chained by setting proper ordering.
 
@@ -1908,9 +2101,18 @@ icingaweb2::config::authmethod { 'ldap-auth':
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::config::authmethod` defined type.
+The following parameters are available in the `icingaweb2::config::authmethod` defined type:
 
-##### `backend`
+* [`backend`](#backend)
+* [`resource`](#resource)
+* [`ldap_user_class`](#ldap_user_class)
+* [`ldap_user_name_attribute`](#ldap_user_name_attribute)
+* [`ldap_filter`](#ldap_filter)
+* [`ldap_base_dn`](#ldap_base_dn)
+* [`domain`](#domain)
+* [`order`](#order)
+
+##### <a name="backend"></a>`backend`
 
 Data type: `Enum['external', 'ldap', 'msldap', 'db']`
 
@@ -1918,7 +2120,7 @@ Select between 'external', 'ldap', 'msldap' or 'db'. Each backend may require ot
 
 Default value: ``undef``
 
-##### `resource`
+##### <a name="resource"></a>`resource`
 
 Data type: `Optional[String]`
 
@@ -1926,7 +2128,7 @@ The name of the resource defined in resources.ini.
 
 Default value: ``undef``
 
-##### `ldap_user_class`
+##### <a name="ldap_user_class"></a>`ldap_user_class`
 
 Data type: `Optional[String]`
 
@@ -1934,7 +2136,7 @@ LDAP user class. Only valid if `backend` is `ldap` or `msldap`.
 
 Default value: ``undef``
 
-##### `ldap_user_name_attribute`
+##### <a name="ldap_user_name_attribute"></a>`ldap_user_name_attribute`
 
 Data type: `Optional[String]`
 
@@ -1942,7 +2144,7 @@ LDAP attribute which contains the username. Only valid if `backend` is `ldap` or
 
 Default value: ``undef``
 
-##### `ldap_filter`
+##### <a name="ldap_filter"></a>`ldap_filter`
 
 Data type: `Optional[String]`
 
@@ -1950,7 +2152,7 @@ LDAP search filter. Only valid if `backend` is `ldap` or `msladap`.
 
 Default value: ``undef``
 
-##### `ldap_base_dn`
+##### <a name="ldap_base_dn"></a>`ldap_base_dn`
 
 Data type: `Optional[String]`
 
@@ -1958,7 +2160,7 @@ LDAP base DN. Only valid if `backend` is `ldap` or `msldap`.
 
 Default value: ``undef``
 
-##### `domain`
+##### <a name="domain"></a>`domain`
 
 Data type: `Optional[String]`
 
@@ -1966,7 +2168,7 @@ Domain for domain-aware authentication
 
 Default value: ``undef``
 
-##### `order`
+##### <a name="order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -1975,7 +2177,7 @@ configuration determines the order of the authentication methods.
 
 Default value: `'01'`
 
-### `icingaweb2::config::groupbackend`
+### <a name="icingaweb2configgroupbackend"></a>`icingaweb2::config::groupbackend`
 
 Groups of users can be stored either in a database, LDAP or ActiveDirectory. This defined type configures backends
 that store groups.
@@ -2007,9 +2209,22 @@ icingaweb2::config::groupbackend { 'mysql-backend':
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::config::groupbackend` defined type.
+The following parameters are available in the `icingaweb2::config::groupbackend` defined type:
 
-##### `group_name`
+* [`group_name`](#group_name)
+* [`backend`](#backend)
+* [`resource`](#resource)
+* [`ldap_user_backend`](#ldap_user_backend)
+* [`ldap_group_class`](#ldap_group_class)
+* [`ldap_group_filter`](#ldap_group_filter)
+* [`ldap_group_name_attribute`](#ldap_group_name_attribute)
+* [`ldap_group_member_attribute`](#ldap_group_member_attribute)
+* [`ldap_base_dn`](#ldap_base_dn)
+* [`ldap_nested_group_search`](#ldap_nested_group_search)
+* [`domain`](#domain)
+* [`order`](#order)
+
+##### <a name="group_name"></a>`group_name`
 
 Data type: `String`
 
@@ -2017,7 +2232,7 @@ Name of the resources. Resources are referenced by their name in other configura
 
 Default value: `$title`
 
-##### `backend`
+##### <a name="backend"></a>`backend`
 
 Data type: `Enum['db', 'ldap', 'msldap']`
 
@@ -2026,7 +2241,7 @@ see the parameters for detailed information.
 
 Default value: ``undef``
 
-##### `resource`
+##### <a name="resource"></a>`resource`
 
 Data type: `String`
 
@@ -2034,7 +2249,7 @@ The resource used to connect to the backend. The resource contains connection in
 
 Default value: ``undef``
 
-##### `ldap_user_backend`
+##### <a name="ldap_user_backend"></a>`ldap_user_backend`
 
 Data type: `Optional[String]`
 
@@ -2043,7 +2258,7 @@ Only valid with backend `ldap` or `msldap`.
 
 Default value: ``undef``
 
-##### `ldap_group_class`
+##### <a name="ldap_group_class"></a>`ldap_group_class`
 
 Data type: `Optional[String]`
 
@@ -2051,7 +2266,7 @@ Class used to identify group objects. Only valid with backend `ldap`.
 
 Default value: ``undef``
 
-##### `ldap_group_filter`
+##### <a name="ldap_group_filter"></a>`ldap_group_filter`
 
 Data type: `Optional[String]`
 
@@ -2059,7 +2274,7 @@ Use a LDAP filter to receive only certain groups. Only valid with backend `ldap`
 
 Default value: ``undef``
 
-##### `ldap_group_name_attribute`
+##### <a name="ldap_group_name_attribute"></a>`ldap_group_name_attribute`
 
 Data type: `Optional[String]`
 
@@ -2067,7 +2282,7 @@ The group name attribute. Only valid with backend `ldap`.
 
 Default value: ``undef``
 
-##### `ldap_group_member_attribute`
+##### <a name="ldap_group_member_attribute"></a>`ldap_group_member_attribute`
 
 Data type: `Optional[String]`
 
@@ -2075,7 +2290,7 @@ The group member attribute. Only valid with backend `ldap`.
 
 Default value: ``undef``
 
-##### `ldap_base_dn`
+##### <a name="ldap_base_dn"></a>`ldap_base_dn`
 
 Data type: `Optional[String]`
 
@@ -2083,7 +2298,7 @@ Base DN that is searched for groups. Only valid with backend `ldap` with `msldap
 
 Default value: ``undef``
 
-##### `ldap_nested_group_search`
+##### <a name="ldap_nested_group_search"></a>`ldap_nested_group_search`
 
 Data type: `Optional[Boolean]`
 
@@ -2091,7 +2306,7 @@ Search for groups in groups. Only valid with backend `msldap`.
 
 Default value: ``undef``
 
-##### `domain`
+##### <a name="domain"></a>`domain`
 
 Data type: `Optional[String]`
 
@@ -2099,7 +2314,7 @@ Domain for domain-aware authentication.
 
 Default value: ``undef``
 
-##### `order`
+##### <a name="order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -2108,7 +2323,7 @@ configuration determines the order of the authentication methods.
 
 Default value: `'01'`
 
-### `icingaweb2::config::resource`
+### <a name="icingaweb2configresource"></a>`icingaweb2::config::resource`
 
 Create and remove Icinga Web 2 resources. Resources may be referenced in other configuration sections.
 
@@ -2143,9 +2358,24 @@ icingaweb2::config::resource{ 'my-ldap':
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::config::resource` defined type.
+The following parameters are available in the `icingaweb2::config::resource` defined type:
 
-##### `resource_name`
+* [`resource_name`](#resource_name)
+* [`type`](#type)
+* [`host`](#host)
+* [`port`](#port)
+* [`db_type`](#db_type)
+* [`db_name`](#db_name)
+* [`db_username`](#db_username)
+* [`db_password`](#db_password)
+* [`db_charset`](#db_charset)
+* [`ldap_root_dn`](#ldap_root_dn)
+* [`ldap_bind_dn`](#ldap_bind_dn)
+* [`ldap_bind_pw`](#ldap_bind_pw)
+* [`ldap_encryption`](#ldap_encryption)
+* [`ldap_timeout`](#ldap_timeout)
+
+##### <a name="resource_name"></a>`resource_name`
 
 Data type: `String`
 
@@ -2153,13 +2383,13 @@ Name of the resources. Resources are referenced by their name in other configura
 
 Default value: `$title`
 
-##### `type`
+##### <a name="type"></a>`type`
 
 Data type: `Enum['db', 'ldap']`
 
 Supported resource types are `db` and `ldap`.
 
-##### `host`
+##### <a name="host"></a>`host`
 
 Data type: `Optional[String]`
 
@@ -2169,7 +2399,7 @@ provide multiple hosts separated by a space.
 
 Default value: ``undef``
 
-##### `port`
+##### <a name="port"></a>`port`
 
 Data type: `Optional[Stdlib::Port]`
 
@@ -2177,7 +2407,7 @@ Port number to use.
 
 Default value: ``undef``
 
-##### `db_type`
+##### <a name="db_type"></a>`db_type`
 
 Data type: `Optional[Enum['mysql', 'pgsql', 'mssql',
     'oci', 'oracle', 'ibm', 'sqlite']]`
@@ -2186,7 +2416,7 @@ Set database type to connect.
 
 Default value: ``undef``
 
-##### `db_name`
+##### <a name="db_name"></a>`db_name`
 
 Data type: `Optional[String]`
 
@@ -2194,7 +2424,7 @@ The database to use. Only valid if `type` is `db`.
 
 Default value: ``undef``
 
-##### `db_username`
+##### <a name="db_username"></a>`db_username`
 
 Data type: `Optional[String]`
 
@@ -2202,7 +2432,7 @@ The username to use when connecting to the server. Only valid if `type` is `db`.
 
 Default value: ``undef``
 
-##### `db_password`
+##### <a name="db_password"></a>`db_password`
 
 Data type: `Optional[Icingaweb2::Secret]`
 
@@ -2210,7 +2440,7 @@ The password to use when connecting to the server. Only valid if `type` is `db`.
 
 Default value: ``undef``
 
-##### `db_charset`
+##### <a name="db_charset"></a>`db_charset`
 
 Data type: `Optional[String]`
 
@@ -2218,7 +2448,7 @@ The character set to use for the database connection. Only valid if `type` is `d
 
 Default value: ``undef``
 
-##### `ldap_root_dn`
+##### <a name="ldap_root_dn"></a>`ldap_root_dn`
 
 Data type: `Optional[String]`
 
@@ -2226,7 +2456,7 @@ Root object of the tree, e.g. 'ou=people,dc=icinga,dc=com'. Only valid if `type`
 
 Default value: ``undef``
 
-##### `ldap_bind_dn`
+##### <a name="ldap_bind_dn"></a>`ldap_bind_dn`
 
 Data type: `Optional[String]`
 
@@ -2234,7 +2464,7 @@ The user to use when connecting to the server. Only valid if `type` is `ldap`.
 
 Default value: ``undef``
 
-##### `ldap_bind_pw`
+##### <a name="ldap_bind_pw"></a>`ldap_bind_pw`
 
 Data type: `Optional[Icingaweb2::Secret]`
 
@@ -2242,7 +2472,7 @@ The password to use when connecting to the server. Only valid if `type` is `ldap
 
 Default value: ``undef``
 
-##### `ldap_encryption`
+##### <a name="ldap_encryption"></a>`ldap_encryption`
 
 Data type: `Optional[Enum['none', 'starttls', 'ldaps']]`
 
@@ -2250,7 +2480,7 @@ Type of encryption to use: none (default), starttls, ldaps. Only valid if `type`
 
 Default value: `'none'`
 
-##### `ldap_timeout`
+##### <a name="ldap_timeout"></a>`ldap_timeout`
 
 Data type: `Integer`
 
@@ -2258,7 +2488,7 @@ Timeout for the ldap connection.
 
 Default value: `5`
 
-### `icingaweb2::config::role`
+### <a name="icingaweb2configrole"></a>`icingaweb2::config::role`
 
 Roles define a set of permissions that may be applied to users or groups.
 
@@ -2324,9 +2554,15 @@ icingaweb2::config::role{'linux-user':
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::config::role` defined type.
+The following parameters are available in the `icingaweb2::config::role` defined type:
 
-##### `role_name`
+* [`role_name`](#role_name)
+* [`users`](#users)
+* [`groups`](#groups)
+* [`permissions`](#permissions)
+* [`filters`](#filters)
+
+##### <a name="role_name"></a>`role_name`
 
 Data type: `String`
 
@@ -2334,7 +2570,7 @@ Name of the role.
 
 Default value: `$title`
 
-##### `users`
+##### <a name="users"></a>`users`
 
 Data type: `Optional[String]`
 
@@ -2342,7 +2578,7 @@ Comma separated list of users this role applies to.
 
 Default value: ``undef``
 
-##### `groups`
+##### <a name="groups"></a>`groups`
 
 Data type: `Optional[String]`
 
@@ -2350,7 +2586,7 @@ Comma separated list of groups this role applies to.
 
 Default value: ``undef``
 
-##### `permissions`
+##### <a name="permissions"></a>`permissions`
 
 Data type: `Optional[String]`
 
@@ -2363,7 +2599,7 @@ Comma separated lsit of permissions. Each module may add it's own permissions. E
 
 Default value: ``undef``
 
-##### `filters`
+##### <a name="filters"></a>`filters`
 
 Data type: `Hash`
 
@@ -2377,7 +2613,7 @@ A string value is expected for each used key. For example:
 
 Default value: `{}`
 
-### `icingaweb2::inisection`
+### <a name="icingaweb2inisection"></a>`icingaweb2::inisection`
 
 Manage settings in INI configuration files.
 
@@ -2400,15 +2636,20 @@ icingaweb2::inisection { '/path/to/config.ini':
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::inisection` defined type.
+The following parameters are available in the `icingaweb2::inisection` defined type:
 
-##### `target`
+* [`target`](#target)
+* [`section_name`](#section_name)
+* [`settings`](#settings)
+* [`order`](#order)
+
+##### <a name="target"></a>`target`
 
 Data type: `Stdlib::Absolutepath`
 
 Absolute path to the configuration file.
 
-##### `section_name`
+##### <a name="section_name"></a>`section_name`
 
 Data type: `String`
 
@@ -2416,7 +2657,7 @@ Name of the target section. Settings are set under [$section_name]
 
 Default value: `$title`
 
-##### `settings`
+##### <a name="settings"></a>`settings`
 
 Data type: `Hash`
 
@@ -2424,7 +2665,7 @@ A hash of settings and their settings. Single settings may be set to absent.
 
 Default value: `{}`
 
-##### `order`
+##### <a name="order"></a>`order`
 
 Data type: `Variant[String, Integer]`
 
@@ -2432,7 +2673,7 @@ Ordering of the INI section within a file. Defaults to `01`
 
 Default value: `'01'`
 
-### `icingaweb2::module`
+### <a name="icingaweb2module"></a>`icingaweb2::module`
 
 Download, enable and configure Icinga Web 2 modules.
 
@@ -2466,9 +2707,18 @@ $settings = {
 
 #### Parameters
 
-The following parameters are available in the `icingaweb2::module` defined type.
+The following parameters are available in the `icingaweb2::module` defined type:
 
-##### `ensure`
+* [`ensure`](#ensure)
+* [`module`](#module)
+* [`module_dir`](#module_dir)
+* [`install_method`](#install_method)
+* [`git_revision`](#git_revision)
+* [`package_name`](#package_name)
+* [`settings`](#settings)
+* [`git_repository`](#git_repository)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -2476,7 +2726,7 @@ Enable or disable module.
 
 Default value: `'present'`
 
-##### `module`
+##### <a name="module"></a>`module`
 
 Data type: `String`
 
@@ -2484,7 +2734,7 @@ Name of the module.
 
 Default value: `$title`
 
-##### `module_dir`
+##### <a name="module_dir"></a>`module_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -2492,7 +2742,7 @@ Target directory of the module. Defaults to first item of `module_path`.
 
 Default value: `"${::icingaweb2::globals::default_module_path}/${title}"`
 
-##### `install_method`
+##### <a name="install_method"></a>`install_method`
 
 Data type: `Enum['git', 'none', 'package']`
 
@@ -2500,7 +2750,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 Default value: `'git'`
 
-##### `git_revision`
+##### <a name="git_revision"></a>`git_revision`
 
 Data type: `String`
 
@@ -2508,7 +2758,7 @@ Tag or branch of the git repository. This setting is only valid in combination w
 
 Default value: `'master'`
 
-##### `package_name`
+##### <a name="package_name"></a>`package_name`
 
 Data type: `Optional[String]`
 
@@ -2516,7 +2766,7 @@ Package name of the module. This setting is only valid in combination with the i
 
 Default value: ``undef``
 
-##### `settings`
+##### <a name="settings"></a>`settings`
 
 Data type: `Hash`
 
@@ -2525,7 +2775,7 @@ The `module_name` should be used as target directory for the configuration files
 
 Default value: `{}`
 
-##### `git_repository`
+##### <a name="git_repository"></a>`git_repository`
 
 Data type: `Optional[String]`
 
@@ -2535,17 +2785,17 @@ Default value: ``undef``
 
 ## Functions
 
-### `icingaweb2::unwrap`
+### <a name="icingaweb2unwrap"></a>`icingaweb2::unwrap`
 
 Type: Puppet Language
 
-The icingaweb2::unwrap function.
+This function returns an unwrap string if necessary.
 
 #### `icingaweb2::unwrap(Optional[Variant[String, Sensitive[String]]] $arg = undef)`
 
 The icingaweb2::unwrap function.
 
-Returns: `Any`
+Returns: `Any` The unwraped string.
 
 ##### `arg`
 
@@ -2555,19 +2805,27 @@ Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 ## Data types
 
-### `Icingaweb2::AdminRole`
+### <a name="icingaweb2adminrole"></a>`Icingaweb2::AdminRole`
 
 A strict type for the default admin role
 
-Alias of `Struct[{
+Alias of
+
+```puppet
+Struct[{
   name   => String,
   users  => Optional[Array[String]],
   groups => Optional[Array[String]],
-}]`
+}]
+```
 
-### `Icingaweb2::Secret`
+### <a name="icingaweb2secret"></a>`Icingaweb2::Secret`
 
 A strict type for the secrets like passwords or keys
 
-Alias of `Variant[String, Sensitive[String]]`
+Alias of
+
+```puppet
+Variant[String, Sensitive[String]]
+```
 

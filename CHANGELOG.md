@@ -1,5 +1,13 @@
 # Change Log
 
+## [v3.4.1](https://github.com/icinga/puppet-icingaweb2/tree/v3.4.1) (2022-07-26)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.4.0...v3.4.1)
+
+**Fixed bugs:**
+
+- Fix missing comma in join of admin role users [\#324](https://github.com/Icinga/puppet-icingaweb2/issues/324)
+- Fix limitations in the documentation [\#320](https://github.com/Icinga/puppet-icingaweb2/issues/320)
+
 ## [v3.4.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.4.0) (2022-05-10)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.3.0...v3.4.0)
 
