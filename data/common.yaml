@@ -2,8 +2,6 @@
 icingaweb2::conf_group: icingaweb2
 icingaweb2::admin_role:
   name: default admin user
-  users:
-    - icingaadmin
 icingaweb2::default_admin_username: icingaadmin
 icingaweb2::default_admin_password: icinga
 icingaweb2::module::businessprocess::git_repository: https://github.com/Icinga/icingaweb2-module-businessprocess.git

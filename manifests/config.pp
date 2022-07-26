@@ -159,7 +159,7 @@ class icingaweb2::config {
 
     if $admin_role {
       icingaweb2::config::role { $admin_role['name']:
-        users       => if $admin_role['users'] { join(union([$admin_username], $admin_role['users'])) } else { $admin_username },
+        users       => if $admin_role['users'] { join(union([$admin_username], $admin_role['users']), ',') } else { $admin_username },
         groups      => if $admin_role['groups'] { join($admin_role['groups']) } else { undef },
         permissions => '*',
       }
