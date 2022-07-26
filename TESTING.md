@@ -6,13 +6,13 @@ also Vagrant and VirtualBox have to be installed for acceptance tests.
 
 Required gems are installed with `bundler`:
 ```
-cd puppet-icinga2
+cd puppet-icingaweb2
 pdk bundle install
 ```
 
 Or just do an update:
 ```
-cd puppet-icinga2
+cd puppet-icingaweb2
 pdk bundle update
 ```
 
@@ -21,7 +21,7 @@ Validation tests will check all manifests, templates and ruby files against synt
 
 Run validation tests:
 ```
-cd puppet-icinga2
+cd puppet-icingaweb2
 pdk validate
 ```
 
@@ -30,7 +30,7 @@ For unit testing we use [RSpec]. All classes, defined resource types and functio
 
 Run unit tests:
 ```
-cd puppet-icinga2
+cd puppet-icingaweb2
 pdk test unit
 ```
 
