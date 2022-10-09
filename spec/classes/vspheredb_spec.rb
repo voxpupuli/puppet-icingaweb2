@@ -23,15 +23,14 @@ describe('icingaweb2::module::vspheredb', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__config__resource('icingaweb2-module-vspheredb')
-            .with_type('db')
-            .with_db_type('mysql')
+          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-vspheredb')
+            .with_type('mysql')
             .with_host('localhost')
             .with_port('3306')
-            .with_db_name('vspheredb')
-            .with_db_username('vspheredb')
-            .with_db_password('vspheredb')
-            .with_db_charset('utf8mb4')
+            .with_database('vspheredb')
+            .with_username('vspheredb')
+            .with_password('vspheredb')
+            .with_charset('utf8mb4')
         }
 
         it {

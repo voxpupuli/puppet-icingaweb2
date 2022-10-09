@@ -27,22 +27,40 @@ class icingaweb2::config {
   $import_schema        = $::icingaweb2::import_schema
   $mysql_db_schema      = $::icingaweb2::globals::mysql_db_schema
   $pgsql_db_schema      = $::icingaweb2::globals::pgsql_db_schema
-  $db_name              = $::icingaweb2::db_name
-  $db_host              = $::icingaweb2::db_host
-  $db_port              = $::icingaweb2::db_port
-  $db_type              = $::icingaweb2::db_type
-  $db_username          = $::icingaweb2::db_username
-  $db_password          = $::icingaweb2::db_password
+  $db                   = {
+    type => $::icingaweb2::db_type,
+    name => $::icingaweb2::db_name,
+    host => $::icingaweb2::db_host,
+    port => pick($::icingaweb2::db_port, $::icingaweb2::globals::port[$::icingaweb2::db_type]),
+    user => $::icingaweb2::db_username,
+    pass => $::icingaweb2::db_password,
+  }
+
   $default_domain       = $::icingaweb2::default_domain
   $admin_role           = $::icingaweb2::admin_role
   $admin_username       = $::icingaweb2::default_admin_username
-  $admin_password       = $::icingaweb2::default_admin_password
-
+  $admin_password       = icingaweb2::unwrap($::icingaweb2::default_admin_password)
   $config_backend       = $::icingaweb2::config_backend
   $config_resource      = $::icingaweb2::config_backend ? {
     'ini' => undef,
-    'db'  => "${db_type}-icingaweb2",
+    'db'  => "${db['type']}-icingaweb2",
   }
+
+  $use_tls              = $::icingaweb2::use_tls
+  $tls                  = merge(icingaweb2::cert::files(
+    'client',
+    $conf_dir,
+    $::icingaweb2::tls_key_file,
+    $::icingaweb2::tls_cert_file,
+    $::icingaweb2::tls_cacert_file,
+    $::icingaweb2::tls_key,
+    $::icingaweb2::tls_cert,
+    $::icingaweb2::tls_cacert,
+  ), {
+    capath   => $::icingaweb2::tls_capath,
+    noverify => $::icingaweb2::tls_noverify,
+    cipher   => $::icingaweb2::tls_cipher,
+  })
 
   File {
     mode    => '0660',
@@ -54,12 +72,14 @@ class icingaweb2::config {
     path     => $::path,
     provider => shell,
     user     => 'root',
+    require  => Icingaweb2::Tls::Client['icingaweb2 tls client config']
   }
 
   file { $logging_dir:
     ensure => directory,
     mode   => '0750',
   }
+
   file { $logging_file:
     ensure => file,
     mode   => '0640',
@@ -131,31 +151,47 @@ class icingaweb2::config {
   }
 
   if $import_schema or $config_backend == 'db' {
-    icingaweb2::config::resource { "${db_type}-icingaweb2":
-      type        => 'db',
-      host        => $db_host,
-      port        => $db_port,
-      db_type     => $db_type,
-      db_name     => $db_name,
-      db_username => $db_username,
-      db_password => $db_password,
+    icingaweb2::tls::client { 'icingaweb2 tls client config':
+      args => $tls,
     }
 
-    icingaweb2::config::groupbackend { "${db_type}-group":
-      backend  => 'db',
-      resource => "${db_type}-icingaweb2"
+    -> icingaweb2::resource::database { "${db['type']}-icingaweb2":
+      type         => $db['type'],
+      host         => $db['host'],
+      port         => $db['port'],
+      database     => $db['name'],
+      username     => $db['user'],
+      password     => $db['pass'],
+      use_tls      => $use_tls,
+      tls_noverify => $tls['noverify'],
+      tls_key      => $tls['key_file'],
+      tls_cert     => $tls['cert_file'],
+      tls_cacert   => $tls['cacert_file'],
+      tls_capath   => $tls['capath'],
+      tls_cipher   => $tls['cipher'],
     }
 
-    icingaweb2::config::authmethod { "${db_type}-auth":
+    icingaweb2::config::groupbackend { "${db['type']}-group":
       backend  => 'db',
-      resource => "${db_type}-icingaweb2"
+      resource => "${db['type']}-icingaweb2"
+    }
+
+    icingaweb2::config::authmethod { "${db['type']}-auth":
+      backend  => 'db',
+      resource => "${db['type']}-icingaweb2"
     }
   }
 
   if $import_schema {
-
-    $_db_password    = icingaweb2::unwrap($db_password)
-    $_admin_password = icingaweb2::unwrap($admin_password)
+    # determine the real dbms, because there are some differnces between
+    # the mysql and mariadb client
+    $real_db_type = if $import_schema =~ Boolean {
+                      if $db['type'] == 'pgsql' { 'pgsql' } else { 'mariadb' }
+                    } else {
+                      $import_schema
+                    }
+    $db_cli_options = icingaweb2::db::connect($db + {
+      type => $real_db_type}, $tls, $use_tls)
 
     if $admin_role {
       icingaweb2::config::role { $admin_role['name']:
@@ -165,30 +201,31 @@ class icingaweb2::config {
       }
     }
 
-    case $db_type {
+    case $db['type'] {
       'mysql': {
         exec { 'import schema':
-          command => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${_db_password}' '${db_name}' < '${mysql_db_schema}'",
-          unless  => "mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${_db_password}' '${db_name}' -Ns -e 'SELECT 1 FROM icingaweb_user'",
+          command => "mysql ${db_cli_options} < '${mysql_db_schema}'",
+          unless  => "mysql ${db_cli_options} -Ns -e 'SELECT 1 FROM icingaweb_user'",
           notify  => Exec['create default admin user'],
         }
 
         exec { 'create default admin user':
-          command     => "echo \"INSERT INTO icingaweb_user (name, active, password_hash) VALUES (\\\"${admin_username}\\\", 1, \\\"`php -r 'echo password_hash(\"${_admin_password}\", PASSWORD_DEFAULT);'`\\\")\" | mysql -h '${db_host}' -P '${db_port}' -u '${db_username}' -p'${_db_password}' '${db_name}' -Ns",
+          command     => "echo \"INSERT INTO icingaweb_user (name, active, password_hash) VALUES (\\\"${admin_username}\\\", 1, \\\"`php -r 'echo password_hash(\"${admin_password}\", PASSWORD_DEFAULT);'`\\\")\" | mysql ${db_cli_options} -Ns",
           refreshonly => true,
         }
       }
       'pgsql': {
+        $_db_password = icingaweb2::unwrap($db['pass'])
         exec { 'import schema':
           environment => ["PGPASSWORD=${_db_password}"],
-          command     => "psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}' -w -f ${pgsql_db_schema}",
-          unless      => "psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}' -w -c 'SELECT 1 FROM icingaweb_user'",
+          command     => "psql '${db_cli_options}' -w -f ${pgsql_db_schema}",
+          unless      => "psql '${db_cli_options}' -w -c 'SELECT 1 FROM icingaweb_user'",
           notify      => Exec['create default admin user'],
         }
 
         exec { 'create default admin user':
           environment => ["PGPASSWORD=${_db_password}"],
-          command     => "echo \"INSERT INTO icingaweb_user (name, active, password_hash) VALUES ('${admin_username}', 1, '`php -r 'echo password_hash(\"${_admin_password}\", PASSWORD_DEFAULT);'`')\" | psql -h '${db_host}' -p '${db_port}' -U '${db_username}' -d '${db_name}'",
+          command     => "echo \"INSERT INTO icingaweb_user (name, active, password_hash) VALUES ('${admin_username}', 1, '`php -r 'echo password_hash(\"${admin_password}\", PASSWORD_DEFAULT);'`')\" | psql '${db_cli_options}'",
           refreshonly => true,
         }
       }

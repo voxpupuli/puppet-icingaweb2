@@ -43,7 +43,9 @@
 #   An array of packages to install additionally.
 #
 # @param import_schema
-#   Import database scheme. Make sure you have an existing database if you use this option.
+#   Whether to import the MySQL schema or not. New options `mariadb` and `mysql`,
+#   both means true. With mariadb its cli options are used for the import,
+#   whereas with mysql its different options.
 #
 # @param db_type
 #   Database type, can be either `mysql` or `pgsql`. This parameter is only used if `import_schema` is `true` or
@@ -68,6 +70,38 @@
 # @param db_password
 #   Password for database access. This parameter is only used if `import_schema` is `true` or
 #   `config_backend` is `db`.
+#
+# @param use_tls
+#   Either enable or disable TLS encryption to the database. Other TLS parameters
+#   are only affected if this is set to 'true'.
+#
+# @param tls_key_file
+#   Location of the private key for client authentication. Only valid if tls is enabled.
+#
+# @param tls_cert_file
+#   Location of the certificate for client authentication. Only valid if tls is enabled.
+#
+# @param tls_cacert_file
+#   Location of the ca certificate. Only valid if tls is enabled.
+#
+# @param tls_key
+#   The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
+#
+# @param tls_cert
+#   The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
+#
+# @param tls_cacert
+#   The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
+#
+# @param tls_capath
+#   The file path to the directory that contains the trusted SSL CA certificates, which are stored in PEM format.
+#   Only available for the mysql database.
+#
+# @param tls_noverify
+#   Disable validation of the server certificate.
+#
+# @param tls_cipher
+#   Cipher to use for the encrypted database connection.
 #
 # @param config_backend
 #   The global Icinga Web 2 preferences can either be stored in a database or in ini files. This parameter can either
@@ -158,13 +192,23 @@ class icingaweb2 (
   Boolean                                         $manage_repos        = false,
   Boolean                                         $manage_package      = true,
   Optional[Array[String]]                         $extra_packages      = undef,
-  Boolean                                         $import_schema       = false,
+  Variant[Boolean, Enum['mariadb', 'mysql']]      $import_schema       = false,
   Enum['mysql', 'pgsql']                          $db_type             = 'mysql',
   Stdlib::Host                                    $db_host             = 'localhost',
-  Stdlib::Port                                    $db_port             = 3306,
+  Optional[Stdlib::Port]                          $db_port             = undef,
   String                                          $db_name             = 'icingaweb2',
-  Optional[String]                                $db_username         = undef,
+  String                                          $db_username         = 'icingaweb2',
   Optional[Icingaweb2::Secret]                    $db_password         = undef,
+  Optional[Boolean]                               $use_tls             = undef,
+  Optional[Stdlib::Absolutepath]                  $tls_key_file        = undef,
+  Optional[Stdlib::Absolutepath]                  $tls_cert_file       = undef,
+  Optional[Stdlib::Absolutepath]                  $tls_cacert_file     = undef,
+  Optional[Stdlib::Absolutepath]                  $tls_capath          = undef,
+  Optional[Icingaweb2::Secret]                    $tls_key             = undef,
+  Optional[String]                                $tls_cert            = undef,
+  Optional[String]                                $tls_cacert          = undef,
+  Optional[Boolean]                               $tls_noverify        = undef,
+  Optional[String]                                $tls_cipher          = undef,
   Enum['ini', 'db']                               $config_backend      = 'ini',
   Optional[String]                                $default_domain      = undef,
   Optional[Stdlib::Absolutepath]                  $cookie_path         = undef,

@@ -39,6 +39,38 @@
 # @param db_password
 #   Password for DB connection.
 #
+# @param use_tls
+#   Either enable or disable TLS encryption to the database. Other TLS parameters
+#   are only affected if this is set to 'true'.
+#
+# @param tls_key_file
+#   Location of the private key for client authentication. Only valid if tls is enabled.
+#
+# @param tls_cert_file
+#   Location of the certificate for client authentication. Only valid if tls is enabled.
+#
+# @param tls_cacert_file
+#   Location of the ca certificate. Only valid if tls is enabled.
+#
+# @param tls_key
+#   The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
+#
+# @param tls_cert
+#   The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
+#
+# @param tls_cacert
+#   The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
+#
+# @param tls_capath
+#   The file path to the directory that contains the trusted SSL CA certificates, which are stored in PEM format.
+#   Only available for the mysql database.
+#
+# @param tls_noverify
+#   Disable validation of the server certificate.
+#
+# @param tls_cipher
+#   Cipher to use for the encrypted database connection.
+#
 # @param import_schema
 #   Import database schema.
 #
@@ -78,46 +110,83 @@
 #   }
 #
 class icingaweb2::module::director(
-  Enum['absent', 'present']      $ensure         = 'present',
-  Optional[Stdlib::Absolutepath] $module_dir     = undef,
-  String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-director.git',
-  Optional[String]               $git_revision   = undef,
-  Enum['git', 'package', 'none'] $install_method = 'git',
-  String                         $package_name   = 'icingaweb2-module-director',
-  Enum['mysql', 'pgsql']         $db_type        = 'mysql',
-  Optional[Stdlib::Host]         $db_host        = undef,
-  Optional[Stdlib::Port]         $db_port        = undef,
-  Optional[String]               $db_name        = undef,
-  Optional[String]               $db_username    = undef,
-  Optional[Icingaweb2::Secret]   $db_password    = undef,
-  Optional[String]               $db_charset     = 'utf8',
-  Boolean                        $import_schema  = false,
-  Boolean                        $kickstart      = false,
-  Optional[String]               $endpoint       = undef,
-  Stdlib::Host                   $api_host       = 'localhost',
-  Stdlib::Port                   $api_port       = 5665,
-  Optional[String]               $api_username   = undef,
-  Optional[Icingaweb2::Secret]   $api_password   = undef,
+  Enum['absent', 'present']      $ensure          = 'present',
+  Optional[Stdlib::Absolutepath] $module_dir      = undef,
+  String                         $git_repository  = 'https://github.com/Icinga/icingaweb2-module-director.git',
+  Optional[String]               $git_revision    = undef,
+  Enum['git', 'package', 'none'] $install_method  = 'git',
+  String                         $package_name    = 'icingaweb2-module-director',
+  Enum['mysql', 'pgsql']         $db_type         = 'mysql',
+  Optional[Stdlib::Host]         $db_host         = 'localhost',
+  Optional[Stdlib::Port]         $db_port         = undef,
+  String                         $db_name         = 'director',
+  String                         $db_username     = 'director',
+  Optional[Icingaweb2::Secret]   $db_password     = undef,
+  Optional[String]               $db_charset      = 'utf8',
+  Optional[Boolean]              $use_tls         = undef,
+  Optional[Stdlib::Absolutepath] $tls_key_file    = undef,
+  Optional[Stdlib::Absolutepath] $tls_cert_file   = undef,
+  Optional[Stdlib::Absolutepath] $tls_cacert_file = undef,
+  Optional[Stdlib::Absolutepath] $tls_capath      = undef,
+  Optional[Icingaweb2::Secret]   $tls_key         = undef,
+  Optional[String]               $tls_cert        = undef,
+  Optional[String]               $tls_cacert      = undef,
+  Optional[Boolean]              $tls_noverify    = undef,
+  Optional[String]               $tls_cipher      = undef,
+  Boolean                        $import_schema   = false,
+  Boolean                        $kickstart       = false,
+  Optional[String]               $endpoint        = undef,
+  Stdlib::Host                   $api_host        = 'localhost',
+  Stdlib::Port                   $api_port        = 5665,
+  Optional[String]               $api_username    = undef,
+  Optional[Icingaweb2::Secret]   $api_password    = undef,
 ) {
 
   $conf_dir        = $::icingaweb2::globals::conf_dir
   $icingacli_bin   = $::icingaweb2::globals::icingacli_bin
   $module_conf_dir = "${conf_dir}/modules/director"
 
+  $tls = merge(delete($::icingaweb2::config::tls, ['key', 'cert', 'cacert']), delete_undef_values(merge(icingaweb2::cert::files(
+    'client',
+    $module_conf_dir,
+    $tls_key_file,
+    $tls_cert_file,
+    $tls_cacert_file,
+    $tls_key,
+    $tls_cert,
+    $tls_cacert,
+  ), {
+    capath   => $tls_capath,
+    noverify => $tls_noverify,
+    cipher   => $tls_cipher,
+  })))
+
   Exec {
-    user => 'root',
-    path => $::path,
+    user     => 'root',
+    path     => $::path,
+    provider => 'shell',
+    require  => [Icingaweb2::Tls::Client['icingaweb2::module::director tls client config'], Icingaweb2::Module['director']],
   }
 
-  icingaweb2::config::resource { 'icingaweb2-module-director':
-    type        => 'db',
-    db_type     => $db_type,
-    host        => $db_host,
-    port        => $db_port,
-    db_name     => $db_name,
-    db_username => $db_username,
-    db_password => icingaweb2::unwrap($db_password),
-    db_charset  => $db_charset,
+  icingaweb2::tls::client { 'icingaweb2::module::director tls client config':
+    args => $tls,
+  }
+
+  icingaweb2::resource::database { 'icingaweb2-module-director':
+    type         => $db_type,
+    host         => $db_host,
+    port         => pick($db_port, $::icingaweb2::globals::port[$db_type]),
+    database     => $db_name,
+    username     => $db_username,
+    password     => $db_password,
+    charset      => $db_charset,
+    use_tls      => $use_tls,
+    tls_noverify => $tls['noverify'],
+    tls_key      => $tls['key_file'],
+    tls_cert     => $tls['cert_file'],
+    tls_cacert   => $tls['cacert_file'],
+    tls_capath   => $tls['capath'],
+    tls_cipher   => $tls['cipher'],
   }
 
   $db_settings = {
@@ -136,7 +205,7 @@ class icingaweb2::module::director(
     exec { 'director-migration':
       command => "${icingacli_bin} director migration run",
       onlyif  => "${icingacli_bin} director migration pending",
-      require => [ Package['icingacli'], Icingaweb2::Module['director'] ]
+      require => Package['icingacli'],
     }
 
     if $kickstart {

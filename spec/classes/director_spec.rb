@@ -28,14 +28,13 @@ describe('icingaweb2::module::director', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__config__resource('icingaweb2-module-director')
-            .with_type('db')
-            .with_db_type('mysql')
+          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-director')
+            .with_type('mysql')
             .with_host('localhost')
-            .with_db_name('director')
-            .with_db_username('director')
-            .with_db_password('director')
-            .with_db_charset('utf8')
+            .with_database('director')
+            .with_username('director')
+            .with_password('director')
+            .with_charset('utf8')
         }
 
         it {
@@ -78,14 +77,13 @@ describe('icingaweb2::module::director', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__config__resource('icingaweb2-module-director')
-            .with_type('db')
-            .with_db_type('mysql')
+          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-director')
+            .with_type('mysql')
             .with_host('localhost')
-            .with_db_name('director')
-            .with_db_username('director')
-            .with_db_password('director')
-            .with_db_charset('utf8')
+            .with_database('director')
+            .with_username('director')
+            .with_password('director')
+            .with_charset('utf8')
         }
 
         it {

@@ -39,7 +39,7 @@ describe('icingaweb2::config', type: :class) do
           "class { 'icingaweb2': import_schema => true, db_type => 'mysql'}"
         end
 
-        it { is_expected.to contain_icingaweb2__config__resource('mysql-icingaweb2') }
+        it { is_expected.to contain_icingaweb2__resource__database('mysql-icingaweb2') }
         it { is_expected.to contain_icingaweb2__config__authmethod('mysql-auth') }
         it { is_expected.to contain_icingaweb2__config__role('default admin user') }
         it { is_expected.to contain_exec('import schema') }
@@ -51,7 +51,7 @@ describe('icingaweb2::config', type: :class) do
           "class { 'icingaweb2': import_schema => true, db_type => 'pgsql'}"
         end
 
-        it { is_expected.to contain_icingaweb2__config__resource('pgsql-icingaweb2') }
+        it { is_expected.to contain_icingaweb2__resource__database('pgsql-icingaweb2') }
         it { is_expected.to contain_icingaweb2__config__authmethod('pgsql-auth') }
         it { is_expected.to contain_icingaweb2__config__role('default admin user') }
         it { is_expected.to contain_exec('import schema') }
@@ -94,7 +94,7 @@ describe('icingaweb2::config', type: :class) do
             .with_settings('show_stacktraces' => false, 'module_path' => '/usr/share/icingaweb2/modules', 'config_backend' => 'db', 'config_resource' => 'mysql-icingaweb2')
         }
 
-        it { is_expected.to contain_icingaweb2__config__resource('mysql-icingaweb2') }
+        it { is_expected.to contain_icingaweb2__resource__database('mysql-icingaweb2') }
       end
 
       context 'with cookie_path => /' do

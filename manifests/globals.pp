@@ -10,8 +10,12 @@ class icingaweb2::globals(
   Stdlib::Absolutepath   $mysql_db_schema,
   Stdlib::Absolutepath   $pgsql_db_schema,
   Stdlib::Absolutepath   $mysql_vspheredb_schema,
+  Stdlib::Absolutepath   $pgsql_vspheredb_schema,
   String                 $gettext_package_name,
   Stdlib::Absolutepath   $icingacli_bin,
 ) {
-
+  $port = {
+    'mysql' => 3306,
+    'pgsql' => 5432,
+  }
 }

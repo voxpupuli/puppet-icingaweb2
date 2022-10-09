@@ -60,14 +60,13 @@ describe('icingaweb2::module::monitoring', type: :class) do
         }
 
         it {
-          is_expected.to contain_icingaweb2__config__resource('icingaweb2-module-monitoring')
-            .with_type('db')
-            .with_db_type('mysql')
+          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-monitoring')
+            .with_type('mysql')
             .with_host('localhost')
             .with_port('3306')
-            .with_db_name('icinga2')
-            .with_db_username('icinga2')
-            .with_db_password('icinga2')
+            .with_database('icinga2')
+            .with_username('icinga2')
+            .with_password('icinga2')
         }
 
         it {
@@ -115,14 +114,13 @@ describe('icingaweb2::module::monitoring', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__config__resource('icingaweb2-module-monitoring')
-            .with_type('db')
-            .with_db_type('pgsql')
+          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-monitoring')
+            .with_type('pgsql')
             .with_host('localhost')
             .with_port(5432)
-            .with_db_name('icinga2')
-            .with_db_username('icinga2')
-            .with_db_password('icinga2')
+            .with_database('icinga2')
+            .with_username('icinga2')
+            .with_password('icinga2')
         }
 
         if facts[:osfamily] == 'Debian'
