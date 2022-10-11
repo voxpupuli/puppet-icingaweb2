@@ -32,6 +32,8 @@ class icingaweb2::module::vsphere(
   String                         $package_name   = 'icingaweb2-module-vsphere',
 ) {
 
+  deprecation('icingaweb2::module::vsphere', 'icingaweb2::module::vsphere is deprecated and was replaced by icingaweb2::module::vspheredb.')
+
   icingaweb2::module { 'vsphere':
     ensure         => $ensure,
     git_repository => $git_repository,
