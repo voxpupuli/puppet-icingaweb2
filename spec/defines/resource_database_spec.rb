@@ -32,7 +32,6 @@ describe('icingaweb2::resource::database', type: :define) do
             .with_settings('type' => 'db', 'db' => 'mysql', 'host' => 'localhost', 'port' => '3306', 'dbname' => 'foo', 'username' => 'bar', 'password' => 'secret')
         }
       end
-
     end
   end
 end
