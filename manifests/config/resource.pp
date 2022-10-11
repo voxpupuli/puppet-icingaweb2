@@ -83,6 +83,11 @@ define icingaweb2::config::resource(
   Optional[Enum['none', 'starttls', 'ldaps']] $ldap_encryption = 'none',
   Integer                                     $ldap_timeout    = 5,
 ) {
+  if $type == 'db' {
+    deprecation('icingaweb2::config::resource', 'This icingaweb2::config::resource is deprecated and will be replaced for type=db by icingaweb2::resource::database in the future.')
+  } else {
+    deprecation('icingaweb2::config::resource', 'This icingaweb2::config::resource is deprecated and will be replaced for type=ldap by icingaweb2::resource::ldap in the future.')
+  }
 
   $conf_dir = $::icingaweb2::globals::conf_dir
 
