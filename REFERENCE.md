@@ -46,6 +46,8 @@ that store groups.
 * [`icingaweb2::config::role`](#icingaweb2configrole): Roles define a set of permissions that may be applied to users or groups.
 * [`icingaweb2::inisection`](#icingaweb2inisection): Manage settings in INI configuration files.
 * [`icingaweb2::module`](#icingaweb2module): Download, enable and configure Icinga Web 2 modules.
+* [`icingaweb2::resource::database`](#icingaweb2resourcedatabase): Create and remove Icinga Web 2 database resources.
+* [`icingaweb2::resource::ldap`](#icingaweb2resourceldap): Create and remove Icinga Web 2 resources. Resources may be referenced in other configuration sections.
 
 #### Private Defined types
 
@@ -56,9 +58,13 @@ that store groups.
 * `icingaweb2::module::generictts::ticketsystem`: Manages ticketsystem configuration for the generictts module.
 * `icingaweb2::module::monitoring::commandtransport`: Manages commandtransport configuration for the monitoring module.
 * `icingaweb2::module::puppetdb::certificate`: Installs a certificate for the Icinga Web 2 puppetdb module.
+* `icingaweb2::tls::client`: A class to generate tls key, cert and cacert paths.
 
 ### Functions
 
+* [`icingaweb2::cert::files`](#icingaweb2certfiles): Choose the path of tls key, cert and ca file.
+* [`icingaweb2::db::connect`](#icingaweb2dbconnect): This function returns a string to connect databases
+with or without TLS information.
 * [`icingaweb2::unwrap`](#icingaweb2unwrap): This function returns an unwrap string if necessary.
 
 ### Data types
@@ -144,6 +150,16 @@ The following parameters are available in the `icingaweb2` class:
 * [`db_name`](#db_name)
 * [`db_username`](#db_username)
 * [`db_password`](#db_password)
+* [`use_tls`](#use_tls)
+* [`tls_key_file`](#tls_key_file)
+* [`tls_cert_file`](#tls_cert_file)
+* [`tls_cacert_file`](#tls_cacert_file)
+* [`tls_key`](#tls_key)
+* [`tls_cert`](#tls_cert)
+* [`tls_cacert`](#tls_cacert)
+* [`tls_capath`](#tls_capath)
+* [`tls_noverify`](#tls_noverify)
+* [`tls_cipher`](#tls_cipher)
 * [`config_backend`](#config_backend)
 * [`conf_user`](#conf_user)
 * [`conf_group`](#conf_group)
@@ -261,9 +277,11 @@ Default value: ``undef``
 
 ##### <a name="import_schema"></a>`import_schema`
 
-Data type: `Boolean`
+Data type: `Variant[Boolean, Enum['mariadb', 'mysql']]`
 
-Import database scheme. Make sure you have an existing database if you use this option.
+Whether to import the MySQL schema or not. New options `mariadb` and `mysql`,
+both means true. With mariadb its cli options are used for the import,
+whereas with mysql its different options.
 
 Default value: ``false``
 
@@ -287,12 +305,12 @@ Default value: `'localhost'`
 
 ##### <a name="db_port"></a>`db_port`
 
-Data type: `Stdlib::Port`
+Data type: `Optional[Stdlib::Port]`
 
 Port of database host. This parameter is only used if `import_schema` is `true` or
 `config_backend` is `db`.
 
-Default value: `3306`
+Default value: ``undef``
 
 ##### <a name="db_name"></a>`db_name`
 
@@ -305,12 +323,12 @@ Default value: `'icingaweb2'`
 
 ##### <a name="db_username"></a>`db_username`
 
-Data type: `Optional[String]`
+Data type: `String`
 
 Username for database access. This parameter is only used if `import_schema` is `true` or
 `config_backend` is `db`.
 
-Default value: ``undef``
+Default value: `'icingaweb2'`
 
 ##### <a name="db_password"></a>`db_password`
 
@@ -318,6 +336,88 @@ Data type: `Optional[Icingaweb2::Secret]`
 
 Password for database access. This parameter is only used if `import_schema` is `true` or
 `config_backend` is `db`.
+
+Default value: ``undef``
+
+##### <a name="use_tls"></a>`use_tls`
+
+Data type: `Optional[Boolean]`
+
+Either enable or disable TLS encryption to the database. Other TLS parameters
+are only affected if this is set to 'true'.
+
+Default value: ``undef``
+
+##### <a name="tls_key_file"></a>`tls_key_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the private key for client authentication. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cert_file"></a>`tls_cert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the certificate for client authentication. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cacert_file"></a>`tls_cacert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the ca certificate. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_key"></a>`tls_key`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cert"></a>`tls_cert`
+
+Data type: `Optional[String]`
+
+The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cacert"></a>`tls_cacert`
+
+Data type: `Optional[String]`
+
+The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_capath"></a>`tls_capath`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+The file path to the directory that contains the trusted SSL CA certificates, which are stored in PEM format.
+Only available for the mysql database.
+
+Default value: ``undef``
+
+##### <a name="tls_noverify"></a>`tls_noverify`
+
+Data type: `Optional[Boolean]`
+
+Disable validation of the server certificate.
+
+Default value: ``undef``
+
+##### <a name="tls_cipher"></a>`tls_cipher`
+
+Data type: `Optional[String]`
+
+Cipher to use for the encrypted database connection.
 
 Default value: ``undef``
 
@@ -395,6 +495,7 @@ The following parameters are available in the `icingaweb2::globals` class:
 * [`mysql_db_schema`](#mysql_db_schema)
 * [`pgsql_db_schema`](#pgsql_db_schema)
 * [`mysql_vspheredb_schema`](#mysql_vspheredb_schema)
+* [`pgsql_vspheredb_schema`](#pgsql_vspheredb_schema)
 * [`gettext_package_name`](#gettext_package_name)
 * [`icingacli_bin`](#icingacli_bin)
 
@@ -429,6 +530,12 @@ Data type: `Stdlib::Absolutepath`
 
 
 ##### <a name="mysql_vspheredb_schema"></a>`mysql_vspheredb_schema`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### <a name="pgsql_vspheredb_schema"></a>`pgsql_vspheredb_schema`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -638,6 +745,16 @@ The following parameters are available in the `icingaweb2::module::director` cla
 * [`db_name`](#db_name)
 * [`db_username`](#db_username)
 * [`db_password`](#db_password)
+* [`use_tls`](#use_tls)
+* [`tls_key_file`](#tls_key_file)
+* [`tls_cert_file`](#tls_cert_file)
+* [`tls_cacert_file`](#tls_cacert_file)
+* [`tls_key`](#tls_key)
+* [`tls_cert`](#tls_cert)
+* [`tls_cacert`](#tls_cacert)
+* [`tls_capath`](#tls_capath)
+* [`tls_noverify`](#tls_noverify)
+* [`tls_cipher`](#tls_cipher)
 * [`import_schema`](#import_schema)
 * [`kickstart`](#kickstart)
 * [`endpoint`](#endpoint)
@@ -709,7 +826,7 @@ Data type: `Optional[Stdlib::Host]`
 
 Hostname of the database.
 
-Default value: ``undef``
+Default value: `'localhost'`
 
 ##### <a name="db_port"></a>`db_port`
 
@@ -721,25 +838,107 @@ Default value: ``undef``
 
 ##### <a name="db_name"></a>`db_name`
 
-Data type: `Optional[String]`
+Data type: `String`
 
 Name of the database.
 
-Default value: ``undef``
+Default value: `'director'`
 
 ##### <a name="db_username"></a>`db_username`
 
-Data type: `Optional[String]`
+Data type: `String`
 
 Username for DB connection.
 
-Default value: ``undef``
+Default value: `'director'`
 
 ##### <a name="db_password"></a>`db_password`
 
 Data type: `Optional[Icingaweb2::Secret]`
 
 Password for DB connection.
+
+Default value: ``undef``
+
+##### <a name="use_tls"></a>`use_tls`
+
+Data type: `Optional[Boolean]`
+
+Either enable or disable TLS encryption to the database. Other TLS parameters
+are only affected if this is set to 'true'.
+
+Default value: ``undef``
+
+##### <a name="tls_key_file"></a>`tls_key_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the private key for client authentication. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cert_file"></a>`tls_cert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the certificate for client authentication. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cacert_file"></a>`tls_cacert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the ca certificate. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_key"></a>`tls_key`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cert"></a>`tls_cert`
+
+Data type: `Optional[String]`
+
+The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cacert"></a>`tls_cacert`
+
+Data type: `Optional[String]`
+
+The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_capath"></a>`tls_capath`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+The file path to the directory that contains the trusted SSL CA certificates, which are stored in PEM format.
+Only available for the mysql database.
+
+Default value: ``undef``
+
+##### <a name="tls_noverify"></a>`tls_noverify`
+
+Data type: `Optional[Boolean]`
+
+Disable validation of the server certificate.
+
+Default value: ``undef``
+
+##### <a name="tls_cipher"></a>`tls_cipher`
+
+Data type: `Optional[String]`
+
+Cipher to use for the encrypted database connection.
 
 Default value: ``undef``
 
@@ -1432,6 +1631,16 @@ The following parameters are available in the `icingaweb2::module::monitoring` c
 * [`ido_db_username`](#ido_db_username)
 * [`ido_db_password`](#ido_db_password)
 * [`ido_db_charset`](#ido_db_charset)
+* [`use_tls`](#use_tls)
+* [`tls_key_file`](#tls_key_file)
+* [`tls_cert_file`](#tls_cert_file)
+* [`tls_cacert_file`](#tls_cacert_file)
+* [`tls_key`](#tls_key)
+* [`tls_cert`](#tls_cert)
+* [`tls_cacert`](#tls_cacert)
+* [`tls_capath`](#tls_capath)
+* [`tls_noverify`](#tls_noverify)
+* [`tls_cipher`](#tls_cipher)
 * [`commandtransports`](#commandtransports)
 
 ##### <a name="ensure"></a>`ensure`
@@ -1469,11 +1678,11 @@ Default value: ``undef``
 
 ##### <a name="ido_port"></a>`ido_port`
 
-Data type: `Stdlib::Port`
+Data type: `Optional[Stdlib::Port]`
 
 Port of the IDO database.
 
-Default value: `3306`
+Default value: ``undef``
 
 ##### <a name="ido_db_name"></a>`ido_db_name`
 
@@ -1504,6 +1713,88 @@ Default value: ``undef``
 Data type: `Optional[String]`
 
 The character set to use for the database connection.
+
+Default value: ``undef``
+
+##### <a name="use_tls"></a>`use_tls`
+
+Data type: `Optional[Boolean]`
+
+Either enable or disable TLS encryption to the database. Other TLS parameters
+are only affected if this is set to 'true'.
+
+Default value: ``undef``
+
+##### <a name="tls_key_file"></a>`tls_key_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the private key for client authentication. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cert_file"></a>`tls_cert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the certificate for client authentication. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cacert_file"></a>`tls_cacert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the ca certificate. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_key"></a>`tls_key`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cert"></a>`tls_cert`
+
+Data type: `Optional[String]`
+
+The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cacert"></a>`tls_cacert`
+
+Data type: `Optional[String]`
+
+The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_capath"></a>`tls_capath`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+The file path to the directory that contains the trusted SSL CA certificates, which are stored in PEM format.
+Only available for the mysql database.
+
+Default value: ``undef``
+
+##### <a name="tls_noverify"></a>`tls_noverify`
+
+Data type: `Optional[Boolean]`
+
+Disable validation of the server certificate.
+
+Default value: ``undef``
+
+##### <a name="tls_cipher"></a>`tls_cipher`
+
+Data type: `Optional[String]`
+
+Cipher to use for the encrypted database connection.
 
 Default value: ``undef``
 
@@ -1887,6 +2178,16 @@ The following parameters are available in the `icingaweb2::module::vspheredb` cl
 * [`db_username`](#db_username)
 * [`db_password`](#db_password)
 * [`db_charset`](#db_charset)
+* [`use_tls`](#use_tls)
+* [`tls_key_file`](#tls_key_file)
+* [`tls_cert_file`](#tls_cert_file)
+* [`tls_cacert_file`](#tls_cacert_file)
+* [`tls_key`](#tls_key)
+* [`tls_cert`](#tls_cert)
+* [`tls_cacert`](#tls_cacert)
+* [`tls_capath`](#tls_capath)
+* [`tls_noverify`](#tls_noverify)
+* [`tls_cipher`](#tls_cipher)
 * [`import_schema`](#import_schema)
 
 ##### <a name="ensure"></a>`ensure`
@@ -1947,35 +2248,35 @@ Default value: `'mysql'`
 
 ##### <a name="db_host"></a>`db_host`
 
-Data type: `Optional[Stdlib::Host]`
+Data type: `Stdlib::Host`
 
 The host where the vspheredb-database will be running
 
-Default value: ``undef``
+Default value: `'localhost'`
 
 ##### <a name="db_port"></a>`db_port`
 
-Data type: `Stdlib::Port`
+Data type: `Optional[Stdlib::Port]`
 
 The port on which the database is accessible.
 
-Default value: `3306`
+Default value: ``undef``
 
 ##### <a name="db_name"></a>`db_name`
 
-Data type: `Optional[String]`
+Data type: `String`
 
 The name of the database this module should use.
 
-Default value: ``undef``
+Default value: `'vspheredb'`
 
 ##### <a name="db_username"></a>`db_username`
 
-Data type: `Optional[String]`
+Data type: `String`
 
 The username needed to access the database.
 
-Default value: ``undef``
+Default value: `'vspheredb'`
 
 ##### <a name="db_password"></a>`db_password`
 
@@ -1993,11 +2294,95 @@ The charset the database is set to.
 
 Default value: `'utf8mb4'`
 
+##### <a name="use_tls"></a>`use_tls`
+
+Data type: `Optional[Boolean]`
+
+Either enable or disable TLS encryption to the database. Other TLS parameters
+are only affected if this is set to 'true'.
+
+Default value: ``undef``
+
+##### <a name="tls_key_file"></a>`tls_key_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the private key for client authentication. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cert_file"></a>`tls_cert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the certificate for client authentication. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cacert_file"></a>`tls_cacert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the ca certificate. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_key"></a>`tls_key`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cert"></a>`tls_cert`
+
+Data type: `Optional[String]`
+
+The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cacert"></a>`tls_cacert`
+
+Data type: `Optional[String]`
+
+The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_capath"></a>`tls_capath`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+The file path to the directory that contains the trusted SSL CA certificates, which are stored in PEM format.
+Only available for the mysql database.
+
+Default value: ``undef``
+
+##### <a name="tls_noverify"></a>`tls_noverify`
+
+Data type: `Optional[Boolean]`
+
+Disable validation of the server certificate.
+
+Default value: ``undef``
+
+##### <a name="tls_cipher"></a>`tls_cipher`
+
+Data type: `Optional[String]`
+
+Cipher to use for the encrypted database connection.
+
+Default value: ``undef``
+
 ##### <a name="import_schema"></a>`import_schema`
 
-Data type: `Boolean`
+Data type: `Variant[Boolean, Enum['mariadb', 'mysql']]`
 
-Whether to import the database schema or not.
+Whether to import the database schema or not. New options `mariadb` and `mysql`,
+both means true. With mariadb its cli options are used for the import,
+whereas with mysql its different options.
 
 Default value: ``false``
 
@@ -2783,7 +3168,367 @@ Data type: `Optional[String]`
 
 Default value: ``undef``
 
+### <a name="icingaweb2resourcedatabase"></a>`icingaweb2::resource::database`
+
+Create and remove Icinga Web 2 database resources.
+
+#### Examples
+
+##### Create a MySQL DB resource:
+
+```puppet
+icingaweb2::resource::database { 'mysql':
+  type     => 'mysql',
+  host     => 'localhost',
+  port     => '3306',
+  database => 'icingaweb2',
+  username => 'icingaweb2',
+  password => 'supersecret',
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::resource::database` defined type:
+
+* [`resource_name`](#resource_name)
+* [`type`](#type)
+* [`host`](#host)
+* [`port`](#port)
+* [`database`](#database)
+* [`username`](#username)
+* [`password`](#password)
+* [`charset`](#charset)
+* [`use_tls`](#use_tls)
+* [`tls_noverify`](#tls_noverify)
+* [`tls_key`](#tls_key)
+* [`tls_cert`](#tls_cert)
+* [`tls_cacert`](#tls_cacert)
+* [`tls_capath`](#tls_capath)
+* [`tls_cipher`](#tls_cipher)
+
+##### <a name="resource_name"></a>`resource_name`
+
+Data type: `String`
+
+Name of the resources. Resources are referenced by their name in other configuration sections.
+
+Default value: `$title`
+
+##### <a name="type"></a>`type`
+
+Data type: `Enum['mysql', 'pgsql', 'mssql',
+    'oci', 'oracle', 'ibm', 'sqlite']`
+
+Set database type to connect.
+
+##### <a name="host"></a>`host`
+
+Data type: `Stdlib::Host`
+
+Connect to the database on the given host. For using unix domain sockets, specify 'localhost' for
+MySQL and the path to the unix domain socket and the directory for PostgreSQL.
+
+Default value: ``undef``
+
+##### <a name="port"></a>`port`
+
+Data type: `Stdlib::Port`
+
+Port number to use.
+
+##### <a name="database"></a>`database`
+
+Data type: `String`
+
+The database to use.
+
+##### <a name="username"></a>`username`
+
+Data type: `Optional[String]`
+
+The username to use when connecting to the server.
+
+Default value: ``undef``
+
+##### <a name="password"></a>`password`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+The password to use when connecting the database.
+
+Default value: ``undef``
+
+##### <a name="charset"></a>`charset`
+
+Data type: `Optional[String]`
+
+The character set to use for the database connection.
+
+Default value: ``undef``
+
+##### <a name="use_tls"></a>`use_tls`
+
+Data type: `Optional[Boolean]`
+
+Either enable or disable TLS encryption to the database. Other TLS parameters
+are only affected if this is set to 'true'.
+
+Default value: ``undef``
+
+##### <a name="tls_noverify"></a>`tls_noverify`
+
+Data type: `Optional[Boolean]`
+
+Disable validation of the server certificate.
+
+Default value: ``undef``
+
+##### <a name="tls_key"></a>`tls_key`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the private key for client authentication. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cert"></a>`tls_cert`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the certificate for client authentication. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cacert"></a>`tls_cacert`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the ca certificate. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_capath"></a>`tls_capath`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+The file path to the directory that contains the trusted SSL CA certificates, which are stored in PEM format.
+Only available for the mysql database.
+
+Default value: ``undef``
+
+##### <a name="tls_cipher"></a>`tls_cipher`
+
+Data type: `Optional[String]`
+
+Chipher to use for the encrypted database connection.
+
+Default value: ``undef``
+
+### <a name="icingaweb2resourceldap"></a>`icingaweb2::resource::ldap`
+
+Create and remove Icinga Web 2 resources. Resources may be referenced in other configuration sections.
+
+#### Examples
+
+##### Create a LDAP resource:
+
+```puppet
+icingaweb2::resource::ldap{ 'my-ldap':
+  type    => 'ldap',
+  host    => 'localhost',
+  port    => 389,
+  root_dn => 'ou=users,dc=icinga,dc=com',
+  bind_dn => 'cn=icingaweb2,ou=users,dc=icinga,dc=com',
+  bind_pw => 'supersecret',
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::resource::ldap` defined type:
+
+* [`resource_name`](#resource_name)
+* [`host`](#host)
+* [`port`](#port)
+* [`root_dn`](#root_dn)
+* [`bind_dn`](#bind_dn)
+* [`bind_pw`](#bind_pw)
+* [`encryption`](#encryption)
+* [`timeout`](#timeout)
+
+##### <a name="resource_name"></a>`resource_name`
+
+Data type: `String`
+
+Name of the resources. Resources are referenced by their name in other configuration sections.
+
+Default value: `$title`
+
+##### <a name="host"></a>`host`
+
+Data type: `String`
+
+Connect to the database or ldap server on the given host. For using unix domain sockets, specify 'localhost' for
+MySQL and the path to the unix domain socket directory for PostgreSQL. When using the 'ldap' type you can also
+provide multiple hosts separated by a space.
+
+Default value: `'localhost'`
+
+##### <a name="port"></a>`port`
+
+Data type: `Optional[Stdlib::Port]`
+
+Port number to use.
+
+Default value: ``undef``
+
+##### <a name="root_dn"></a>`root_dn`
+
+Data type: `Optional[String]`
+
+Root object of the tree, e.g. 'ou=people,dc=icinga,dc=com'.
+
+Default value: ``undef``
+
+##### <a name="bind_dn"></a>`bind_dn`
+
+Data type: `Optional[String]`
+
+The user to use when connecting to the server.
+
+Default value: ``undef``
+
+##### <a name="bind_pw"></a>`bind_pw`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+The password to use when connecting to the server.
+
+Default value: ``undef``
+
+##### <a name="encryption"></a>`encryption`
+
+Data type: `Optional[Enum['none', 'starttls', 'ldaps']]`
+
+Type of encryption to use: none (default), starttls, ldaps.
+
+Default value: `'none'`
+
+##### <a name="timeout"></a>`timeout`
+
+Data type: `Integer`
+
+Timeout for the ldap connection.
+
+Default value: `5`
+
 ## Functions
+
+### <a name="icingaweb2certfiles"></a>`icingaweb2::cert::files`
+
+Type: Puppet Language
+
+Choose the path of tls key, cert and ca file.
+
+#### `icingaweb2::cert::files(String $name, Optional[Stdlib::Absolutepath] $default_dir, Optional[Stdlib::Absolutepath] $key_file = undef, Optional[Stdlib::Absolutepath] $cert_file = undef, Optional[Stdlib::Absolutepath] $cacert_file = undef, Optional[Icingaweb2::Secret] $key = undef, Optional[String] $cert = undef, Optional[String] $cacert = undef)`
+
+The icingaweb2::cert::files function.
+
+Returns: `Hash` Returned hash includes all paths and the key, cert and cacert.
+
+##### `name`
+
+Data type: `String`
+
+
+
+##### `default_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+
+
+##### `key_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+
+
+##### `cert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+
+
+##### `cacert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+
+
+##### `key`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+
+
+##### `cert`
+
+Data type: `Optional[String]`
+
+
+
+##### `cacert`
+
+Data type: `Optional[String]`
+
+
+
+### <a name="icingaweb2dbconnect"></a>`icingaweb2::db::connect`
+
+Type: Puppet Language
+
+This function returns a string to connect databases
+with or without TLS information.
+
+#### `icingaweb2::db::connect(Struct[{
+    type => Enum['pgsql','mysql','mariadb'],
+    host => Stdlib::Host,
+    port => Stdlib::Port,
+    name => String,
+    user => String,
+    pass => Optional[Icingaweb2::Secret],
+  }] $db, Hash[String, Any] $tls, Optional[Boolean] $use_tls = undef)`
+
+The icingaweb2::db::connect function.
+
+Returns: `String` Connection string to connect database.
+
+##### `db`
+
+Data type: `Struct[{
+    type => Enum['pgsql','mysql','mariadb'],
+    host => Stdlib::Host,
+    port => Stdlib::Port,
+    name => String,
+    user => String,
+    pass => Optional[Icingaweb2::Secret],
+  }]`
+
+
+
+##### `tls`
+
+Data type: `Hash[String, Any]`
+
+
+
+##### `use_tls`
+
+Data type: `Optional[Boolean]`
+
+
 
 ### <a name="icingaweb2unwrap"></a>`icingaweb2::unwrap`
 

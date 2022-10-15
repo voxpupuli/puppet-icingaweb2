@@ -1,5 +1,18 @@
 # Change Log
 
+## [v3.5.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.5.0) (2022-10-15)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.4.1...v3.5.0)
+
+**Implemented enhancements:**
+
+- Set icingaweb2::config::resource to deprecated [\#329](https://github.com/Icinga/puppet-icingaweb2/issues/329)
+- Add ldap resource as new define resource [\#326](https://github.com/Icinga/puppet-icingaweb2/issues/326)
+- Add database resource as new define resource [\#325](https://github.com/Icinga/puppet-icingaweb2/issues/325)
+- Set module vsphere to deprecated [\#323](https://github.com/Icinga/puppet-icingaweb2/issues/323)
+- Add Ubuntu jammy support [\#322](https://github.com/Icinga/puppet-icingaweb2/issues/322)
+- Add TLS support to connect pgsql database [\#313](https://github.com/Icinga/puppet-icingaweb2/issues/313)
+- Add TLS support to connect mysql database [\#312](https://github.com/Icinga/puppet-icingaweb2/issues/312)
+
 ## [v3.4.1](https://github.com/icinga/puppet-icingaweb2/tree/v3.4.1) (2022-07-26)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.4.0...v3.4.1)
 
