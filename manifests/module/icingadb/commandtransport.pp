@@ -1,22 +1,22 @@
 # @summary
 #   Manages commandtransport configuration for the icingadb module.
 #
+# @api private
+#
 # @param commandtransport
 #   The name of the commandtransport.
 #
 # @param host
-#   Hostname/ip for the transport. Only needed for api transport.
+#   Hostname/ip for the transport.
 #
 # @param port
-#   Port for the transport. Only needed for api transport.
+#   Port for the transport.
 #
 # @param username
-#   Username for the transport. Only needed for api transport.
+#   Username for the transport.
 #
 # @param password
-#   Password for the transport. Only needed for api transport.
-#
-# @api private
+#   Password for the transport.
 #
 define icingaweb2::module::icingadb::commandtransport(
   String              $username,

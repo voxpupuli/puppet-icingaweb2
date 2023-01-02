@@ -52,4 +52,12 @@ class {'icingaweb2':
 }
 
 class {'icingaweb2::module::icingadb':
+  db_password       => Sensitive('supersecret'),
+  redis_password    => Sensitive('supersecret'), 
+  commandtransports => {
+    icinga2 => {
+      username => 'root',
+      password => Sensitive('icinga'),
+    }
+  }
 }
