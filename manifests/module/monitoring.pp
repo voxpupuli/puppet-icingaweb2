@@ -110,7 +110,6 @@ class icingaweb2::module::monitoring(
   Hash                           $commandtransports    = {},
 
 ) {
-
   $conf_dir        = $::icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/monitoring"
 
