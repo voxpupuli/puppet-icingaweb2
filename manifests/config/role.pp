@@ -18,6 +18,9 @@
 #   - Allow scheduling checks: 'monitoring/command/schedule-checks'
 #   - Grant admin permissions: 'admin'
 #
+# @param refusals
+#   Refusals are used to deny access. So they’re the exact opposite of permissions.
+#
 # @param filters
 #   Hash of filters. Modules may add new filter keys, some sample keys are:
 #   - application/share/users
@@ -90,6 +93,7 @@ define icingaweb2::config::role (
   Optional[String] $users       = undef,
   Optional[String] $groups      = undef,
   Optional[String] $permissions = undef,
+  Optional[String] $refusals    = undef,
   Hash             $filters     = {},
 ) {
   $conf_dir = $icingaweb2::globals::conf_dir
@@ -98,6 +102,7 @@ define icingaweb2::config::role (
     'users'       => $users,
     'groups'      => $groups,
     'permissions' => $permissions,
+    'refusals'    => $refusals,
   }
 
   icingaweb2::inisection { "role-${role_name}":
