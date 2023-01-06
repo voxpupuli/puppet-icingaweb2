@@ -12,6 +12,9 @@
 # @param git_repository
 #   Set a git repository URL.
 #
+# @param git_revision
+#   Set either a branch or a tag name, eg. `master` or `v1.3.2`.   
+#
 # @param install_method
 #   Install methods are `git`, `package` and `none` is supported as installation method.
 #
@@ -41,7 +44,7 @@
 #     url          => 'https://localhost:8080'
 #   }
 #
-class icingaweb2::module::graphite(
+class icingaweb2::module::graphite (
   Enum['absent', 'present']      $ensure                                = 'present',
   Optional[Stdlib::Absolutepath] $module_dir                            = undef,
   String                         $git_repository                        = 'https://github.com/Icinga/icingaweb2-module-graphite.git',
@@ -54,8 +57,7 @@ class icingaweb2::module::graphite(
   Optional[String]               $graphite_writer_host_name_template    = undef,
   Optional[String]               $graphite_writer_service_name_template = undef
 ) {
-
-  $conf_dir        = $::icingaweb2::globals::conf_dir
+  $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/graphite"
 
   $graphite_settings = {
@@ -73,13 +75,13 @@ class icingaweb2::module::graphite(
     'module-graphite-graphite' => {
       'section_name' => 'graphite',
       'target'       => "${module_conf_dir}/config.ini",
-      'settings'     => delete_undef_values($graphite_settings)
+      'settings'     => delete_undef_values($graphite_settings),
     },
     'module-graphite-icinga' => {
       'section_name' => 'icinga',
       'target'       => "${module_conf_dir}/config.ini",
-      'settings'     => delete_undef_values($icinga_settings)
-    }
+      'settings'     => delete_undef_values($icinga_settings),
+    },
   }
 
   icingaweb2::module { 'graphite':
@@ -91,5 +93,4 @@ class icingaweb2::module::graphite(
     package_name   => $package_name,
     settings       => $settings,
   }
-
 }

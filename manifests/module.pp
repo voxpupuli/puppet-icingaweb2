@@ -12,8 +12,11 @@
 # @param module_dir
 #   Target directory of the module. Defaults to first item of `module_path`.
 #
-# @param [Enum['git', 'none', 'package']] install_method
+# @param install_method
 #   Install methods are `git`, `package` and `none` is supported as installation method. Defaults to `git`
+#
+# @param git_repository
+#   The git repository. This setting is only valid in combination with the installation method `git`.
 #
 # @param git_revision
 #   Tag or branch of the git repository. This setting is only valid in combination with the installation method `git`.
@@ -46,24 +49,23 @@
 #     }
 #   }
 #
-define icingaweb2::module(
+define icingaweb2::module (
   Enum['absent', 'present']         $ensure         = 'present',
   String                            $module         = $title,
-  Stdlib::Absolutepath              $module_dir     = "${::icingaweb2::globals::default_module_path}/${title}",
+  Stdlib::Absolutepath              $module_dir     = "${icingaweb2::globals::default_module_path}/${title}",
   Enum['git', 'none', 'package']    $install_method = 'git',
   Optional[String]                  $git_repository = undef,
   String                            $git_revision   = 'master',
   Optional[String]                  $package_name   = undef,
   Hash                              $settings       = {},
 ) {
-
-  $conf_dir   = $::icingaweb2::globals::conf_dir
-  $conf_user  = $::icingaweb2::conf_user
-  $conf_group = $::icingaweb2::conf_group
+  $conf_dir   = $icingaweb2::globals::conf_dir
+  $conf_user  = $icingaweb2::conf_user
+  $conf_group = $icingaweb2::conf_group
 
   File {
     owner => $conf_user,
-    group => $conf_group
+    group => $conf_group,
   }
 
   if $ensure == 'present' {
@@ -78,12 +80,12 @@ define icingaweb2::module(
     $ensure_vcsrepo = 'absent'
   }
 
-  file {"${conf_dir}/enabledModules/${module}":
+  file { "${conf_dir}/enabledModules/${module}":
     ensure => $ensure_module_enabled,
     target => $module_dir,
   }
 
-  file {"${conf_dir}/modules/${module}":
+  file { "${conf_dir}/modules/${module}":
     ensure => $ensure_module_config_dir,
     mode   => '2770',
   }
@@ -97,7 +99,7 @@ define icingaweb2::module(
         revision => $git_revision,
       }
     }
-    'none': { }
+    'none': {}
     'package': {
       package { $package_name:
         ensure => $ensure,
@@ -107,5 +109,4 @@ define icingaweb2::module(
       fail('The installation method you provided is not supported.')
     }
   }
-
 }

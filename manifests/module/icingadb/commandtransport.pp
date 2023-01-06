@@ -18,15 +18,14 @@
 # @param password
 #   Password for the transport.
 #
-define icingaweb2::module::icingadb::commandtransport(
+define icingaweb2::module::icingadb::commandtransport (
   String              $username,
   Icingaweb2::Secret  $password,
   String              $commandtransport = $title,
   Stdlib::Host        $host             = 'localhost',
   Stdlib::Port        $port             = 5665,
 ) {
-
-  $conf_dir        = $::icingaweb2::globals::conf_dir
+  $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/icingadb"
 
   $settings = {

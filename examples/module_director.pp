@@ -1,6 +1,6 @@
 package { 'git': }
 
-include ::mysql::server
+include mysql::server
 
 mysql::db { 'director':
   user     => 'director',
@@ -10,7 +10,7 @@ mysql::db { 'director':
   grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'CREATE', 'INDEX', 'EXECUTE', 'ALTER', 'REFERENCES'],
 }
 
-class {'icingaweb2':
+class { 'icingaweb2':
   manage_repos  => true,
   import_schema => true,
   db_type       => 'mysql',
@@ -20,7 +20,7 @@ class {'icingaweb2':
   db_password   => 'icingaweb2',
 }
 
-class {'icingaweb2::module::monitoring':
+class { 'icingaweb2::module::monitoring':
   ido_host          => 'localhost',
   ido_db_name       => 'icinga2',
   ido_db_username   => 'icinga2',
@@ -30,11 +30,11 @@ class {'icingaweb2::module::monitoring':
       transport => 'api',
       username  => 'root',
       password  => 'icinga',
-    }
-  }
+    },
+  },
 }
 
-class {'icingaweb2::module::director':
+class { 'icingaweb2::module::director':
   git_revision  => 'v1.3.2',
   db_host       => 'localhost',
   db_name       => 'director',
@@ -45,5 +45,5 @@ class {'icingaweb2::module::director':
   endpoint      => 'puppet-icingaweb2.localdomain',
   api_username  => 'root',
   api_password  => 'icinga',
-  require       => Mysql::Db['director']
+  require       => Mysql::Db['director'],
 }

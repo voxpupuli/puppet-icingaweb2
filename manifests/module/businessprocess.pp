@@ -28,7 +28,7 @@
 #     git_revision => 'v2.1.0'
 #   }
 #
-class icingaweb2::module::businessprocess(
+class icingaweb2::module::businessprocess (
   Enum['absent', 'present']      $ensure         = 'present',
   Optional[Stdlib::Absolutepath] $module_dir     = undef,
   String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-businessprocess.git',
@@ -36,8 +36,7 @@ class icingaweb2::module::businessprocess(
   Enum['git', 'none', 'package'] $install_method = 'git',
   String                         $package_name   = 'icingaweb2-module-businessprocess',
 ) {
-
-  icingaweb2::module {'businessprocess':
+  icingaweb2::module { 'businessprocess':
     ensure         => $ensure,
     git_repository => $git_repository,
     git_revision   => $git_revision,
@@ -45,5 +44,4 @@ class icingaweb2::module::businessprocess(
     module_dir     => $module_dir,
     package_name   => $package_name,
   }
-
 }

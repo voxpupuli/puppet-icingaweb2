@@ -114,7 +114,7 @@ describe('icingaweb2::module::puppetdb', type: :class) do
 
       context 'with ssl set to puppet and host to puppetdb.example.com' do
         let(:params) { { ssl: 'puppet', host: 'puppetdb.example.com' } }
-        let(:facts) { facts.merge(fqdn: 'puppetdb') }
+        let(:facts) { facts }
 
         it { is_expected.to contain_icingaweb2__module('puppetdb') }
 
@@ -137,7 +137,7 @@ describe('icingaweb2::module::puppetdb', type: :class) do
 
         it {
           is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/certs/ca.pem')
-            .with_ensure('present')
+            .with_ensure('file')
             .with_mode('0640')
             .with_source("#{Puppet.settings['ssldir']}/certs/ca.pem")
         }
@@ -145,7 +145,7 @@ describe('icingaweb2::module::puppetdb', type: :class) do
         it { is_expected.to have_icingaweb2__module__puppetdb__certificate_resource_count(0) }
 
         it {
-          is_expected.to contain_concat('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/puppetdb_combined.pem')
+          is_expected.to contain_concat('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/foo.example.com_combined.pem')
             .with_ensure('present')
             .with_warn('false')
             .with_mode('0640')
@@ -154,15 +154,15 @@ describe('icingaweb2::module::puppetdb', type: :class) do
 
         it {
           is_expected.to contain_concat__fragment('private_key')
-            .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/puppetdb_combined.pem')
-            .with_source("#{Puppet.settings['ssldir']}/private_keys/puppetdb.pem")
+            .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/foo.example.com_combined.pem')
+            .with_source("#{Puppet.settings['ssldir']}/private_keys/foo.example.com.pem")
             .with_order('1')
         }
 
         it {
           is_expected.to contain_concat__fragment('public_key')
-            .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/puppetdb_combined.pem')
-            .with_source("#{Puppet.settings['ssldir']}/certs/puppetdb.pem")
+            .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/foo.example.com_combined.pem')
+            .with_source("#{Puppet.settings['ssldir']}/certs/foo.example.com.pem")
             .with_order('2')
         }
       end
@@ -175,7 +175,7 @@ describe('icingaweb2::module::puppetdb', type: :class) do
                                               { 'ssl_key' => 'mysslkey1', 'ssl_cacert' => 'mycacert1' }  } }
         end
 
-        let(:facts) { facts.merge(fqdn: 'puppetdb') }
+        let(:facts) { facts }
 
         it { is_expected.to contain_icingaweb2__module('puppetdb') }
         it {
@@ -191,7 +191,7 @@ describe('icingaweb2::module::puppetdb', type: :class) do
         }
 
         it {
-          is_expected.to contain_concat('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/puppetdb_combined.pem')
+          is_expected.to contain_concat('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/foo.example.com_combined.pem')
             .with_ensure('present')
             .with_warn('false')
             .with_mode('0640')
@@ -200,13 +200,13 @@ describe('icingaweb2::module::puppetdb', type: :class) do
 
         it {
           is_expected.to contain_concat__fragment('private_key')
-            .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/puppetdb_combined.pem')
+            .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/foo.example.com_combined.pem')
             .with_order('1')
         }
 
         it {
           is_expected.to contain_concat__fragment('public_key')
-            .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/puppetdb_combined.pem')
+            .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/foo.example.com_combined.pem')
             .with_order('2')
         }
       end

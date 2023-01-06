@@ -1,11 +1,11 @@
-include ::icingaweb2
+include icingaweb2
 
-icingaweb2::config::authmethod {'external-auth':
+icingaweb2::config::authmethod { 'external-auth':
   backend => 'external',
   order   => '01',
 }
 
-icingaweb2::config::resource{'my-sql':
+icingaweb2::config::resource { 'my-sql':
   type        => 'db',
   db_type     => 'mysql',
   host        => 'localhost',
@@ -15,7 +15,7 @@ icingaweb2::config::resource{'my-sql':
   db_password => 'supersecret',
 }
 
-icingaweb2::config::authmethod {'db-auth':
+icingaweb2::config::authmethod { 'db-auth':
   backend  => 'db',
   resource => 'my-sql',
   order    => '02',

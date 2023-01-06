@@ -3,7 +3,33 @@
 #
 # @note This parameters depend on the os plattform. Changes maybe will break the functional capability of the supported plattforms and versions. Please only do changes when you know what you're doing.
 #
-class icingaweb2::globals(
+# @param package_name
+#
+# @param conf_dir
+#   Path to the config files.
+#
+# @param default_module_path
+#   Location of the modules.
+#
+# @param mysql_db_schema
+#   Location of the database schema for MySQL/MariaDB.
+#
+# @param pgsql_db_schema
+#   Location of the database schema for PostgreSQL.
+#
+# @param mysql_vspheredb_schema
+#   Location of the vspheredb database schema for MySQL/MariaDB.
+#
+# @param pgsql_vspheredb_schema
+#   Location of the vspheredb database schema for PostgreSQL.
+#
+# @param gettext_package_name
+#   Package name `gettext` tool belongs to.
+#
+# @param icingacli_bin
+#   Path to `icingacli' comand line tool.
+#
+class icingaweb2::globals (
   String                 $package_name,
   Stdlib::Absolutepath   $conf_dir,
   Stdlib::Absolutepath   $default_module_path,

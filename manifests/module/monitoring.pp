@@ -87,7 +87,7 @@
 #     }
 #   }
 #
-class icingaweb2::module::monitoring(
+class icingaweb2::module::monitoring (
   Enum['absent', 'present']      $ensure               = 'present',
   Variant[String, Array[String]] $protected_customvars = ['*pw*', '*pass*', 'community'],
   Enum['mysql', 'pgsql']         $ido_type             = 'mysql',
@@ -108,12 +108,11 @@ class icingaweb2::module::monitoring(
   Optional[Boolean]              $tls_noverify         = undef,
   Optional[String]               $tls_cipher           = undef,
   Hash                           $commandtransports    = {},
-
 ) {
-  $conf_dir        = $::icingaweb2::globals::conf_dir
+  $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/monitoring"
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'Debian': {
       $install_method = 'package'
       $package_name   = 'icingaweb2-module-monitoring'
@@ -124,19 +123,19 @@ class icingaweb2::module::monitoring(
     }
   }
 
-  $tls = merge(delete($::icingaweb2::config::tls, ['key', 'cert', 'cacert']), delete_undef_values(merge(icingaweb2::cert::files(
-    'client',
-    $module_conf_dir,
-    $tls_key_file,
-    $tls_cert_file,
-    $tls_cacert_file,
-    $tls_key,
-    $tls_cert,
-    $tls_cacert,
-  ), {
-    capath   => $tls_capath,
-    noverify => $tls_noverify,
-    cipher   => $tls_cipher,
+  $tls = merge(delete($icingaweb2::config::tls, ['key', 'cert', 'cacert']), delete_undef_values(merge(icingaweb2::cert::files(
+          'client',
+          $module_conf_dir,
+          $tls_key_file,
+          $tls_cert_file,
+          $tls_cacert_file,
+          $tls_key,
+          $tls_cert,
+          $tls_cacert,
+        ), {
+          capath   => $tls_capath,
+          noverify => $tls_noverify,
+          cipher   => $tls_cipher,
   })))
 
   icingaweb2::tls::client { 'icingaweb2::module::monitoring tls client config':
@@ -146,7 +145,7 @@ class icingaweb2::module::monitoring(
   icingaweb2::resource::database { 'icingaweb2-module-monitoring':
     type         => $ido_type,
     host         => $ido_host,
-    port         => pick($ido_port, $::icingaweb2::globals::port[$ido_type]),
+    port         => pick($ido_port, $icingaweb2::globals::port[$ido_type]),
     database     => $ido_db_name,
     username     => $ido_db_username,
     password     => $ido_db_password,
@@ -169,20 +168,20 @@ class icingaweb2::module::monitoring(
     'protected_customvars' => $protected_customvars ? {
       String        => $protected_customvars,
       Array[String] => join($protected_customvars, ','),
-    }
+    },
   }
 
   $settings = {
     'module-monitoring-backends' => {
       'section_name' => 'backends',
       'target'       => "${module_conf_dir}/backends.ini",
-      'settings'     => delete_undef_values($backend_settings)
+      'settings'     => delete_undef_values($backend_settings),
     },
     'module-monitoring-security' => {
       'section_name' => 'security',
       'target'       => "${module_conf_dir}/config.ini",
-      'settings'     => delete_undef_values($security_settings)
-    }
+      'settings'     => delete_undef_values($security_settings),
+    },
   }
 
   create_resources('icingaweb2::module::monitoring::commandtransport', $commandtransports)
@@ -193,5 +192,4 @@ class icingaweb2::module::monitoring(
     package_name   => $package_name,
     settings       => $settings,
   }
-
 }

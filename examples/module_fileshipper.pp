@@ -1,14 +1,16 @@
 include icingaweb2
 
+package { 'git': }
+
 class { 'icingaweb2::module::fileshipper':
   git_revision     => 'v1.0.1',
   base_directories => {
-    temp => '/tmp'
+    temp => '/tmp',
   },
   directories      => {
     'test' => {
       'source' => '/tmp/source',
       'target' => '/tmp/target',
-    }
-  }
+    },
+  },
 }

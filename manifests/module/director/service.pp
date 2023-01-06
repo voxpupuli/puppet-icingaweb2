@@ -21,18 +21,17 @@
 #   Whether to manage the server user resource. Only available if
 #   install_method package is not used.
 #
-class icingaweb2::module::director::service(
+class icingaweb2::module::director::service (
   Stdlib::Ensure::Service   $ensure      = 'running',
   Boolean                   $enable      = true,
   String                    $user        = 'icingadirector',
   String                    $group       = 'icingaweb2',
   Boolean                   $manage_user = true,
 ) {
+  require icingaweb2::module::director
 
-  require ::icingaweb2::module::director
-
-  $icingacli_bin  = $::icingaweb2::globals::icingacli_bin
-  $install_method = $::icingaweb2::module::director::install_method
+  $icingacli_bin  = $icingaweb2::globals::icingacli_bin
+  $install_method = $icingaweb2::module::director::install_method
 
   if $install_method != 'package' {
     if $manage_user {
@@ -50,7 +49,7 @@ class icingaweb2::module::director::service(
     }
   }
 
-  service {'icinga-director':
+  service { 'icinga-director':
     ensure => $ensure,
     enable => $enable,
   }

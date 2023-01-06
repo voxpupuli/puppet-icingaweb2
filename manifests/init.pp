@@ -178,9 +178,8 @@ class icingaweb2 (
   Variant[Icingaweb2::AdminRole, Boolean[false]]  $admin_role,
   String                                          $default_admin_username,
   Icingaweb2::Secret                              $default_admin_password,
-  Optional[Variant[
-    Stdlib::Absolutepath,
-    Array[Stdlib::Absolutepath]]]                 $module_path         = undef,
+  Optional[Variant[Stdlib::Absolutepath,
+  Array[Stdlib::Absolutepath]]]                   $module_path         = undef,
   Enum['file', 'syslog', 'php', 'none']           $logging             = 'file',
   Enum['ERROR', 'WARNING', 'INFO', 'DEBUG']       $logging_level       = 'INFO',
   Pattern[/user|local[0-7]/]                      $logging_facility    = 'user',
@@ -213,20 +212,18 @@ class icingaweb2 (
   Optional[String]                                $default_domain      = undef,
   Optional[Stdlib::Absolutepath]                  $cookie_path         = undef,
 ) {
-
-  require ::icingaweb2::globals
+  require icingaweb2::globals
 
   if $manage_repos or $manage_repo {
-    require ::icinga::repos
+    require icinga::repos
     if $manage_repo {
       deprecation('manage_repo', 'manage_repo is deprecated and will be replaced by manage_repos in the future.')
     }
   }
 
-  class { '::icingaweb2::install': }
-  -> class { '::icingaweb2::config': }
+  class { 'icingaweb2::install': }
+  -> class { 'icingaweb2::config': }
 
-  contain ::icingaweb2::install
-  contain ::icingaweb2::config
-
+  contain icingaweb2::install
+  contain icingaweb2::config
 }

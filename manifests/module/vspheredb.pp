@@ -112,32 +112,30 @@ class icingaweb2::module::vspheredb (
   Optional[Boolean]                          $tls_noverify    = undef,
   Optional[String]                           $tls_cipher      = undef,
 ) {
-
-  $conf_dir               = $::icingaweb2::globals::conf_dir
-  $mysql_vspheredb_schema = $::icingaweb2::globals::mysql_vspheredb_schema
-  $pgsql_vspheredb_schema = $::icingaweb2::globals::pgsql_vspheredb_schema
+  $conf_dir               = $icingaweb2::globals::conf_dir
+  $mysql_vspheredb_schema = $icingaweb2::globals::mysql_vspheredb_schema
+  $pgsql_vspheredb_schema = $icingaweb2::globals::pgsql_vspheredb_schema
   $module_conf_dir        = "${conf_dir}/modules/vspheredb"
-  $_db_port               = pick($db_port, $::icingaweb2::globals::port[$db_type])
+  $_db_port               = pick($db_port, $icingaweb2::globals::port[$db_type])
 
-
-  $tls = merge(delete($::icingaweb2::config::tls, ['key', 'cert', 'cacert']), delete_undef_values(merge(icingaweb2::cert::files(
-    'client',
-    $module_conf_dir,
-    $tls_key_file,
-    $tls_cert_file,
-    $tls_cacert_file,
-    $tls_key,
-    $tls_cert,
-    $tls_cacert,
-  ), {
-    capath   => $tls_capath,
-    noverify => $tls_noverify,
-    cipher   => $tls_cipher,
+  $tls = merge(delete($icingaweb2::config::tls, ['key', 'cert', 'cacert']), delete_undef_values(merge(icingaweb2::cert::files(
+          'client',
+          $module_conf_dir,
+          $tls_key_file,
+          $tls_cert_file,
+          $tls_cacert_file,
+          $tls_key,
+          $tls_cert,
+          $tls_cacert,
+        ), {
+          capath   => $tls_capath,
+          noverify => $tls_noverify,
+          cipher   => $tls_cipher,
   })))
 
   Exec {
     user     => 'root',
-    path     => $::path,
+    path     => $facts['path'],
     provider => 'shell',
     require  => [Icingaweb2::Tls::Client['icingaweb2::module::vspheredb tls client config'], Icingaweb2::Module['director']],
   }
@@ -183,17 +181,17 @@ class icingaweb2::module::vspheredb (
 
   if $import_schema {
     $real_db_type = if $import_schema =~ Boolean {
-                      if $db_type == 'pgsql' { 'pgsql' } else { 'mariadb' }
-                    } else {
-                      $import_schema
-                    }
+      if $db_type == 'pgsql' { 'pgsql' } else { 'mariadb' }
+    } else {
+      $import_schema
+    }
     $db_cli_options = icingaweb2::db::connect({
-      type => $real_db_type,
-      name => $db_name,
-      host => $db_host,
-      port => $_db_port,
-      user => $db_username,
-      pass => $db_password,
+        type => $real_db_type,
+        name => $db_name,
+        host => $db_host,
+        port => $_db_port,
+        user => $db_username,
+        pass => $db_password,
     }, $tls, $use_tls)
 
     case $db_type {

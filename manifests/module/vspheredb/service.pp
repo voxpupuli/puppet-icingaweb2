@@ -30,8 +30,7 @@ class icingaweb2::module::vspheredb::service (
   String                  $group       = 'icingaweb2',
   Boolean                 $manage_user = true,
 ) {
-
-  require ::icingaweb2::module::vspheredb
+  require icingaweb2::module::vspheredb
 
   $install_method = $icingaweb2::module::vspheredb::install_method
 
@@ -41,7 +40,7 @@ class icingaweb2::module::vspheredb::service (
         ensure => 'present',
         gid    => $group,
         shell  => '/bin/false',
-        before => [ Systemd::Unit_file['icinga-vspheredb.service'], Systemd::Tmpfile['icinga-vspheredb.conf'] ],
+        before => [Systemd::Unit_file['icinga-vspheredb.service'], Systemd::Tmpfile['icinga-vspheredb.conf']],
       }
     }
 
@@ -53,14 +52,14 @@ class icingaweb2::module::vspheredb::service (
     systemd::unit_file { 'icinga-vspheredb.service':
       ensure  => 'present',
       content => epp('icingaweb2/icinga-vspheredb.service.epp', {
-        'conf_user'     => $user,
-        'icingacli_bin' => $icingaweb2::globals::icingacli_bin,
+          'conf_user'     => $user,
+          'icingacli_bin' => $icingaweb2::globals::icingacli_bin,
       }),
       notify  => Service['icinga-vspheredb'],
     }
   }
 
-  service {'icinga-vspheredb':
+  service { 'icinga-vspheredb':
     ensure => $ensure,
     enable => $enable,
   }

@@ -66,22 +66,22 @@
 #     ldap_bind_pw => 'supersecret',
 #   }
 #
-define icingaweb2::config::resource(
-  Enum['db', 'ldap']                          $type,
-  String                                      $resource_name   = $title,
-  Optional[String]                            $host            = undef,
-  Optional[Stdlib::Port]                      $port            = undef,
+define icingaweb2::config::resource (
+  Enum['db', 'ldap']                       $type,
+  String                                   $resource_name   = $title,
+  Optional[String]                         $host            = undef,
+  Optional[Stdlib::Port]                   $port            = undef,
   Optional[Enum['mysql', 'pgsql', 'mssql',
-    'oci', 'oracle', 'ibm', 'sqlite']]        $db_type         = undef,
-  Optional[String]                            $db_name         = undef,
-  Optional[String]                            $db_username     = undef,
-  Optional[Icingaweb2::Secret]                $db_password     = undef,
-  Optional[String]                            $db_charset      = undef,
-  Optional[String]                            $ldap_root_dn    = undef,
-  Optional[String]                            $ldap_bind_dn    = undef,
-  Optional[Icingaweb2::Secret]                $ldap_bind_pw    = undef,
-  Optional[Enum['none', 'starttls', 'ldaps']] $ldap_encryption = 'none',
-  Integer                                     $ldap_timeout    = 5,
+  'oci', 'oracle', 'ibm', 'sqlite']]       $db_type         = undef,
+  Optional[String]                         $db_name         = undef,
+  Optional[String]                         $db_username     = undef,
+  Optional[Icingaweb2::Secret]             $db_password     = undef,
+  Optional[String]                         $db_charset      = undef,
+  Optional[String]                         $ldap_root_dn    = undef,
+  Optional[String]                         $ldap_bind_dn    = undef,
+  Optional[Icingaweb2::Secret]             $ldap_bind_pw    = undef,
+  Enum['none', 'starttls', 'ldaps']        $ldap_encryption = 'none',
+  Integer                                  $ldap_timeout    = 5,
 ) {
   if $type == 'db' {
     deprecation('icingaweb2::config::resource', 'icingaweb2::config::resource is deprecated and will be replaced for type=db by icingaweb2::resource::database in the future.')
@@ -89,7 +89,7 @@ define icingaweb2::config::resource(
     deprecation('icingaweb2::config::resource', 'icingaweb2::config::resource is deprecated and will be replaced for type=ldap by icingaweb2::resource::ldap in the future.')
   }
 
-  $conf_dir = $::icingaweb2::globals::conf_dir
+  $conf_dir = $icingaweb2::globals::conf_dir
 
   case $type {
     'db': {
@@ -126,5 +126,4 @@ define icingaweb2::config::resource(
     target       => "${conf_dir}/resources.ini",
     settings     => delete_undef_values($settings),
   }
-
 }

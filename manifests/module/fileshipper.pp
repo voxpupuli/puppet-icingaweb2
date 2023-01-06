@@ -45,7 +45,7 @@
 #     }
 #   }
 #
-class icingaweb2::module::fileshipper(
+class icingaweb2::module::fileshipper (
   Enum['absent', 'present']      $ensure           = 'present',
   Optional[Stdlib::Absolutepath] $module_dir       = undef,
   String                         $git_repository   = 'https://github.com/Icinga/icingaweb2-module-fileshipper.git',
@@ -54,14 +54,13 @@ class icingaweb2::module::fileshipper(
   String                         $package_name     = 'icingaweb2-module-fileshipper',
   Hash                           $base_directories = {},
   Hash                           $directories      = {},
-){
-
-  $conf_dir        = $::icingaweb2::globals::conf_dir
+) {
+  $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/fileshipper"
 
   if $base_directories {
     $base_directories.each |$identifier, $directory| {
-      icingaweb2::module::fileshipper::basedir{$identifier:
+      icingaweb2::module::fileshipper::basedir { $identifier:
         basedir => $directory,
       }
     }
@@ -69,7 +68,7 @@ class icingaweb2::module::fileshipper(
 
   if $directories {
     $directories.each |$identifier, $settings| {
-      icingaweb2::module::fileshipper::directory{$identifier:
+      icingaweb2::module::fileshipper::directory { $identifier:
         source     => $settings['source'],
         target     => $settings['target'],
         extensions => $settings['extensions'],

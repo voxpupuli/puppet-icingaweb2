@@ -12,15 +12,14 @@
 #
 # @api private
 #
-define icingaweb2::module::generictts::ticketsystem(
+define icingaweb2::module::generictts::ticketsystem (
   String             $ticketsystem = $title,
   Optional[String]   $pattern      = undef,
   Optional[String]   $url          = undef,
 ) {
-
   assert_private("You're not supposed to use this defined type manually.")
 
-  $conf_dir        = $::icingaweb2::globals::conf_dir
+  $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/generictts"
 
   icingaweb2::inisection { "generictts-ticketsystem-${ticketsystem}":
@@ -29,7 +28,6 @@ define icingaweb2::module::generictts::ticketsystem(
     settings     => {
       'pattern' => $pattern,
       'url'     => $url,
-    }
+    },
   }
-
 }

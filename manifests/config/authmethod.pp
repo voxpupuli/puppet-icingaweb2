@@ -43,7 +43,7 @@
 #     order                    => '05',
 #   }
 #
-define icingaweb2::config::authmethod(
+define icingaweb2::config::authmethod (
   Enum['external', 'ldap', 'msldap', 'db'] $backend                  = undef,
   Optional[String]                         $resource                 = undef,
   Optional[String]                         $ldap_user_class          = undef,
@@ -53,8 +53,7 @@ define icingaweb2::config::authmethod(
   Optional[String]                         $domain                   = undef,
   Variant[String, Integer]                 $order                    = '01',
 ) {
-
-  $conf_dir = $::icingaweb2::globals::conf_dir
+  $conf_dir = $icingaweb2::globals::conf_dir
 
   case $backend {
     'external': {
@@ -91,5 +90,4 @@ define icingaweb2::config::authmethod(
     settings     => delete_undef_values($settings),
     order        => $order,
   }
-
 }

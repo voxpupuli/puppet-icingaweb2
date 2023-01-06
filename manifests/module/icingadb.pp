@@ -21,7 +21,7 @@
 # @param db_name
 #   Name of the IcingaDB database.
 #
-# @param username
+# @param db_username
 #   Username for IcingaDB database connection.
 #
 # @param db_password
@@ -115,7 +115,7 @@
 # @param commandtransports
 #   A hash of command transports.
 #
-class icingaweb2::module::icingadb(
+class icingaweb2::module::icingadb (
   String                          $package_name,
   Icingaweb2::Secret              $db_password,
   Enum['absent', 'present']       $ensure                   = 'present',
@@ -153,7 +153,7 @@ class icingaweb2::module::icingadb(
   Optional[Stdlib::Absolutepath]  $redis_tls_cacert_file    = undef,
   Hash[String, Hash]              $commandtransports        = {},
 ) {
-  $conf_dir        = $::icingaweb2::globals::conf_dir
+  $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/icingadb"
 
   if $redis_use_tls {
@@ -168,12 +168,12 @@ class icingaweb2::module::icingadb(
       $redis_tls_cacert,
     )
     $redis_settings = delete_undef_values({
-      tls  => true,
-      cert => $redis_tls_files['cert_file'],
-      key  => $redis_tls_files['key_file'],
-      ca   => $redis_tls_files['cacert_file'],
+        tls  => true,
+        cert => $redis_tls_files['cert_file'],
+        key  => $redis_tls_files['key_file'],
+        ca   => $redis_tls_files['cacert_file'],
     })
-    ::icingaweb2::tls::client { 'icingaweb2::module::icingadb redis client tls config':
+    icingaweb2::tls::client { 'icingaweb2::module::icingadb redis client tls config':
       args  => $redis_tls_files,
     }
   } else {
@@ -197,35 +197,35 @@ class icingaweb2::module::icingadb(
       'section_name' => 'redis1',
       'target'       => "${module_conf_dir}/redis.ini",
       'settings'     => delete_undef_values({
-        host     => $redis_primary_host,
-        port     => $redis_primary_port,
-        password => $redis_primary_password,
+          host     => $redis_primary_host,
+          port     => $redis_primary_port,
+          password => $redis_primary_password,
       }),
     },
     'icingaweb2-module-icingadb-redis2' => {
       'section_name' => 'redis2',
       'target'       => "${module_conf_dir}/redis.ini",
       'settings'     => delete_undef_values({
-        host     => $redis_secondary_host,
-        port     => $redis_secondary_port,
-        password => $redis_secondary_password,
+          host     => $redis_secondary_host,
+          port     => $redis_secondary_port,
+          password => $redis_secondary_password,
       }),
     },
   }
-  
-  $db_tls = merge(delete($::icingaweb2::config::tls, ['key', 'cert', 'cacert']), delete_undef_values(merge(icingaweb2::cert::files(
-    'client',
-    $module_conf_dir,
-    $db_tls_key_file,
-    $db_tls_cert_file,
-    $db_tls_cacert_file,
-    $db_tls_key,
-    $db_tls_cert,
-    $db_tls_cacert,
-  ), {
-    capath   => $db_tls_capath,
-    noverify => $db_tls_noverify,
-    cipher   => $db_tls_cipher,
+
+  $db_tls = merge(delete($icingaweb2::config::tls, ['key', 'cert', 'cacert']), delete_undef_values(merge(icingaweb2::cert::files(
+          'client',
+          $module_conf_dir,
+          $db_tls_key_file,
+          $db_tls_cert_file,
+          $db_tls_cacert_file,
+          $db_tls_key,
+          $db_tls_cert,
+          $db_tls_cacert,
+        ), {
+          capath   => $db_tls_capath,
+          noverify => $db_tls_noverify,
+          cipher   => $db_tls_cipher,
   })))
 
   icingaweb2::tls::client { 'icingaweb2::module::icingadb tls client config':
@@ -235,7 +235,7 @@ class icingaweb2::module::icingadb(
   icingaweb2::resource::database { 'icingaweb2-module-icingadb':
     type         => $db_type,
     host         => $db_host,
-    port         => pick($db_port, $::icingaweb2::globals::port[$db_type]),
+    port         => pick($db_port, $icingaweb2::globals::port[$db_type]),
     database     => $db_name,
     username     => $db_username,
     password     => $db_password,

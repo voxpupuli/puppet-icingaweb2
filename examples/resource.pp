@@ -2,7 +2,7 @@ class { 'icingaweb2':
   manage_repos => true,
 }
 
-icingaweb2::config::resource{'my-sql':
+icingaweb2::config::resource { 'my-sql':
   type        => 'db',
   db_type     => 'mysql',
   host        => 'localhost',
@@ -12,7 +12,7 @@ icingaweb2::config::resource{'my-sql':
   db_password => 'supersecret',
 }
 
-icingaweb2::config::resource{'my-ldap':
+icingaweb2::config::resource { 'my-ldap':
   type         => 'ldap',
   host         => 'localhost',
   port         => 389,

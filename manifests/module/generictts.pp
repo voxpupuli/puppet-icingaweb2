@@ -37,7 +37,7 @@
 #     },
 #   }
 #
-class icingaweb2::module::generictts(
+class icingaweb2::module::generictts (
   Enum['absent', 'present']      $ensure         = 'present',
   Optional[Stdlib::Absolutepath] $module_dir     = undef,
   String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-generictts.git',
@@ -46,10 +46,9 @@ class icingaweb2::module::generictts(
   String                         $package_name   = 'icingaweb2-module-generictts',
   Hash                           $ticketsystems  = {},
 ) {
-
   create_resources('icingaweb2::module::generictts::ticketsystem', $ticketsystems)
 
-  icingaweb2::module {'generictts':
+  icingaweb2::module { 'generictts':
     ensure         => $ensure,
     git_repository => $git_repository,
     git_revision   => $git_revision,
@@ -57,5 +56,4 @@ class icingaweb2::module::generictts(
     module_dir     => $module_dir,
     package_name   => $package_name,
   }
-
 }
