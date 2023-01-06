@@ -1,5 +1,24 @@
 # Change Log
 
+## [v3.6.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.6.0) (2023-01-06)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.5.0...v3.6.0)
+
+**Implemented enhancements:**
+
+- Add support for Role permission refusals [\#335](https://github.com/Icinga/puppet-icingaweb2/pull/335) ([lbetz](https://github.com/lbetz))
+- Add audit module support [\#334](https://github.com/Icinga/puppet-icingaweb2/pull/334) ([lbetz](https://github.com/lbetz))
+- Add support for the icingadb module [\#333](https://github.com/Icinga/puppet-icingaweb2/pull/333) ([lbetz](https://github.com/lbetz))
+
+**Closed issues:**
+
+- Add support for Role permission refusals, parent and unrestricted [\#331](https://github.com/Icinga/puppet-icingaweb2/issues/331)
+- Add support for the icingadb module [\#321](https://github.com/Icinga/puppet-icingaweb2/issues/321)
+- Support for audit [\#300](https://github.com/Icinga/puppet-icingaweb2/issues/300)
+
+**Merged pull requests:**
+
+- Add icingadb module [\#332](https://github.com/Icinga/puppet-icingaweb2/pull/332) ([mwaldmueller](https://github.com/mwaldmueller))
+
 ## [v3.5.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.5.0) (2022-10-15)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.4.1...v3.5.0)
 

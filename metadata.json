@@ -1,6 +1,6 @@
 {
   "name": "icinga-icingaweb2",
-  "version": "3.5.0",
+  "version": "3.6.0",
   "author": "Icinga Team",
   "summary": "Icinga Web 2 Puppet Module",
   "license": "Apache-2.0",
@@ -41,26 +41,30 @@
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
         "7",
-        "8"
+        "8",
+        "9"
       ]
     },
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
         "7",
-        "8"
+        "8",
+        "9"
       ]
     },
     {
       "operatingsystem": "AlmaLinux",
       "operatingsystemrelease": [
-        "8"
+        "8",
+        "9"
       ]
     },
     {
       "operatingsystem": "Rocky",
       "operatingsystemrelease": [
-        "8"
+        "8",
+        "9"
       ]
     },
     {

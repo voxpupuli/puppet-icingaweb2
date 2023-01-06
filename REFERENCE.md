@@ -10,6 +10,7 @@
 
 * [`icingaweb2`](#icingaweb2): Installs and configures Icinga Web 2.
 * [`icingaweb2::globals`](#icingaweb2globals): This class loads the default parameters by doing a hiera lookup.
+* [`icingaweb2::module::audit`](#icingaweb2moduleaudit): Installs and enables the audit  module.
 * [`icingaweb2::module::businessprocess`](#icingaweb2modulebusinessprocess): Installs and enables the businessprocess module.
 * [`icingaweb2::module::cube`](#icingaweb2modulecube): Installs and enables the cube module.
 * [`icingaweb2::module::director`](#icingaweb2moduledirector): Installs and configures the director module.
@@ -19,6 +20,7 @@
 * [`icingaweb2::module::fileshipper`](#icingaweb2modulefileshipper): The fileshipper module extends the Director. It offers import sources to deal with CSV, JSON, YAML and XML files.
 * [`icingaweb2::module::generictts`](#icingaweb2modulegenerictts): Installs and enables the generictts module.
 * [`icingaweb2::module::graphite`](#icingaweb2modulegraphite): The Graphite module draws graphs out of time series data stored in Graphite.
+* [`icingaweb2::module::icingadb`](#icingaweb2moduleicingadb): Manages the icingadb module. This module is still optional at the moment.
 * [`icingaweb2::module::incubator`](#icingaweb2moduleincubator): Installs and enables the incubator module.
 * [`icingaweb2::module::ipl`](#icingaweb2moduleipl): Installs and enables the ipl module.
 * [`icingaweb2::module::monitoring`](#icingaweb2modulemonitoring): Manages the monitoring module. This module is mandatory for probably every setup.
@@ -56,6 +58,7 @@ that store groups.
 * `icingaweb2::module::fileshipper::basedir`: Manages base directories for the fileshipper module.
 * `icingaweb2::module::fileshipper::directory`: Manages directories with plain Icinga 2 configuration files.
 * `icingaweb2::module::generictts::ticketsystem`: Manages ticketsystem configuration for the generictts module.
+* `icingaweb2::module::icingadb::commandtransport`: Manages commandtransport configuration for the icingadb module.
 * `icingaweb2::module::monitoring::commandtransport`: Manages commandtransport configuration for the monitoring module.
 * `icingaweb2::module::puppetdb::certificate`: Installs a certificate for the Icinga Web 2 puppetdb module.
 * `icingaweb2::tls::client`: A class to generate tls key, cert and cacert paths.
@@ -217,9 +220,8 @@ Default value: ``false``
 
 ##### <a name="module_path"></a>`module_path`
 
-Data type: `Optional[Variant[
-    Stdlib::Absolutepath,
-    Array[Stdlib::Absolutepath]]]`
+Data type: `Optional[Variant[Stdlib::Absolutepath,
+  Array[Stdlib::Absolutepath]]]`
 
 Additional path to module sources. Multiple paths must be separated by colon.
 
@@ -509,49 +511,183 @@ Data type: `String`
 
 Data type: `Stdlib::Absolutepath`
 
-
+Path to the config files.
 
 ##### <a name="default_module_path"></a>`default_module_path`
 
 Data type: `Stdlib::Absolutepath`
 
-
+Location of the modules.
 
 ##### <a name="mysql_db_schema"></a>`mysql_db_schema`
 
 Data type: `Stdlib::Absolutepath`
 
-
+Location of the database schema for MySQL/MariaDB.
 
 ##### <a name="pgsql_db_schema"></a>`pgsql_db_schema`
 
 Data type: `Stdlib::Absolutepath`
 
-
+Location of the database schema for PostgreSQL.
 
 ##### <a name="mysql_vspheredb_schema"></a>`mysql_vspheredb_schema`
 
 Data type: `Stdlib::Absolutepath`
 
-
+Location of the vspheredb database schema for MySQL/MariaDB.
 
 ##### <a name="pgsql_vspheredb_schema"></a>`pgsql_vspheredb_schema`
 
 Data type: `Stdlib::Absolutepath`
 
-
+Location of the vspheredb database schema for PostgreSQL.
 
 ##### <a name="gettext_package_name"></a>`gettext_package_name`
 
 Data type: `String`
 
-
+Package name `gettext` tool belongs to.
 
 ##### <a name="icingacli_bin"></a>`icingacli_bin`
 
 Data type: `Stdlib::Absolutepath`
 
+Path to `icingacli' comand line tool.
 
+### <a name="icingaweb2moduleaudit"></a>`icingaweb2::module::audit`
+
+Installs and enables the audit  module.
+
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed.
+
+#### Examples
+
+##### 
+
+```puppet
+class { 'icingaweb2::module::audit':
+  git_revision => 'v1.0.2',
+  log_type     => 'syslog',
+  log_facility => 'authpriv',
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::module::audit` class:
+
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`git_revision`](#git_revision)
+* [`install_method`](#install_method)
+* [`package_name`](#package_name)
+* [`log_type`](#log_type)
+* [`log_file`](#log_file)
+* [`log_ident`](#log_ident)
+* [`log_facility`](#log_facility)
+* [`stream_format`](#stream_format)
+* [`stream_file`](#stream_file)
+
+##### <a name="ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Enable or disable module.
+
+Default value: `'present'`
+
+##### <a name="module_dir"></a>`module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
+
+##### <a name="git_repository"></a>`git_repository`
+
+Data type: `String`
+
+Set a git repository URL.
+
+Default value: `'https://github.com/Icinga/icingaweb2-module-audit.git'`
+
+##### <a name="git_revision"></a>`git_revision`
+
+Data type: `Optional[String]`
+
+Set either a branch or a tag name, eg. `master` or `v1.0.2`.
+
+Default value: ``undef``
+
+##### <a name="install_method"></a>`install_method`
+
+Data type: `Enum['git', 'none', 'package']`
+
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+Default value: `'git'`
+
+##### <a name="package_name"></a>`package_name`
+
+Data type: `String`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+Default value: `'icingaweb2-module-audit'`
+
+##### <a name="log_type"></a>`log_type`
+
+Data type: `Enum['file', 'syslog', 'none']`
+
+Logging type to use.
+
+Default value: `'none'`
+
+##### <a name="log_file"></a>`log_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the log file. Only valid if `log_type` is set to `file`.
+
+Default value: ``undef``
+
+##### <a name="log_ident"></a>`log_ident`
+
+Data type: `Optional[String]`
+
+Logging prefix ident. Only valid if `log_type` is set to `syslog`.
+
+Default value: ``undef``
+
+##### <a name="log_facility"></a>`log_facility`
+
+Data type: `Variant[
+    Enum['auth', 'user', 'authpriv'],
+    Pattern[/^local[0-7]$/]
+  ]`
+
+Facility to log to. Only valid if `log_type` is set to `syslog`.
+
+Default value: `'auth'`
+
+##### <a name="stream_format"></a>`stream_format`
+
+Data type: `Enum['json', 'none']`
+
+Set to `json` to stream in JSON format. Disabled by setting to `none`.
+
+Default value: `'none'`
+
+##### <a name="stream_file"></a>`stream_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Path to the stream destination.
+
+Default value: ``undef``
 
 ### <a name="icingaweb2modulebusinessprocess"></a>`icingaweb2::module::businessprocess`
 
@@ -745,6 +881,7 @@ The following parameters are available in the `icingaweb2::module::director` cla
 * [`db_name`](#db_name)
 * [`db_username`](#db_username)
 * [`db_password`](#db_password)
+* [`db_charset`](#db_charset)
 * [`use_tls`](#use_tls)
 * [`tls_key_file`](#tls_key_file)
 * [`tls_cert_file`](#tls_cert_file)
@@ -762,7 +899,6 @@ The following parameters are available in the `icingaweb2::module::director` cla
 * [`api_port`](#api_port)
 * [`api_username`](#api_username)
 * [`api_password`](#api_password)
-* [`db_charset`](#db_charset)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -822,7 +958,7 @@ Default value: `'mysql'`
 
 ##### <a name="db_host"></a>`db_host`
 
-Data type: `Optional[Stdlib::Host]`
+Data type: `Stdlib::Host`
 
 Hostname of the database.
 
@@ -859,6 +995,14 @@ Data type: `Optional[Icingaweb2::Secret]`
 Password for DB connection.
 
 Default value: ``undef``
+
+##### <a name="db_charset"></a>`db_charset`
+
+Data type: `String`
+
+Character set to use for the database.
+
+Default value: `'utf8'`
 
 ##### <a name="use_tls"></a>`use_tls`
 
@@ -997,14 +1141,6 @@ Data type: `Optional[Icingaweb2::Secret]`
 Icinga 2 API password. This setting is only valid if `kickstart` is `true`.
 
 Default value: ``undef``
-
-##### <a name="db_charset"></a>`db_charset`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `'utf8'`
 
 ### <a name="icingaweb2moduledirectorservice"></a>`icingaweb2::module::director::service`
 
@@ -1404,6 +1540,7 @@ The following parameters are available in the `icingaweb2::module::graphite` cla
 * [`ensure`](#ensure)
 * [`module_dir`](#module_dir)
 * [`git_repository`](#git_repository)
+* [`git_revision`](#git_revision)
 * [`install_method`](#install_method)
 * [`package_name`](#package_name)
 * [`url`](#url)
@@ -1411,7 +1548,6 @@ The following parameters are available in the `icingaweb2::module::graphite` cla
 * [`password`](#password)
 * [`graphite_writer_host_name_template`](#graphite_writer_host_name_template)
 * [`graphite_writer_service_name_template`](#graphite_writer_service_name_template)
-* [`git_revision`](#git_revision)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -1436,6 +1572,14 @@ Data type: `String`
 Set a git repository URL.
 
 Default value: `'https://github.com/Icinga/icingaweb2-module-graphite.git'`
+
+##### <a name="git_revision"></a>`git_revision`
+
+Data type: `Optional[String]`
+
+Set either a branch or a tag name, eg. `master` or `v1.3.2`.
+
+Default value: ``undef``
 
 ##### <a name="install_method"></a>`install_method`
 
@@ -1493,13 +1637,340 @@ The value of your icinga 2 GraphiteWriter's attribute `service_name_template` (i
 
 Default value: ``undef``
 
-##### <a name="git_revision"></a>`git_revision`
+### <a name="icingaweb2moduleicingadb"></a>`icingaweb2::module::icingadb`
+
+Manages the icingadb module. This module is still optional at the moment.
+
+* **Note** At first have a look at the [IcingaDB module documentation](https://icinga.com/docs/icinga-db/latest/doc/01-About/).
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::module::icingadb` class:
+
+* [`ensure`](#ensure)
+* [`package_name`](#package_name)
+* [`db_type`](#db_type)
+* [`db_host`](#db_host)
+* [`db_port`](#db_port)
+* [`db_name`](#db_name)
+* [`db_username`](#db_username)
+* [`db_password`](#db_password)
+* [`db_charset`](#db_charset)
+* [`db_use_tls`](#db_use_tls)
+* [`db_tls_cert_file`](#db_tls_cert_file)
+* [`db_tls_key_file`](#db_tls_key_file)
+* [`db_tls_cacert_file`](#db_tls_cacert_file)
+* [`db_tls_cert`](#db_tls_cert)
+* [`db_tls_key`](#db_tls_key)
+* [`db_tls_cacert`](#db_tls_cacert)
+* [`db_tls_capath`](#db_tls_capath)
+* [`db_tls_noverify`](#db_tls_noverify)
+* [`db_tls_cipher`](#db_tls_cipher)
+* [`redis_host`](#redis_host)
+* [`redis_port`](#redis_port)
+* [`redis_password`](#redis_password)
+* [`redis_primary_host`](#redis_primary_host)
+* [`redis_primary_port`](#redis_primary_port)
+* [`redis_primary_password`](#redis_primary_password)
+* [`redis_secondary_host`](#redis_secondary_host)
+* [`redis_secondary_port`](#redis_secondary_port)
+* [`redis_secondary_password`](#redis_secondary_password)
+* [`redis_use_tls`](#redis_use_tls)
+* [`redis_tls_cert`](#redis_tls_cert)
+* [`redis_tls_key`](#redis_tls_key)
+* [`redis_tls_cacert`](#redis_tls_cacert)
+* [`redis_tls_cert_file`](#redis_tls_cert_file)
+* [`redis_tls_key_file`](#redis_tls_key_file)
+* [`redis_tls_cacert_file`](#redis_tls_cacert_file)
+* [`commandtransports`](#commandtransports)
+
+##### <a name="ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Enable or disable module.
+
+Default value: `'present'`
+
+##### <a name="package_name"></a>`package_name`
+
+Data type: `String`
+
+IicngaDB-Web module package name.
+
+##### <a name="db_type"></a>`db_type`
+
+Data type: `Enum['mysql', 'pgsql']`
+
+Type of your IDO database. Either `mysql` or `pgsql`.
+
+Default value: `'mysql'`
+
+##### <a name="db_host"></a>`db_host`
+
+Data type: `Stdlib::Host`
+
+Hostname of the IcingaDB database.
+
+Default value: `'localhost'`
+
+##### <a name="db_port"></a>`db_port`
+
+Data type: `Optional[Stdlib::Port]`
+
+Port of the IcingaDB database.
+
+Default value: ``undef``
+
+##### <a name="db_name"></a>`db_name`
+
+Data type: `String`
+
+Name of the IcingaDB database.
+
+Default value: `'icingadb'`
+
+##### <a name="db_username"></a>`db_username`
+
+Data type: `String`
+
+Username for IcingaDB database connection.
+
+Default value: `'icingadb'`
+
+##### <a name="db_password"></a>`db_password`
+
+Data type: `Icingaweb2::Secret`
+
+Password for IcingaDB database connection.
+
+##### <a name="db_charset"></a>`db_charset`
 
 Data type: `Optional[String]`
 
-
+The character set to use for the IcingaDB database connection.
 
 Default value: ``undef``
+
+##### <a name="db_use_tls"></a>`db_use_tls`
+
+Data type: `Optional[Boolean]`
+
+Either enable or disable TLS encryption to the database. Other TLS parameters
+are only affected if this is set to 'true'.
+
+Default value: ``undef``
+
+##### <a name="db_tls_cert_file"></a>`db_tls_cert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the certificate for client authentication. Only valid if db_use_tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="db_tls_key_file"></a>`db_tls_key_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the private key for client authentication. Only valid if db_use_tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="db_tls_cacert_file"></a>`db_tls_cacert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the CA root certificate. Only valid if db_use_tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="db_tls_cert"></a>`db_tls_cert`
+
+Data type: `Optional[String]`
+
+The client certificate in PEM format. Only valid if db_use_tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="db_tls_key"></a>`db_tls_key`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+The client private key in PEM format. Only valid if db_use_tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="db_tls_cacert"></a>`db_tls_cacert`
+
+Data type: `Optional[String]`
+
+The CA root certificate in PEM format. Only valid if db_use_tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="db_tls_capath"></a>`db_tls_capath`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+The file path to the directory that contains the trusted SSL CA certificates, which are stored in PEM format.
+Only available for the mysql database.
+
+Default value: ``undef``
+
+##### <a name="db_tls_noverify"></a>`db_tls_noverify`
+
+Data type: `Optional[Boolean]`
+
+Disable validation of the server certificate.
+
+Default value: ``undef``
+
+##### <a name="db_tls_cipher"></a>`db_tls_cipher`
+
+Data type: `Optional[String]`
+
+Cipher to use for the encrypted database connection.
+
+Default value: ``undef``
+
+##### <a name="redis_host"></a>`redis_host`
+
+Data type: `Stdlib::Host`
+
+Redis host to connect.
+
+Default value: `'localhost'`
+
+##### <a name="redis_port"></a>`redis_port`
+
+Data type: `Optional[Stdlib::Port]`
+
+Connect `redis_host` om this port.
+
+Default value: ``undef``
+
+##### <a name="redis_password"></a>`redis_password`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+Password for Redis connection.
+
+Default value: ``undef``
+
+##### <a name="redis_primary_host"></a>`redis_primary_host`
+
+Data type: `Stdlib::Host`
+
+Alternative parameter to use for `redis_host`. Useful for high availability environments.
+
+Default value: `$redis_host`
+
+##### <a name="redis_primary_port"></a>`redis_primary_port`
+
+Data type: `Optional[Stdlib::Port]`
+
+Alternative parameter to use for `redis_port`. Useful for high availability environments.
+
+Default value: `$redis_port`
+
+##### <a name="redis_primary_password"></a>`redis_primary_password`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+Alternative parameter to use for `redis_passwod`. Useful for high availability environments.
+
+Default value: `$redis_password`
+
+##### <a name="redis_secondary_host"></a>`redis_secondary_host`
+
+Data type: `Optional[Stdlib::Host]`
+
+Fallback Redis host to connect if the first one fails.
+
+Default value: ``undef``
+
+##### <a name="redis_secondary_port"></a>`redis_secondary_port`
+
+Data type: `Optional[Stdlib::Port]`
+
+Port to connect on the fallback Redis server.
+
+Default value: ``undef``
+
+##### <a name="redis_secondary_password"></a>`redis_secondary_password`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+Password for the second Redis server.
+
+Default value: ``undef``
+
+##### <a name="redis_use_tls"></a>`redis_use_tls`
+
+Data type: `Optional[Boolean]`
+
+Use tls encrypt connection for Redis.
+All Credentials are applied for both connections in a high availability environments.
+
+Default value: ``undef``
+
+##### <a name="redis_tls_cert"></a>`redis_tls_cert`
+
+Data type: `Optional[String]`
+
+Client certificate in PEM format to authenticate to Redis.
+Only valid if redis_use_tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="redis_tls_key"></a>`redis_tls_key`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+Client private key in PEM format. Only valid if redis_use_tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="redis_tls_cacert"></a>`redis_tls_cacert`
+
+Data type: `Optional[String]`
+
+The CA certificate in PEM format. Only valid if redis_use_tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="redis_tls_cert_file"></a>`redis_tls_cert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the client certificate. Only valid if redis_use_tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="redis_tls_key_file"></a>`redis_tls_key_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the private key. Only valid if redis_use_tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="redis_tls_cacert_file"></a>`redis_tls_cacert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the CA certificate. Only valid if redis_use_tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="commandtransports"></a>`commandtransports`
+
+Data type: `Hash[String, Hash]`
+
+A hash of command transports.
+
+Default value: `{}`
 
 ### <a name="icingaweb2moduleincubator"></a>`icingaweb2::module::incubator`
 
@@ -2795,7 +3266,7 @@ Default value: ``undef``
 ##### <a name="db_type"></a>`db_type`
 
 Data type: `Optional[Enum['mysql', 'pgsql', 'mssql',
-    'oci', 'oracle', 'ibm', 'sqlite']]`
+  'oci', 'oracle', 'ibm', 'sqlite']]`
 
 Set database type to connect.
 
@@ -2859,7 +3330,7 @@ Default value: ``undef``
 
 ##### <a name="ldap_encryption"></a>`ldap_encryption`
 
-Data type: `Optional[Enum['none', 'starttls', 'ldaps']]`
+Data type: `Enum['none', 'starttls', 'ldaps']`
 
 Type of encryption to use: none (default), starttls, ldaps. Only valid if `type` is `ldap`.
 
@@ -2945,6 +3416,7 @@ The following parameters are available in the `icingaweb2::config::role` defined
 * [`users`](#users)
 * [`groups`](#groups)
 * [`permissions`](#permissions)
+* [`refusals`](#refusals)
 * [`filters`](#filters)
 
 ##### <a name="role_name"></a>`role_name`
@@ -2981,6 +3453,14 @@ Comma separated lsit of permissions. Each module may add it's own permissions. E
 - Allow access do module monitoring: 'module/monitoring'
 - Allow scheduling checks: 'monitoring/command/schedule-checks'
 - Grant admin permissions: 'admin'
+
+Default value: ``undef``
+
+##### <a name="refusals"></a>`refusals`
+
+Data type: `Optional[String]`
+
+Refusals are used to deny access. So they’re the exact opposite of permissions.
 
 Default value: ``undef``
 
@@ -3098,10 +3578,10 @@ The following parameters are available in the `icingaweb2::module` defined type:
 * [`module`](#module)
 * [`module_dir`](#module_dir)
 * [`install_method`](#install_method)
+* [`git_repository`](#git_repository)
 * [`git_revision`](#git_revision)
 * [`package_name`](#package_name)
 * [`settings`](#settings)
-* [`git_repository`](#git_repository)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -3125,7 +3605,7 @@ Data type: `Stdlib::Absolutepath`
 
 Target directory of the module. Defaults to first item of `module_path`.
 
-Default value: `"${::icingaweb2::globals::default_module_path}/${title}"`
+Default value: `"${icingaweb2::globals::default_module_path}/${title}"`
 
 ##### <a name="install_method"></a>`install_method`
 
@@ -3134,6 +3614,14 @@ Data type: `Enum['git', 'none', 'package']`
 Install methods are `git`, `package` and `none` is supported as installation method. Defaults to `git`
 
 Default value: `'git'`
+
+##### <a name="git_repository"></a>`git_repository`
+
+Data type: `Optional[String]`
+
+The git repository. This setting is only valid in combination with the installation method `git`.
+
+Default value: ``undef``
 
 ##### <a name="git_revision"></a>`git_revision`
 
@@ -3159,14 +3647,6 @@ A hash with the module settings. Multiple configuration files with ini sections 
 The `module_name` should be used as target directory for the configuration files.
 
 Default value: `{}`
-
-##### <a name="git_repository"></a>`git_repository`
-
-Data type: `Optional[String]`
-
-
-
-Default value: ``undef``
 
 ### <a name="icingaweb2resourcedatabase"></a>`icingaweb2::resource::database`
 
@@ -3218,7 +3698,7 @@ Default value: `$title`
 ##### <a name="type"></a>`type`
 
 Data type: `Enum['mysql', 'pgsql', 'mssql',
-    'oci', 'oracle', 'ibm', 'sqlite']`
+  'oci', 'oracle', 'ibm', 'sqlite']`
 
 Set database type to connect.
 
@@ -3409,7 +3889,7 @@ Default value: ``undef``
 
 ##### <a name="encryption"></a>`encryption`
 
-Data type: `Optional[Enum['none', 'starttls', 'ldaps']]`
+Data type: `Enum['none', 'starttls', 'ldaps']`
 
 Type of encryption to use: none (default), starttls, ldaps.
 
@@ -3493,12 +3973,12 @@ This function returns a string to connect databases
 with or without TLS information.
 
 #### `icingaweb2::db::connect(Struct[{
-    type => Enum['pgsql','mysql','mariadb'],
-    host => Stdlib::Host,
-    port => Stdlib::Port,
-    name => String,
-    user => String,
-    pass => Optional[Icingaweb2::Secret],
+      type => Enum['pgsql','mysql','mariadb'],
+      host => Stdlib::Host,
+      port => Stdlib::Port,
+      name => String,
+      user => String,
+      pass => Optional[Icingaweb2::Secret],
   }] $db, Hash[String, Any] $tls, Optional[Boolean] $use_tls = undef)`
 
 The icingaweb2::db::connect function.
@@ -3508,12 +3988,12 @@ Returns: `String` Connection string to connect database.
 ##### `db`
 
 Data type: `Struct[{
-    type => Enum['pgsql','mysql','mariadb'],
-    host => Stdlib::Host,
-    port => Stdlib::Port,
-    name => String,
-    user => String,
-    pass => Optional[Icingaweb2::Secret],
+      type => Enum['pgsql','mysql','mariadb'],
+      host => Stdlib::Host,
+      port => Stdlib::Port,
+      name => String,
+      user => String,
+      pass => Optional[Icingaweb2::Secret],
   }]`
 
 
@@ -3558,9 +4038,9 @@ Alias of
 
 ```puppet
 Struct[{
-  name   => String,
-  users  => Optional[Array[String]],
-  groups => Optional[Array[String]],
+    name   => String,
+    users  => Optional[Array[String]],
+    groups => Optional[Array[String]],
 }]
 ```
 
