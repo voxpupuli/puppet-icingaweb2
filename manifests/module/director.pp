@@ -39,6 +39,9 @@
 # @param db_password
 #   Password for DB connection.
 #
+# @param db_charset
+#   Character set to use for the database.
+#
 # @param use_tls
 #   Either enable or disable TLS encryption to the database. Other TLS parameters
 #   are only affected if this is set to 'true'.
@@ -109,7 +112,7 @@
 #     require       => Mysql::Db['director']
 #   }
 #
-class icingaweb2::module::director(
+class icingaweb2::module::director (
   Enum['absent', 'present']      $ensure          = 'present',
   Optional[Stdlib::Absolutepath] $module_dir      = undef,
   String                         $git_repository  = 'https://github.com/Icinga/icingaweb2-module-director.git',
@@ -117,12 +120,12 @@ class icingaweb2::module::director(
   Enum['git', 'package', 'none'] $install_method  = 'git',
   String                         $package_name    = 'icingaweb2-module-director',
   Enum['mysql', 'pgsql']         $db_type         = 'mysql',
-  Optional[Stdlib::Host]         $db_host         = 'localhost',
+  Stdlib::Host                   $db_host         = 'localhost',
   Optional[Stdlib::Port]         $db_port         = undef,
   String                         $db_name         = 'director',
   String                         $db_username     = 'director',
   Optional[Icingaweb2::Secret]   $db_password     = undef,
-  Optional[String]               $db_charset      = 'utf8',
+  String                         $db_charset      = 'utf8',
   Optional[Boolean]              $use_tls         = undef,
   Optional[Stdlib::Absolutepath] $tls_key_file    = undef,
   Optional[Stdlib::Absolutepath] $tls_cert_file   = undef,
@@ -141,29 +144,28 @@ class icingaweb2::module::director(
   Optional[String]               $api_username    = undef,
   Optional[Icingaweb2::Secret]   $api_password    = undef,
 ) {
-
-  $conf_dir        = $::icingaweb2::globals::conf_dir
-  $icingacli_bin   = $::icingaweb2::globals::icingacli_bin
+  $conf_dir        = $icingaweb2::globals::conf_dir
+  $icingacli_bin   = $icingaweb2::globals::icingacli_bin
   $module_conf_dir = "${conf_dir}/modules/director"
 
-  $tls = merge(delete($::icingaweb2::config::tls, ['key', 'cert', 'cacert']), delete_undef_values(merge(icingaweb2::cert::files(
-    'client',
-    $module_conf_dir,
-    $tls_key_file,
-    $tls_cert_file,
-    $tls_cacert_file,
-    $tls_key,
-    $tls_cert,
-    $tls_cacert,
-  ), {
-    capath   => $tls_capath,
-    noverify => $tls_noverify,
-    cipher   => $tls_cipher,
+  $tls = merge(delete($icingaweb2::config::tls, ['key', 'cert', 'cacert']), delete_undef_values(merge(icingaweb2::cert::files(
+          'client',
+          $module_conf_dir,
+          $tls_key_file,
+          $tls_cert_file,
+          $tls_cacert_file,
+          $tls_key,
+          $tls_cert,
+          $tls_cacert,
+        ), {
+          capath   => $tls_capath,
+          noverify => $tls_noverify,
+          cipher   => $tls_cipher,
   })))
 
   Exec {
     user     => 'root',
-    path     => $::path,
+    path     => $facts['path'],
     provider => 'shell',
     require  => [Icingaweb2::Tls::Client['icingaweb2::module::director tls client config'], Icingaweb2::Module['director']],
   }
@@ -175,7 +177,7 @@ class icingaweb2::module::director(
   icingaweb2::resource::database { 'icingaweb2-module-director':
     type         => $db_type,
     host         => $db_host,
-    port         => pick($db_port, $::icingaweb2::globals::port[$db_type]),
+    port         => pick($db_port, $icingaweb2::globals::port[$db_type]),
     database     => $db_name,
     username     => $db_username,
     password     => $db_password,
@@ -194,9 +196,9 @@ class icingaweb2::module::director(
       'section_name' => 'db',
       'target'       => "${module_conf_dir}/config.ini",
       'settings'     => {
-        'resource'   => 'icingaweb2-module-director'
-      }
-    }
+        'resource'   => 'icingaweb2-module-director',
+      },
+    },
   }
 
   if $import_schema {
@@ -219,14 +221,14 @@ class icingaweb2::module::director(
             'port'       => $api_port,
             'username'   => $api_username,
             'password'   => icingaweb2::unwrap($api_password),
-          }
-        }
+          },
+        },
       }
 
       exec { 'director-kickstart':
         command => "${icingacli_bin} director kickstart run",
         onlyif  => "${icingacli_bin} director kickstart required",
-        require => Exec['director-migration']
+        require => Exec['director-migration'],
       }
     } else {
       $kickstart_settings = {}
@@ -235,7 +237,7 @@ class icingaweb2::module::director(
     $kickstart_settings = {}
   }
 
-  icingaweb2::module {'director':
+  icingaweb2::module { 'director':
     ensure         => $ensure,
     git_repository => $git_repository,
     git_revision   => $git_revision,
@@ -244,5 +246,4 @@ class icingaweb2::module::director(
     package_name   => $package_name,
     settings       => merge($db_settings, $kickstart_settings),
   }
-
 }

@@ -26,7 +26,7 @@
 #     git_revision => 'v1.0.0'
 #   }
 #
-class icingaweb2::module::cube(
+class icingaweb2::module::cube (
   Enum['absent', 'present']      $ensure         = 'present',
   Optional[Stdlib::Absolutepath] $module_dir     = undef,
   String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-cube.git',
@@ -34,8 +34,7 @@ class icingaweb2::module::cube(
   Enum['git', 'none', 'package'] $install_method = 'git',
   String                         $package_name   = 'icingaweb2-module-cube',
 ) {
-
-  icingaweb2::module {'cube':
+  icingaweb2::module { 'cube':
     ensure         => $ensure,
     git_repository => $git_repository,
     git_revision   => $git_revision,
@@ -43,5 +42,4 @@ class icingaweb2::module::cube(
     module_dir     => $module_dir,
     package_name   => $package_name,
   }
-
 }

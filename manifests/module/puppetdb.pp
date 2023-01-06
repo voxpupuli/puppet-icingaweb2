@@ -57,7 +57,7 @@
 #     host         => 'puppetdb.example.com',
 #   }
 #
-class icingaweb2::module::puppetdb(
+class icingaweb2::module::puppetdb (
   Enum['absent', 'present']      $ensure         = 'present',
   Optional[Stdlib::Absolutepath] $module_dir     = undef,
   String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-puppetdb.git',
@@ -68,14 +68,13 @@ class icingaweb2::module::puppetdb(
   Optional[Stdlib::Host]         $host           = undef,
   Hash                           $certificates   = {},
 ) {
-
-  $conf_dir   = "${::icingaweb2::globals::conf_dir}/modules/puppetdb"
+  $conf_dir   = "${icingaweb2::globals::conf_dir}/modules/puppetdb"
   $ssl_dir    = "${conf_dir}/ssl"
-  $conf_user  = $::icingaweb2::conf_user
-  $conf_group = $::icingaweb2::conf_group
+  $conf_user  = $icingaweb2::conf_user
+  $conf_group = $icingaweb2::conf_group
 
   file { $ssl_dir:
-    ensure  => 'directory',
+    ensure  => directory,
     group   => $conf_group,
     owner   => $conf_user,
     mode    => '2740',
@@ -86,11 +85,10 @@ class icingaweb2::module::puppetdb(
 
   case $ssl {
     'puppet': {
-
       $puppetdb_ssldir = "${ssl_dir}/${host}"
 
       file { [$puppetdb_ssldir, "${puppetdb_ssldir}/private_keys", "${puppetdb_ssldir}/certs"]:
-        ensure  => 'directory',
+        ensure  => directory,
         group   => $conf_group,
         owner   => $conf_user,
         mode    => '2740',
@@ -100,16 +98,16 @@ class icingaweb2::module::puppetdb(
       }
 
       file { "${puppetdb_ssldir}/certs/ca.pem":
-        ensure => 'present',
+        ensure => file,
         group  => $conf_group,
         owner  => $conf_user,
         mode   => '0640',
-        source => "${::settings::ssldir}/certs/ca.pem",
+        source => "${settings::ssldir}/certs/ca.pem",
       }
 
-      $combinedkey_path = "${puppetdb_ssldir}/private_keys/${::fqdn}_combined.pem"
+      $combinedkey_path = "${puppetdb_ssldir}/private_keys/${facts['networking']['fqdn']}_combined.pem"
 
-      notice($::settings::ssldir)
+      notice($settings::ssldir)
 
       concat { $combinedkey_path:
         ensure         => present,
@@ -122,24 +120,23 @@ class icingaweb2::module::puppetdb(
 
       concat::fragment { 'private_key':
         target => $combinedkey_path,
-        source => "${::settings::ssldir}/private_keys/${::fqdn}.pem",
+        source => "${settings::ssldir}/private_keys/${facts['networking']['fqdn']}.pem",
         order  => 1,
       }
 
       concat::fragment { 'public_key':
         target => $combinedkey_path,
-        source => "${::settings::ssldir}/certs/${::fqdn}.pem",
+        source => "${settings::ssldir}/certs/${facts['networking']['fqdn']}.pem",
         order  => 2,
       }
-
     } # puppet
-    'none': { }
-    default: { }
-  } # case ssl
+    'none': {}
+    default: {}
+  }
 
   create_resources('icingaweb2::module::puppetdb::certificate',$certificates)
 
-  icingaweb2::module {'puppetdb':
+  icingaweb2::module { 'puppetdb':
     ensure         => $ensure,
     git_repository => $git_repository,
     git_revision   => $git_revision,
@@ -147,5 +144,4 @@ class icingaweb2::module::puppetdb(
     module_dir     => $module_dir,
     package_name   => $package_name,
   }
-
 }

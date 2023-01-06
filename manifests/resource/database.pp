@@ -59,26 +59,25 @@
 #     password => 'supersecret',
 #   }
 #
-define icingaweb2::resource::database(
+define icingaweb2::resource::database (
   Enum['mysql', 'pgsql', 'mssql',
-    'oci', 'oracle', 'ibm', 'sqlite']   $type,
-  String                                $database,
-  Stdlib::Port                          $port,
-  String                                $resource_name = $title,
-  Stdlib::Host                          $host          = undef,
-  Optional[String]                      $username      = undef,
-  Optional[Icingaweb2::Secret]          $password      = undef,
-  Optional[String]                      $charset       = undef,
-  Optional[Boolean]                     $use_tls       = undef,
-  Optional[Boolean]                     $tls_noverify  = undef,
-  Optional[Stdlib::Absolutepath]        $tls_key       = undef,
-  Optional[Stdlib::Absolutepath]        $tls_cert      = undef,
-  Optional[Stdlib::Absolutepath]        $tls_cacert    = undef,
-  Optional[Stdlib::Absolutepath]        $tls_capath    = undef,
-  Optional[String]                      $tls_cipher    = undef,
+  'oci', 'oracle', 'ibm', 'sqlite']  $type,
+  String                             $database,
+  Stdlib::Port                       $port,
+  String                             $resource_name = $title,
+  Stdlib::Host                       $host          = undef,
+  Optional[String]                   $username      = undef,
+  Optional[Icingaweb2::Secret]       $password      = undef,
+  Optional[String]                   $charset       = undef,
+  Optional[Boolean]                  $use_tls       = undef,
+  Optional[Boolean]                  $tls_noverify  = undef,
+  Optional[Stdlib::Absolutepath]     $tls_key       = undef,
+  Optional[Stdlib::Absolutepath]     $tls_cert      = undef,
+  Optional[Stdlib::Absolutepath]     $tls_cacert    = undef,
+  Optional[Stdlib::Absolutepath]     $tls_capath    = undef,
+  Optional[String]                   $tls_cipher    = undef,
 ) {
-
-  $conf_dir = $::icingaweb2::globals::conf_dir
+  $conf_dir = $icingaweb2::globals::conf_dir
 
   $settings = {
     'type'                          => 'db',
@@ -103,5 +102,4 @@ define icingaweb2::resource::database(
     target       => "${conf_dir}/resources.ini",
     settings     => delete_undef_values($settings),
   }
-
 }

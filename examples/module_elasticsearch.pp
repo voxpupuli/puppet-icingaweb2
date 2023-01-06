@@ -1,5 +1,7 @@
 include icingaweb2
 
+package { 'git': }
+
 class { 'icingaweb2::module::elasticsearch':
   git_revision => 'v0.9.0',
   instances    => {
@@ -7,7 +9,7 @@ class { 'icingaweb2::module::elasticsearch':
       uri      => 'http://localhost:9200',
       user     => 'foo',
       password => 'bar',
-    }
+    },
   },
   eventtypes   => {
     'filebeat' => {
@@ -15,6 +17,6 @@ class { 'icingaweb2::module::elasticsearch':
       index    => 'filebeat-*',
       filter   => 'beat.hostname={host.name}',
       fields   => 'input_type, source, message',
-    }
-  }
+    },
+  },
 }

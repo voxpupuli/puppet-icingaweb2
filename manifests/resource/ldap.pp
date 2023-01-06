@@ -37,18 +37,17 @@
 #     bind_pw => 'supersecret',
 #   }
 #
-define icingaweb2::resource::ldap(
-  String                                      $resource_name = $title,
-  String                                      $host          = 'localhost',
-  Optional[Stdlib::Port]                      $port          = undef,
-  Optional[String]                            $root_dn       = undef,
-  Optional[String]                            $bind_dn       = undef,
-  Optional[Icingaweb2::Secret]                $bind_pw       = undef,
-  Optional[Enum['none', 'starttls', 'ldaps']] $encryption    = 'none',
-  Integer                                     $timeout       = 5,
+define icingaweb2::resource::ldap (
+  String                            $resource_name = $title,
+  String                            $host          = 'localhost',
+  Optional[Stdlib::Port]            $port          = undef,
+  Optional[String]                  $root_dn       = undef,
+  Optional[String]                  $bind_dn       = undef,
+  Optional[Icingaweb2::Secret]      $bind_pw       = undef,
+  Enum['none', 'starttls', 'ldaps'] $encryption    = 'none',
+  Integer                           $timeout       = 5,
 ) {
-
-  $conf_dir = $::icingaweb2::globals::conf_dir
+  $conf_dir = $icingaweb2::globals::conf_dir
   $settings = {
     'type'       => 'ldap',
     'hostname'   => $host,

@@ -7,14 +7,13 @@
 #   A config hash with the keys:
 #   key_file, cert_file, cacert_file, key, cert and cacert
 #
-define icingaweb2::tls::client(
+define icingaweb2::tls::client (
   Hash[String, Any] $args,
 ) {
-
   assert_private()
 
-  $owner = $::icingaweb2::conf_user
-  $group = $::icingaweb2::conf_group
+  $owner = $icingaweb2::conf_user
+  $group = $icingaweb2::conf_group
 
   File {
     owner => $owner,

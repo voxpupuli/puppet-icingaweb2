@@ -23,7 +23,7 @@
 #
 # @note Check out the [vSphere module documentation](https://www.icinga.com/docs/director/latest/vsphere/doc/).
 #
-class icingaweb2::module::vsphere(
+class icingaweb2::module::vsphere (
   Enum['absent', 'present']      $ensure         = 'present',
   Optional[Stdlib::Absolutepath] $module_dir     = undef,
   String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-vsphere.git',
@@ -31,7 +31,6 @@ class icingaweb2::module::vsphere(
   Enum['git', 'none', 'package'] $install_method = 'git',
   String                         $package_name   = 'icingaweb2-module-vsphere',
 ) {
-
   deprecation('icingaweb2::module::vsphere', 'icingaweb2::module::vsphere is deprecated and was replaced by icingaweb2::module::vspheredb.')
 
   icingaweb2::module { 'vsphere':
@@ -42,5 +41,4 @@ class icingaweb2::module::vsphere(
     module_dir     => $module_dir,
     package_name   => $package_name,
   }
-
 }

@@ -7,12 +7,12 @@
 #
 function icingaweb2::db::connect(
   Struct[{
-    type => Enum['pgsql','mysql','mariadb'],
-    host => Stdlib::Host,
-    port => Stdlib::Port,
-    name => String,
-    user => String,
-    pass => Optional[Icingaweb2::Secret],
+      type => Enum['pgsql','mysql','mariadb'],
+      host => Stdlib::Host,
+      port => Stdlib::Port,
+      name => String,
+      user => String,
+      pass => Optional[Icingaweb2::Secret],
   }]                   $db,
   Hash[String, Any]    $tls,
   Optional[Boolean]    $use_tls = undef,
@@ -30,30 +30,30 @@ function icingaweb2::db::connect(
     case $db['type'] {
       'pgsql': {
         $tls_options = regsubst(join(any2array(delete_undef_values({
-          'sslmode='     => if $tls['noverify'] { 'require' } else { 'verify-full' },
-          'sslcert='     => $tls['cert_file'],
-          'sslkey='      => $tls['key_file'],
-          'sslrootcert=' => $tls['cacert_file'],
+                  'sslmode='     => if $tls['noverify'] { 'require' } else { 'verify-full' },
+                  'sslcert='     => $tls['cert_file'],
+                  'sslkey='      => $tls['key_file'],
+                  'sslrootcert=' => $tls['cacert_file'],
         })), ' '), '= ', '=', 'G')
       }
       'mariadb': {
         $tls_options = join(any2array(delete_undef_values({
-          '--ssl'        => '',
-          '--ssl-ca'     => $tls['cacert_file'],
-          '--ssl-cert'   => $tls['cert_file'],
-          '--ssl-key'    => $tls['key_file'],
-          '--ssl-capath' => $tls['capath'],
-          '--ssl-cipher' => $tls['cipher'],
+                '--ssl'        => '',
+                '--ssl-ca'     => $tls['cacert_file'],
+                '--ssl-cert'   => $tls['cert_file'],
+                '--ssl-key'    => $tls['key_file'],
+                '--ssl-capath' => $tls['capath'],
+                '--ssl-cipher' => $tls['cipher'],
         })), ' ')
       }
       'mysql': {
         $tls_options = join(any2array(delete_undef_values({
-          '--ssl-mode'   => 'required',
-          '--ssl-ca'     => $tls['cacert_file'],
-          '--ssl-cert'   => $tls['cert_file'],
-          '--ssl-key'    => $tls['key_file'],
-          '--ssl-capath' => $tls['capath'],
-          '--ssl-cipher' => $tls['cipher'],
+                '--ssl-mode'   => 'required',
+                '--ssl-ca'     => $tls['cacert_file'],
+                '--ssl-cert'   => $tls['cert_file'],
+                '--ssl-key'    => $tls['key_file'],
+                '--ssl-capath' => $tls['capath'],
+                '--ssl-cipher' => $tls['cipher'],
         })), ' ')
       }
       default: {
@@ -66,25 +66,24 @@ function icingaweb2::db::connect(
 
   if $db['type'] == 'pgsql' {
     $options = regsubst(join(any2array(delete_undef_values({
-      'host='        => $db['host'],
-      'user='        => $db['user'],
-      'port='        => $db['port'],
-      'dbname='      => $db['name'],
+              'host='        => $db['host'],
+              'user='        => $db['user'],
+              'port='        => $db['port'],
+              'dbname='      => $db['name'],
     })), ' '), '= ', '=', 'G')
   } else {
     $_password = icingaweb2::unwrap($db['pass'])
     $options = join(any2array(delete_undef_values({
-      '-h'               => $db['host'] ? {
-        /localhost/  => undef,
-        default      => $db['host'],
-      },
-      '-P'               => $db['port'],
-      '-u'               => $db['user'],
-      "-p'${_password}'" => '',
-      '-D'               => $db['name'],
+            '-h'               => $db['host'] ? {
+              /localhost/  => undef,
+              default      => $db['host'],
+            },
+            '-P'               => $db['port'],
+            '-u'               => $db['user'],
+            "-p'${_password}'" => '',
+            '-D'               => $db['name'],
     })), ' ')
   }
 
   "${options} ${tls_options}"
 }
-

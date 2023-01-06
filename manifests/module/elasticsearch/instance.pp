@@ -25,7 +25,7 @@
 #
 # @api private
 #
-define icingaweb2::module::elasticsearch::instance(
+define icingaweb2::module::elasticsearch::instance (
   String                          $instance_name      = $title,
   String                          $uri                = undef,
   Optional[String]                $user               = undef,
@@ -33,11 +33,10 @@ define icingaweb2::module::elasticsearch::instance(
   Optional[Stdlib::Absolutepath]  $ca                 = undef,
   Optional[Stdlib::Absolutepath]  $client_certificate = undef,
   Optional[Stdlib::Absolutepath]  $client_private_key = undef,
-){
-
+) {
   assert_private("You're not supposed to use this defined type manually.")
 
-  $conf_dir        = $::icingaweb2::globals::conf_dir
+  $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/elasticsearch"
 
   $instance_settings = {
@@ -52,6 +51,6 @@ define icingaweb2::module::elasticsearch::instance(
   icingaweb2::inisection { "elasticsearch-instance-${instance_name}":
     section_name => $instance_name,
     target       => "${module_conf_dir}/instances.ini",
-    settings     => delete_undef_values($instance_settings)
+    settings     => delete_undef_values($instance_settings),
   }
 }

@@ -20,17 +20,16 @@
 #
 # @api private
 #
-define icingaweb2::module::puppetdb::certificate(
+define icingaweb2::module::puppetdb::certificate (
   String                    $ssl_key,
   String                    $ssl_cacert,
   Enum['absent', 'present'] $ensure = 'present',
 ) {
-
   assert_private("You're not supposed to use this defined type manually.")
 
-  $certificate_dir = "${::icingaweb2::module::puppetdb::ssl_dir}/${title}"
-  $conf_user       = $::icingaweb2::conf_user
-  $conf_group      = $::icingaweb2::conf_group
+  $certificate_dir = "${icingaweb2::module::puppetdb::ssl_dir}/${title}"
+  $conf_user       = $icingaweb2::conf_user
+  $conf_group      = $icingaweb2::conf_group
 
   File {
     owner => $conf_user,
@@ -51,14 +50,13 @@ define icingaweb2::module::puppetdb::certificate(
     recurse => true,
   }
 
-  file {"${certificate_dir}/private_keys/${title}_combined.pem":
+  file { "${certificate_dir}/private_keys/${title}_combined.pem":
     ensure  => $ensure,
     content => $ssl_key,
   }
 
-  file {"${certificate_dir}/certs/ca.pem":
+  file { "${certificate_dir}/certs/ca.pem":
     ensure  => $ensure,
     content => $ssl_cacert,
   }
-
 }

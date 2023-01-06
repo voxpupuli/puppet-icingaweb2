@@ -30,7 +30,7 @@
 #     chrome_binary => '/usr/bin/chromium-browser',
 #   }
 #
-class icingaweb2::module::pdfexport(
+class icingaweb2::module::pdfexport (
   Enum['absent', 'present']      $ensure         = 'present',
   Optional[Stdlib::Absolutepath] $module_dir     = undef,
   String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-pdfexport.git',
@@ -39,8 +39,7 @@ class icingaweb2::module::pdfexport(
   String                         $package_name   = 'icingaweb2-module-pdfexport',
   Optional[Stdlib::Absolutepath] $chrome_binary  = undef,
 ) {
-
-  $conf_dir        = $::icingaweb2::globals::conf_dir
+  $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/pdfexport"
 
   icingaweb2::module { 'pdfexport':
@@ -60,5 +59,4 @@ class icingaweb2::module::pdfexport(
       },
     },
   }
-
 }

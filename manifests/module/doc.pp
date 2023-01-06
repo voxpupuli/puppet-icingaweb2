@@ -4,11 +4,10 @@
 # @param ensure
 #   Enable or disable module. Defaults to `present`
 #
-class icingaweb2::module::doc(
+class icingaweb2::module::doc (
   Enum['absent', 'present']   $ensure = 'present',
-){
-
-  case $::osfamily {
+) {
+  case $facts['os']['family'] {
     'Debian': {
       $install_method = 'package'
       $package_name   = 'icingaweb2-module-doc'

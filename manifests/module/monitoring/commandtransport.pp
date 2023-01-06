@@ -24,7 +24,7 @@
 #
 # @api private
 #
-define icingaweb2::module::monitoring::commandtransport(
+define icingaweb2::module::monitoring::commandtransport (
   String                       $commandtransport = $title,
   Enum['api', 'local']         $transport        = 'api',
   Stdlib::Host                 $host             = 'localhost',
@@ -33,8 +33,7 @@ define icingaweb2::module::monitoring::commandtransport(
   Optional[Icingaweb2::Secret] $password         = undef,
   Stdlib::Absolutepath         $path             = '/var/run/icinga2/cmd/icinga2.cmd',
 ) {
-
-  $conf_dir        = $::icingaweb2::globals::conf_dir
+  $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/monitoring"
 
   case $transport {
@@ -63,5 +62,4 @@ define icingaweb2::module::monitoring::commandtransport(
     target       => "${module_conf_dir}/commandtransports.ini",
     settings     => delete_undef_values($commandtransport_settings),
   }
-
 }

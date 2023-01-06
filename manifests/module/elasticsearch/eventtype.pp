@@ -20,16 +20,16 @@
 #
 # @api private
 #
-define icingaweb2::module::elasticsearch::eventtype(
+define icingaweb2::module::elasticsearch::eventtype (
   String             $eventtype_name = $title,
   Optional[String]   $instance       = undef,
   Optional[String]   $index          = undef,
   Optional[String]   $filter         = undef,
   Optional[String]   $fields         = undef,
-){
+) {
   assert_private("You're not supposed to use this defined type manually.")
 
-  $conf_dir        = $::icingaweb2::globals::conf_dir
+  $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/elasticsearch"
 
   $eventtype_settings = {
@@ -42,6 +42,6 @@ define icingaweb2::module::elasticsearch::eventtype(
   icingaweb2::inisection { "elasticsearch-eventtype-${eventtype_name}":
     section_name => $eventtype_name,
     target       => "${module_conf_dir}/eventtypes.ini",
-    settings     => delete_undef_values($eventtype_settings)
+    settings     => delete_undef_values($eventtype_settings),
   }
 }

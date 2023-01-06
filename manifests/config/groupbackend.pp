@@ -58,7 +58,7 @@
 #     resource => 'my-sql',
 #   }
 #
-define icingaweb2::config::groupbackend(
+define icingaweb2::config::groupbackend (
   String                       $group_name                  = $title,
   Enum['db', 'ldap', 'msldap'] $backend                     = undef,
   String                       $resource                    = undef,
@@ -72,8 +72,7 @@ define icingaweb2::config::groupbackend(
   Optional[String]             $domain                      = undef,
   Variant[String, Integer]     $order                       = '01',
 ) {
-
-  $conf_dir = $::icingaweb2::globals::conf_dir
+  $conf_dir = $icingaweb2::globals::conf_dir
 
   case $backend {
     'db': {

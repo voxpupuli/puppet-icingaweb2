@@ -25,15 +25,14 @@
 #     },
 #   }
 #
-define icingaweb2::inisection(
+define icingaweb2::inisection (
   Stdlib::Absolutepath      $target,
   String                    $section_name  = $title,
   Hash                      $settings      = {},
   Variant[String, Integer]  $order         = '01',
 ) {
-
-  $conf_user      = $::icingaweb2::conf_user
-  $conf_group     = $::icingaweb2::conf_group
+  $conf_user      = $icingaweb2::conf_user
+  $conf_group     = $icingaweb2::conf_group
 
   if !defined(Concat[$target]) {
     concat { $target:
@@ -46,9 +45,8 @@ define icingaweb2::inisection(
   }
 
   concat::fragment { "${title}-${section_name}-${order}":
-    target  =>  $target,
+    target  => $target,
     content => template('icingaweb2/inisection.erb'),
     order   => $order,
   }
-
 }

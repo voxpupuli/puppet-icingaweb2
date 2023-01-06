@@ -12,11 +12,11 @@ icingaweb2::module::fileshipper::git_repository: https://github.com/Icinga/icing
 icingaweb2::module::generictts::git_repository: https://github.com/Icinga/icingaweb2-module-generictts.git
 icingaweb2::module::graphite::git_repository: https://github.com/Icinga/icingaweb2-module-graphite.git
 icingaweb2::module::incubator::git_repository: https://github.com/Icinga/icingaweb2-module-incubator.git
-icingaweb2::module::incubator::git_revision: v0.5.0
+icingaweb2::module::incubator::git_revision: v0.19.0
 icingaweb2::module::ipl::git_repository: https://github.com/Icinga/icingaweb2-module-ipl.git
 icingaweb2::module::ipl::git_revision: v0.5.0
 icingaweb2::module::puppetdb::git_repository: https://github.com/Icinga/icingaweb2-module-puppetdb.git
 icingaweb2::module::reactbundle::git_repository: https://github.com/Icinga/icingaweb2-module-reactbundle.git
-icingaweb2::module::reactbundle::git_revision: v0.7.0
+icingaweb2::module::reactbundle::git_revision: v0.9.0
 icingaweb2::module::vsphere::git_repository: https://github.com/Icinga/icingaweb2-module-vsphere.git
 icingaweb2::module::vspheredb::git_repository: https://github.com/Icinga/icingaweb2-module-vspheredb.git

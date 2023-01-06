@@ -6,7 +6,7 @@ GitHub supports Markdown: https://guides.github.com/features/mastering-markdown/
 Multi-line code blocks either with three back ticks, or four space indent.
 
 ```
-class { 'icingaweb2':
+class { 'icinga2':
   manage_repo => true,
 }
 ```

@@ -49,7 +49,7 @@
 #     }
 #   }
 #
-class icingaweb2::module::elasticsearch(
+class icingaweb2::module::elasticsearch (
   Enum['absent', 'present']      $ensure         = 'present',
   Optional[Stdlib::Absolutepath] $module_dir     = undef,
   String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-elasticsearch.git',
@@ -58,11 +58,10 @@ class icingaweb2::module::elasticsearch(
   String                         $package_name   = 'icingaweb2-module-elasticsearch',
   Optional[Hash]                 $instances      = undef,
   Optional[Hash]                 $eventtypes     = undef,
-){
-
+) {
   if $instances {
     $instances.each |$name, $setting| {
-      icingaweb2::module::elasticsearch::instance{ $name:
+      icingaweb2::module::elasticsearch::instance { $name:
         uri                => $setting['uri'],
         user               => $setting['user'],
         password           => $setting['password'],
