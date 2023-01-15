@@ -124,7 +124,7 @@ describe('icingaweb2::module::monitoring', type: :class) do
         }
 
         if facts[:osfamily] == 'Debian'
-          it { is_expected.to contain_package('icingaweb2-module-monitoring').with('ensure' => 'present') }
+          it { is_expected.to contain_package('icingaweb2-module-monitoring').with('ensure' => 'installed') }
         end
 
         it {

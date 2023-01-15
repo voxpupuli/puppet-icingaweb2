@@ -6,10 +6,10 @@ class { 'apache':
 
 class { 'apache::mod::php': }
 
+package { 'php-pgsql': }
+
 case $facts['os']['family'] {
   'redhat': {
-    package { 'php-pgsql': }
-
     file { '/etc/httpd/conf.d/icingaweb2.conf':
       ensure  => file,
       source  => 'puppet:///modules/icingaweb2/examples/apache2/icingaweb2.conf',

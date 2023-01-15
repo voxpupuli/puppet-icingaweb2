@@ -34,7 +34,7 @@ describe('icingaweb2::module::doc', type: :class) do
         }
 
         if facts[:osfamily] == 'Debian'
-          it { is_expected.to contain_package('icingaweb2-module-doc').with('ensure' => 'present') }
+          it { is_expected.to contain_package('icingaweb2-module-doc').with('ensure' => 'installed') }
         end
       end
 
@@ -50,7 +50,7 @@ describe('icingaweb2::module::doc', type: :class) do
         }
 
         if facts[:osfamily] == 'Debian'
-          it { is_expected.to contain_package('icingaweb2-module-doc').with('ensure' => 'absent') }
+          it { is_expected.to contain_package('icingaweb2-module-doc').with('ensure' => 'installed') }
         end
       end
 
