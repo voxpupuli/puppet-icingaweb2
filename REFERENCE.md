@@ -3415,8 +3415,10 @@ The following parameters are available in the `icingaweb2::config::role` defined
 * [`role_name`](#role_name)
 * [`users`](#users)
 * [`groups`](#groups)
+* [`parent`](#parent)
 * [`permissions`](#permissions)
 * [`refusals`](#refusals)
+* [`unrestricted`](#unrestricted)
 * [`filters`](#filters)
 
 ##### <a name="role_name"></a>`role_name`
@@ -3443,6 +3445,14 @@ Comma separated list of groups this role applies to.
 
 Default value: ``undef``
 
+##### <a name="parent"></a>`parent`
+
+Data type: `Optional[String]`
+
+The name of the role from which to inherit privileges.
+
+Default value: ``undef``
+
 ##### <a name="permissions"></a>`permissions`
 
 Data type: `Optional[String]`
@@ -3461,6 +3471,14 @@ Default value: ``undef``
 Data type: `Optional[String]`
 
 Refusals are used to deny access. So they’re the exact opposite of permissions.
+
+Default value: ``undef``
+
+##### <a name="unrestricted"></a>`unrestricted`
+
+Data type: `Optional[Boolean]`
+
+If set to `true`, owners of this role are not restricted in any way.
 
 Default value: ``undef``
 

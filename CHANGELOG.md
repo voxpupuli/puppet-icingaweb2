@@ -1,5 +1,17 @@
 # Change Log
 
+## [v3.6.1](https://github.com/icinga/puppet-icingaweb2/tree/v3.6.1) (2023-01-15)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.6.0...v3.6.1)
+
+**Fixed bugs:**
+
+- Set module to absent should only disable the module [\#336](https://github.com/Icinga/puppet-icingaweb2/issues/336)
+- Add missing parameters parent and unrestricted in role [\#337](https://github.com/Icinga/puppet-icingaweb2/pull/337) ([lbetz](https://github.com/lbetz))
+
+**Merged pull requests:**
+
+- Set module to absent should only disable the module [\#338](https://github.com/Icinga/puppet-icingaweb2/pull/338) ([lbetz](https://github.com/lbetz))
+
 ## [v3.6.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.6.0) (2023-01-06)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.5.0...v3.6.0)
 
