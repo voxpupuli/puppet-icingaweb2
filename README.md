@@ -56,13 +56,13 @@ This module depends on
 
 This module has been tested on:
 
-* Debian 9, 10, 11
+* Debian 10, 11
 * CentOS/RHEL 7
   * Requires [Software Collections Repository](https://wiki.centos.org/AdditionalResources/Repositories/SCL)
-* RHEL/AlmaLinux/Rocky 8
+* RHEL/AlmaLinux/Rocky 8, 9
   * Requires an [Icinga Subscription](https://icinga.com/subscription) for all versions >= 2.9.5 of Icinga Web 2.
-* Ubuntu 16.04, 18.04, 20.04
-* SLES 12, 15
+* Ubuntu 20.04, 22.04
+* SLES 15
 
 Other operating systems or versions may work but have not been tested.
 
@@ -90,7 +90,7 @@ mysql::db { 'icingaweb2':
   grant    => [ 'ALL' ],
 }
 
-class {'icingaweb2':
+class { 'icingaweb2':
   manage_repos   => true,
   import_schema  => true,
   db_type        => 'mysql',
@@ -111,13 +111,13 @@ class {'icingaweb2':
   manage_repos   => true,
 }
 
-icingaweb2::config::resource{ 'my-ldap':
-  type         => 'ldap',
-  host         => 'localhost',
-  port         => 389,
-  ldap_root_dn => 'ou=users,dc=icinga,dc=com',
-  ldap_bind_dn => 'cn=icingaweb2,ou=users,dc=icinga,dc=com',
-  ldap_bind_pw => 'supersecret',
+icingaweb2::resource::ldap { 'my-ldap':
+  type    => 'ldap',
+  host    => 'localhost',
+  port    => 389,
+  root_dn => 'ou=users,dc=icinga,dc=com',
+  bind_dn => 'cn=icingaweb2,ou=users,dc=icinga,dc=com',
+  bind_pw => 'supersecret',
 }
 ```
 With the help of this resource, we are now creating user and group backends. Users are permitted to login and users and groups will later be used for authorization.

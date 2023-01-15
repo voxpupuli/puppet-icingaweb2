@@ -68,32 +68,28 @@ define icingaweb2::module (
     group => $conf_group,
   }
 
-  if $ensure == 'present' {
-    $ensure_module_enabled = 'link'
-    $ensure_module_config_dir = 'directory'
-    $ensure_vcsrepo = 'present'
-
-    create_resources('icingaweb2::inisection', $settings)
+  $enable_module = if $ensure == 'present' {
+    'link'
   } else {
-    $ensure_module_enabled = 'absent'
-    $ensure_module_config_dir = 'absent'
-    $ensure_vcsrepo = 'absent'
+    'absent'
   }
 
   file { "${conf_dir}/enabledModules/${module}":
-    ensure => $ensure_module_enabled,
+    ensure => $enable_module,
     target => $module_dir,
   }
 
   file { "${conf_dir}/modules/${module}":
-    ensure => $ensure_module_config_dir,
+    ensure => directory,
     mode   => '2770',
   }
+
+  create_resources('icingaweb2::inisection', $settings)
 
   case $install_method {
     'git': {
       vcsrepo { $module_dir:
-        ensure   => $ensure_vcsrepo,
+        ensure   => present,
         provider => 'git',
         source   => $git_repository,
         revision => $git_revision,
@@ -102,7 +98,7 @@ define icingaweb2::module (
     'none': {}
     'package': {
       package { $package_name:
-        ensure => $ensure,
+        ensure => installed,
       }
     }
     default: {
