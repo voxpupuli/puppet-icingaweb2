@@ -46,6 +46,8 @@ class icingaweb2::module::generictts (
   String                         $package_name   = 'icingaweb2-module-generictts',
   Hash                           $ticketsystems  = {},
 ) {
+  icingaweb2::assert_module()
+
   create_resources('icingaweb2::module::generictts::ticketsystem', $ticketsystems)
 
   icingaweb2::module { 'generictts':

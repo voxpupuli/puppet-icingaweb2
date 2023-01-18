@@ -68,6 +68,8 @@ class icingaweb2::module::puppetdb (
   Optional[Stdlib::Host]         $host           = undef,
   Hash                           $certificates   = {},
 ) {
+  icingaweb2::assert_module()
+
   $conf_dir   = "${icingaweb2::globals::conf_dir}/modules/puppetdb"
   $ssl_dir    = "${conf_dir}/ssl"
   $conf_user  = $icingaweb2::conf_user

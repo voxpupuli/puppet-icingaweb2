@@ -55,6 +55,8 @@ class icingaweb2::module::fileshipper (
   Hash                           $base_directories = {},
   Hash                           $directories      = {},
 ) {
+  icingaweb2::assert_module()
+
   $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/fileshipper"
 

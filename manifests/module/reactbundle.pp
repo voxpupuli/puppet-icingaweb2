@@ -21,6 +21,8 @@ class icingaweb2::module::reactbundle (
   Enum['absent', 'present']      $ensure     = 'present',
   Optional[Stdlib::Absolutepath] $module_dir = undef,
 ) {
+  icingaweb2::assert_module()
+
   icingaweb2::module { 'reactbundle':
     ensure         => $ensure,
     module_dir     => $module_dir,

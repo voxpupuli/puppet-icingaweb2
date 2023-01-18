@@ -7,6 +7,8 @@
 class icingaweb2::module::doc (
   Enum['absent', 'present']   $ensure = 'present',
 ) {
+  icingaweb2::assert_module()
+
   case $facts['os']['family'] {
     'Debian': {
       $install_method = 'package'
