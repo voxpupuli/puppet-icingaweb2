@@ -112,6 +112,8 @@ class icingaweb2::module::vspheredb (
   Optional[Boolean]                          $tls_noverify    = undef,
   Optional[String]                           $tls_cipher      = undef,
 ) {
+  icingaweb2::assert_module()
+
   $conf_dir               = $icingaweb2::globals::conf_dir
   $mysql_vspheredb_schema = $icingaweb2::globals::mysql_vspheredb_schema
   $pgsql_vspheredb_schema = $icingaweb2::globals::pgsql_vspheredb_schema

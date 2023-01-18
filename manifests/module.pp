@@ -59,6 +59,8 @@ define icingaweb2::module (
   Optional[String]                  $package_name   = undef,
   Hash                              $settings       = {},
 ) {
+  icingaweb2::assert_module()
+
   $conf_dir   = $icingaweb2::globals::conf_dir
   $conf_user  = $icingaweb2::conf_user
   $conf_group = $icingaweb2::conf_group

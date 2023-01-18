@@ -36,6 +36,8 @@ class icingaweb2::module::businessprocess (
   Enum['git', 'none', 'package'] $install_method = 'git',
   String                         $package_name   = 'icingaweb2-module-businessprocess',
 ) {
+  icingaweb2::assert_module()
+
   icingaweb2::module { 'businessprocess':
     ensure         => $ensure,
     git_repository => $git_repository,

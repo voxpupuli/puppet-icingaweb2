@@ -39,6 +39,8 @@ class icingaweb2::module::pdfexport (
   String                         $package_name   = 'icingaweb2-module-pdfexport',
   Optional[Stdlib::Absolutepath] $chrome_binary  = undef,
 ) {
+  icingaweb2::assert_module()
+
   $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/pdfexport"
 

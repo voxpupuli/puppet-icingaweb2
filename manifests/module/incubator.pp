@@ -21,6 +21,8 @@ class icingaweb2::module::incubator (
   Enum['absent', 'present']      $ensure      = 'present',
   Optional[Stdlib::Absolutepath] $module_dir  = undef,
 ) {
+  icingaweb2::assert_module()
+
   icingaweb2::module { 'incubator':
     ensure         => $ensure,
     module_dir     => $module_dir,

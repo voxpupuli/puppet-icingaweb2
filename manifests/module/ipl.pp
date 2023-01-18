@@ -21,6 +21,8 @@ class icingaweb2::module::ipl (
   Enum['absent', 'present']      $ensure         = 'present',
   Optional[Stdlib::Absolutepath] $module_dir     = undef,
 ) {
+  icingaweb2::assert_module()
+
   icingaweb2::module { 'ipl':
     ensure         => $ensure,
     module_dir     => $module_dir,

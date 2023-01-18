@@ -7,6 +7,8 @@
 class icingaweb2::module::translation (
   Enum['absent', 'present'] $ensure = 'present',
 ) {
+  icingaweb2::assert_module()
+
   $conf_dir             = $icingaweb2::globals::conf_dir
   $gettext_package_name = $icingaweb2::globals::gettext_package_name
   $module_conf_dir      = "${conf_dir}/modules/translation"

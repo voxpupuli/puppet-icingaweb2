@@ -63,6 +63,8 @@ class icingaweb2::module::audit (
   Enum['json', 'none']           $stream_format  = 'none',
   Optional[Stdlib::Absolutepath] $stream_file    = undef,
 ) {
+  icingaweb2::assert_module()
+
   $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/audit"
 

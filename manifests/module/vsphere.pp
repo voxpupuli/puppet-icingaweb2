@@ -31,6 +31,8 @@ class icingaweb2::module::vsphere (
   Enum['git', 'none', 'package'] $install_method = 'git',
   String                         $package_name   = 'icingaweb2-module-vsphere',
 ) {
+  icingaweb2::assert_module()
+
   deprecation('icingaweb2::module::vsphere', 'icingaweb2::module::vsphere is deprecated and was replaced by icingaweb2::module::vspheredb.')
 
   icingaweb2::module { 'vsphere':

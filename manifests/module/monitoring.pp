@@ -109,6 +109,8 @@ class icingaweb2::module::monitoring (
   Optional[String]               $tls_cipher           = undef,
   Hash                           $commandtransports    = {},
 ) {
+  icingaweb2::assert_module()
+
   $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/monitoring"
 

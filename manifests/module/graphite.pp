@@ -57,6 +57,8 @@ class icingaweb2::module::graphite (
   Optional[String]               $graphite_writer_host_name_template    = undef,
   Optional[String]               $graphite_writer_service_name_template = undef
 ) {
+  icingaweb2::assert_module()
+
   $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/graphite"
 

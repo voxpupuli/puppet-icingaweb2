@@ -34,6 +34,8 @@ class icingaweb2::module::cube (
   Enum['git', 'none', 'package'] $install_method = 'git',
   String                         $package_name   = 'icingaweb2-module-cube',
 ) {
+  icingaweb2::assert_module()
+
   icingaweb2::module { 'cube':
     ensure         => $ensure,
     git_repository => $git_repository,
