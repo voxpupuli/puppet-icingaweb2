@@ -48,28 +48,22 @@
 #   whereas with mysql its different options.
 #
 # @param db_type
-#   Database type, can be either `mysql` or `pgsql`. This parameter is only used if `import_schema` is `true` or
-#   `config_backend` is `db`.
+#   Database type, can be either `mysql` or `pgsql`.
 #
 # @param db_host
-#   Database hostname. This parameter is only used if `import_schema` is `true` or
-#   `config_backend` is `db`.
+#   Database hostname.
 #
 # @param db_port
-#   Port of database host. This parameter is only used if `import_schema` is `true` or
-#   `config_backend` is `db`.
+#   Port to connect on the database host.
 #
 # @param db_name
-#   Database name. This parameter is only used if `import_schema` is `true` or
-#   `config_backend` is `db`.
+#   Database name.
 #
 # @param db_username
-#   Username for database access. This parameter is only used if `import_schema` is `true` or
-#   `config_backend` is `db`.
+#   Username for database access.
 #
 # @param db_password
-#   Password for database access. This parameter is only used if `import_schema` is `true` or
-#   `config_backend` is `db`.
+#   Password for database access.
 #
 # @param use_tls
 #   Either enable or disable TLS encryption to the database. Other TLS parameters

@@ -23,6 +23,12 @@
 # @param pgsql_vspheredb_schema
 #   Location of the vspheredb database schema for PostgreSQL.
 #
+# @param mysql_reporting_schema
+#   Location of the reporting database schema for MySQL/MariaDB.
+#
+# @param pgsql_reporting_schema
+#   Location of the reporting database schema for PostgreSQL.
+#
 # @param gettext_package_name
 #   Package name `gettext` tool belongs to.
 #
@@ -37,6 +43,8 @@ class icingaweb2::globals (
   Stdlib::Absolutepath   $pgsql_db_schema,
   Stdlib::Absolutepath   $mysql_vspheredb_schema,
   Stdlib::Absolutepath   $pgsql_vspheredb_schema,
+  Stdlib::Absolutepath   $mysql_reporting_schema,
+  Stdlib::Absolutepath   $pgsql_reporting_schema,
   String                 $gettext_package_name,
   Stdlib::Absolutepath   $icingacli_bin,
 ) {

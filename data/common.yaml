@@ -20,3 +20,4 @@ icingaweb2::module::reactbundle::git_repository: https://github.com/Icinga/icing
 icingaweb2::module::reactbundle::git_revision: v0.9.0
 icingaweb2::module::vsphere::git_repository: https://github.com/Icinga/icingaweb2-module-vsphere.git
 icingaweb2::module::vspheredb::git_repository: https://github.com/Icinga/icingaweb2-module-vspheredb.git
+icingaweb2::module::reporting::git_repository: https://github.com/Icinga/icingaweb2-module-reporting.git

@@ -1,8 +1,8 @@
-package { 'git': }
+class { 'icingaweb2':
+  extra_packages => ['git'],
+}
 
-include icingaweb2
-
-$conf_dir        = $icingaweb2::params::conf_dir
+$conf_dir        = $icingaweb2::globals::conf_dir
 $module_conf_dir = "${conf_dir}/modules/map"
 
 $map_settings = {

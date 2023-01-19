@@ -1,8 +1,10 @@
-package { 'git': }
+class { 'icinga::repos':
+  manage_extras => true,
+}
 
 include icingaweb2
 
-$conf_dir        = $icingaweb2::params::conf_dir
+$conf_dir        = $icingaweb2::globals::conf_dir
 $module_conf_dir = "${conf_dir}/modules/grafana"
 
 $settings = {
@@ -34,8 +36,7 @@ $settings = {
 }
 
 icingaweb2::module { 'grafana':
-  install_method => 'git',
-  git_repository => 'https://github.com/Mikesch-mp/icingaweb2-module-grafana.git',
-  git_revision   => 'v1.1.8',
+  install_method => 'package',
+  package_name   => 'icingaweb2-module-grafana',
   settings       => $settings,
 }
