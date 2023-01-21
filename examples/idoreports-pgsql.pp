@@ -56,3 +56,24 @@ class { 'icingaweb2::module::reporting':
 }
 
 include icingaweb2::module::reporting::service
+
+class { 'icingaweb2::module::monitoring':
+  ido_type             => 'pgsql',
+  ido_host             => 'localhost',
+  ido_db_name          => 'icinga2',
+  ido_db_username      => 'icinga2',
+  ido_db_password      => Sensitive('icinga2'),
+  protected_customvars => ['*pw*', '*pass*', '*community'],
+  commandtransports    => {
+    icinga2 => {
+      transport => 'api',
+      username  => 'icinga',
+      password  => Sensitive('icinga'),
+    },
+  },
+}
+
+class { 'icingaweb2::module::idoreports':
+  git_revision  => 'v0.10.0',
+  import_schema => true,
+}
