@@ -90,19 +90,19 @@
 #   }
 #
 class icingaweb2::module::reporting (
+  Enum['absent', 'present']                  $ensure,
+  Enum['git', 'none', 'package']             $install_method,
   String                                     $git_repository,
-  Icingaweb2::Secret                         $db_password,
-  Enum['absent', 'present']                  $ensure          = 'present',
+  String                                     $package_name,
   Optional[Stdlib::Absolutepath]             $module_dir      = undef,
   Optional[String]                           $git_revision    = undef,
-  Enum['git', 'none', 'package']             $install_method  = 'git',
-  String                                     $package_name    = 'icingaweb2-module-reporting',
   Enum['mysql', 'pgsql']                     $db_type         = 'mysql',
   Stdlib::Host                               $db_host         = 'localhost',
   Optional[Stdlib::Port]                     $db_port         = undef,
   String                                     $db_name         = 'reporting',
   String                                     $db_username     = 'reporting',
-  String                                     $db_charset      = 'utf8mb4',
+  Optional[Icingaweb2::Secret]               $db_password     = undef,
+  Optional[String]                           $db_charset      = undef,
   Variant[Boolean, Enum['mariadb', 'mysql']] $import_schema   = false,
   Optional[Boolean]                          $use_tls         = undef,
   Optional[Stdlib::Absolutepath]             $tls_key_file    = undef,
@@ -123,6 +123,16 @@ class icingaweb2::module::reporting (
   $pgsql_reporting_schema = $icingaweb2::globals::pgsql_reporting_schema
   $module_conf_dir        = "${conf_dir}/modules/reporting"
   $_db_port               = pick($db_port, $icingaweb2::globals::port[$db_type])
+
+  $_db_charset = if $db_charset {
+    $db_charset
+  } else {
+    if $db_type == 'mysql' {
+      'utf8mb4'
+    } else {
+      'UTF8'
+    }
+  }
 
   $tls = merge(delete($icingaweb2::config::tls, ['key', 'cert', 'cacert']), delete_undef_values(merge(icingaweb2::cert::files(
           'client',
@@ -157,7 +167,7 @@ class icingaweb2::module::reporting (
     database     => $db_name,
     username     => $db_username,
     password     => $db_password,
-    charset      => $db_charset,
+    charset      => $_db_charset,
     use_tls      => $use_tls,
     tls_noverify => $tls['noverify'],
     tls_key      => $tls['key_file'],
