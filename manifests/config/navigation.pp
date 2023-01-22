@@ -2,7 +2,7 @@
 #   Navigate defines a menu entry, host- or service action.
 #
 # @param item_name
-#   Name of the menu entry, host- or service action..
+#   Name of the menu entry, host- or service action.
 #
 # @param owner
 #   Owner of the navigation item.

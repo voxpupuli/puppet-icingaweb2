@@ -29,7 +29,7 @@ class icingaweb2::install {
     ensure_packages($extra_packages, { 'ensure' => installed })
   }
 
-  file { prefix(['navigation', 'preferences'], "${conf_dir}/"):
+  file { prefix(['navigation', 'preferences', 'dashboards'], "${conf_dir}/"):
     ensure => directory,
     mode   => '2770',
   }
