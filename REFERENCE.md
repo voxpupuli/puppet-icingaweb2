@@ -21,12 +21,15 @@
 * [`icingaweb2::module::generictts`](#icingaweb2modulegenerictts): Installs and enables the generictts module.
 * [`icingaweb2::module::graphite`](#icingaweb2modulegraphite): The Graphite module draws graphs out of time series data stored in Graphite.
 * [`icingaweb2::module::icingadb`](#icingaweb2moduleicingadb): Manages the icingadb module. This module is still optional at the moment.
+* [`icingaweb2::module::idoreports`](#icingaweb2moduleidoreports): Installs, configures and enables the idoreports module.
 * [`icingaweb2::module::incubator`](#icingaweb2moduleincubator): Installs and enables the incubator module.
 * [`icingaweb2::module::ipl`](#icingaweb2moduleipl): Installs and enables the ipl module.
 * [`icingaweb2::module::monitoring`](#icingaweb2modulemonitoring): Manages the monitoring module. This module is mandatory for probably every setup.
 * [`icingaweb2::module::pdfexport`](#icingaweb2modulepdfexport): Installs, configures and enables the pdfexport module.
 * [`icingaweb2::module::puppetdb`](#icingaweb2modulepuppetdb): Installs and configures the puppetdb module.
 * [`icingaweb2::module::reactbundle`](#icingaweb2modulereactbundle): Installs and enables the reactbundle module.
+* [`icingaweb2::module::reporting`](#icingaweb2modulereporting): Installs the reporting plugin
+* [`icingaweb2::module::reporting::service`](#icingaweb2modulereportingservice): Installs and configures the reporting scheduler.
 * [`icingaweb2::module::translation`](#icingaweb2moduletranslation): Installs and configures the translation module.
 * [`icingaweb2::module::vsphere`](#icingaweb2modulevsphere): The vSphere module extends the Director. It provides import sources for virtual machines and physical hosts from vSphere.
 * [`icingaweb2::module::vspheredb`](#icingaweb2modulevspheredb): Installs the vsphereDB plugin
@@ -42,8 +45,11 @@
 #### Public Defined types
 
 * [`icingaweb2::config::authmethod`](#icingaweb2configauthmethod): Manage Icinga Web 2 authentication methods. Auth methods may be chained by setting proper ordering.
+* [`icingaweb2::config::dashboard`](#icingaweb2configdashboard): Manage a dashboard.
+* [`icingaweb2::config::dashlet`](#icingaweb2configdashlet): Manage a dashlet.
 * [`icingaweb2::config::groupbackend`](#icingaweb2configgroupbackend): Groups of users can be stored either in a database, LDAP or ActiveDirectory. This defined type configures backends
 that store groups.
+* [`icingaweb2::config::navigation`](#icingaweb2confignavigation): Navigate defines a menu entry, host- or service action.
 * [`icingaweb2::config::resource`](#icingaweb2configresource): Create and remove Icinga Web 2 resources. Resources may be referenced in other configuration sections.
 * [`icingaweb2::config::role`](#icingaweb2configrole): Roles define a set of permissions that may be applied to users or groups.
 * [`icingaweb2::inisection`](#icingaweb2inisection): Manage settings in INI configuration files.
@@ -65,6 +71,7 @@ that store groups.
 
 ### Functions
 
+* [`icingaweb2::assert_module`](#icingaweb2assert_module): This function returns a fail if the icingaweb2 class isn't declared.
 * [`icingaweb2::cert::files`](#icingaweb2certfiles): Choose the path of tls key, cert and ca file.
 * [`icingaweb2::db::connect`](#icingaweb2dbconnect): This function returns a string to connect databases
 with or without TLS information.
@@ -291,8 +298,7 @@ Default value: ``false``
 
 Data type: `Enum['mysql', 'pgsql']`
 
-Database type, can be either `mysql` or `pgsql`. This parameter is only used if `import_schema` is `true` or
-`config_backend` is `db`.
+Database type, can be either `mysql` or `pgsql`.
 
 Default value: `'mysql'`
 
@@ -300,8 +306,7 @@ Default value: `'mysql'`
 
 Data type: `Stdlib::Host`
 
-Database hostname. This parameter is only used if `import_schema` is `true` or
-`config_backend` is `db`.
+Database hostname.
 
 Default value: `'localhost'`
 
@@ -309,8 +314,7 @@ Default value: `'localhost'`
 
 Data type: `Optional[Stdlib::Port]`
 
-Port of database host. This parameter is only used if `import_schema` is `true` or
-`config_backend` is `db`.
+Port to connect on the database host.
 
 Default value: ``undef``
 
@@ -318,8 +322,7 @@ Default value: ``undef``
 
 Data type: `String`
 
-Database name. This parameter is only used if `import_schema` is `true` or
-`config_backend` is `db`.
+Database name.
 
 Default value: `'icingaweb2'`
 
@@ -327,8 +330,7 @@ Default value: `'icingaweb2'`
 
 Data type: `String`
 
-Username for database access. This parameter is only used if `import_schema` is `true` or
-`config_backend` is `db`.
+Username for database access.
 
 Default value: `'icingaweb2'`
 
@@ -336,8 +338,7 @@ Default value: `'icingaweb2'`
 
 Data type: `Optional[Icingaweb2::Secret]`
 
-Password for database access. This parameter is only used if `import_schema` is `true` or
-`config_backend` is `db`.
+Password for database access.
 
 Default value: ``undef``
 
@@ -498,6 +499,12 @@ The following parameters are available in the `icingaweb2::globals` class:
 * [`pgsql_db_schema`](#pgsql_db_schema)
 * [`mysql_vspheredb_schema`](#mysql_vspheredb_schema)
 * [`pgsql_vspheredb_schema`](#pgsql_vspheredb_schema)
+* [`mysql_reporting_schema`](#mysql_reporting_schema)
+* [`pgsql_reporting_schema`](#pgsql_reporting_schema)
+* [`mysql_idoreports_slaperiods`](#mysql_idoreports_slaperiods)
+* [`mysql_idoreports_sla_percent`](#mysql_idoreports_sla_percent)
+* [`pgsql_idoreports_slaperiods`](#pgsql_idoreports_slaperiods)
+* [`pgsql_idoreports_sla_percent`](#pgsql_idoreports_sla_percent)
 * [`gettext_package_name`](#gettext_package_name)
 * [`icingacli_bin`](#icingacli_bin)
 
@@ -542,6 +549,42 @@ Location of the vspheredb database schema for MySQL/MariaDB.
 Data type: `Stdlib::Absolutepath`
 
 Location of the vspheredb database schema for PostgreSQL.
+
+##### <a name="mysql_reporting_schema"></a>`mysql_reporting_schema`
+
+Data type: `Stdlib::Absolutepath`
+
+Location of the reporting database schema for MySQL/MariaDB.
+
+##### <a name="pgsql_reporting_schema"></a>`pgsql_reporting_schema`
+
+Data type: `Stdlib::Absolutepath`
+
+Location of the reporting database schema for PostgreSQL.
+
+##### <a name="mysql_idoreports_slaperiods"></a>`mysql_idoreports_slaperiods`
+
+Data type: `Stdlib::Absolutepath`
+
+Location of the slaperiods database extension for MySQL.
+
+##### <a name="mysql_idoreports_sla_percent"></a>`mysql_idoreports_sla_percent`
+
+Data type: `Stdlib::Absolutepath`
+
+Location of the get_sla_ok_percent database extension for MySQL.
+
+##### <a name="pgsql_idoreports_slaperiods"></a>`pgsql_idoreports_slaperiods`
+
+Data type: `Stdlib::Absolutepath`
+
+Location of the slaperiods database extension for PostgreSQL.
+
+##### <a name="pgsql_idoreports_sla_percent"></a>`pgsql_idoreports_sla_percent`
+
+Data type: `Stdlib::Absolutepath`
+
+Location of the get_sla_ok_percent database extension for PostgreSQL.
 
 ##### <a name="gettext_package_name"></a>`gettext_package_name`
 
@@ -1972,6 +2015,203 @@ A hash of command transports.
 
 Default value: `{}`
 
+### <a name="icingaweb2moduleidoreports"></a>`icingaweb2::module::idoreports`
+
+Installs, configures and enables the idoreports module.
+
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
+
+#### Examples
+
+##### 
+
+```puppet
+class { 'icingaweb2::module::idoreports':
+  git_revision  => 'v0.10.0',
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::module::idoreports` class:
+
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`git_revision`](#git_revision)
+* [`install_method`](#install_method)
+* [`package_name`](#package_name)
+* [`import_schema`](#import_schema)
+* [`ido_db_username`](#ido_db_username)
+* [`ido_db_password`](#ido_db_password)
+* [`use_tls`](#use_tls)
+* [`tls_key_file`](#tls_key_file)
+* [`tls_cert_file`](#tls_cert_file)
+* [`tls_cacert_file`](#tls_cacert_file)
+* [`tls_key`](#tls_key)
+* [`tls_cert`](#tls_cert)
+* [`tls_cacert`](#tls_cacert)
+* [`tls_capath`](#tls_capath)
+* [`tls_noverify`](#tls_noverify)
+* [`tls_cipher`](#tls_cipher)
+
+##### <a name="ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Enable or disable module.
+
+##### <a name="module_dir"></a>`module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
+
+##### <a name="git_repository"></a>`git_repository`
+
+Data type: `String`
+
+Set a git repository URL.
+
+##### <a name="git_revision"></a>`git_revision`
+
+Data type: `Optional[String]`
+
+Set either a branch or a tag name, eg. `master` or `v2.1.0`.
+
+Default value: ``undef``
+
+##### <a name="install_method"></a>`install_method`
+
+Data type: `Enum['git', 'none', 'package']`
+
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+##### <a name="package_name"></a>`package_name`
+
+Data type: `String`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+##### <a name="import_schema"></a>`import_schema`
+
+Data type: `Variant[Boolean, Enum['mariadb', 'mysql']]`
+
+The IDO database needs some extensions for reorting. Whether to import the database extensions or not.
+Options `mariadb` and `mysql`, both means true. With mariadb its cli options are used for the import,
+whereas with mysql its different options.
+
+Default value: ``false``
+
+##### <a name="ido_db_username"></a>`ido_db_username`
+
+Data type: `Optional[String]`
+
+An alternative username to login into the database. By default, the user from
+the `monitoring` module is used.
+
+Default value: `$icingaweb2::module::monitoring::ido_db_username`
+
+##### <a name="ido_db_password"></a>`ido_db_password`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+The password for the alternative user. By default, the password from
+the `monitoring` module is used.
+
+Default value: `$icingaweb2::module::monitoring::ido_db_password`
+
+##### <a name="use_tls"></a>`use_tls`
+
+Data type: `Optional[Boolean]`
+
+Either enable or disable TLS encryption to the database. Other TLS parameters
+are only affected if this is set to 'true'. By default, same value from
+the `monitoring` module is used.
+
+Default value: `$icingaweb2::module::monitoring::use_tls`
+
+##### <a name="tls_key_file"></a>`tls_key_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the private key for client authentication. Only valid if tls is enabled.
+By default, same value from the `monitoring` module is used.
+
+Default value: `$icingaweb2::module::monitoring::tls_key_file`
+
+##### <a name="tls_cert_file"></a>`tls_cert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the certificate for client authentication. Only valid if tls is enabled.
+By default, same value from the `monitoring` module is used.
+
+Default value: `$icingaweb2::module::monitoring::tls_cert_file`
+
+##### <a name="tls_cacert_file"></a>`tls_cacert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the ca certificate. Only valid if tls is enabled.
+By default, same value from the `monitoring` module is used.
+
+Default value: `$icingaweb2::module::monitoring::tls_cacert_file`
+
+##### <a name="tls_key"></a>`tls_key`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
+By default, same value from the `monitoring` module is used.
+
+Default value: `$icingaweb2::module::monitoring::tls_key`
+
+##### <a name="tls_cert"></a>`tls_cert`
+
+Data type: `Optional[String]`
+
+The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
+By default, same value from the `monitoring` module is used.
+
+Default value: `$icingaweb2::module::monitoring::tls_cert`
+
+##### <a name="tls_cacert"></a>`tls_cacert`
+
+Data type: `Optional[String]`
+
+The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
+By default, same value from the `monitoring` module is used.
+
+Default value: `$icingaweb2::module::monitoring::tls_cacert`
+
+##### <a name="tls_capath"></a>`tls_capath`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+The file path to the directory that contains the trusted SSL CA certificates, which are stored in PEM format.
+Only available for the mysql database. By default, same value from the `monitoring` module is used.
+
+Default value: `$icingaweb2::module::monitoring::tls_capath`
+
+##### <a name="tls_noverify"></a>`tls_noverify`
+
+Data type: `Optional[Boolean]`
+
+Disable validation of the server certificate. By default, same value from the `monitoring` module is used.
+
+Default value: `$icingaweb2::module::monitoring::tls_noverify`
+
+##### <a name="tls_cipher"></a>`tls_cipher`
+
+Data type: `Optional[String]`
+
+Cipher to use for the encrypted database connection. By default, same value from the `monitoring` module is used.
+
+Default value: `$icingaweb2::module::monitoring::tls_cipher`
+
 ### <a name="icingaweb2moduleincubator"></a>`icingaweb2::module::incubator`
 
 Installs and enables the incubator module.
@@ -2530,6 +2770,318 @@ Data type: `String`
 
 Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
 
+### <a name="icingaweb2modulereporting"></a>`icingaweb2::module::reporting`
+
+Installs the reporting plugin
+
+#### Examples
+
+##### 
+
+```puppet
+class { 'icingaweb2::module::reporting':
+  ensure       => present,
+  git_revision => 'v0.9.0',
+  db_host      => 'localhost',
+  db_name      => 'reporting',
+  db_username  => 'reporting',
+  db_password  => 'supersecret',
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::module::reporting` class:
+
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`git_revision`](#git_revision)
+* [`install_method`](#install_method)
+* [`package_name`](#package_name)
+* [`db_type`](#db_type)
+* [`db_host`](#db_host)
+* [`db_port`](#db_port)
+* [`db_name`](#db_name)
+* [`db_username`](#db_username)
+* [`db_password`](#db_password)
+* [`db_charset`](#db_charset)
+* [`use_tls`](#use_tls)
+* [`tls_key_file`](#tls_key_file)
+* [`tls_cert_file`](#tls_cert_file)
+* [`tls_cacert_file`](#tls_cacert_file)
+* [`tls_key`](#tls_key)
+* [`tls_cert`](#tls_cert)
+* [`tls_cacert`](#tls_cacert)
+* [`tls_capath`](#tls_capath)
+* [`tls_noverify`](#tls_noverify)
+* [`tls_cipher`](#tls_cipher)
+* [`import_schema`](#import_schema)
+* [`mail`](#mail)
+
+##### <a name="ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Ensures the state of the reporting module.
+
+##### <a name="module_dir"></a>`module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
+
+##### <a name="git_repository"></a>`git_repository`
+
+Data type: `String`
+
+The upstream module repository.
+
+##### <a name="git_revision"></a>`git_revision`
+
+Data type: `Optional[String]`
+
+The version of the module that needs to be used.
+
+Default value: ``undef``
+
+##### <a name="install_method"></a>`install_method`
+
+Data type: `Enum['git', 'none', 'package']`
+
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+##### <a name="package_name"></a>`package_name`
+
+Data type: `String`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+##### <a name="db_type"></a>`db_type`
+
+Data type: `Enum['mysql', 'pgsql']`
+
+The database type. Either mysql or postgres.
+
+Default value: `'mysql'`
+
+##### <a name="db_host"></a>`db_host`
+
+Data type: `Stdlib::Host`
+
+The host where the reporting database will be running
+
+Default value: `'localhost'`
+
+##### <a name="db_port"></a>`db_port`
+
+Data type: `Optional[Stdlib::Port]`
+
+The port on which the database is accessible.
+
+Default value: ``undef``
+
+##### <a name="db_name"></a>`db_name`
+
+Data type: `String`
+
+The name of the database this module should use.
+
+Default value: `'reporting'`
+
+##### <a name="db_username"></a>`db_username`
+
+Data type: `String`
+
+The username needed to access the database.
+
+Default value: `'reporting'`
+
+##### <a name="db_password"></a>`db_password`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+The password needed to access the database.
+
+Default value: ``undef``
+
+##### <a name="db_charset"></a>`db_charset`
+
+Data type: `Optional[String]`
+
+The charset the database is set to.
+
+Default value: ``undef``
+
+##### <a name="use_tls"></a>`use_tls`
+
+Data type: `Optional[Boolean]`
+
+Either enable or disable TLS encryption to the database. Other TLS parameters
+are only affected if this is set to 'true'.
+
+Default value: ``undef``
+
+##### <a name="tls_key_file"></a>`tls_key_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the private key for client authentication. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cert_file"></a>`tls_cert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the certificate for client authentication. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cacert_file"></a>`tls_cacert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the ca certificate. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_key"></a>`tls_key`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cert"></a>`tls_cert`
+
+Data type: `Optional[String]`
+
+The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cacert"></a>`tls_cacert`
+
+Data type: `Optional[String]`
+
+The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_capath"></a>`tls_capath`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+The file path to the directory that contains the trusted SSL CA certificates, which are stored in PEM format.
+Only available for the mysql database.
+
+Default value: ``undef``
+
+##### <a name="tls_noverify"></a>`tls_noverify`
+
+Data type: `Optional[Boolean]`
+
+Disable validation of the server certificate.
+
+Default value: ``undef``
+
+##### <a name="tls_cipher"></a>`tls_cipher`
+
+Data type: `Optional[String]`
+
+Cipher to use for the encrypted database connection.
+
+Default value: ``undef``
+
+##### <a name="import_schema"></a>`import_schema`
+
+Data type: `Variant[Boolean, Enum['mariadb', 'mysql']]`
+
+Whether to import the database schema or not. Options `mariadb` and `mysql`,
+both means true. With mariadb its cli options are used for the import,
+whereas with mysql its different options.
+
+Default value: ``false``
+
+##### <a name="mail"></a>`mail`
+
+Data type: `Optional[String]`
+
+Mails are sent with this sender address.
+
+Default value: ``undef``
+
+### <a name="icingaweb2modulereportingservice"></a>`icingaweb2::module::reporting::service`
+
+Installs and configures the reporting scheduler.
+
+* **Note** Only systemd is supported by the Icinga Team and this module.
+
+#### Examples
+
+##### 
+
+```puppet
+include icingaweb2::module::reporting::service
+```
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::module::reporting::service` class:
+
+* [`ensure`](#ensure)
+* [`enable`](#enable)
+* [`user`](#user)
+* [`group`](#group)
+* [`manage_user`](#manage_user)
+
+##### <a name="ensure"></a>`ensure`
+
+Data type: `Stdlib::Ensure::Service`
+
+Whether the reporting service should be running.
+
+Default value: `'running'`
+
+##### <a name="enable"></a>`enable`
+
+Data type: `Boolean`
+
+Enable or disable the service.
+
+Default value: ``true``
+
+##### <a name="user"></a>`user`
+
+Data type: `String`
+
+Specifies the user to run the reporting service daemon as.
+Only available if install_method package is not used.
+
+Default value: `'icingareporting'`
+
+##### <a name="group"></a>`group`
+
+Data type: `String`
+
+Specifies the primary group to run the reporting service daemon as.
+Only available if install_method package is not used.
+
+Default value: `'icingaweb2'`
+
+##### <a name="manage_user"></a>`manage_user`
+
+Data type: `Boolean`
+
+Whether to manage the server user resource. Only available if
+install_method package is not used.
+
+Default value: ``true``
+
 ### <a name="icingaweb2moduletranslation"></a>`icingaweb2::module::translation`
 
 Installs and configures the translation module.
@@ -3033,6 +3585,79 @@ configuration determines the order of the authentication methods.
 
 Default value: `'01'`
 
+### <a name="icingaweb2configdashboard"></a>`icingaweb2::config::dashboard`
+
+Manage a dashboard.
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::config::dashboard` defined type:
+
+* [`owner`](#owner)
+* [`dashboard`](#dashboard)
+
+##### <a name="owner"></a>`owner`
+
+Data type: `String`
+
+Owner of the dashboard.
+
+##### <a name="dashboard"></a>`dashboard`
+
+Data type: `String`
+
+Title of the dashboard.
+
+### <a name="icingaweb2configdashlet"></a>`icingaweb2::config::dashlet`
+
+Manage a dashlet.
+
+#### Examples
+
+##### Add new Dashlet to an existing default dashboard:
+
+```puppet
+icingaweb2::config::dashlet { 'icingaadmin-Overdue-NewDashlet':
+  owner     => 'icingaadmin',
+  dashboard => 'Overdue',
+  dashlet   => 'New Dashlet',
+  url       => 'monitoring/list/hosts',
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::config::dashlet` defined type:
+
+* [`owner`](#owner)
+* [`dashboard`](#dashboard)
+* [`dashlet`](#dashlet)
+* [`url`](#url)
+
+##### <a name="owner"></a>`owner`
+
+Data type: `String`
+
+Owner of the dashlet.
+
+##### <a name="dashboard"></a>`dashboard`
+
+Data type: `String`
+
+Dashboard to which the dashlet belongs.
+
+##### <a name="dashlet"></a>`dashlet`
+
+Data type: `String`
+
+Name of the dashlet.
+
+##### <a name="url"></a>`url`
+
+Data type: `String`
+
+URL of the dashlet.
+
 ### <a name="icingaweb2configgroupbackend"></a>`icingaweb2::config::groupbackend`
 
 Groups of users can be stored either in a database, LDAP or ActiveDirectory. This defined type configures backends
@@ -3178,6 +3803,115 @@ Multiple authentication methods can be chained. The order of entries in the auth
 configuration determines the order of the authentication methods.
 
 Default value: `'01'`
+
+### <a name="icingaweb2confignavigation"></a>`icingaweb2::config::navigation`
+
+Navigate defines a menu entry, host- or service action.
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::config::navigation` defined type:
+
+* [`item_name`](#item_name)
+* [`owner`](#owner)
+* [`type`](#type)
+* [`shared`](#shared)
+* [`users`](#users)
+* [`groups`](#groups)
+* [`parent`](#parent)
+* [`target`](#target)
+* [`url`](#url)
+* [`icon`](#icon)
+* [`filter`](#filter)
+
+##### <a name="item_name"></a>`item_name`
+
+Data type: `String`
+
+Name of the menu entry, host- or service action.
+
+Default value: `$title`
+
+##### <a name="owner"></a>`owner`
+
+Data type: `String`
+
+Owner of the navigation item.
+
+##### <a name="type"></a>`type`
+
+Data type: `Enum[
+    'menu-item',
+    'host-action',
+    'service-action'
+  ]`
+
+Type of the navigation item.
+
+Default value: `'menu-item'`
+
+##### <a name="shared"></a>`shared`
+
+Data type: `Boolean`
+
+Creates a shared navigation item.
+
+Default value: ``false``
+
+##### <a name="users"></a>`users`
+
+Data type: `Optional[Array[String]]`
+
+List of users who have access to the element. Only valid if shared.
+
+Default value: ``undef``
+
+##### <a name="groups"></a>`groups`
+
+Data type: `Optional[Array[String]]`
+
+List of user groups that have access to the element. Only valid if shared.
+
+Default value: ``undef``
+
+##### <a name="parent"></a>`parent`
+
+Data type: `Optional[String]`
+
+The name of the a parent item. Only valid for menu entries.
+Important: `shared` has to set if the parent entry is also `shared`.
+
+Default value: ``undef``
+
+##### <a name="target"></a>`target`
+
+Data type: `Enum['_blank', '_main']`
+
+The target to view the content.
+
+Default value: `'_main'`
+
+##### <a name="url"></a>`url`
+
+Data type: `String`
+
+Url to the content of the navigation item.
+
+##### <a name="icon"></a>`icon`
+
+Data type: `Optional[String]`
+
+Location of an icon for the navigation item.
+
+Default value: ``undef``
+
+##### <a name="filter"></a>`filter`
+
+Data type: `Optional[String]`
+
+Filter to restrict the result of the content. Only valid for actions.
+
+Default value: ``undef``
 
 ### <a name="icingaweb2configresource"></a>`icingaweb2::config::resource`
 
@@ -3922,6 +4656,18 @@ Timeout for the ldap connection.
 Default value: `5`
 
 ## Functions
+
+### <a name="icingaweb2assert_module"></a>`icingaweb2::assert_module`
+
+Type: Puppet Language
+
+This function returns a fail if the icingaweb2 class isn't declared.
+
+#### `icingaweb2::assert_module()`
+
+The icingaweb2::assert_module function.
+
+Returns: `Any`
 
 ### <a name="icingaweb2certfiles"></a>`icingaweb2::cert::files`
 

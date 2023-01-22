@@ -1,5 +1,22 @@
 # Change Log
 
+## [v3.7.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.7.0) (2023-01-22)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.6.1...v3.7.0)
+
+**Implemented enhancements:**
+
+- Add support for navigation items and dashboards [\#316](https://github.com/Icinga/puppet-icingaweb2/issues/316)
+- Support for reporting and idoreports [\#299](https://github.com/Icinga/puppet-icingaweb2/issues/299)
+- Add support for dashboards [\#344](https://github.com/Icinga/puppet-icingaweb2/pull/344) ([lbetz](https://github.com/lbetz))
+- Add support for navigation items [\#343](https://github.com/Icinga/puppet-icingaweb2/pull/343) ([lbetz](https://github.com/lbetz))
+- Add support for idoreports module [\#342](https://github.com/Icinga/puppet-icingaweb2/pull/342) ([lbetz](https://github.com/lbetz))
+- Add support for reporting module [\#341](https://github.com/Icinga/puppet-icingaweb2/pull/341) ([lbetz](https://github.com/lbetz))
+- Protect module classes against undefined variables [\#340](https://github.com/Icinga/puppet-icingaweb2/pull/340) ([lbetz](https://github.com/lbetz))
+
+**Closed issues:**
+
+- Protect module classes against undefined variables [\#339](https://github.com/Icinga/puppet-icingaweb2/issues/339)
+
 ## [v3.6.1](https://github.com/icinga/puppet-icingaweb2/tree/v3.6.1) (2023-01-15)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.6.0...v3.6.1)
 
