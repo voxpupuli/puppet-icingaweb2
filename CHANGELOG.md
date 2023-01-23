@@ -1,5 +1,12 @@
 # Change Log
 
+## [v3.7.1](https://github.com/icinga/puppet-icingaweb2/tree/v3.7.1) (2023-01-23)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.7.0...v3.7.1)
+
+**Fixed bugs:**
+
+- Fix broken idempotency when importing any db schema [\#345](https://github.com/Icinga/puppet-icingaweb2/pull/345) ([lbetz](https://github.com/lbetz))
+
 ## [v3.7.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.7.0) (2023-01-22)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.6.1...v3.7.0)
 
