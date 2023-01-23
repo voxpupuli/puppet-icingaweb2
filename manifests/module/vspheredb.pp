@@ -139,7 +139,7 @@ class icingaweb2::module::vspheredb (
     user     => 'root',
     path     => $facts['path'],
     provider => 'shell',
-    require  => [Icingaweb2::Tls::Client['icingaweb2::module::vspheredb tls client config'], Icingaweb2::Module['director']],
+    require  => [Icingaweb2::Tls::Client['icingaweb2::module::vspheredb tls client config'], Icingaweb2::Module['vspheredb']],
   }
 
   icingaweb2::tls::client { 'icingaweb2::module::vspheredb tls client config':

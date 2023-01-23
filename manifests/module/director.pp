@@ -169,7 +169,6 @@ class icingaweb2::module::director (
     user     => 'root',
     path     => $facts['path'],
     provider => 'shell',
-    require  => [Icingaweb2::Tls::Client['icingaweb2::module::director tls client config'], Icingaweb2::Module['director']],
   }
 
   icingaweb2::tls::client { 'icingaweb2::module::director tls client config':
@@ -209,7 +208,7 @@ class icingaweb2::module::director (
     exec { 'director-migration':
       command => "${icingacli_bin} director migration run",
       onlyif  => "${icingacli_bin} director migration pending",
-      require => Package['icingacli'],
+      require => [Icingaweb2::Tls::Client['icingaweb2::module::director tls client config'], Icingaweb2::Module['director'], Package['icingacli']],
     }
 
     if $kickstart {
