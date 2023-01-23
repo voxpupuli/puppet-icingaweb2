@@ -153,7 +153,7 @@ class icingaweb2::module::reporting (
     user     => 'root',
     path     => $facts['path'],
     provider => 'shell',
-    require  => Icingaweb2::Tls::Client['icingaweb2::module::reporting tls client config'],
+    require  => [Icingaweb2::Module['reporting'], Icingaweb2::Tls::Client['icingaweb2::module::reporting tls client config']],
   }
 
   icingaweb2::tls::client { 'icingaweb2::module::reporting tls client config':
@@ -222,7 +222,6 @@ class icingaweb2::module::reporting (
         exec { 'import icingaweb2::module::reporting schema':
           command => "mysql ${db_cli_options} < '${mysql_reporting_schema}'",
           unless  => "mysql ${db_cli_options} -Ns -e 'SELECT * FROM report'",
-          require => Icingaweb2::Module['reporting'],
         }
       }
       'pgsql': {
@@ -231,7 +230,6 @@ class icingaweb2::module::reporting (
           environment => ["PGPASSWORD=${_db_password}"],
           command     => "psql '${db_cli_options}' -w -f ${pgsql_reporting_schema}",
           unless      => "psql '${db_cli_options}' -w -c 'SELECT * FROM report'",
-          require     => Icingaweb2::Module['reporting'],
         }
       } # pgsql (not supported)
       default: {
