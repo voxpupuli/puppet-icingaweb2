@@ -494,6 +494,8 @@ The following parameters are available in the `icingaweb2::globals` class:
 
 * [`package_name`](#package_name)
 * [`conf_dir`](#conf_dir)
+* [`data_dir`](#data_dir)
+* [`comp_db_schema_dir`](#comp_db_schema_dir)
 * [`default_module_path`](#default_module_path)
 * [`mysql_db_schema`](#mysql_db_schema)
 * [`pgsql_db_schema`](#pgsql_db_schema)
@@ -519,6 +521,18 @@ Data type: `String`
 Data type: `Stdlib::Absolutepath`
 
 Path to the config files.
+
+##### <a name="data_dir"></a>`data_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+Location of PHP data files.
+
+##### <a name="comp_db_schema_dir"></a>`comp_db_schema_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+For compatibility, since in Icinga Web 2 2.11.4 the schema files have been moved.
 
 ##### <a name="default_module_path"></a>`default_module_path`
 

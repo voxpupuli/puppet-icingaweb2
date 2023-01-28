@@ -1,5 +1,16 @@
 # Change Log
 
+## [v3.7.2](https://github.com/icinga/puppet-icingaweb2/tree/v3.7.2) (2023-01-28)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.7.1...v3.7.2)
+
+**Implemented enhancements:**
+
+- bump puppet/systemd to \< 5.0.0 [\#346](https://github.com/Icinga/puppet-icingaweb2/pull/346) ([jhoblitt](https://github.com/jhoblitt))
+
+**Fixed bugs:**
+
+- Fix compatibility for db schema imports in Icinga Web 2 2.11.4 [\#347](https://github.com/Icinga/puppet-icingaweb2/pull/347) ([lbetz](https://github.com/lbetz))
+
 ## [v3.7.1](https://github.com/icinga/puppet-icingaweb2/tree/v3.7.1) (2023-01-23)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.7.0...v3.7.1)
 
