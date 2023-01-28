@@ -12,6 +12,8 @@ class icingaweb2::install {
   $extra_packages = $icingaweb2::extra_packages
   $conf_user      = $icingaweb2::conf_user
   $conf_group     = $icingaweb2::conf_group
+  $data_dir       = $icingaweb2::globals::data_dir
+  $comp_dir       = $icingaweb2::globals::comp_db_schema_dir
 
   File {
     mode    => '0660',
@@ -32,5 +34,18 @@ class icingaweb2::install {
   file { prefix(['navigation', 'preferences', 'dashboards'], "${conf_dir}/"):
     ensure => directory,
     mode   => '2770',
+  }
+
+  file { $comp_dir:
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
+
+  exec { 'link old db schema directory for compatibility':
+    path    => $facts['path'],
+    command => "ln -s ${data_dir}/schema ${comp_dir}/schema",
+    unless  => "stat ${comp_dir}/schema",
   }
 }

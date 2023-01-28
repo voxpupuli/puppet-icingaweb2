@@ -8,6 +8,12 @@
 # @param conf_dir
 #   Path to the config files.
 #
+# @param data_dir
+#   Location of PHP data files.
+#
+# @param comp_db_schema_dir
+#   For compatibility, since in Icinga Web 2 2.11.4 the schema files have been moved.
+#
 # @param default_module_path
 #   Location of the modules.
 #
@@ -50,6 +56,8 @@
 class icingaweb2::globals (
   String                 $package_name,
   Stdlib::Absolutepath   $conf_dir,
+  Stdlib::Absolutepath   $data_dir,
+  Stdlib::Absolutepath   $comp_db_schema_dir,
   Stdlib::Absolutepath   $default_module_path,
   Stdlib::Absolutepath   $mysql_db_schema,
   Stdlib::Absolutepath   $pgsql_db_schema,
