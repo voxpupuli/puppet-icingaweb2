@@ -1,6 +1,8 @@
 ---
 icingaweb2::globals::package_name: icingaweb2
 icingaweb2::globals::conf_dir: /etc/icingaweb2
+icingaweb2::globals::data_dir: /usr/share/icingaweb2
+icingaweb2::globals::comp_db_schema_dir: /usr/share/doc/icingaweb2
 icingaweb2::globals::mysql_db_schema: /usr/share/doc/icingaweb2/schema/mysql.schema.sql
 icingaweb2::globals::pgsql_db_schema: /usr/share/doc/icingaweb2/schema/pgsql.schema.sql
 icingaweb2::globals::mysql_vspheredb_schema: /usr/share/icingaweb2/modules/vspheredb/schema/mysql.sql
