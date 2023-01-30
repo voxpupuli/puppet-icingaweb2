@@ -66,6 +66,18 @@
 # @param commandtransports
 #   A hash of command transports.
 #
+# @param install_method
+#   Install methods are `git`, `package` and `none` is supported as installation method. Defaults to `none`
+#
+# @param git_repository
+#   The git repository. This setting is only valid in combination with the installation method `git`.
+#
+# @param git_revision
+#   Tag or branch of the git repository. This setting is only valid in combination with the installation method `git`.
+#
+# @param package_name
+#   Package name of the module. This setting is only valid in combination with the installation method `package`.
+#
 # @example This module is mandatory for almost every setup. It connects your Icinga Web interface to the Icinga 2 core. Current and history information are queried through the IDO database. Actions such as `Check Now`, `Set Downtime` or `Acknowledge` are send to the Icinga 2 API.
 #
 # Requirements:
@@ -78,6 +90,8 @@
 #     ido_db_name     => 'icinga2',
 #     ido_db_username => 'icinga2',
 #     ido_db_password => 'supersecret',
+#     install_method  => 'package',
+#     package_name    => 'icingaweb2-module-monitoring',
 #     commandtransports => {
 #       icinga2 => {
 #         transport => 'api',
@@ -88,42 +102,35 @@
 #   }
 #
 class icingaweb2::module::monitoring (
-  Enum['absent', 'present']      $ensure               = 'present',
-  Variant[String, Array[String]] $protected_customvars = ['*pw*', '*pass*', 'community'],
-  Enum['mysql', 'pgsql']         $ido_type             = 'mysql',
-  Optional[Stdlib::Host]         $ido_host             = undef,
-  Optional[Stdlib::Port]         $ido_port             = undef,
-  Optional[String]               $ido_db_name          = undef,
-  Optional[String]               $ido_db_username      = undef,
-  Optional[Icingaweb2::Secret]   $ido_db_password      = undef,
-  Optional[String]               $ido_db_charset       = undef,
-  Optional[Boolean]              $use_tls              = undef,
-  Optional[Stdlib::Absolutepath] $tls_key_file         = undef,
-  Optional[Stdlib::Absolutepath] $tls_cert_file        = undef,
-  Optional[Stdlib::Absolutepath] $tls_cacert_file      = undef,
-  Optional[Stdlib::Absolutepath] $tls_capath           = undef,
-  Optional[Icingaweb2::Secret]   $tls_key              = undef,
-  Optional[String]               $tls_cert             = undef,
-  Optional[String]               $tls_cacert           = undef,
-  Optional[Boolean]              $tls_noverify         = undef,
-  Optional[String]               $tls_cipher           = undef,
-  Hash                           $commandtransports    = {},
+  Enum['absent', 'present']        $ensure               = 'present',
+  Variant[String, Array[String]]   $protected_customvars = ['*pw*', '*pass*', 'community'],
+  Enum['mysql', 'pgsql']           $ido_type             = 'mysql',
+  Optional[Stdlib::Host]           $ido_host             = undef,
+  Optional[Stdlib::Port]           $ido_port             = undef,
+  Optional[String]                 $ido_db_name          = undef,
+  Optional[String]                 $ido_db_username      = undef,
+  Optional[Icingaweb2::Secret]     $ido_db_password      = undef,
+  Optional[String]                 $ido_db_charset       = undef,
+  Optional[Boolean]                $use_tls              = undef,
+  Optional[Stdlib::Absolutepath]   $tls_key_file         = undef,
+  Optional[Stdlib::Absolutepath]   $tls_cert_file        = undef,
+  Optional[Stdlib::Absolutepath]   $tls_cacert_file      = undef,
+  Optional[Stdlib::Absolutepath]   $tls_capath           = undef,
+  Optional[Icingaweb2::Secret]     $tls_key              = undef,
+  Optional[String]                 $tls_cert             = undef,
+  Optional[String]                 $tls_cacert           = undef,
+  Optional[Boolean]                $tls_noverify         = undef,
+  Optional[String]                 $tls_cipher           = undef,
+  Hash                             $commandtransports    = {},
+  Enum['git', 'none', 'package']   $install_method       = 'none',
+  Optional[String]                 $git_repository       = undef,
+  String                           $git_revision         = 'master',
+  Optional[String]                 $package_name         = undef,
 ) {
   icingaweb2::assert_module()
 
   $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/monitoring"
-
-  case $facts['os']['family'] {
-    'Debian': {
-      $install_method = 'package'
-      $package_name   = 'icingaweb2-module-monitoring'
-    }
-    default: {
-      $install_method = 'none'
-      $package_name   = undef
-    }
-  }
 
   $tls = merge(delete($icingaweb2::config::tls, ['key', 'cert', 'cacert']), delete_undef_values(merge(icingaweb2::cert::files(
           'client',
@@ -193,5 +200,7 @@ class icingaweb2::module::monitoring (
     install_method => $install_method,
     package_name   => $package_name,
     settings       => $settings,
+    git_repository => $git_repository,
+    git_revision   => $git_revision,
   }
 }
