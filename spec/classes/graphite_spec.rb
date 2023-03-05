@@ -35,10 +35,15 @@ describe('icingaweb2::module::graphite', type: :class) do
           {
             git_revision: 'v0.9.0',
             url: 'http://localhost',
+            insecure: false,
             user: 'foo',
             password: 'bar',
             graphite_writer_host_name_template: 'foobar',
             graphite_writer_service_name_template: 'barfoo',
+            customvar_obscured_check_command: 'baz',
+            default_time_range: 10,
+            default_time_range_unit: 'hours',
+            disable_no_graphs: true,
           }
         end
 
@@ -52,7 +57,14 @@ describe('icingaweb2::module::graphite', type: :class) do
           is_expected.to contain_icingaweb2__inisection('module-graphite-graphite')
             .with_section_name('graphite')
             .with_target('/etc/icingaweb2/modules/graphite/config.ini')
-            .with_settings('url' => 'http://localhost', 'user' => 'foo', 'password' => 'bar')
+            .with_settings('url' => 'http://localhost', 'insecure' => false, 'user' => 'foo', 'password' => 'bar')
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('module-graphite-ui')
+            .with_section_name('ui')
+            .with_target('/etc/icingaweb2/modules/graphite/config.ini')
+            .with_settings('default_time_range' => 10, 'default_time_range_unit' => 'hours', 'disable_no_graphs_found' => true)
         }
 
         it {
@@ -60,7 +72,8 @@ describe('icingaweb2::module::graphite', type: :class) do
             .with_section_name('icinga')
             .with_target('/etc/icingaweb2/modules/graphite/config.ini')
             .with_settings('graphite_writer_host_name_template' => 'foobar',
-                           'graphite_writer_service_name_template' => 'barfoo')
+                           'graphite_writer_service_name_template' => 'barfoo',
+                           'customvar_obscured_check_command' => 'baz')
         }
       end
     end
