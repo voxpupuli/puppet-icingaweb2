@@ -24,6 +24,9 @@
 # @param url
 #   URL to your Graphite Web/API.
 #
+# @param insecure
+#   Do not verify the TLS certificate.
+#
 # @param user
 #   A user with access to your Graphite Web via HTTP basic authentication.
 #
@@ -35,6 +38,18 @@
 #
 # @param graphite_writer_service_name_template
 #   The value of your icinga 2 GraphiteWriter's attribute `service_name_template` (if specified).
+#
+# @param customvar_obscured_check_command
+#   The Icinga custom variable with the `actual` check command obscured by e.g. check_by_ssh.
+#
+# @param default_time_range_unit
+#   Set unit for the time range.
+#
+# @param default_time_range
+#   Set the displayed time range.
+#
+# @param disable_no_graphs
+#   Do not display empty graphs.
 #
 # @note Here the official [Graphite module documentation](https://www.icinga.com/docs/graphite/latest/) can be found.
 #
@@ -52,10 +67,18 @@ class icingaweb2::module::graphite (
   Enum['git', 'none', 'package'] $install_method                        = 'git',
   String                         $package_name                          = 'icingaweb2-module-graphite',
   Optional[String]               $url                                   = undef,
+  Optional[Boolean]              $insecure                              = undef,
   Optional[String]               $user                                  = undef,
   Optional[Icingaweb2::Secret]   $password                              = undef,
   Optional[String]               $graphite_writer_host_name_template    = undef,
-  Optional[String]               $graphite_writer_service_name_template = undef
+  Optional[String]               $graphite_writer_service_name_template = undef,
+  Optional[String]               $customvar_obscured_check_command      = undef,
+  Optional[Enum[
+      'minutes', 'hours', 'days',
+      'weeks', 'months', 'years'
+  ]]                             $default_time_range_unit               = undef,
+  Optional[Integer[1]]           $default_time_range                    = undef,
+  Optional[Boolean]              $disable_no_graphs                     = undef,
 ) {
   icingaweb2::assert_module()
 
@@ -66,11 +89,19 @@ class icingaweb2::module::graphite (
     'url'      => $url,
     'user'     => $user,
     'password' => icingaweb2::unwrap($password),
+    'insecure' => $insecure,
   }
 
   $icinga_settings = {
     'graphite_writer_host_name_template'    => $graphite_writer_host_name_template,
     'graphite_writer_service_name_template' => $graphite_writer_service_name_template,
+    'customvar_obscured_check_command'      => $customvar_obscured_check_command,
+  }
+
+  $ui_settings = {
+    'default_time_range'      => $default_time_range,
+    'default_time_range_unit' => $default_time_range_unit,
+    'disable_no_graphs_found' => $disable_no_graphs,
   }
 
   $settings = {
@@ -83,6 +114,11 @@ class icingaweb2::module::graphite (
       'section_name' => 'icinga',
       'target'       => "${module_conf_dir}/config.ini",
       'settings'     => delete_undef_values($icinga_settings),
+    },
+    'module-graphite-ui' => {
+      'section_name' => 'ui',
+      'target'       => "${module_conf_dir}/config.ini",
+      'settings'     => delete_undef_values($ui_settings),
     },
   }
 
