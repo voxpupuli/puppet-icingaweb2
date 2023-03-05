@@ -1601,10 +1601,15 @@ The following parameters are available in the `icingaweb2::module::graphite` cla
 * [`install_method`](#install_method)
 * [`package_name`](#package_name)
 * [`url`](#url)
+* [`insecure`](#insecure)
 * [`user`](#user)
 * [`password`](#password)
 * [`graphite_writer_host_name_template`](#graphite_writer_host_name_template)
 * [`graphite_writer_service_name_template`](#graphite_writer_service_name_template)
+* [`customvar_obscured_check_command`](#customvar_obscured_check_command)
+* [`default_time_range_unit`](#default_time_range_unit)
+* [`default_time_range`](#default_time_range)
+* [`disable_no_graphs`](#disable_no_graphs)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -1662,6 +1667,14 @@ URL to your Graphite Web/API.
 
 Default value: ``undef``
 
+##### <a name="insecure"></a>`insecure`
+
+Data type: `Optional[Boolean]`
+
+Do not verify the TLS certificate.
+
+Default value: ``undef``
+
 ##### <a name="user"></a>`user`
 
 Data type: `Optional[String]`
@@ -1691,6 +1704,41 @@ Default value: ``undef``
 Data type: `Optional[String]`
 
 The value of your icinga 2 GraphiteWriter's attribute `service_name_template` (if specified).
+
+Default value: ``undef``
+
+##### <a name="customvar_obscured_check_command"></a>`customvar_obscured_check_command`
+
+Data type: `Optional[String]`
+
+The Icinga custom variable with the `actual` check command obscured by e.g. check_by_ssh.
+
+Default value: ``undef``
+
+##### <a name="default_time_range_unit"></a>`default_time_range_unit`
+
+Data type: `Optional[Enum[
+      'minutes', 'hours', 'days',
+      'weeks', 'months', 'years'
+  ]]`
+
+Set unit for the time range.
+
+Default value: ``undef``
+
+##### <a name="default_time_range"></a>`default_time_range`
+
+Data type: `Optional[Integer[1]]`
+
+Set the displayed time range.
+
+Default value: ``undef``
+
+##### <a name="disable_no_graphs"></a>`disable_no_graphs`
+
+Data type: `Optional[Boolean]`
+
+Do not display empty graphs.
 
 Default value: ``undef``
 

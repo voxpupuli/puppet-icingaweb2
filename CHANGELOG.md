@@ -1,5 +1,16 @@
 # Change Log
 
+## [v3.7.3](https://github.com/icinga/puppet-icingaweb2/tree/v3.7.3) (2023-03-05)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.7.2...v3.7.3)
+
+**Fixed bugs:**
+
+- Add missing parameters to graphite module class [\#350](https://github.com/Icinga/puppet-icingaweb2/pull/350) ([lbetz](https://github.com/lbetz))
+
+**Closed issues:**
+
+- icingaweb2 2.11.4 changed package layout, breaks icingaweb2::module::monitoring [\#349](https://github.com/Icinga/puppet-icingaweb2/issues/349)
+
 ## [v3.7.2](https://github.com/icinga/puppet-icingaweb2/tree/v3.7.2) (2023-01-28)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.7.1...v3.7.2)
 
