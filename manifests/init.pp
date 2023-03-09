@@ -128,11 +128,14 @@
 # @param resources
 #   Additional resources. Option `type` has to be set as hash key. Type of `ldap`
 #   declares a define resource of `icingaweb2::resource::ldap`, a type of `mysql`, `pgsql`,
-#  `oracle`, `mssql`, `ibm`, `oci`, `sqlite` goes to `icingaweb2::resource::databas`.
+#  `oracle`, `mssql`, `ibm`, `oci`, `sqlite` goes to `icingaweb2::resource::database`.
 #
 # @param user_backends
 #   Additional user backends for access control. See `icingaweb2::config::authmethod`.
-
+#
+# @param group_backends
+#   Additional group backends for access control. See `icingaweb2::config::groupbackend`.
+#
 # @example Use MySQL as backend for user authentication:
 #   include ::mysql::server
 #
@@ -175,7 +178,7 @@
 #
 # @example Icinga Web 2 with an additional resource of type `ldap`, e.g. for authentication:
 #   class { 'icingaweb2':
-#     resources     => {
+#     resources       => {
 #       'my-ldap' => {
 #         type    => 'ldap',
 #         host    => 'localhost',
@@ -185,7 +188,7 @@
 #         bind_pw => Sensitive('supersecret'),
 #       }
 #     },
-#     user_backends => {
+#     user_backends   => {
 #       'ldap-auth' => {
 #         backend                  => 'ldap',
 #         resource                 => 'my-ldap',
@@ -193,6 +196,18 @@
 #         ldap_filter              => '(memberof:1.2.840.113556.1.4.1941:=CN=monitoring,OU=groups,DC=icinga,DC=com)',
 #         ldap_user_name_attribute => 'userPrincipalName',
 #         order                    => '05',
+#       },
+#     },
+#     group_backends => {
+#       'ldap-auth' => {
+#         backend                     => 'ldap',
+#         resource                    => 'my-ldap',
+#         ldap_group_class            => 'group',
+#         ldap_group_name_attribute   => 'cn',
+#         ldap_group_member_attribute => 'member',
+#         ldap_base_dn                => 'ou=groups,dc=icinga,dc=com',
+#         domain                      => 'icinga.com',
+#         order                       => '05',
 #       },
 #     },
 #   }
@@ -239,6 +254,7 @@ class icingaweb2 (
   Optional[Stdlib::Absolutepath]                  $cookie_path         = undef,
   Hash[String, Hash[String, Any]]                 $resources           = {},
   Hash[String, Hash[String, Any]]                 $user_backends       = {},
+  Hash[String, Hash[String, Any]]                 $group_backends      = {},
 ) {
   require icingaweb2::globals
 

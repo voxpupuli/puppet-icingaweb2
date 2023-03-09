@@ -59,9 +59,9 @@
 #   }
 #
 define icingaweb2::config::groupbackend (
+  Enum['db', 'ldap', 'msldap'] $backend,
+  String                       $resource,
   String                       $group_name                  = $title,
-  Enum['db', 'ldap', 'msldap'] $backend                     = undef,
-  String                       $resource                    = undef,
   Optional[String]             $ldap_user_backend           = undef,
   Optional[String]             $ldap_group_class            = undef,
   Optional[String]             $ldap_group_filter           = undef,

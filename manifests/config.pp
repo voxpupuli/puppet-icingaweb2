@@ -25,6 +25,7 @@ class icingaweb2::config {
 
   $resources            = $icingaweb2::resources
   $user_backends        = $icingaweb2::user_backends
+  $group_backends       = $icingaweb2::group_backends
 
   $import_schema        = $icingaweb2::import_schema
   $mysql_db_schema      = $icingaweb2::globals::mysql_db_schema
@@ -170,9 +171,14 @@ class icingaweb2::config {
     }
   }
 
-  # Additional user backends for access control
+  # Additional user and group backends for access control
   $user_backends.each |String $backend, Hash $cfg| {
     icingaweb2::config::authmethod { $backend:
+      * => $cfg,
+    }
+  }
+  $group_backends.each |String $backend, Hash $cfg| {
+    icingaweb2::config::groupbackend { $backend:
       * => $cfg,
     }
   }
