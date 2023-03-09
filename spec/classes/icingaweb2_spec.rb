@@ -22,7 +22,7 @@ describe('icingaweb2', type: :class) do
         it { is_expected.not_to contain_package('icinga2').with('ensure' => 'installed') }
       end
 
-      context 'with additional resources and user backend' do
+      context 'with additional resources, user and group backend' do
         let(:params) do
           {
             resources: {
@@ -32,12 +32,16 @@ describe('icingaweb2', type: :class) do
             user_backends: {
               bar: { backend: 'ldap', resource: 'foo' },
             },
+            group_backends: {
+              bar: { backend: 'ldap', resource: 'foo' },
+            },
           }
         end
 
         it { is_expected.to contain_icingaweb2__resource__ldap('foo') }
         it { is_expected.to contain_icingaweb2__resource__database('baz').with('type' => 'pgsql') }
         it { is_expected.to contain_icingaweb2__config__authmethod('bar').with('resource' => 'foo') }
+        it { is_expected.to contain_icingaweb2__config__groupbackend('bar').with('resource' => 'foo') }
       end
     end
   end
