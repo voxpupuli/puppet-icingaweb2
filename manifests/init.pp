@@ -125,24 +125,29 @@
 #   Default password for initial admin access. This parameter is only used
 #   if `import_schema` is set to `true` and only during the import itself.
 #
+# @param resources
+#   Additional resources. Option `type` has to be set as hash key. Type of `ldap`
+#   declares a define resource of `icingaweb2::resource::ldap`, a type of `mysql`, `pgsql`,
+#  `oracle`, `mssql`, `ibm`, `oci`, `sqlite` goes to `icingaweb2::resource::databas`.
+#
 # @example Use MySQL as backend for user authentication:
 #   include ::mysql::server
 #
 #   mysql::db { 'icingaweb2':
 #     user     => 'icingaweb2',
-#     password => 'supersecret',
+#     password => Sensitive('supersecret'),
 #     host     => 'localhost',
 #     grant    => [ 'ALL' ],
 #   }
 #
-#   class {'icingaweb2':
+#   class { 'icingaweb2':
 #     manage_repos  => true,
 #     import_schema => true,
 #     db_type       => 'mysql',
 #     db_host       => 'localhost',
 #     db_port       => 3306,
 #     db_username   => 'icingaweb2',
-#     db_password   => 'supersecret',
+#     db_password   => Sensitive('supersecret'),
 #     require       => Mysql::Db['icingaweb2'],
 #   }
 #
@@ -151,10 +156,10 @@
 #
 #   postgresql::server::db { 'icingaweb2':
 #     user     => 'icingaweb2',
-#     password => postgresql_password('icingaweb2', 'icingaweb2'),
+#     password => postgresql_password('icingaweb2', Sensitive('icingaweb2')),
 #   }
 #
-#   class {'icingaweb2':
+#   class { 'icingaweb2':
 #     manage_repos  => true,
 #     import_schema => true,
 #     db_type       => 'pgsql',
@@ -163,6 +168,20 @@
 #     db_username   => 'icingaweb2',
 #     db_password   => 'icingaweb2',
 #     require       => Postgresql::Server::Db['icingaweb2'],
+#   }
+#
+# @example Icinga Web 2 with an additional resource of type `ldap`, e.g. for authentication:
+#   class { 'icingaweb2':
+#     resources => {
+#       'my-ldap' => {
+#         type    => 'ldap',
+#         host    => 'localhost',
+#         port    => 389,
+#         root_dn => 'ou=users,dc=icinga,dc=com',
+#         bind_dn => 'cn=icingaweb2,ou=users,dc=icinga,dc=com',
+#         bind_pw => Sensitive('supersecret'),
+#       }
+#     }
 #   }
 #
 class icingaweb2 (
@@ -205,6 +224,7 @@ class icingaweb2 (
   Enum['ini', 'db']                               $config_backend      = 'ini',
   Optional[String]                                $default_domain      = undef,
   Optional[Stdlib::Absolutepath]                  $cookie_path         = undef,
+  Hash[String, Hash[String, Any]]                 $resources           = {},
 ) {
   require icingaweb2::globals
 

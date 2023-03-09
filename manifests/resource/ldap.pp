@@ -29,12 +29,11 @@
 #
 # @example Create a LDAP resource:
 #   icingaweb2::resource::ldap{ 'my-ldap':
-#     type    => 'ldap',
 #     host    => 'localhost',
 #     port    => 389,
 #     root_dn => 'ou=users,dc=icinga,dc=com',
 #     bind_dn => 'cn=icingaweb2,ou=users,dc=icinga,dc=com',
-#     bind_pw => 'supersecret',
+#     bind_pw => Sensitive('supersecret'),
 #   }
 #
 define icingaweb2::resource::ldap (

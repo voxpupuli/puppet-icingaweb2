@@ -23,6 +23,8 @@ class icingaweb2::config {
 
   $cookie_path          = $icingaweb2::cookie_path
 
+  $resources            = $icingaweb2::resources
+
   $import_schema        = $icingaweb2::import_schema
   $mysql_db_schema      = $icingaweb2::globals::mysql_db_schema
   $pgsql_db_schema      = $icingaweb2::globals::pgsql_db_schema
@@ -146,6 +148,24 @@ class icingaweb2::config {
   file { "${conf_dir}/enabledModules":
     ensure => directory,
     mode   => '2770',
+  }
+
+  $resources.each |String $res, Hash $cfg| {
+    case $cfg['type'] {
+      'ldap': {
+        icingaweb2::resource::ldap { $res:
+          * => delete($cfg, 'type'),
+        }
+      }
+      'mysql', 'pgsql', 'oracle', 'mssql', 'ibm', 'oci', 'sqlite': {
+        icingaweb2::resource::database { $res:
+          * => $cfg,
+        }
+      }
+      default: {
+        fail("icingaweb2::resources::${res} uses an unknown resource type")
+      }
+    }
   }
 
   if $import_schema or $config_backend == 'db' {
