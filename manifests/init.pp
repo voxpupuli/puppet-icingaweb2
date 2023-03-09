@@ -130,6 +130,9 @@
 #   declares a define resource of `icingaweb2::resource::ldap`, a type of `mysql`, `pgsql`,
 #  `oracle`, `mssql`, `ibm`, `oci`, `sqlite` goes to `icingaweb2::resource::databas`.
 #
+# @param user_backends
+#   Additional user backends for access control. See `icingaweb2::config::authmethod`.
+
 # @example Use MySQL as backend for user authentication:
 #   include ::mysql::server
 #
@@ -172,7 +175,7 @@
 #
 # @example Icinga Web 2 with an additional resource of type `ldap`, e.g. for authentication:
 #   class { 'icingaweb2':
-#     resources => {
+#     resources     => {
 #       'my-ldap' => {
 #         type    => 'ldap',
 #         host    => 'localhost',
@@ -181,7 +184,17 @@
 #         bind_dn => 'cn=icingaweb2,ou=users,dc=icinga,dc=com',
 #         bind_pw => Sensitive('supersecret'),
 #       }
-#     }
+#     },
+#     user_backends => {
+#       'ldap-auth' => {
+#         backend                  => 'ldap',
+#         resource                 => 'my-ldap',
+#         ldap_user_class          => 'user',
+#         ldap_filter              => '(memberof:1.2.840.113556.1.4.1941:=CN=monitoring,OU=groups,DC=icinga,DC=com)',
+#         ldap_user_name_attribute => 'userPrincipalName',
+#         order                    => '05',
+#       },
+#     },
 #   }
 #
 class icingaweb2 (
@@ -225,6 +238,7 @@ class icingaweb2 (
   Optional[String]                                $default_domain      = undef,
   Optional[Stdlib::Absolutepath]                  $cookie_path         = undef,
   Hash[String, Hash[String, Any]]                 $resources           = {},
+  Hash[String, Hash[String, Any]]                 $user_backends       = {},
 ) {
   require icingaweb2::globals
 

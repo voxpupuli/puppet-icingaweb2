@@ -24,6 +24,7 @@ class icingaweb2::config {
   $cookie_path          = $icingaweb2::cookie_path
 
   $resources            = $icingaweb2::resources
+  $user_backends        = $icingaweb2::user_backends
 
   $import_schema        = $icingaweb2::import_schema
   $mysql_db_schema      = $icingaweb2::globals::mysql_db_schema
@@ -150,6 +151,7 @@ class icingaweb2::config {
     mode   => '2770',
   }
 
+  # Additional resources
   $resources.each |String $res, Hash $cfg| {
     case $cfg['type'] {
       'ldap': {
@@ -165,6 +167,13 @@ class icingaweb2::config {
       default: {
         fail("icingaweb2::resources::${res} uses an unknown resource type")
       }
+    }
+  }
+
+  # Additional user backends for access control
+  $user_backends.each |String $backend, Hash $cfg| {
+    icingaweb2::config::authmethod { $backend:
+      * => $cfg,
     }
   }
 

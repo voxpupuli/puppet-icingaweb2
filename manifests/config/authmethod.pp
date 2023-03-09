@@ -44,7 +44,7 @@
 #   }
 #
 define icingaweb2::config::authmethod (
-  Enum['external', 'ldap', 'msldap', 'db'] $backend                  = undef,
+  Enum['external', 'ldap', 'msldap', 'db'] $backend,
   Optional[String]                         $resource                 = undef,
   Optional[String]                         $ldap_user_class          = undef,
   Optional[String]                         $ldap_user_name_attribute = undef,
