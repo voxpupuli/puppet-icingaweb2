@@ -105,6 +105,7 @@ define icingaweb2::config::role (
   Hash              $filters      = {},
 ) {
   $conf_dir = $icingaweb2::globals::conf_dir
+  $replace  = $icingaweb2::globals::role_replace
 
   $settings = {
     'users'        => $users,
@@ -119,5 +120,6 @@ define icingaweb2::config::role (
     section_name => $role_name,
     target       => "${conf_dir}/roles.ini",
     settings     => delete_undef_values(merge($settings,$filters)),
+    replace      => $replace,
   }
 }

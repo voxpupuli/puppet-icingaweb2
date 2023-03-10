@@ -4,12 +4,16 @@
 # @note This parameters depend on the os plattform. Changes maybe will break the functional capability of the supported plattforms and versions. Please only do changes when you know what you're doing.
 #
 # @param package_name
+#   Package to install.
 #
 # @param conf_dir
 #   Path to the config files.
 #
 # @param data_dir
 #   Location of PHP data files.
+#
+# @param role_replace
+#   Specifies whether to overwrite the roles.ini file if it already exists.
 #
 # @param comp_db_schema_dir
 #   For compatibility, since in Icinga Web 2 2.11.4 the schema files have been moved.
@@ -57,6 +61,7 @@ class icingaweb2::globals (
   String                 $package_name,
   Stdlib::Absolutepath   $conf_dir,
   Stdlib::Absolutepath   $data_dir,
+  Boolean                $role_replace,
   Stdlib::Absolutepath   $comp_db_schema_dir,
   Stdlib::Absolutepath   $default_module_path,
   Stdlib::Absolutepath   $mysql_db_schema,
