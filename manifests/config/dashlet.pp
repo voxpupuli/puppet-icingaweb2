@@ -13,7 +13,7 @@
 # @param url
 #   URL of the dashlet.
 #
-# @examle Create a new Dashboard with a Dashlet:
+# @example Create a new Dashboard with a Dashlet:
 #   icingaweb2::config::dashboard { 'icingaadmin-NewDashboard':
 #     owner     => 'icingaadmin',
 #     dashboard => 'New Dashboard',

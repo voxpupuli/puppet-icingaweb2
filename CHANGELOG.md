@@ -1,5 +1,16 @@
 # Change Log
 
+## [v3.8.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.8.0) (2023-03-10)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.7.3...v3.8.0)
+
+**Implemented enhancements:**
+
+- Add new parameters to pdfexport class [\#355](https://github.com/Icinga/puppet-icingaweb2/pull/355) ([lbetz](https://github.com/lbetz))
+- Add global parameter to prevent overwriting roles.ini [\#354](https://github.com/Icinga/puppet-icingaweb2/pull/354) ([lbetz](https://github.com/lbetz))
+- Add parameter for group backends to class icingaweb2 for access controll [\#353](https://github.com/Icinga/puppet-icingaweb2/pull/353) ([lbetz](https://github.com/lbetz))
+- Add parameter for user backends to class icingaweb2 for access controll [\#352](https://github.com/Icinga/puppet-icingaweb2/pull/352) ([lbetz](https://github.com/lbetz))
+- Add parameter for additinal resources to class icingaweb2 [\#351](https://github.com/Icinga/puppet-icingaweb2/pull/351) ([lbetz](https://github.com/lbetz))
+
 ## [v3.7.3](https://github.com/icinga/puppet-icingaweb2/tree/v3.7.3) (2023-03-05)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.7.2...v3.7.3)
 

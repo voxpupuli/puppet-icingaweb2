@@ -86,7 +86,7 @@ with or without TLS information.
 
 ### <a name="icingaweb2"></a>`icingaweb2`
 
-Installs and configures Icinga Web 2.
+`oracle`, `mssql`, `ibm`, `oci`, `sqlite` goes to `icingaweb2::resource::database`.
 
 #### Examples
 
@@ -97,19 +97,19 @@ include ::mysql::server
 
 mysql::db { 'icingaweb2':
   user     => 'icingaweb2',
-  password => 'supersecret',
+  password => Sensitive('supersecret'),
   host     => 'localhost',
   grant    => [ 'ALL' ],
 }
 
-class {'icingaweb2':
+class { 'icingaweb2':
   manage_repos  => true,
   import_schema => true,
   db_type       => 'mysql',
   db_host       => 'localhost',
   db_port       => 3306,
   db_username   => 'icingaweb2',
-  db_password   => 'supersecret',
+  db_password   => Sensitive('supersecret'),
   require       => Mysql::Db['icingaweb2'],
 }
 ```
@@ -121,10 +121,10 @@ include ::postgresql::server
 
 postgresql::server::db { 'icingaweb2':
   user     => 'icingaweb2',
-  password => postgresql_password('icingaweb2', 'icingaweb2'),
+  password => postgresql_password('icingaweb2', Sensitive('icingaweb2')),
 }
 
-class {'icingaweb2':
+class { 'icingaweb2':
   manage_repos  => true,
   import_schema => true,
   db_type       => 'pgsql',
@@ -133,6 +133,45 @@ class {'icingaweb2':
   db_username   => 'icingaweb2',
   db_password   => 'icingaweb2',
   require       => Postgresql::Server::Db['icingaweb2'],
+}
+```
+
+##### Icinga Web 2 with an additional resource of type `ldap`, e.g. for authentication:
+
+```puppet
+class { 'icingaweb2':
+  resources       => {
+    'my-ldap' => {
+      type    => 'ldap',
+      host    => 'localhost',
+      port    => 389,
+      root_dn => 'ou=users,dc=icinga,dc=com',
+      bind_dn => 'cn=icingaweb2,ou=users,dc=icinga,dc=com',
+      bind_pw => Sensitive('supersecret'),
+    }
+  },
+  user_backends   => {
+    'ldap-auth' => {
+      backend                  => 'ldap',
+      resource                 => 'my-ldap',
+      ldap_user_class          => 'user',
+      ldap_filter              => '(memberof:1.2.840.113556.1.4.1941:=CN=monitoring,OU=groups,DC=icinga,DC=com)',
+      ldap_user_name_attribute => 'userPrincipalName',
+      order                    => '05',
+    },
+  },
+  group_backends => {
+    'ldap-auth' => {
+      backend                     => 'ldap',
+      resource                    => 'my-ldap',
+      ldap_group_class            => 'group',
+      ldap_group_name_attribute   => 'cn',
+      ldap_group_member_attribute => 'member',
+      ldap_base_dn                => 'ou=groups,dc=icinga,dc=com',
+      domain                      => 'icinga.com',
+      order                       => '05',
+    },
+  },
 }
 ```
 
@@ -178,6 +217,9 @@ The following parameters are available in the `icingaweb2` class:
 * [`admin_role`](#admin_role)
 * [`default_admin_username`](#default_admin_username)
 * [`default_admin_password`](#default_admin_password)
+* [`resources`](#resources)
+* [`user_backends`](#user_backends)
+* [`group_backends`](#group_backends)
 
 ##### <a name="logging"></a>`logging`
 
@@ -482,6 +524,31 @@ Data type: `Icingaweb2::Secret`
 Default password for initial admin access. This parameter is only used
 if `import_schema` is set to `true` and only during the import itself.
 
+##### <a name="resources"></a>`resources`
+
+Data type: `Hash[String, Hash[String, Any]]`
+
+Additional resources. Option `type` has to be set as hash key. Type of `ldap`
+declares a define resource of `icingaweb2::resource::ldap`, a type of `mysql`, `pgsql`,
+
+Default value: `{}`
+
+##### <a name="user_backends"></a>`user_backends`
+
+Data type: `Hash[String, Hash[String, Any]]`
+
+Additional user backends for access control. See `icingaweb2::config::authmethod`.
+
+Default value: `{}`
+
+##### <a name="group_backends"></a>`group_backends`
+
+Data type: `Hash[String, Hash[String, Any]]`
+
+Additional group backends for access control. See `icingaweb2::config::groupbackend`.
+
+Default value: `{}`
+
 ### <a name="icingaweb2globals"></a>`icingaweb2::globals`
 
 This class loads the default parameters by doing a hiera lookup.
@@ -495,6 +562,7 @@ The following parameters are available in the `icingaweb2::globals` class:
 * [`package_name`](#package_name)
 * [`conf_dir`](#conf_dir)
 * [`data_dir`](#data_dir)
+* [`role_replace`](#role_replace)
 * [`comp_db_schema_dir`](#comp_db_schema_dir)
 * [`default_module_path`](#default_module_path)
 * [`mysql_db_schema`](#mysql_db_schema)
@@ -514,7 +582,7 @@ The following parameters are available in the `icingaweb2::globals` class:
 
 Data type: `String`
 
-
+Package to install.
 
 ##### <a name="conf_dir"></a>`conf_dir`
 
@@ -527,6 +595,12 @@ Path to the config files.
 Data type: `Stdlib::Absolutepath`
 
 Location of PHP data files.
+
+##### <a name="role_replace"></a>`role_replace`
+
+Data type: `Boolean`
+
+Specifies whether to overwrite the roles.ini file if it already exists.
 
 ##### <a name="comp_db_schema_dir"></a>`comp_db_schema_dir`
 
@@ -2607,6 +2681,9 @@ The following parameters are available in the `icingaweb2::module::pdfexport` cl
 * [`install_method`](#install_method)
 * [`package_name`](#package_name)
 * [`chrome_binary`](#chrome_binary)
+* [`force_temp_storage`](#force_temp_storage)
+* [`remote_host`](#remote_host)
+* [`remote_port`](#remote_port)
 
 ##### <a name="ensure"></a>`ensure`
 
@@ -2660,7 +2737,31 @@ Default value: `'icingaweb2-module-pdfexport'`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-Path of the chrome or chromium binary.
+Path of the chrome or Chrome/Chromium binary.
+
+Default value: ``undef``
+
+##### <a name="force_temp_storage"></a>`force_temp_storage`
+
+Data type: `Optional[Boolean]`
+
+Force using of local temp storage.
+
+Default value: ``undef``
+
+##### <a name="remote_host"></a>`remote_host`
+
+Data type: `Optional[Stdlib::Host]`
+
+Connect a remote running Chrome/Chromium.
+
+Default value: ``undef``
+
+##### <a name="remote_port"></a>`remote_port`
+
+Data type: `Optional[Stdlib::Port]`
+
+Port to connect the remote running Chrome/Chromium.
 
 Default value: ``undef``
 
@@ -3588,8 +3689,6 @@ Data type: `Enum['external', 'ldap', 'msldap', 'db']`
 
 Select between 'external', 'ldap', 'msldap' or 'db'. Each backend may require other settings.
 
-Default value: ``undef``
-
 ##### <a name="resource"></a>`resource`
 
 Data type: `Optional[String]`
@@ -3651,6 +3750,17 @@ Default value: `'01'`
 
 Manage a dashboard.
 
+#### Examples
+
+##### Create a new Dashboard:
+
+```puppet
+icingaweb2::config::dashboard { 'icingaadmin-NewDashboard':
+  owner     => 'icingaadmin',
+  dashboard => 'New Dashboard',
+}
+```
+
 #### Parameters
 
 The following parameters are available in the `icingaweb2::config::dashboard` defined type:
@@ -3675,6 +3785,22 @@ Title of the dashboard.
 Manage a dashlet.
 
 #### Examples
+
+##### Create a new Dashboard with a Dashlet:
+
+```puppet
+icingaweb2::config::dashboard { 'icingaadmin-NewDashboard':
+  owner     => 'icingaadmin',
+  dashboard => 'New Dashboard',
+}
+
+icingaweb2::config::dashlet { 'icingaadmin-NewDashboard':
+  owner     => 'icingaadmin',
+  dashboard => 'New Dashboard',
+  dashlet   => 'New Dashlet',
+  url       => 'monitoring/list/hosts',
+}
+```
 
 ##### Add new Dashlet to an existing default dashboard:
 
@@ -3782,15 +3908,11 @@ Data type: `Enum['db', 'ldap', 'msldap']`
 Type of backend. Valide values are: `db`, `ldap` and `msldap`. Each backend supports different settings,
 see the parameters for detailed information.
 
-Default value: ``undef``
-
 ##### <a name="resource"></a>`resource`
 
 Data type: `String`
 
 The resource used to connect to the backend. The resource contains connection information.
-
-Default value: ``undef``
 
 ##### <a name="ldap_user_backend"></a>`ldap_user_backend`
 
@@ -4321,6 +4443,7 @@ The following parameters are available in the `icingaweb2::inisection` defined t
 * [`section_name`](#section_name)
 * [`settings`](#settings)
 * [`order`](#order)
+* [`replace`](#replace)
 
 ##### <a name="target"></a>`target`
 
@@ -4351,6 +4474,14 @@ Data type: `Variant[String, Integer]`
 Ordering of the INI section within a file. Defaults to `01`
 
 Default value: `'01'`
+
+##### <a name="replace"></a>`replace`
+
+Data type: `Boolean`
+
+Specifies whether to overwrite the destination file if it already exists.
+
+Default value: ``true``
 
 ### <a name="icingaweb2module"></a>`icingaweb2::module`
 
@@ -4523,8 +4654,6 @@ Data type: `Stdlib::Host`
 Connect to the database on the given host. For using unix domain sockets, specify 'localhost' for
 MySQL and the path to the unix domain socket and the directory for PostgreSQL.
 
-Default value: ``undef``
-
 ##### <a name="port"></a>`port`
 
 Data type: `Stdlib::Port`
@@ -4629,12 +4758,11 @@ Create and remove Icinga Web 2 resources. Resources may be referenced in other c
 
 ```puppet
 icingaweb2::resource::ldap{ 'my-ldap':
-  type    => 'ldap',
   host    => 'localhost',
   port    => 389,
   root_dn => 'ou=users,dc=icinga,dc=com',
   bind_dn => 'cn=icingaweb2,ou=users,dc=icinga,dc=com',
-  bind_pw => 'supersecret',
+  bind_pw => Sensitive('supersecret'),
 }
 ```
 
@@ -4729,7 +4857,7 @@ This function returns a fail if the icingaweb2 class isn't declared.
 
 The icingaweb2::assert_module function.
 
-Returns: `Any`
+Returns: `Any` none
 
 ### <a name="icingaweb2certfiles"></a>`icingaweb2::cert::files`
 

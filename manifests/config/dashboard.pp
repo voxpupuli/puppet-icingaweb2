@@ -7,7 +7,7 @@
 # @param dashboard
 #   Title of the dashboard.
 #
-# @examle Create a new Dashboard:
+# @example Create a new Dashboard:
 #   icingaweb2::config::dashboard { 'icingaadmin-NewDashboard':
 #     owner     => 'icingaadmin',
 #     dashboard => 'New Dashboard',
