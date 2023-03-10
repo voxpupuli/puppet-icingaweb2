@@ -22,7 +22,16 @@
 #   Package name of the module. This setting is only valid in combination with the installation method `package`.
 #
 # @param chrome_binary
-#   Path of the chrome or chromium binary.
+#   Path of the chrome or Chrome/Chromium binary.
+#
+# @param force_temp_storage
+#   Force using of local temp storage.
+#
+# @param remote_host
+#   Connect a remote running Chrome/Chromium.
+#
+# @param remote_port
+#   Port to connect the remote running Chrome/Chromium.
 #
 # @example
 #   class { 'icingaweb2::module::pdfexport':
@@ -31,13 +40,16 @@
 #   }
 #
 class icingaweb2::module::pdfexport (
-  Enum['absent', 'present']      $ensure         = 'present',
-  Optional[Stdlib::Absolutepath] $module_dir     = undef,
-  String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-pdfexport.git',
-  Optional[String]               $git_revision   = undef,
-  Enum['git', 'none', 'package'] $install_method = 'git',
-  String                         $package_name   = 'icingaweb2-module-pdfexport',
-  Optional[Stdlib::Absolutepath] $chrome_binary  = undef,
+  Enum['absent', 'present']      $ensure             = 'present',
+  Optional[Stdlib::Absolutepath] $module_dir         = undef,
+  String                         $git_repository     = 'https://github.com/Icinga/icingaweb2-module-pdfexport.git',
+  Optional[String]               $git_revision       = undef,
+  Enum['git', 'none', 'package'] $install_method     = 'git',
+  String                         $package_name       = 'icingaweb2-module-pdfexport',
+  Optional[Stdlib::Absolutepath] $chrome_binary      = undef,
+  Optional[Boolean]              $force_temp_storage = undef,
+  Optional[Stdlib::Host]         $remote_host        = undef,
+  Optional[Stdlib::Port]         $remote_port        = undef,
 ) {
   icingaweb2::assert_module()
 
@@ -55,9 +67,12 @@ class icingaweb2::module::pdfexport (
       'module-pdfexport-chrome' => {
         section_name => 'chrome',
         target       => "${module_conf_dir}/config.ini",
-        settings     => {
-          'binary' => $chrome_binary,
-        },
+        settings     => delete_undef_values({
+            'binary'             => $chrome_binary,
+            'force_temp_storage' => $force_temp_storage,
+            'host'               => $remote_host,
+            'port'               => $remote_port,
+        }),
       },
     },
   }
