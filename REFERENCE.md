@@ -4286,7 +4286,8 @@ Default value: `5`
 
 Roles define a set of permissions that may be applied to users or groups.
 
-* **Note** Availble permissions in module monitoring:
+* **Note** Available permissions in module monitoring:
+
 | Description | Value |
 |-------------|-------|
 | Allow everything | `*` |
