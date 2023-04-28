@@ -29,3 +29,7 @@ icingaweb2::module::idoreports::ensure: present
 icingaweb2::module::idoreports::install_method: git
 icingaweb2::module::idoreports::git_repository: https://github.com/Icinga/icingaweb2-module-idoreports.git
 icingaweb2::module::idoreports::package_name: icingaweb2-module-idoreports
+icingaweb2::module::x509::ensure: present
+icingaweb2::module::x509::install_method: git
+icingaweb2::module::x509::git_repository: https://github.com/Icinga/icingaweb2-module-x509.git
+icingaweb2::module::x509::package_name: icingaweb2-module-x509
