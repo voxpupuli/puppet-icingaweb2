@@ -45,7 +45,9 @@
 #     }
 #   }
 #
-# @note Availble permissions in module monitoring:
+# @note Available permissions in module monitoring:
+#
+#
 #   | Description | Value |
 #   |-------------|-------|
 #   | Allow everything | `*` |
