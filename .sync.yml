@@ -5,4 +5,12 @@
 #
 # See https://github.com/puppetlabs/pdk-templates/blob/main/config_defaults.yml
 # for the default values.
---- {}
+---
+Gemfile:
+  optional:
+    ':development':
+      - gem: 'concurrent-ruby'
+        version: '< 1.2.0'
+#Rakefile:
+#  linter_options:
+#    - disable_140chars
