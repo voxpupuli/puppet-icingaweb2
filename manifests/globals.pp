@@ -74,6 +74,8 @@ class icingaweb2::globals (
   Stdlib::Absolutepath   $mysql_idoreports_sla_percent,
   Stdlib::Absolutepath   $pgsql_idoreports_slaperiods,
   Stdlib::Absolutepath   $pgsql_idoreports_sla_percent,
+  Stdlib::Absolutepath   $mysql_x509_schema,
+  Stdlib::Absolutepath   $pgsql_x509_schema,
   String                 $gettext_package_name,
   Stdlib::Absolutepath   $icingacli_bin,
 ) {

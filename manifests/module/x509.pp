@@ -1,7 +1,7 @@
-# @summary Installs the reporting module
+# @summary Installs the x509 module
 #
 # @param ensure
-#   Ensures the state of the reporting module.
+#   Ensures the state of the x509 module.
 #
 # @param module_dir
 #   Target directory of the module.
@@ -19,10 +19,10 @@
 #   Package name of the module. This setting is only valid in combination with the installation method `package`.
 #
 # @param db_type
-#   The database type. Either mysql or postgres.
+#   The database type. Either mysql or pgsql.
 #
 # @param db_host
-#   The host where the reporting database will be running
+#   The host where the database will be running
 #
 # @param db_port
 #   The port on which the database is accessible.
@@ -76,20 +76,19 @@
 #   both means true. With mariadb its cli options are used for the import,
 #   whereas with mysql its different options.
 #
-# @param mail
-#   Mails are sent with this sender address.
+# @param
 #
 # @example
-#   class { 'icingaweb2::module::reporting':
+#   class { 'icingaweb2::module::x509':
 #     ensure       => present,
-#     git_revision => 'v0.9.0',
+#     git_revision => 'v1.2.1',
 #     db_host      => 'localhost',
-#     db_name      => 'reporting',
-#     db_username  => 'reporting',
-#     db_password  => 'supersecret',
+#     db_name      => 'x509',
+#     db_username  => 'x509',
+#     db_password  => Sensitive('supersecret'),
 #   }
 #
-class icingaweb2::module::reporting (
+class icingaweb2::module::x509 (
   Enum['absent', 'present']                  $ensure,
   Enum['git', 'none', 'package']             $install_method,
   String                                     $git_repository,
@@ -99,8 +98,8 @@ class icingaweb2::module::reporting (
   Enum['mysql', 'pgsql']                     $db_type         = 'mysql',
   Stdlib::Host                               $db_host         = 'localhost',
   Optional[Stdlib::Port]                     $db_port         = undef,
-  String                                     $db_name         = 'reporting',
-  String                                     $db_username     = 'reporting',
+  String                                     $db_name         = 'x509',
+  String                                     $db_username     = 'x509',
   Optional[Icingaweb2::Secret]               $db_password     = undef,
   Optional[String]                           $db_charset      = undef,
   Variant[Boolean, Enum['mariadb', 'mysql']] $import_schema   = false,
@@ -114,15 +113,14 @@ class icingaweb2::module::reporting (
   Optional[String]                           $tls_cacert      = undef,
   Optional[Boolean]                          $tls_noverify    = undef,
   Optional[String]                           $tls_cipher      = undef,
-  Optional[String]                           $mail            = undef,
 ) {
   icingaweb2::assert_module()
 
-  $conf_dir               = $icingaweb2::globals::conf_dir
-  $mysql_reporting_schema = $icingaweb2::globals::mysql_reporting_schema
-  $pgsql_reporting_schema = $icingaweb2::globals::pgsql_reporting_schema
-  $module_conf_dir        = "${conf_dir}/modules/reporting"
-  $_db_port               = pick($db_port, $icingaweb2::globals::port[$db_type])
+  $conf_dir          = $icingaweb2::globals::conf_dir
+  $mysql_x509_schema = $icingaweb2::globals::mysql_x509_schema
+  $pgsql_x509_schema = $icingaweb2::globals::pgsql_x509_schema
+  $module_conf_dir   = "${conf_dir}/modules/x509"
+  $_db_port          = pick($db_port, $icingaweb2::globals::port[$db_type])
 
   $_db_charset = if $db_charset {
     $db_charset
@@ -153,14 +151,14 @@ class icingaweb2::module::reporting (
     user     => 'root',
     path     => $facts['path'],
     provider => 'shell',
-    require  => [Icingaweb2::Module['reporting'], Icingaweb2::Tls::Client['icingaweb2::module::reporting tls client config']],
+    require  => [Icingaweb2::Module['x509'], Icingaweb2::Tls::Client['icingaweb2::module::x509 tls client config']],
   }
 
-  icingaweb2::tls::client { 'icingaweb2::module::reporting tls client config':
+  icingaweb2::tls::client { 'icingaweb2::module::x509 tls client config':
     args => $tls,
   }
 
-  icingaweb2::resource::database { 'reporting':
+  icingaweb2::resource::database { 'x509':
     type         => $db_type,
     host         => $db_host,
     port         => $_db_port,
@@ -177,7 +175,7 @@ class icingaweb2::module::reporting (
     tls_cipher   => $tls['cipher'],
   }
 
-  icingaweb2::module { 'reporting':
+  icingaweb2::module { 'x509':
     ensure         => $ensure,
     git_repository => $git_repository,
     git_revision   => $git_revision,
@@ -185,19 +183,12 @@ class icingaweb2::module::reporting (
     module_dir     => $module_dir,
     package_name   => $package_name,
     settings       => {
-      'icingaweb2-module-reporting-backend' => {
+      'icingaweb2-module-x509-backend' => {
         'section_name' => 'backend',
         'target'       => "${module_conf_dir}/config.ini",
         'settings'     => {
-          'resource' => 'reporting',
+          'resource' => 'x509',
         },
-      },
-      'icingaweb2-module-reporting-mail'    => {
-        'section_name' => 'mail',
-        'target'       => "${module_conf_dir}/config.ini",
-        'settings'     => delete_undef_values({
-            'from' => $mail,
-        }),
       },
     },
   }
@@ -219,16 +210,16 @@ class icingaweb2::module::reporting (
 
     case $db_type {
       'mysql': {
-        exec { 'import icingaweb2::module::reporting schema':
-          command => "mysql ${db_cli_options} < '${mysql_reporting_schema}'",
+        exec { 'import icingaweb2::module::x509 schema':
+          command => "mysql ${db_cli_options} < '${mysql_x509_schema}'",
           unless  => "mysql ${db_cli_options} -Ns -e 'SELECT * FROM report'",
         }
       }
       'pgsql': {
         $_db_password = icingaweb2::unwrap($db_password)
-        exec { 'import icingaweb2::module::reporting schema':
+        exec { 'import icingaweb2::module::x509 schema':
           environment => ["PGPASSWORD=${_db_password}"],
-          command     => "psql '${db_cli_options}' -w -f ${pgsql_reporting_schema}",
+          command     => "psql '${db_cli_options}' -w -f ${pgsql_x509_schema}",
           unless      => "psql '${db_cli_options}' -w -c 'SELECT * FROM report'",
         }
       } # pgsql (not supported)
