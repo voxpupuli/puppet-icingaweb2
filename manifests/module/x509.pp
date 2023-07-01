@@ -1,7 +1,9 @@
 # @summary Installs the x509 module
 #
 # @param ensure
-#   Ensures the state of the x509 module.
+#   Ensures the state of the x509 module. Specific states can also be defined, depending on the `install_method`.
+#   For package installations, it represents the package state, for git managed modules it defines
+#   the revision to check out.
 #
 # @param module_dir
 #   Target directory of the module.
@@ -89,7 +91,7 @@
 #   }
 #
 class icingaweb2::module::x509 (
-  Enum['absent', 'present']                  $ensure,
+  String                                     $ensure,
   Enum['git', 'none', 'package']             $install_method,
   String                                     $git_repository,
   String                                     $package_name,

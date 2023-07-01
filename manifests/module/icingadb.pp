@@ -4,7 +4,7 @@
 # @note At first have a look at the [IcingaDB module documentation](https://icinga.com/docs/icinga-db/latest/doc/01-About/).
 #
 # @param ensure
-#   Enable or disable module.
+#   Enable or disable module. Specific package states can also be defined.
 #
 # @param package_name
 #   IicngaDB-Web module package name.
@@ -116,9 +116,9 @@
 #   A hash of command transports.
 #
 class icingaweb2::module::icingadb (
+  String                          $ensure,
   String                          $package_name,
   Icingaweb2::Secret              $db_password,
-  Enum['absent', 'present']       $ensure                   = 'present',
   Enum['mysql', 'pgsql']          $db_type                  = 'mysql',
   Stdlib::Host                    $db_host                  = 'localhost',
   Optional[Stdlib::Port]          $db_port                  = undef,

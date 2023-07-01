@@ -103,6 +103,19 @@ describe('icingaweb2::module::director', type: :class) do
         it { is_expected.not_to contain_exec('director-migration') }
         it { is_expected.not_to contain_exec('director-kickstart') }
       end
+
+      context "#{os} with ensure = latest" do
+        let(:params) do
+          {
+            ensure: 'latest',
+          }
+        end
+
+        it {
+          is_expected.to contain_icingaweb2__module('director')
+            .with_ensure('latest')
+        }
+      end
     end
   end
 end

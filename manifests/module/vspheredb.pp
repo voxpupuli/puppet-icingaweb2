@@ -1,7 +1,9 @@
 # @summary Installs the vsphereDB plugin
 #
 # @param ensure
-#   Ensur es the state of the vspheredb module.
+#   Ensur es the state of the vspheredb module. Specific states can also be defined, depending on the `install_method`.
+#   For package installations, it represents the package state, for git managed modules it defines
+#   the revision to check out.
 #
 # @param module_dir
 #   Target directory of the module.
@@ -87,7 +89,7 @@
 #   }
 #
 class icingaweb2::module::vspheredb (
-  Enum['absent', 'present']                  $ensure          = 'present',
+  String                                     $ensure,
   Optional[Stdlib::Absolutepath]             $module_dir      = undef,
   String                                     $git_repository  = 'https://github.com/Icinga/icingaweb2-module-vspheredb.git',
   Optional[String]                           $git_revision    = undef,

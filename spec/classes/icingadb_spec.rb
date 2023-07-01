@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe('icingaweb2::module::icingadb', type: :class) do
+  let(:params) do
+    {
+      db_password: 'foobar',
+    }
+  end
   let(:pre_condition) do
     [
       "class { 'icingaweb2': }",
@@ -14,12 +19,6 @@ describe('icingaweb2::module::icingadb', type: :class) do
       end
 
       context "#{os} with local MySQL and Redis" do
-        let(:params) do
-          {
-            db_password: 'foobar',
-          }
-        end
-
         it {
           is_expected.to contain_icingaweb2__module('icingadb').with(
             {
@@ -73,10 +72,9 @@ describe('icingaweb2::module::icingadb', type: :class) do
 
       context "#{os} with local PostgreSQL and Redis" do
         let(:params) do
-          {
+          super().merge(
             db_type: 'pgsql',
-            db_password: 'foobar',
-          }
+          )
         end
 
         it {
@@ -127,6 +125,19 @@ describe('icingaweb2::module::icingadb', type: :class) do
               'use_tls'  => nil,
             },
           )
+        }
+      end
+
+      context "#{os} with ensure = latest" do
+        let(:params) do
+          super().merge(
+            ensure: 'latest',
+          )
+        end
+
+        it {
+          is_expected.to contain_icingaweb2__module('icingadb')
+            .with_ensure('latest')
         }
       end
     end

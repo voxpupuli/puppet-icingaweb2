@@ -4,7 +4,9 @@
 # @note If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 #
 # @param ensure
-#   Enables or disables module.
+#   Enables or disables module. Specific states can also be defined, depending on the `install_method`.
+#   For package installations, it represents the package state, for git managed modules it defines
+#   the revision to check out.
 #
 # @param module_dir
 #   Target directory of the module.
@@ -60,7 +62,7 @@
 #   }
 #
 class icingaweb2::module::graphite (
-  Enum['absent', 'present']      $ensure                                = 'present',
+  String                         $ensure,
   Optional[Stdlib::Absolutepath] $module_dir                            = undef,
   String                         $git_repository                        = 'https://github.com/Icinga/icingaweb2-module-graphite.git',
   Optional[String]               $git_revision                          = undef,

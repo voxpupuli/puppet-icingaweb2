@@ -2,10 +2,10 @@
 #   The doc module provides an interface to the Icinga 2 and Icinga Web 2 documentation.
 #
 # @param ensure
-#   Enable or disable module. Defaults to `present`
+#   Enable or disable module. Specific states can also be defined, depending on the operating system.
 #
 class icingaweb2::module::doc (
-  Enum['absent', 'present']   $ensure = 'present',
+  String                         $ensure,
 ) {
   icingaweb2::assert_module()
 

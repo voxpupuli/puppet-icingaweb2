@@ -22,6 +22,19 @@ describe('icingaweb2::module::cube', type: :class) do
             .with_git_revision('v1.0.0')
         }
       end
+
+      context "#{os} with ensure = latest" do
+        let(:params) do
+          {
+            ensure: 'latest',
+          }
+        end
+
+        it {
+          is_expected.to contain_icingaweb2__module('cube')
+            .with_ensure('latest')
+        }
+      end
     end
   end
 end

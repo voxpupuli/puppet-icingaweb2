@@ -50,14 +50,21 @@ describe('icingaweb2::module::doc', type: :class) do
         }
 
         if facts[:osfamily] == 'Debian'
-          it { is_expected.to contain_package('icingaweb2-module-doc').with('ensure' => 'installed') }
+          it { is_expected.to contain_package('icingaweb2-module-doc').with('ensure' => 'absent') }
         end
       end
 
       context 'with ensure foobar' do
         let(:params) { { ensure: 'foobar' } }
 
-        it { is_expected.to raise_error(Puppet::Error, %r{expects a match for Enum\['absent', 'present'\]}) }
+        it {
+          is_expected.to contain_icingaweb2__module('doc')
+            .with_ensure(params[:ensure])
+        }
+
+        if facts[:osfamily] == 'Debian'
+          it { is_expected.to contain_package('icingaweb2-module-doc').with('ensure' => params[:ensure]) }
+        end
       end
     end
   end

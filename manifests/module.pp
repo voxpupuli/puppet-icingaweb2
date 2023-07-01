@@ -4,7 +4,9 @@
 # @note If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 #
 # @param ensure
-#   Enable or disable module.
+#   Enable or disable module. Specific states can also be defined, depending on the `install_method`.
+#   For package installations, it represents the package state, for git managed modules it defines
+#   the revision to check out.
 #
 # @param module
 #   Name of the module.
@@ -19,7 +21,8 @@
 #   The git repository. This setting is only valid in combination with the installation method `git`.
 #
 # @param git_revision
-#   Tag or branch of the git repository. This setting is only valid in combination with the installation method `git`.
+#   Tag or branch of the git repository. This setting is deprecated and only used in combination with
+#   the installation method `git`.
 #
 # @param package_name
 #   Package name of the module. This setting is only valid in combination with the installation method `package`.
@@ -50,12 +53,12 @@
 #   }
 #
 define icingaweb2::module (
-  Enum['absent', 'present']         $ensure         = 'present',
+  String                            $ensure         = 'present',
   String                            $module         = $title,
   Stdlib::Absolutepath              $module_dir     = "${icingaweb2::globals::default_module_path}/${title}",
   Enum['git', 'none', 'package']    $install_method = 'git',
   Optional[String]                  $git_repository = undef,
-  String                            $git_revision   = 'master',
+  Optional[String]                  $git_revision   = undef,
   Optional[String]                  $package_name   = undef,
   Hash                              $settings       = {},
 ) {
@@ -70,14 +73,29 @@ define icingaweb2::module (
     group => $conf_group,
   }
 
-  $enable_module = if $ensure == 'present' {
-    'link'
-  } else {
-    'absent'
+  case $ensure {
+    'present', 'installed': {
+      $vcs_revision = pick($git_revision, 'master')
+      $vcs_ensure = 'present'
+      $pkg_ensure = 'installed'
+      $link_ensure = 'link'
+    }
+    'absent', 'purged': {
+      $vcs_revision = 'master'
+      $vcs_ensure = 'absent'
+      $pkg_ensure = $ensure
+      $link_ensure = 'absent'
+    }
+    default: {
+      $vcs_revision = pick($git_revision, $ensure)
+      $vcs_ensure = 'present'
+      $pkg_ensure = $ensure
+      $link_ensure = 'link'
+    }
   }
 
   file { "${conf_dir}/enabledModules/${module}":
-    ensure => $enable_module,
+    ensure => $link_ensure,
     target => $module_dir,
   }
 
@@ -91,16 +109,16 @@ define icingaweb2::module (
   case $install_method {
     'git': {
       vcsrepo { $module_dir:
-        ensure   => present,
+        ensure   => $vcs_ensure,
         provider => 'git',
         source   => $git_repository,
-        revision => $git_revision,
+        revision => $vcs_revision,
       }
     }
     'none': {}
     'package': {
       package { $package_name:
-        ensure => installed,
+        ensure => $pkg_ensure,
       }
     }
     default: {

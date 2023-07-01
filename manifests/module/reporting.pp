@@ -1,7 +1,9 @@
 # @summary Installs the reporting module
 #
 # @param ensure
-#   Ensures the state of the reporting module.
+#   Ensures the state of the reporting module. Specific states can also be defined, depending on the `install_method`.
+#   For package installations, it represents the package state, for git managed modules it defines
+#   the revision to check out.
 #
 # @param module_dir
 #   Target directory of the module.
@@ -90,7 +92,7 @@
 #   }
 #
 class icingaweb2::module::reporting (
-  Enum['absent', 'present']                  $ensure,
+  String                                     $ensure,
   Enum['git', 'none', 'package']             $install_method,
   String                                     $git_repository,
   String                                     $package_name,

@@ -28,12 +28,14 @@
 * [`icingaweb2::module::pdfexport`](#icingaweb2modulepdfexport): Installs, configures and enables the pdfexport module.
 * [`icingaweb2::module::puppetdb`](#icingaweb2modulepuppetdb): Installs and configures the puppetdb module.
 * [`icingaweb2::module::reactbundle`](#icingaweb2modulereactbundle): Installs and enables the reactbundle module.
-* [`icingaweb2::module::reporting`](#icingaweb2modulereporting): Installs the reporting plugin
+* [`icingaweb2::module::reporting`](#icingaweb2modulereporting): Installs the reporting module
 * [`icingaweb2::module::reporting::service`](#icingaweb2modulereportingservice): Installs and configures the reporting scheduler.
 * [`icingaweb2::module::translation`](#icingaweb2moduletranslation): Installs and configures the translation module.
 * [`icingaweb2::module::vsphere`](#icingaweb2modulevsphere): The vSphere module extends the Director. It provides import sources for virtual machines and physical hosts from vSphere.
 * [`icingaweb2::module::vspheredb`](#icingaweb2modulevspheredb): Installs the vsphereDB plugin
 * [`icingaweb2::module::vspheredb::service`](#icingaweb2modulevspheredbservice): Installs and configures the vspheredb service.
+* [`icingaweb2::module::x509`](#icingaweb2modulex509): Installs the x509 module
+* [`icingaweb2::module::x509::service`](#icingaweb2modulex509service): Installs and configures the x509 job scheduler.
 
 #### Private Classes
 
@@ -577,6 +579,8 @@ The following parameters are available in the `icingaweb2::globals` class:
 * [`pgsql_idoreports_sla_percent`](#pgsql_idoreports_sla_percent)
 * [`gettext_package_name`](#gettext_package_name)
 * [`icingacli_bin`](#icingacli_bin)
+* [`mysql_x509_schema`](#mysql_x509_schema)
+* [`pgsql_x509_schema`](#pgsql_x509_schema)
 
 ##### <a name="package_name"></a>`package_name`
 
@@ -686,6 +690,18 @@ Data type: `Stdlib::Absolutepath`
 
 Path to `icingacli' comand line tool.
 
+##### <a name="mysql_x509_schema"></a>`mysql_x509_schema`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### <a name="pgsql_x509_schema"></a>`pgsql_x509_schema`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
 ### <a name="icingaweb2moduleaudit"></a>`icingaweb2::module::audit`
 
 Installs and enables the audit  module.
@@ -723,11 +739,11 @@ The following parameters are available in the `icingaweb2::module::audit` class:
 
 ##### <a name="ensure"></a>`ensure`
 
-Data type: `Enum['absent', 'present']`
+Data type: `String`
 
-Enable or disable module.
-
-Default value: `'present'`
+Enable or disable module. Specific states can also be defined, depending on the `install_method`.
+For package installations, it represents the package state, for git managed modules it defines
+the revision to check out.
 
 ##### <a name="module_dir"></a>`module_dir`
 
@@ -849,11 +865,11 @@ The following parameters are available in the `icingaweb2::module::businessproce
 
 ##### <a name="ensure"></a>`ensure`
 
-Data type: `Enum['absent', 'present']`
+Data type: `String`
 
-Enable or disable module.
-
-Default value: `'present'`
+Enable or disable module. Specific states can also be defined, depending on the `install_method`.
+For package installations, it represents the package state, for git managed modules it defines
+the revision to check out.
 
 ##### <a name="module_dir"></a>`module_dir`
 
@@ -924,11 +940,11 @@ The following parameters are available in the `icingaweb2::module::cube` class:
 
 ##### <a name="ensure"></a>`ensure`
 
-Data type: `Enum['absent', 'present']`
+Data type: `String`
 
-Enable or disable module.
-
-Default value: `'present'`
+Enable or disable module. Specific states can also be defined, depending on the `install_method`.
+For package installations, it represents the package state, for git managed modules it defines
+the revision to check out.
 
 ##### <a name="module_dir"></a>`module_dir`
 
@@ -1033,11 +1049,11 @@ The following parameters are available in the `icingaweb2::module::director` cla
 
 ##### <a name="ensure"></a>`ensure`
 
-Data type: `Enum['absent', 'present']`
+Data type: `String`
 
-Enable or disable module.
-
-Default value: `'present'`
+Enable or disable module. Specific states can also be defined, depending on the `install_method`.
+For package installations, it represents the package state, for git managed modules it defines
+the revision to check out.
 
 ##### <a name="module_dir"></a>`module_dir`
 
@@ -1344,11 +1360,9 @@ The following parameters are available in the `icingaweb2::module::doc` class:
 
 ##### <a name="ensure"></a>`ensure`
 
-Data type: `Enum['absent', 'present']`
+Data type: `String`
 
-Enable or disable module. Defaults to `present`
-
-Default value: `'present'`
+Enable or disable module. Specific states can also be defined, depending on the operating system.
 
 ### <a name="icingaweb2moduleelasticsearch"></a>`icingaweb2::module::elasticsearch`
 
@@ -1396,11 +1410,11 @@ The following parameters are available in the `icingaweb2::module::elasticsearch
 
 ##### <a name="ensure"></a>`ensure`
 
-Data type: `Enum['absent', 'present']`
+Data type: `String`
 
-Enable or disable module.
-
-Default value: `'present'`
+Enable or disable module. Specific states can also be defined, depending on the `install_method`.
+For package installations, it represents the package state, for git managed modules it defines
+the revision to check out.
 
 ##### <a name="module_dir"></a>`module_dir`
 
@@ -1493,11 +1507,11 @@ The following parameters are available in the `icingaweb2::module::fileshipper` 
 
 ##### <a name="ensure"></a>`ensure`
 
-Data type: `Enum['absent', 'present']`
+Data type: `String`
 
-Enables or disables module.
-
-Default value: `'present'`
+Enables or disables module. Specific states can also be defined, depending on the `install_method`.
+For package installations, it represents the package state, for git managed modules it defines
+the revision to check out.
 
 ##### <a name="module_dir"></a>`module_dir`
 
@@ -1591,11 +1605,11 @@ The following parameters are available in the `icingaweb2::module::generictts` c
 
 ##### <a name="ensure"></a>`ensure`
 
-Data type: `Enum['absent', 'present']`
+Data type: `String`
 
-Enable or disable module.
-
-Default value: `'present'`
+Enable or disable module. Specific states can also be defined, depending on the `install_method`.
+For package installations, it represents the package state, for git managed modules it defines
+the revision to check out.
 
 ##### <a name="module_dir"></a>`module_dir`
 
@@ -1687,11 +1701,11 @@ The following parameters are available in the `icingaweb2::module::graphite` cla
 
 ##### <a name="ensure"></a>`ensure`
 
-Data type: `Enum['absent', 'present']`
+Data type: `String`
 
-Enables or disables module.
-
-Default value: `'present'`
+Enables or disables module. Specific states can also be defined, depending on the `install_method`.
+For package installations, it represents the package state, for git managed modules it defines
+the revision to check out.
 
 ##### <a name="module_dir"></a>`module_dir`
 
@@ -1865,11 +1879,9 @@ The following parameters are available in the `icingaweb2::module::icingadb` cla
 
 ##### <a name="ensure"></a>`ensure`
 
-Data type: `Enum['absent', 'present']`
+Data type: `String`
 
-Enable or disable module.
-
-Default value: `'present'`
+Enable or disable module. Specific package states can also be defined.
 
 ##### <a name="package_name"></a>`package_name`
 
@@ -2193,9 +2205,11 @@ The following parameters are available in the `icingaweb2::module::idoreports` c
 
 ##### <a name="ensure"></a>`ensure`
 
-Data type: `Enum['absent', 'present']`
+Data type: `String`
 
-Enable or disable module.
+Enable or disable module. Specific states can also be defined, depending on the `install_method`.
+For package installations, it represents the package state, for git managed modules it defines
+the revision to check out.
 
 ##### <a name="module_dir"></a>`module_dir`
 
@@ -2687,11 +2701,11 @@ The following parameters are available in the `icingaweb2::module::pdfexport` cl
 
 ##### <a name="ensure"></a>`ensure`
 
-Data type: `Enum['absent', 'present']`
+Data type: `String`
 
-Enable or disable module.
-
-Default value: `'present'`
+Enable or disable module. Specific states can also be defined, depending on the `install_method`.
+For package installations, it represents the package state, for git managed modules it defines
+the revision to check out.
 
 ##### <a name="module_dir"></a>`module_dir`
 
@@ -2820,11 +2834,11 @@ The following parameters are available in the `icingaweb2::module::puppetdb` cla
 
 ##### <a name="ensure"></a>`ensure`
 
-Data type: `Enum['absent', 'present']`
+Data type: `String`
 
-Enable or disable module.
-
-Default value: `'present'`
+Enable or disable module. Specific states can also be defined, depending on the `install_method`.
+For package installations, it represents the package state, for git managed modules it defines
+the revision to check out.
 
 ##### <a name="module_dir"></a>`module_dir`
 
@@ -2935,7 +2949,7 @@ Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
 
 ### <a name="icingaweb2modulereporting"></a>`icingaweb2::module::reporting`
 
-Installs the reporting plugin
+Installs the reporting module
 
 #### Examples
 
@@ -2984,9 +2998,11 @@ The following parameters are available in the `icingaweb2::module::reporting` cl
 
 ##### <a name="ensure"></a>`ensure`
 
-Data type: `Enum['absent', 'present']`
+Data type: `String`
 
-Ensures the state of the reporting module.
+Ensures the state of the reporting module. Specific states can also be defined, depending on the `install_method`.
+For package installations, it represents the package state, for git managed modules it defines
+the revision to check out.
 
 ##### <a name="module_dir"></a>`module_dir`
 
@@ -3282,11 +3298,11 @@ The following parameters are available in the `icingaweb2::module::vsphere` clas
 
 ##### <a name="ensure"></a>`ensure`
 
-Data type: `Enum['absent', 'present']`
+Data type: `String`
 
-Enable or disable module.
-
-Default value: `'present'`
+Enable or disable module. Specific states can also be defined, depending on the `install_method`.
+For package installations, it represents the package state, for git managed modules it defines
+the revision to check out.
 
 ##### <a name="module_dir"></a>`module_dir`
 
@@ -3378,11 +3394,11 @@ The following parameters are available in the `icingaweb2::module::vspheredb` cl
 
 ##### <a name="ensure"></a>`ensure`
 
-Data type: `Enum['absent', 'present']`
+Data type: `String`
 
-Ensur es the state of the vspheredb module.
-
-Default value: `'present'`
+Ensur es the state of the vspheredb module. Specific states can also be defined, depending on the `install_method`.
+For package installations, it represents the package state, for git managed modules it defines
+the revision to check out.
 
 ##### <a name="module_dir"></a>`module_dir`
 
@@ -3636,6 +3652,286 @@ Data type: `Boolean`
 
 Whether to manage the server user resource. Only available if
 install_method package is not used.
+
+Default value: ``true``
+
+### <a name="icingaweb2modulex509"></a>`icingaweb2::module::x509`
+
+Installs the x509 module
+
+#### Examples
+
+##### 
+
+```puppet
+class { 'icingaweb2::module::x509':
+  ensure       => present,
+  git_revision => 'v1.2.1',
+  db_host      => 'localhost',
+  db_name      => 'x509',
+  db_username  => 'x509',
+  db_password  => Sensitive('supersecret'),
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::module::x509` class:
+
+* [`ensure`](#ensure)
+* [`module_dir`](#module_dir)
+* [`git_repository`](#git_repository)
+* [`git_revision`](#git_revision)
+* [`install_method`](#install_method)
+* [`package_name`](#package_name)
+* [`db_type`](#db_type)
+* [`db_host`](#db_host)
+* [`db_port`](#db_port)
+* [`db_name`](#db_name)
+* [`db_username`](#db_username)
+* [`db_password`](#db_password)
+* [`db_charset`](#db_charset)
+* [`use_tls`](#use_tls)
+* [`tls_key_file`](#tls_key_file)
+* [`tls_cert_file`](#tls_cert_file)
+* [`tls_cacert_file`](#tls_cacert_file)
+* [`tls_key`](#tls_key)
+* [`tls_cert`](#tls_cert)
+* [`tls_cacert`](#tls_cacert)
+* [`tls_capath`](#tls_capath)
+* [`tls_noverify`](#tls_noverify)
+* [`tls_cipher`](#tls_cipher)
+* [`import_schema`](#import_schema)
+* [``](#)
+
+##### <a name="ensure"></a>`ensure`
+
+Data type: `String`
+
+Ensures the state of the x509 module. Specific states can also be defined, depending on the `install_method`.
+For package installations, it represents the package state, for git managed modules it defines
+the revision to check out.
+
+##### <a name="module_dir"></a>`module_dir`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Target directory of the module.
+
+Default value: ``undef``
+
+##### <a name="git_repository"></a>`git_repository`
+
+Data type: `String`
+
+The upstream module repository.
+
+##### <a name="git_revision"></a>`git_revision`
+
+Data type: `Optional[String]`
+
+The version of the module that needs to be used.
+
+Default value: ``undef``
+
+##### <a name="install_method"></a>`install_method`
+
+Data type: `Enum['git', 'none', 'package']`
+
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+##### <a name="package_name"></a>`package_name`
+
+Data type: `String`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+##### <a name="db_type"></a>`db_type`
+
+Data type: `Enum['mysql', 'pgsql']`
+
+The database type. Either mysql or pgsql.
+
+Default value: `'mysql'`
+
+##### <a name="db_host"></a>`db_host`
+
+Data type: `Stdlib::Host`
+
+The host where the database will be running
+
+Default value: `'localhost'`
+
+##### <a name="db_port"></a>`db_port`
+
+Data type: `Optional[Stdlib::Port]`
+
+The port on which the database is accessible.
+
+Default value: ``undef``
+
+##### <a name="db_name"></a>`db_name`
+
+Data type: `String`
+
+The name of the database this module should use.
+
+Default value: `'x509'`
+
+##### <a name="db_username"></a>`db_username`
+
+Data type: `String`
+
+The username needed to access the database.
+
+Default value: `'x509'`
+
+##### <a name="db_password"></a>`db_password`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+The password needed to access the database.
+
+Default value: ``undef``
+
+##### <a name="db_charset"></a>`db_charset`
+
+Data type: `Optional[String]`
+
+The charset the database is set to.
+
+Default value: ``undef``
+
+##### <a name="use_tls"></a>`use_tls`
+
+Data type: `Optional[Boolean]`
+
+Either enable or disable TLS encryption to the database. Other TLS parameters
+are only affected if this is set to 'true'.
+
+Default value: ``undef``
+
+##### <a name="tls_key_file"></a>`tls_key_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the private key for client authentication. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cert_file"></a>`tls_cert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the certificate for client authentication. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cacert_file"></a>`tls_cacert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Location of the ca certificate. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_key"></a>`tls_key`
+
+Data type: `Optional[Icingaweb2::Secret]`
+
+The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cert"></a>`tls_cert`
+
+Data type: `Optional[String]`
+
+The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_cacert"></a>`tls_cacert`
+
+Data type: `Optional[String]`
+
+The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
+
+Default value: ``undef``
+
+##### <a name="tls_capath"></a>`tls_capath`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+The file path to the directory that contains the trusted SSL CA certificates, which are stored in PEM format.
+Only available for the mysql database.
+
+Default value: ``undef``
+
+##### <a name="tls_noverify"></a>`tls_noverify`
+
+Data type: `Optional[Boolean]`
+
+Disable validation of the server certificate.
+
+Default value: ``undef``
+
+##### <a name="tls_cipher"></a>`tls_cipher`
+
+Data type: `Optional[String]`
+
+Cipher to use for the encrypted database connection.
+
+Default value: ``undef``
+
+##### <a name="import_schema"></a>`import_schema`
+
+Data type: `Variant[Boolean, Enum['mariadb', 'mysql']]`
+
+Whether to import the database schema or not. Options `mariadb` and `mysql`,
+both means true. With mariadb its cli options are used for the import,
+whereas with mysql its different options.
+
+Default value: ``false``
+
+##### <a name=""></a>``
+
+
+
+### <a name="icingaweb2modulex509service"></a>`icingaweb2::module::x509::service`
+
+Installs and configures the x509 job scheduler.
+
+* **Note** Only systemd is supported by the Icinga Team and this module.
+
+#### Examples
+
+##### 
+
+```puppet
+include icingaweb2::module::x509::service
+```
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::module::x509::service` class:
+
+* [`ensure`](#ensure)
+* [`enable`](#enable)
+
+##### <a name="ensure"></a>`ensure`
+
+Data type: `Stdlib::Ensure::Service`
+
+Whether the x509 service should be running.
+
+Default value: `'running'`
+
+##### <a name="enable"></a>`enable`
+
+Data type: `Boolean`
+
+Enable or disable the service.
 
 Default value: ``true``
 
@@ -4531,9 +4827,11 @@ The following parameters are available in the `icingaweb2::module` defined type:
 
 ##### <a name="ensure"></a>`ensure`
 
-Data type: `Enum['absent', 'present']`
+Data type: `String`
 
-Enable or disable module.
+Enable or disable module. Specific states can also be defined, depending on the `install_method`.
+For package installations, it represents the package state, for git managed modules it defines
+the revision to check out.
 
 Default value: `'present'`
 
@@ -4571,11 +4869,12 @@ Default value: ``undef``
 
 ##### <a name="git_revision"></a>`git_revision`
 
-Data type: `String`
+Data type: `Optional[String]`
 
-Tag or branch of the git repository. This setting is only valid in combination with the installation method `git`.
+Tag or branch of the git repository. This setting is deprecated and only used in combination with
+the installation method `git`.
 
-Default value: `'master'`
+Default value: ``undef``
 
 ##### <a name="package_name"></a>`package_name`
 

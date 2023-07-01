@@ -47,6 +47,19 @@ describe('icingaweb2::module::vspheredb', type: :class) do
                            })
         }
       end
+
+      context "#{os} with ensure = latest" do
+        let(:params) do
+          {
+            ensure: 'latest',
+          }
+        end
+
+        it {
+          is_expected.to contain_icingaweb2__module('vspheredb')
+            .with_ensure('latest')
+        }
+      end
     end
   end
 end

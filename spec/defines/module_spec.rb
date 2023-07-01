@@ -115,6 +115,54 @@ describe('icingaweb2::module', type: :define) do
             .with_settings('setting1' => 'value1', 'setting2' => 'value2')
         }
       end
+
+      context "#{os} with install_method => package and ensure => 1.2-3" do
+        let(:params) do
+          { ensure: '1.2-3',
+            install_method: 'package',
+            package_name: 'icingaweb2-module-mymodule', }
+        end
+
+        it { is_expected.to contain_file('/etc/icingaweb2/enabledModules/mymodule').with_ensure('link') }
+        it { is_expected.to contain_file('/etc/icingaweb2/modules/mymodule').with_ensure('directory') }
+        it { is_expected.to contain_package('icingaweb2-module-mymodule').with_ensure('1.2-3') }
+      end
+
+      context "#{os} with install_method => git and ensure => v1.2" do
+        let(:params) do
+          { ensure: 'v1.2',
+            install_method: 'git',
+            git_repository: 'https://github.com/icinga/mymodule.git', }
+        end
+        let(:modules_basedir) do
+          case facts[:os]['family']
+          when 'FreeBSD'
+            '/usr/local/www/icingaweb2/modules'
+          else
+            '/usr/share/icingaweb2/modules'
+          end
+        end
+        let(:conf_basedir) do
+          case facts[:os]['family']
+          when 'FreeBSD'
+            '/usr/local/etc/icingaweb2'
+          else
+            '/etc/icingaweb2'
+          end
+        end
+
+        it { is_expected.to contain_file("#{conf_basedir}/enabledModules/mymodule").with_ensure('link') }
+        it { is_expected.to contain_file("#{conf_basedir}/modules/mymodule").with_ensure('directory') }
+        it {
+          is_expected.to contain_vcsrepo("#{modules_basedir}/mymodule")
+            .with(
+              ensure: 'present',
+              provider: 'git',
+              source: params[:git_repository],
+              revision: params[:ensure],
+            )
+        }
+      end
     end
   end
 end
