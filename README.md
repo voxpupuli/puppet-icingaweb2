@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Icinga/puppet-icingaweb2.png?branch=master)](https://travis-ci.org/Icinga/puppet-icingaweb2)
+[![Build Status](https://travis-ci.org/Icinga/puppet-icingaweb2.png?branch=main)](https://travis-ci.org/Icinga/puppet-icingaweb2)
 
 # Icinga Web 2 Puppet Module
 
@@ -202,7 +202,7 @@ class {'icingaweb2::module::monitoring':
 
 ## Reference
 
-See [REFERENCE.md](https://github.com/Icinga/puppet-icingaweb2/blob/master/REFERENCE.md)
+See [REFERENCE.md](https://github.com/Icinga/puppet-icingaweb2/blob/main/REFERENCE.md)
 
 ## Development
 
