@@ -1,5 +1,28 @@
 # Change Log
 
+## [v3.9.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.9.0) (2023-07-21)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.8.0...v3.9.0)
+
+**Implemented enhancements:**
+
+- Add module x509 support [\#357](https://github.com/Icinga/puppet-icingaweb2/issues/357)
+- Allow vcsrepo \< 7.0.0 [\#361](https://github.com/Icinga/puppet-icingaweb2/pull/361) ([saz](https://github.com/saz))
+- Module/x509 [\#360](https://github.com/Icinga/puppet-icingaweb2/pull/360) ([lbetz](https://github.com/lbetz))
+
+**Fixed bugs:**
+
+- Markdown permission table for icingaweb2::config::role is broken [\#356](https://github.com/Icinga/puppet-icingaweb2/issues/356)
+- Fix role documentation typo and table [\#358](https://github.com/Icinga/puppet-icingaweb2/pull/358) ([zilchms](https://github.com/zilchms))
+
+**Closed issues:**
+
+- Rename default branch to main [\#367](https://github.com/Icinga/puppet-icingaweb2/issues/367)
+
+**Merged pull requests:**
+
+- Feature dependency version [\#362](https://github.com/Icinga/puppet-icingaweb2/pull/362) ([carraroj](https://github.com/carraroj))
+- Pin concurrent-ruby temporary to less than 1.2.0 [\#359](https://github.com/Icinga/puppet-icingaweb2/pull/359) ([lbetz](https://github.com/lbetz))
+
 ## [v3.8.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.8.0) (2023-03-10)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.7.3...v3.8.0)
 

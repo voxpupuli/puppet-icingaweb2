@@ -76,8 +76,6 @@
 #   both means true. With mariadb its cli options are used for the import,
 #   whereas with mysql its different options.
 #
-# @param
-#
 # @example
 #   class { 'icingaweb2::module::x509':
 #     ensure       => present,

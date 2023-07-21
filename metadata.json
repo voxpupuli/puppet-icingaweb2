@@ -1,6 +1,6 @@
 {
   "name": "icinga-icingaweb2",
-  "version": "3.8.0",
+  "version": "3.9.0",
   "author": "Icinga Team",
   "summary": "Icinga Web 2 Puppet Module",
   "license": "Apache-2.0",
@@ -70,7 +70,6 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "18.04",
         "20.04",
         "22.04"
       ]
