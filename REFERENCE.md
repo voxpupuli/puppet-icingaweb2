@@ -581,10 +581,10 @@ The following parameters are available in the `icingaweb2::globals` class:
 * [`mysql_idoreports_sla_percent`](#-icingaweb2--globals--mysql_idoreports_sla_percent)
 * [`pgsql_idoreports_slaperiods`](#-icingaweb2--globals--pgsql_idoreports_slaperiods)
 * [`pgsql_idoreports_sla_percent`](#-icingaweb2--globals--pgsql_idoreports_sla_percent)
-* [`gettext_package_name`](#-icingaweb2--globals--gettext_package_name)
-* [`icingacli_bin`](#-icingaweb2--globals--icingacli_bin)
 * [`mysql_x509_schema`](#-icingaweb2--globals--mysql_x509_schema)
 * [`pgsql_x509_schema`](#-icingaweb2--globals--pgsql_x509_schema)
+* [`gettext_package_name`](#-icingaweb2--globals--gettext_package_name)
+* [`icingacli_bin`](#-icingaweb2--globals--icingacli_bin)
 
 ##### <a name="-icingaweb2--globals--package_name"></a>`package_name`
 
@@ -682,6 +682,18 @@ Data type: `Stdlib::Absolutepath`
 
 Location of the get_sla_ok_percent database extension for PostgreSQL.
 
+##### <a name="-icingaweb2--globals--mysql_x509_schema"></a>`mysql_x509_schema`
+
+Data type: `Stdlib::Absolutepath`
+
+Location of the x509 database schema for MySQL/MariaDB.
+
+##### <a name="-icingaweb2--globals--pgsql_x509_schema"></a>`pgsql_x509_schema`
+
+Data type: `Stdlib::Absolutepath`
+
+Location of the x509 database schema for PostgreSQL.
+
 ##### <a name="-icingaweb2--globals--gettext_package_name"></a>`gettext_package_name`
 
 Data type: `String`
@@ -693,18 +705,6 @@ Package name `gettext` tool belongs to.
 Data type: `Stdlib::Absolutepath`
 
 Path to `icingacli' comand line tool.
-
-##### <a name="-icingaweb2--globals--mysql_x509_schema"></a>`mysql_x509_schema`
-
-Data type: `Stdlib::Absolutepath`
-
-
-
-##### <a name="-icingaweb2--globals--pgsql_x509_schema"></a>`pgsql_x509_schema`
-
-Data type: `Stdlib::Absolutepath`
-
-
 
 ### <a name="icingaweb2--module--audit"></a>`icingaweb2::module::audit`
 
@@ -2499,6 +2499,7 @@ The following parameters are available in the `icingaweb2::module::monitoring` c
 
 * [`ensure`](#-icingaweb2--module--monitoring--ensure)
 * [`protected_customvars`](#-icingaweb2--module--monitoring--protected_customvars)
+* [`manage_package`](#-icingaweb2--module--monitoring--manage_package)
 * [`ido_type`](#-icingaweb2--module--monitoring--ido_type)
 * [`ido_host`](#-icingaweb2--module--monitoring--ido_host)
 * [`ido_port`](#-icingaweb2--module--monitoring--ido_port)
@@ -2534,6 +2535,16 @@ Custom variables in Icinga 2 may contain sensible information. Set patterns for 
 that should be hidden in the web interface.
 
 Default value: `['*pw*', '*pass*', 'community']`
+
+##### <a name="-icingaweb2--module--monitoring--manage_package"></a>`manage_package`
+
+Data type: `Boolean`
+
+Set to `false` as Fix for Icinga Web >= 2.12.0 to do not manage the removed package
+`icingaweb2-module-monitoring` (only Debian/Ubuntu).
+See issue #368 (https://github.com/Icinga/puppet-icingaweb2/issues/368).
+
+Default value: `true`
 
 ##### <a name="-icingaweb2--module--monitoring--ido_type"></a>`ido_type`
 

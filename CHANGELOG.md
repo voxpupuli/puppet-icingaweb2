@@ -1,5 +1,12 @@
 # Change Log
 
+## [v3.9.1](https://github.com/icinga/puppet-icingaweb2/tree/v3.9.1) (2023-09-28)
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.9.0...v3.9.1)
+
+**Fixed bugs:**
+
+- Add manage\_package param to do not manage removed icingaweb2-module-monitoring package on Debian and Ubuntu [\#368](https://github.com/Icinga/puppet-icingaweb2/issues/368)
+
 ## [v3.9.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.9.0) (2023-07-21)
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.8.0...v3.9.0)
 
