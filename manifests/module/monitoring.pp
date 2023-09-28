@@ -10,6 +10,11 @@
 #   Custom variables in Icinga 2 may contain sensible information. Set patterns for custom variables
 #   that should be hidden in the web interface.
 #
+# @param manage_package
+#   Set to `false` as Fix for Icinga Web >= 2.12.0 to do not manage the removed package
+#   `icingaweb2-module-monitoring` (only Debian/Ubuntu).
+#   See issue #368 (https://github.com/Icinga/puppet-icingaweb2/issues/368).
+#
 # @param ido_type
 #   Type of your IDO database. Either `mysql` or `pgsql`.
 #
@@ -91,6 +96,7 @@ class icingaweb2::module::monitoring (
   Enum['absent', 'present']      $ensure               = 'present',
   Variant[String, Array[String]] $protected_customvars = ['*pw*', '*pass*', 'community'],
   Enum['mysql', 'pgsql']         $ido_type             = 'mysql',
+  Boolean                        $manage_package       = true,
   Optional[Stdlib::Host]         $ido_host             = undef,
   Optional[Stdlib::Port]         $ido_port             = undef,
   Optional[String]               $ido_db_name          = undef,
@@ -116,8 +122,13 @@ class icingaweb2::module::monitoring (
 
   case $facts['os']['family'] {
     'Debian': {
-      $install_method = 'package'
-      $package_name   = 'icingaweb2-module-monitoring'
+      if $manage_package {
+        $install_method = 'package'
+        $package_name   = 'icingaweb2-module-monitoring'
+      } else {
+        $install_method = 'none'
+        $package_name   = undef
+      }
     }
     default: {
       $install_method = 'none'

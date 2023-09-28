@@ -27,6 +27,11 @@ This module can manage all configurations files of Icinga Web 2 and import an in
 manage all official [modules](https://www.icinga.com/products/icinga-web-2-modules/) as well as modules developed by the
 community.
 
+### What's new in version 3.9.1
+
+The Icinga team removed package icingaweb2-module-monitoring (only on Debian/Ubuntu) for Icinga Web 2 >= 2.12.0. For now
+we add an parameter `manage_package` (set to `true` bye default) to do not managed the missing transition package.
+
 ### What's new in version 3.0.0
 
 * The current version now uses the `icinga::repos` class from the new module `icinga` for the configuration of

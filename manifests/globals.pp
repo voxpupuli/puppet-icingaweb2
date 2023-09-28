@@ -51,6 +51,12 @@
 # @param pgsql_idoreports_sla_percent
 #   Location of the get_sla_ok_percent database extension for PostgreSQL.
 #
+# @param mysql_x509_schema
+#   Location of the x509 database schema for MySQL/MariaDB.
+#
+# @param pgsql_x509_schema
+#   Location of the x509 database schema for PostgreSQL.
+#
 # @param gettext_package_name
 #   Package name `gettext` tool belongs to.
 #

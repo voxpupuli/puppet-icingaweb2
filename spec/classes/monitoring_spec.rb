@@ -133,6 +133,23 @@ describe('icingaweb2::module::monitoring', type: :class) do
         }
       end
 
+      context "#{os} with manage_package 'false'" do
+        let(:params) do
+          { ido_type: 'mysql',
+            ido_host: 'localhost',
+            ido_db_name: 'icinga2',
+            ido_db_username: 'icinga2',
+            ido_db_password: 'icinga2',
+            manage_package: false }
+        end
+
+        it {
+          is_expected.to contain_icingaweb2__module('monitoring')
+            .with_install_method('none')
+            .with_module_dir('/usr/share/icingaweb2/modules/monitoring')
+        }
+      end
+
       context "#{os} with invalid ido_type" do
         let(:params) { { ido_type: 'foobar' } }
 
