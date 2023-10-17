@@ -134,20 +134,20 @@ class icingaweb2::module::reporting (
     }
   }
 
-  $tls = merge(delete($icingaweb2::config::tls, ['key', 'cert', 'cacert']), delete_undef_values(merge(icingaweb2::cert::files(
-          'client',
-          $module_conf_dir,
-          $tls_key_file,
-          $tls_cert_file,
-          $tls_cacert_file,
-          $tls_key,
-          $tls_cert,
-          $tls_cacert,
-        ), {
-          capath   => $tls_capath,
-          noverify => $tls_noverify,
-          cipher   => $tls_cipher,
-  })))
+  $tls = delete($icingaweb2::config::tls, ['key', 'cert', 'cacert']) + delete_undef_values(icingaweb2::cert::files(
+      'client',
+      $module_conf_dir,
+      $tls_key_file,
+      $tls_cert_file,
+      $tls_cacert_file,
+      $tls_key,
+      $tls_cert,
+      $tls_cacert,
+    ) + {
+      capath   => $tls_capath,
+      noverify => $tls_noverify,
+      cipher   => $tls_cipher,
+  })
 
   Exec {
     user     => 'root',

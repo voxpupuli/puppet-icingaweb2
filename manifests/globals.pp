@@ -85,6 +85,8 @@ class icingaweb2::globals (
   String                 $gettext_package_name,
   Stdlib::Absolutepath   $icingacli_bin,
 ) {
+  $stdlib_version = load_module_metadata('stdlib')['version']
+
   $port = {
     'mysql' => 3306,
     'pgsql' => 5432,

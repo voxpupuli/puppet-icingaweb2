@@ -29,7 +29,7 @@
 #   The `module_name` should be used as target directory for the configuration files.
 #
 # @example
-#   $conf_dir        = $::icingaweb2::globals::conf_dir
+#   $conf_dir        = $icingaweb2::globals::conf_dir
 #   $module_conf_dir = "${conf_dir}/modules/mymodule"
 #
 #   $settings = {

@@ -28,7 +28,12 @@ class icingaweb2::install {
   }
 
   if $extra_packages {
-    ensure_packages($extra_packages, { 'ensure' => installed })
+    $metadata = load_module_metadata('stdlib')
+    if versioncmp($metadata['version'], '9.0.0') < 0 {
+      ensure_packages($extra_packages, { 'ensure' => installed })
+    } else {
+      stdlib::ensure_packages($extra_packages, { 'ensure' => installed })
+    }
   }
 
   file { prefix(['navigation', 'preferences', 'dashboards'], "${conf_dir}/"):
