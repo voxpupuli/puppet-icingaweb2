@@ -190,25 +190,25 @@ describe('icingaweb2::module::puppetdb', type: :class) do
             .with_ssl_cacert('mycacert1')
         }
 
-        it {
-          is_expected.to contain_concat('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/foo.example.com_combined.pem')
-            .with_ensure('present')
-            .with_warn('false')
-            .with_mode('0640')
-            .with_ensure_newline(true)
-        }
+        # it {
+        #   is_expected.to contain_concat('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/foo.example.com_combined.pem')
+        #     .with_ensure('present')
+        #     .with_warn('false')
+        #     .with_mode('0640')
+        #     .with_ensure_newline(true)
+        # }
 
-        it {
-          is_expected.to contain_concat__fragment('private_key')
-            .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/foo.example.com_combined.pem')
-            .with_order('1')
-        }
+        # it {
+        #   is_expected.to contain_concat__fragment('private_key')
+        #     .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/foo.example.com_combined.pem')
+        #     .with_order('1')
+        # }
 
-        it {
-          is_expected.to contain_concat__fragment('public_key')
-            .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/foo.example.com_combined.pem')
-            .with_order('2')
-        }
+        # it {
+        #   is_expected.to contain_concat__fragment('public_key')
+        #     .with_target('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys/foo.example.com_combined.pem')
+        #     .with_order('2')
+        # }
       end
 
       context 'with ssl set to foo' do

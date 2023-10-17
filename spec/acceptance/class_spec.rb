@@ -4,7 +4,7 @@ describe 'icingaweb2 class:' do
   describe 'icingaweb2 with defaults' do
     let(:pp) do
       <<-MANIFEST
-        case $::osfamily {
+        case $facts['os']['family'] {
           'redhat': {
             if $facts['os']['name'] == 'centos' and Integer($facts['os']['release']['major']) < 8 {
               package { 'centos-release-scl': }
