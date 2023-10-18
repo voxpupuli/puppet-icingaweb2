@@ -28,9 +28,6 @@
 # @param theme_disabled
 #   Whether users can change themes or not.
 #
-# @param manage_repo
-#   Deprecated, use manage_repos.
-#
 # @param manage_repos
 #   When set to true this module will use the module icinga/puppet-icinga to manage repositories,
 #   e.g. the release repo on packages.icinga.com repository by default, the EPEL repository or Backports.
@@ -228,7 +225,6 @@ class icingaweb2 (
   Boolean                                         $show_stacktraces    = false,
   String                                          $theme               = 'Icinga',
   Boolean                                         $theme_disabled      = false,
-  Boolean                                         $manage_repo         = false,
   Boolean                                         $manage_repos        = false,
   Boolean                                         $manage_package      = true,
   Optional[Array[String]]                         $extra_packages      = undef,
@@ -258,11 +254,8 @@ class icingaweb2 (
 ) {
   require icingaweb2::globals
 
-  if $manage_repos or $manage_repo {
+  if $manage_repos {
     require icinga::repos
-    if $manage_repo {
-      deprecation('manage_repo', 'manage_repo is deprecated and will be replaced by manage_repos in the future.')
-    }
   }
 
   class { 'icingaweb2::install': }

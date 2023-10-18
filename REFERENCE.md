@@ -189,7 +189,6 @@ The following parameters are available in the `icingaweb2` class:
 * [`module_path`](#-icingaweb2--module_path)
 * [`theme`](#-icingaweb2--theme)
 * [`theme_disabled`](#-icingaweb2--theme_disabled)
-* [`manage_repo`](#-icingaweb2--manage_repo)
 * [`manage_repos`](#-icingaweb2--manage_repos)
 * [`manage_package`](#-icingaweb2--manage_package)
 * [`extra_packages`](#-icingaweb2--extra_packages)
@@ -294,14 +293,6 @@ Default value: `'Icinga'`
 Data type: `Boolean`
 
 Whether users can change themes or not.
-
-Default value: `false`
-
-##### <a name="-icingaweb2--manage_repo"></a>`manage_repo`
-
-Data type: `Boolean`
-
-Deprecated, use manage_repos.
 
 Default value: `false`
 
