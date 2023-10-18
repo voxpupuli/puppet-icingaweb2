@@ -31,7 +31,6 @@
 * [`icingaweb2::module::reporting`](#icingaweb2--module--reporting): Installs the reporting module
 * [`icingaweb2::module::reporting::service`](#icingaweb2--module--reporting--service): Installs and configures the reporting scheduler.
 * [`icingaweb2::module::translation`](#icingaweb2--module--translation): Installs and configures the translation module.
-* [`icingaweb2::module::vsphere`](#icingaweb2--module--vsphere): The vSphere module extends the Director. It provides import sources for virtual machines and physical hosts from vSphere.
 * [`icingaweb2::module::vspheredb`](#icingaweb2--module--vspheredb): Installs the vsphereDB plugin
 * [`icingaweb2::module::vspheredb::service`](#icingaweb2--module--vspheredb--service): Installs and configures the vspheredb service.
 * [`icingaweb2::module::x509`](#icingaweb2--module--x509): Installs the x509 module
@@ -3268,71 +3267,6 @@ Data type: `Enum['absent', 'present']`
 Enable or disable module.
 
 Default value: `'present'`
-
-### <a name="icingaweb2--module--vsphere"></a>`icingaweb2::module::vsphere`
-
-The vSphere module extends the Director. It provides import sources for virtual machines and physical hosts from vSphere.
-
-* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
-
-#### Parameters
-
-The following parameters are available in the `icingaweb2::module::vsphere` class:
-
-* [`ensure`](#-icingaweb2--module--vsphere--ensure)
-* [`module_dir`](#-icingaweb2--module--vsphere--module_dir)
-* [`git_repository`](#-icingaweb2--module--vsphere--git_repository)
-* [`install_method`](#-icingaweb2--module--vsphere--install_method)
-* [`package_name`](#-icingaweb2--module--vsphere--package_name)
-* [`git_revision`](#-icingaweb2--module--vsphere--git_revision)
-
-##### <a name="-icingaweb2--module--vsphere--ensure"></a>`ensure`
-
-Data type: `Enum['absent', 'present']`
-
-Enable or disable module.
-
-Default value: `'present'`
-
-##### <a name="-icingaweb2--module--vsphere--module_dir"></a>`module_dir`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-Target directory of the module.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--vsphere--git_repository"></a>`git_repository`
-
-Data type: `String`
-
-Set a git repository URL.
-
-Default value: `'https://github.com/Icinga/icingaweb2-module-vsphere.git'`
-
-##### <a name="-icingaweb2--module--vsphere--install_method"></a>`install_method`
-
-Data type: `Enum['git', 'none', 'package']`
-
-Install methods are `git`, `package` and `none` is supported as installation method.
-
-Default value: `'git'`
-
-##### <a name="-icingaweb2--module--vsphere--package_name"></a>`package_name`
-
-Data type: `String`
-
-Package name of the module. This setting is only valid in combination with the installation method `package`.
-
-Default value: `'icingaweb2-module-vsphere'`
-
-##### <a name="-icingaweb2--module--vsphere--git_revision"></a>`git_revision`
-
-Data type: `Optional[String]`
-
-Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
-
-Default value: `undef`
 
 ### <a name="icingaweb2--module--vspheredb"></a>`icingaweb2::module::vspheredb`
 
