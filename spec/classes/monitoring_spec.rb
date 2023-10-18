@@ -13,15 +13,6 @@ describe('icingaweb2::module::monitoring', type: :class) do
         facts
       end
 
-      case facts[:osfamily]
-      when 'Debian'
-        let(:install_method) { 'package' }
-        let(:package_name) { 'icingaweb2-module-monitoring' }
-      else
-        let(:install_method) { 'none' }
-        let(:package_name) { nil }
-      end
-
       context "#{os} with ido_type 'mysql' and commandtransport 'api'" do
         let(:params) do
           { ido_type: 'mysql',
@@ -39,8 +30,7 @@ describe('icingaweb2::module::monitoring', type: :class) do
 
         it {
           is_expected.to contain_icingaweb2__module('monitoring')
-            .with_install_method(install_method)
-            .with_package_name(package_name)
+            .with_install_method('none')
             .with_module_dir('/usr/share/icingaweb2/modules/monitoring')
             .with_settings('module-monitoring-backends' => {
                              'section_name' => 'backends',
@@ -93,8 +83,7 @@ describe('icingaweb2::module::monitoring', type: :class) do
 
         it do
           is_expected.to contain_icingaweb2__module('monitoring')
-            .with_install_method(install_method)
-            .with_package_name(package_name)
+            .with_install_method('none')
             .with_module_dir('/usr/share/icingaweb2/modules/monitoring')
             .with_settings('module-monitoring-backends' => {
                              'section_name' => 'backends',
@@ -123,30 +112,9 @@ describe('icingaweb2::module::monitoring', type: :class) do
             .with_password('icinga2')
         }
 
-        if facts[:osfamily] == 'Debian'
-          it { is_expected.to contain_package('icingaweb2-module-monitoring').with('ensure' => 'installed') }
-        end
-
         it {
           is_expected.to contain_icingaweb2__module__monitoring__commandtransport('foo')
             .with_transport('local')
-        }
-      end
-
-      context "#{os} with manage_package 'false'" do
-        let(:params) do
-          { ido_type: 'mysql',
-            ido_host: 'localhost',
-            ido_db_name: 'icinga2',
-            ido_db_username: 'icinga2',
-            ido_db_password: 'icinga2',
-            manage_package: false }
-        end
-
-        it {
-          is_expected.to contain_icingaweb2__module('monitoring')
-            .with_install_method('none')
-            .with_module_dir('/usr/share/icingaweb2/modules/monitoring')
         }
       end
 
