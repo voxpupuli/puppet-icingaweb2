@@ -113,7 +113,7 @@ describe 'icingaweb2 class:' do
           -> Class['apache']
 
         class { 'icingaweb2':
-          manage_repo   => true,
+          manage_repos  => true,
           conf_user     => $web_conf_user,
           db_type       => 'mysql',
           db_host       => 'localhost',
