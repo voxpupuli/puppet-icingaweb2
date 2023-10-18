@@ -50,20 +50,20 @@ class icingaweb2::config {
   }
 
   $use_tls              = $icingaweb2::use_tls
-  $tls                  = merge(icingaweb2::cert::files(
-      'client',
-      $conf_dir,
-      $icingaweb2::tls_key_file,
-      $icingaweb2::tls_cert_file,
-      $icingaweb2::tls_cacert_file,
-      $icingaweb2::tls_key,
-      $icingaweb2::tls_cert,
-      $icingaweb2::tls_cacert,
-    ), {
-      capath   => $icingaweb2::tls_capath,
-      noverify => $icingaweb2::tls_noverify,
-      cipher   => $icingaweb2::tls_cipher,
-  })
+  $tls                  = icingaweb2::cert::files(
+    'client',
+    $conf_dir,
+    $icingaweb2::tls_key_file,
+    $icingaweb2::tls_cert_file,
+    $icingaweb2::tls_cacert_file,
+    $icingaweb2::tls_key,
+    $icingaweb2::tls_cert,
+    $icingaweb2::tls_cacert,
+  ) + {
+    capath   => $icingaweb2::tls_capath,
+    noverify => $icingaweb2::tls_noverify,
+    cipher   => $icingaweb2::tls_cipher,
+  }
 
   File {
     mode    => '0660',

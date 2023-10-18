@@ -215,20 +215,20 @@ class icingaweb2::module::icingadb (
     },
   }
 
-  $db_tls = merge(delete($icingaweb2::config::tls, ['key', 'cert', 'cacert']), delete_undef_values(merge(icingaweb2::cert::files(
-          'client',
-          $module_conf_dir,
-          $db_tls_key_file,
-          $db_tls_cert_file,
-          $db_tls_cacert_file,
-          $db_tls_key,
-          $db_tls_cert,
-          $db_tls_cacert,
-        ), {
-          capath   => $db_tls_capath,
-          noverify => $db_tls_noverify,
-          cipher   => $db_tls_cipher,
-  })))
+  $db_tls = delete($icingaweb2::config::tls, ['key', 'cert', 'cacert']) + delete_undef_values(icingaweb2::cert::files(
+      'client',
+      $module_conf_dir,
+      $db_tls_key_file,
+      $db_tls_cert_file,
+      $db_tls_cacert_file,
+      $db_tls_key,
+      $db_tls_cert,
+      $db_tls_cacert,
+    ), {
+      capath   => $db_tls_capath,
+      noverify => $db_tls_noverify,
+      cipher   => $db_tls_cipher,
+  })
 
   icingaweb2::tls::client { 'icingaweb2::module::icingadb tls client config':
     args => $db_tls,

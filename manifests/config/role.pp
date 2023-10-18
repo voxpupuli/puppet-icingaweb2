@@ -121,7 +121,7 @@ define icingaweb2::config::role (
   icingaweb2::inisection { "role-${role_name}":
     section_name => $role_name,
     target       => "${conf_dir}/roles.ini",
-    settings     => delete_undef_values(merge($settings,$filters)),
+    settings     => delete_undef_values($settings + $filters),
     replace      => $replace,
   }
 }

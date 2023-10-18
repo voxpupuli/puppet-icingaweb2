@@ -4815,7 +4815,7 @@ Download, enable and configure Icinga Web 2 modules.
 ##### 
 
 ```puppet
-$conf_dir        = $::icingaweb2::globals::conf_dir
+$conf_dir        = $icingaweb2::globals::conf_dir
 $module_conf_dir = "${conf_dir}/modules/mymodule"
 
 $settings = {
