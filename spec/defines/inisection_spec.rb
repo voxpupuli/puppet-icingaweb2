@@ -4,7 +4,7 @@ describe('icingaweb2::inisection', type: :define) do
   let(:title) { 'foo' }
   let(:pre_condition) do
     [
-      "class { 'icingaweb2': }",
+      "class { 'icingaweb2': db_type => 'mysql', db_password => 'secret' }",
     ]
   end
 

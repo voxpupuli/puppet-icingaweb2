@@ -8,6 +8,13 @@ describe('icingaweb2', type: :class) do
       end
 
       context 'with defaults' do
+        let(:params) do
+          {
+            db_type: 'mysql',
+            db_password: 'secret',
+          }
+        end
+
         it { is_expected.to compile }
         it { is_expected.to contain_class('icingaweb2::config') }
         it { is_expected.to contain_class('icingaweb2::install') }
@@ -16,7 +23,11 @@ describe('icingaweb2', type: :class) do
 
       context 'with manage_package => false' do
         let(:params) do
-          { manage_package: false }
+          {
+            manage_package: false,
+            db_type: 'mysql',
+            db_password: 'secret',
+          }
         end
 
         it { is_expected.not_to contain_package('icinga2').with('ensure' => 'installed') }
@@ -25,6 +36,8 @@ describe('icingaweb2', type: :class) do
       context 'with additional resources, user and group backend' do
         let(:params) do
           {
+            db_type: 'mysql',
+            db_password: 'secret',
             resources: {
               foo: { type: 'ldap' },
               baz: { type: 'pgsql', host: 'localhost', database: 'baz', port: 5432 },

@@ -94,10 +94,6 @@
 # @param tls_cipher
 #   Cipher to use for the encrypted database connection.
 #
-# @param config_backend
-#   The global Icinga Web 2 preferences can either be stored in a database or in ini files. This parameter can either
-#   be set to `db` or `ini`.
-#
 # @param conf_user
 #   By default this module expects Apache2 on the server. You can change the owner of the config files with this
 #   parameter.
@@ -213,6 +209,7 @@ class icingaweb2 (
   Stdlib::Absolutepath                            $logging_file,
   String                                          $conf_user,
   String                                          $conf_group,
+  Icingaweb2::Secret                              $db_password,
   Variant[Icingaweb2::AdminRole, Boolean[false]]  $admin_role,
   String                                          $default_admin_username,
   Icingaweb2::Secret                              $default_admin_password,
@@ -234,7 +231,6 @@ class icingaweb2 (
   Optional[Stdlib::Port]                          $db_port             = undef,
   String                                          $db_name             = 'icingaweb2',
   String                                          $db_username         = 'icingaweb2',
-  Optional[Icingaweb2::Secret]                    $db_password         = undef,
   Optional[Boolean]                               $use_tls             = undef,
   Optional[Stdlib::Absolutepath]                  $tls_key_file        = undef,
   Optional[Stdlib::Absolutepath]                  $tls_cert_file       = undef,
@@ -245,7 +241,6 @@ class icingaweb2 (
   Optional[String]                                $tls_cacert          = undef,
   Optional[Boolean]                               $tls_noverify        = undef,
   Optional[String]                                $tls_cipher          = undef,
-  Enum['ini', 'db']                               $config_backend      = 'ini',
   Optional[String]                                $default_domain      = undef,
   Optional[Stdlib::Absolutepath]                  $cookie_path         = undef,
   Hash[String, Hash[String, Any]]                 $resources           = {},

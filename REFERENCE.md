@@ -209,7 +209,6 @@ The following parameters are available in the `icingaweb2` class:
 * [`tls_capath`](#-icingaweb2--tls_capath)
 * [`tls_noverify`](#-icingaweb2--tls_noverify)
 * [`tls_cipher`](#-icingaweb2--tls_cipher)
-* [`config_backend`](#-icingaweb2--config_backend)
 * [`conf_user`](#-icingaweb2--conf_user)
 * [`conf_group`](#-icingaweb2--conf_group)
 * [`default_domain`](#-icingaweb2--default_domain)
@@ -374,11 +373,9 @@ Default value: `'icingaweb2'`
 
 ##### <a name="-icingaweb2--db_password"></a>`db_password`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Icingaweb2::Secret`
 
 Password for database access.
-
-Default value: `undef`
 
 ##### <a name="-icingaweb2--use_tls"></a>`use_tls`
 
@@ -461,15 +458,6 @@ Data type: `Optional[String]`
 Cipher to use for the encrypted database connection.
 
 Default value: `undef`
-
-##### <a name="-icingaweb2--config_backend"></a>`config_backend`
-
-Data type: `Enum['ini', 'db']`
-
-The global Icinga Web 2 preferences can either be stored in a database or in ini files. This parameter can either
-be set to `db` or `ini`.
-
-Default value: `'ini'`
 
 ##### <a name="-icingaweb2--conf_user"></a>`conf_user`
 
