@@ -32,7 +32,7 @@ describe('icingaweb2::module::translation', type: :class) do
                            })
         }
 
-        case facts[:osfamily]
+        case facts[:os]['family']
         when 'Debian', 'RedHat'
           it { is_expected.to contain_package('gettext').with('ensure' => 'present') }
         when 'Suse'
@@ -50,7 +50,7 @@ describe('icingaweb2::module::translation', type: :class) do
             .with_module_dir('/usr/share/icingaweb2/modules/translation')
         }
 
-        case facts[:osfamily]
+        case facts[:os]['family']
         when 'Debian', 'RedHat'
           it { is_expected.to contain_package('gettext').with('ensure' => 'absent') }
         when 'Suse'
