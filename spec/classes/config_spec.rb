@@ -7,15 +7,15 @@ describe('icingaweb2::config', type: :class) do
         facts
       end
 
-      context 'with default parameters' do
+      context 'with default parameters, db_type => mysql' do
         let :pre_condition do
-          "class { 'icingaweb2': }"
+          "class { 'icingaweb2': db_type => 'mysql', db_password => 'secret' }"
         end
 
         it { is_expected.to contain_icingaweb2__inisection('config-logging') }
         it {
           is_expected.to contain_icingaweb2__inisection('config-global')
-            .with_settings('show_stacktraces' => false, 'module_path' => '/usr/share/icingaweb2/modules', 'config_backend' => 'ini')
+            .with_settings('show_stacktraces' => false, 'module_path' => '/usr/share/icingaweb2/modules', 'config_resource' => 'mysql-icingaweb2')
         }
         it { is_expected.to contain_icingaweb2__inisection('config-themes') }
         it { is_expected.not_to contain_icingaweb2__inisection('config-cookie') }
@@ -29,14 +29,16 @@ describe('icingaweb2::config', type: :class) do
             .with_ensure('file')
             .with_mode('0640')
         }
+
+        it { is_expected.to contain_icingaweb2__resource__database('mysql-icingaweb2') }
         it { is_expected.not_to contain_exec('import schema') }
         it { is_expected.not_to contain_exec('create default admin user') }
         it { is_expected.not_to contain_icingaweb2__config__role('default admin user') }
       end
 
-      context 'with import_schema => true and db_type => mysql' do
+      context 'with db_type => mysql, import_schema => true' do
         let :pre_condition do
-          "class { 'icingaweb2': import_schema => true, db_type => 'mysql'}"
+          "class { 'icingaweb2': import_schema => true, db_type => 'mysql', db_password => 'secret' }"
         end
 
         it { is_expected.to contain_icingaweb2__resource__database('mysql-icingaweb2') }
@@ -46,9 +48,9 @@ describe('icingaweb2::config', type: :class) do
         it { is_expected.to contain_exec('create default admin user') }
       end
 
-      context 'with import_schema => true and db_type => pgsql' do
+      context 'with db_type => pgsql, import_schema => true' do
         let :pre_condition do
-          "class { 'icingaweb2': import_schema => true, db_type => 'pgsql'}"
+          "class { 'icingaweb2': import_schema => true, db_type => 'pgsql', db_password => 'secret' }"
         end
 
         it { is_expected.to contain_icingaweb2__resource__database('pgsql-icingaweb2') }
@@ -58,62 +60,31 @@ describe('icingaweb2::config', type: :class) do
         it { is_expected.to contain_exec('create default admin user') }
       end
 
-      context 'with import_schema => true and invalid db_type' do
+      context 'with invalid db_type' do
         let :pre_condition do
-          "class { 'icingaweb2': import_schema => true, db_type => 'foobar'}"
+          "class { 'icingaweb2': db_type => 'foobar', db_password => 'secret' }"
         end
 
         it { is_expected.to raise_error(Puppet::Error, %r{expects a match for Enum\['mysql', 'pgsql'\]}) }
       end
 
-      # context 'with import_schema => false' do
-      #   let :pre_condition do
-      #     "class { 'icingaweb2': import_schema => false }"
-      #   end
-
-      #   it { is_expected.not_to contain_exec('import schema') }
-      #   it { is_expected.not_to contain_exec('create default admin user') }
-      #   it { is_expected.to contain_icingaweb2__config__role('default admin user') }
-      # end
-
       context 'with import_schema => true and admin_role => false' do
         let :pre_condition do
-          "class { 'icingaweb2': import_schema => true, admin_role => false }"
+          "class { 'icingaweb2': import_schema => true, db_type => 'mysql', db_password => 'secret', admin_role => false }"
         end
 
         it { is_expected.not_to contain_icingaweb2__config__role('default admin user') }
       end
 
-      context 'with config_backend => db' do
-        let :pre_condition do
-          "class { 'icingaweb2': config_backend => 'db' }"
-        end
-
-        it {
-          is_expected.to contain_icingaweb2__inisection('config-global')
-            .with_settings('show_stacktraces' => false, 'module_path' => '/usr/share/icingaweb2/modules', 'config_backend' => 'db', 'config_resource' => 'mysql-icingaweb2')
-        }
-
-        it { is_expected.to contain_icingaweb2__resource__database('mysql-icingaweb2') }
-      end
-
       context 'with cookie_path => /' do
         let :pre_condition do
-          "class { 'icingaweb2': cookie_path => '/' }"
+          "class { 'icingaweb2': cookie_path => '/', db_type => 'mysql', db_password => 'secret' }"
         end
 
         it {
           is_expected.to contain_icingaweb2__inisection('config-cookie')
             .with_settings('path' => '/')
         }
-      end
-
-      context 'with invalid config_backend' do
-        let :pre_condition do
-          "class { 'icingaweb2': config_backend => 'foobar' }"
-        end
-
-        it { is_expected.to raise_error(Puppet::Error, %r{expects a match for Enum\['db', 'ini'\]}) }
       end
     end
   end

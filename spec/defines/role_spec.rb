@@ -4,7 +4,7 @@ describe('icingaweb2::config::role', type: :define) do
   let(:title) { 'myrole' }
   let(:pre_condition) do
     [
-      "class { 'icingaweb2': }",
+      "class { 'icingaweb2': db_type => 'mysql', db_password => 'secret' }",
     ]
   end
 

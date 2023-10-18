@@ -103,7 +103,6 @@ class { 'icingaweb2':
   db_port        => 3306,
   db_username    => 'icingaweb2',
   db_password    => 'supersecret',
-  config_backend => 'db',
   extra_packages => [ 'git' ],
   require        => Mysql::Db['icingaweb2'],
 }

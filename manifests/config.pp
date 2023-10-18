@@ -43,11 +43,7 @@ class icingaweb2::config {
   $admin_role           = $icingaweb2::admin_role
   $admin_username       = $icingaweb2::default_admin_username
   $admin_password       = icingaweb2::unwrap($icingaweb2::default_admin_password)
-  $config_backend       = $icingaweb2::config_backend
-  $config_resource      = $icingaweb2::config_backend ? {
-    'ini' => undef,
-    'db'  => "${db['type']}-icingaweb2",
-  }
+  $config_resource      = "${db['type']}-icingaweb2"
 
   $use_tls              = $icingaweb2::use_tls
   $tls                  = icingaweb2::cert::files(
@@ -103,7 +99,6 @@ class icingaweb2::config {
   $settings = {
     'show_stacktraces' => $show_stacktraces,
     'module_path'      => join(unique([$default_module_path] + $module_path), ':'),
-    'config_backend'   => $config_backend,
     'config_resource'  => $config_resource,
   }
 
@@ -183,36 +178,34 @@ class icingaweb2::config {
     }
   }
 
-  if $import_schema or $config_backend == 'db' {
-    icingaweb2::tls::client { 'icingaweb2 tls client config':
-      args => $tls,
-    }
+  icingaweb2::tls::client { 'icingaweb2 tls client config':
+    args => $tls,
+  }
 
-    -> icingaweb2::resource::database { "${db['type']}-icingaweb2":
-      type         => $db['type'],
-      host         => $db['host'],
-      port         => $db['port'],
-      database     => $db['name'],
-      username     => $db['user'],
-      password     => $db['pass'],
-      use_tls      => $use_tls,
-      tls_noverify => $tls['noverify'],
-      tls_key      => $tls['key_file'],
-      tls_cert     => $tls['cert_file'],
-      tls_cacert   => $tls['cacert_file'],
-      tls_capath   => $tls['capath'],
-      tls_cipher   => $tls['cipher'],
-    }
+  -> icingaweb2::resource::database { "${db['type']}-icingaweb2":
+    type         => $db['type'],
+    host         => $db['host'],
+    port         => $db['port'],
+    database     => $db['name'],
+    username     => $db['user'],
+    password     => $db['pass'],
+    use_tls      => $use_tls,
+    tls_noverify => $tls['noverify'],
+    tls_key      => $tls['key_file'],
+    tls_cert     => $tls['cert_file'],
+    tls_cacert   => $tls['cacert_file'],
+    tls_capath   => $tls['capath'],
+    tls_cipher   => $tls['cipher'],
+  }
 
-    icingaweb2::config::groupbackend { "${db['type']}-group":
-      backend  => 'db',
-      resource => "${db['type']}-icingaweb2",
-    }
+  icingaweb2::config::groupbackend { "${db['type']}-group":
+    backend  => 'db',
+    resource => "${db['type']}-icingaweb2",
+  }
 
-    icingaweb2::config::authmethod { "${db['type']}-auth":
-      backend  => 'db',
-      resource => "${db['type']}-icingaweb2",
-    }
+  icingaweb2::config::authmethod { "${db['type']}-auth":
+    backend  => 'db',
+    resource => "${db['type']}-icingaweb2",
   }
 
   if $import_schema {
