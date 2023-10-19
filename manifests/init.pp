@@ -215,7 +215,7 @@ class icingaweb2 (
   Icingaweb2::Secret                              $default_admin_password,
   Optional[Variant[Stdlib::Absolutepath,
   Array[Stdlib::Absolutepath]]]                   $module_path         = undef,
-  Enum['file', 'syslog', 'php', 'none']           $logging             = 'file',
+  Enum['file', 'syslog', 'php', 'none']           $logging             = 'syslog',
   Enum['ERROR', 'WARNING', 'INFO', 'DEBUG']       $logging_level       = 'INFO',
   Pattern[/user|local[0-7]/]                      $logging_facility    = 'user',
   String                                          $logging_application = 'icingaweb2',
