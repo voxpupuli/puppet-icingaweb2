@@ -3,7 +3,7 @@ require 'spec_helper'
 describe('icingaweb2::module::monitoring', type: :class) do
   let(:pre_condition) do
     [
-      "class { 'icingaweb2': db_type => 'mysql', db_password => 'secret' }",
+      "class { 'icingaweb2': db_type => 'mysql' }",
     ]
   end
 

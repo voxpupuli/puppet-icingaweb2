@@ -3,7 +3,7 @@ require 'spec_helper'
 describe('icingaweb2::module::icingadb', type: :class) do
   let(:pre_condition) do
     [
-      "class { 'icingaweb2': db_type => 'mysql', db_password => 'secret' }",
+      "class { 'icingaweb2': db_type => 'mysql' }",
     ]
   end
 
@@ -16,6 +16,7 @@ describe('icingaweb2::module::icingadb', type: :class) do
       context "#{os} with local MySQL and Redis" do
         let(:params) do
           {
+            db_type: 'mysql',
             db_password: 'foobar',
           }
         end

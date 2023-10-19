@@ -3,7 +3,7 @@ require 'spec_helper'
 describe('icingaweb2::module::vspheredb', type: :class) do
   let(:pre_condition) do
     [
-      "class { 'icingaweb2': db_type => 'mysql', db_password => 'secret' }",
+      "class { 'icingaweb2': db_type => 'mysql' }",
     ]
   end
 
@@ -16,6 +16,7 @@ describe('icingaweb2::module::vspheredb', type: :class) do
       context "#{os} with git_revision 'v1.1.0'" do
         let(:params) do
           { git_revision: 'v1.1.0',
+            db_type: 'mysql',
             db_host: 'localhost',
             db_name: 'vspheredb',
             db_username: 'vspheredb',
