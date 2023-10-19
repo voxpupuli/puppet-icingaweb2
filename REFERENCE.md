@@ -225,7 +225,7 @@ Data type: `Enum['file', 'syslog', 'php', 'none']`
 
 Whether Icinga Web 2 should log to 'file', 'syslog' or 'php' (web server's error log). Setting 'none' disables logging.
 
-Default value: `'file'`
+Default value: `'syslog'`
 
 ##### <a name="-icingaweb2--logging_file"></a>`logging_file`
 
