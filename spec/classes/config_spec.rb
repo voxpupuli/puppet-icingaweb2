@@ -9,7 +9,7 @@ describe('icingaweb2::config', type: :class) do
 
       context 'with default parameters, db_type => mysql' do
         let :pre_condition do
-          "class { 'icingaweb2': db_type => 'mysql', db_password => 'secret' }"
+          "class { 'icingaweb2': db_type => 'mysql' }"
         end
 
         it { is_expected.to contain_icingaweb2__inisection('config-logging') }
@@ -28,7 +28,7 @@ describe('icingaweb2::config', type: :class) do
 
       context 'with db_type => mysql, import_schema => true' do
         let :pre_condition do
-          "class { 'icingaweb2': import_schema => true, db_type => 'mysql', db_password => 'secret' }"
+          "class { 'icingaweb2': import_schema => true, db_type => 'mysql' }"
         end
 
         it { is_expected.to contain_icingaweb2__resource__database('mysql-icingaweb2') }
@@ -40,7 +40,7 @@ describe('icingaweb2::config', type: :class) do
 
       context 'with db_type => pgsql, import_schema => true' do
         let :pre_condition do
-          "class { 'icingaweb2': import_schema => true, db_type => 'pgsql', db_password => 'secret' }"
+          "class { 'icingaweb2': import_schema => true, db_type => 'pgsql' }"
         end
 
         it { is_expected.to contain_icingaweb2__resource__database('pgsql-icingaweb2') }
@@ -52,7 +52,7 @@ describe('icingaweb2::config', type: :class) do
 
       context 'with invalid db_type' do
         let :pre_condition do
-          "class { 'icingaweb2': db_type => 'foobar', db_password => 'secret' }"
+          "class { 'icingaweb2': db_type => 'foobar' }"
         end
 
         it { is_expected.to raise_error(Puppet::Error, %r{expects a match for Enum\['mysql', 'pgsql'\]}) }
@@ -60,7 +60,7 @@ describe('icingaweb2::config', type: :class) do
 
       context 'with import_schema => true and admin_role => false' do
         let :pre_condition do
-          "class { 'icingaweb2': import_schema => true, db_type => 'mysql', db_password => 'secret', admin_role => false }"
+          "class { 'icingaweb2': import_schema => true, db_type => 'mysql', admin_role => false }"
         end
 
         it { is_expected.not_to contain_icingaweb2__config__role('default admin user') }
@@ -68,7 +68,7 @@ describe('icingaweb2::config', type: :class) do
 
       context 'with cookie_path => /' do
         let :pre_condition do
-          "class { 'icingaweb2': cookie_path => '/', db_type => 'mysql', db_password => 'secret' }"
+          "class { 'icingaweb2': cookie_path => '/', db_type => 'mysql' }"
         end
 
         it {

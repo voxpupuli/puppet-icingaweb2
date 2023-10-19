@@ -87,13 +87,13 @@
 #   }
 #
 class icingaweb2::module::vspheredb (
+  Enum['mysql']                              $db_type,
   Enum['absent', 'present']                  $ensure          = 'present',
   Optional[Stdlib::Absolutepath]             $module_dir      = undef,
   String                                     $git_repository  = 'https://github.com/Icinga/icingaweb2-module-vspheredb.git',
   Optional[String]                           $git_revision    = undef,
   Enum['git', 'none', 'package']             $install_method  = 'git',
   String                                     $package_name    = 'icingaweb2-module-vspheredb',
-  Enum['mysql']                              $db_type         = 'mysql',
   Stdlib::Host                               $db_host         = 'localhost',
   Optional[Stdlib::Port]                     $db_port         = undef,
   String                                     $db_name         = 'vspheredb',

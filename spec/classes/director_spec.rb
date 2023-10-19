@@ -3,7 +3,7 @@ require 'spec_helper'
 describe('icingaweb2::module::director', type: :class) do
   let(:pre_condition) do
     [
-      "class { 'icingaweb2': db_type => 'mysql', db_password => 'secret' }",
+      "class { 'icingaweb2': db_type => 'mysql' }",
     ]
   end
 
@@ -16,6 +16,7 @@ describe('icingaweb2::module::director', type: :class) do
       context "#{os} with kickstart 'true'" do
         let(:params) do
           { git_revision: 'foobar',
+            db_type: 'mysql',
             db_host: 'localhost',
             db_name: 'director',
             db_username: 'director',
@@ -69,6 +70,7 @@ describe('icingaweb2::module::director', type: :class) do
       context "#{os} with import_schema 'false'" do
         let(:params) do
           { git_revision: 'foobar',
+            db_type: 'mysql',
             db_host: 'localhost',
             db_name: 'director',
             db_username: 'director',

@@ -336,8 +336,6 @@ Data type: `Enum['mysql', 'pgsql']`
 
 Database type, can be either `mysql` or `pgsql`.
 
-Default value: `'mysql'`
-
 ##### <a name="-icingaweb2--db_host"></a>`db_host`
 
 Data type: `Stdlib::Host`
@@ -372,9 +370,11 @@ Default value: `'icingaweb2'`
 
 ##### <a name="-icingaweb2--db_password"></a>`db_password`
 
-Data type: `Icingaweb2::Secret`
+Data type: `Optional[Icingaweb2::Secret]`
 
 Password for database access.
+
+Default value: `undef`
 
 ##### <a name="-icingaweb2--use_tls"></a>`use_tls`
 
@@ -1092,8 +1092,6 @@ Default value: `'icingaweb2-module-director'`
 Data type: `Enum['mysql', 'pgsql']`
 
 Type of your database. Either `mysql` or `pgsql`.
-
-Default value: `'mysql'`
 
 ##### <a name="-icingaweb2--module--director--db_host"></a>`db_host`
 
@@ -1894,8 +1892,6 @@ IicngaDB-Web module package name.
 Data type: `Enum['mysql', 'pgsql']`
 
 Type of your IDO database. Either `mysql` or `pgsql`.
-
-Default value: `'mysql'`
 
 ##### <a name="-icingaweb2--module--icingadb--db_host"></a>`db_host`
 
@@ -3040,8 +3036,6 @@ Data type: `Enum['mysql', 'pgsql']`
 
 The database type. Either mysql or postgres.
 
-Default value: `'mysql'`
-
 ##### <a name="-icingaweb2--module--reporting--db_host"></a>`db_host`
 
 Data type: `Stdlib::Host`
@@ -3376,8 +3370,6 @@ Default value: `'icingaweb2-module-vspheredb'`
 Data type: `Enum['mysql']`
 
 The database type. Either mysql or postgres.
-
-Default value: `'mysql'`
 
 ##### <a name="-icingaweb2--module--vspheredb--db_host"></a>`db_host`
 
