@@ -17,7 +17,6 @@ describe('icingaweb2::module::icingadb', type: :class) do
         let(:params) do
           {
             db_type: 'mysql',
-            db_password: 'foobar',
           }
         end
 
@@ -64,7 +63,6 @@ describe('icingaweb2::module::icingadb', type: :class) do
               'port' => 3306,
               'database' => 'icingadb',
               'username' => 'icingadb',
-              'password' => 'foobar',
               'charset'  => nil,
               'use_tls'  => nil,
             },
@@ -76,7 +74,6 @@ describe('icingaweb2::module::icingadb', type: :class) do
         let(:params) do
           {
             db_type: 'pgsql',
-            db_password: 'foobar',
           }
         end
 
@@ -123,7 +120,6 @@ describe('icingaweb2::module::icingadb', type: :class) do
               'port' => 5432,
               'database' => 'icingadb',
               'username' => 'icingadb',
-              'password' => 'foobar',
               'charset'  => nil,
               'use_tls'  => nil,
             },

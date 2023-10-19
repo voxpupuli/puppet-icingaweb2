@@ -1927,9 +1927,11 @@ Default value: `'icingadb'`
 
 ##### <a name="-icingaweb2--module--icingadb--db_password"></a>`db_password`
 
-Data type: `Icingaweb2::Secret`
+Data type: `Optional[Icingaweb2::Secret]`
 
 Password for IcingaDB database connection.
+
+Default value: `undef`
 
 ##### <a name="-icingaweb2--module--icingadb--db_charset"></a>`db_charset`
 
