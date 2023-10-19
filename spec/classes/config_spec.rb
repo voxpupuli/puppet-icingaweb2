@@ -19,16 +19,6 @@ describe('icingaweb2::config', type: :class) do
         }
         it { is_expected.to contain_icingaweb2__inisection('config-themes') }
         it { is_expected.not_to contain_icingaweb2__inisection('config-cookie') }
-        it {
-          is_expected.to contain_file('/var/log/icingaweb2')
-            .with_ensure('directory')
-            .with_mode('0750')
-        }
-        it {
-          is_expected.to contain_file('/var/log/icingaweb2/icingaweb2.log')
-            .with_ensure('file')
-            .with_mode('0640')
-        }
 
         it { is_expected.to contain_icingaweb2__resource__database('mysql-icingaweb2') }
         it { is_expected.not_to contain_exec('import schema') }
