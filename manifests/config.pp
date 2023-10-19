@@ -6,12 +6,9 @@
 class icingaweb2::config {
   $conf_dir             = $icingaweb2::globals::conf_dir
   $default_module_path  = $icingaweb2::globals::default_module_path
-  $conf_user            = $icingaweb2::conf_user
-  $conf_group           = $icingaweb2::conf_group
 
   $logging              = $icingaweb2::logging
   $logging_file         = $icingaweb2::logging_file
-  $logging_dir          = dirname($icingaweb2::logging_file)
   $logging_level        = $icingaweb2::logging_level
   $logging_facility     = $icingaweb2::logging_facility
   $logging_application  = $icingaweb2::logging_application
@@ -61,27 +58,11 @@ class icingaweb2::config {
     cipher   => $icingaweb2::tls_cipher,
   }
 
-  File {
-    mode    => '0660',
-    owner   => $conf_user,
-    group   => $conf_group,
-  }
-
   Exec {
     path     => $facts['path'],
     provider => shell,
     user     => 'root',
     require  => Icingaweb2::Tls::Client['icingaweb2 tls client config'],
-  }
-
-  file { $logging_dir:
-    ensure => directory,
-    mode   => '0750',
-  }
-
-  file { $logging_file:
-    ensure => file,
-    mode   => '0640',
   }
 
   icingaweb2::inisection { 'config-logging':
@@ -135,16 +116,6 @@ class icingaweb2::config {
         'path'     => $cookie_path,
       },
     }
-  }
-
-  file { "${conf_dir}/modules":
-    ensure => directory,
-    mode   => '2770',
-  }
-
-  file { "${conf_dir}/enabledModules":
-    ensure => directory,
-    mode   => '2770',
   }
 
   # Additional resources

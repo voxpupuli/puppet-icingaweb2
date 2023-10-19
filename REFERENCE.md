@@ -544,6 +544,7 @@ The following parameters are available in the `icingaweb2::globals` class:
 
 * [`package_name`](#-icingaweb2--globals--package_name)
 * [`conf_dir`](#-icingaweb2--globals--conf_dir)
+* [`state_dir`](#-icingaweb2--globals--state_dir)
 * [`data_dir`](#-icingaweb2--globals--data_dir)
 * [`role_replace`](#-icingaweb2--globals--role_replace)
 * [`comp_db_schema_dir`](#-icingaweb2--globals--comp_db_schema_dir)
@@ -574,6 +575,12 @@ Package to install.
 Data type: `Stdlib::Absolutepath`
 
 Path to the config files.
+
+##### <a name="-icingaweb2--globals--state_dir"></a>`state_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+Path to variable application data.
 
 ##### <a name="-icingaweb2--globals--data_dir"></a>`data_dir`
 
