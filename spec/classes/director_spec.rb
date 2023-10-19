@@ -63,11 +63,17 @@ describe('icingaweb2::module::director', type: :class) do
                            })
         }
 
+        it {
+          is_expected.to contain_class('icingaweb2::module::director::service')
+            .with_ensure('running')
+            .with_enable(true)
+        }
+
         it { is_expected.to contain_exec('director-migration') }
         it { is_expected.to contain_exec('director-kickstart') }
       end
 
-      context "#{os} with import_schema 'false'" do
+      context "#{os} with import_schema 'false', manage_service 'false'" do
         let(:params) do
           { git_revision: 'foobar',
             db_type: 'mysql',
@@ -75,6 +81,7 @@ describe('icingaweb2::module::director', type: :class) do
             db_name: 'director',
             db_username: 'director',
             db_password: 'director',
+            manage_service: false,
             import_schema: false }
         end
 
@@ -100,6 +107,10 @@ describe('icingaweb2::module::director', type: :class) do
                                'resource' => 'icingaweb2-module-director',
                              },
                            })
+        }
+
+        it {
+          is_expected.not_to contain_class('icingaweb2::module::director::service')
         }
 
         it { is_expected.not_to contain_exec('director-migration') }

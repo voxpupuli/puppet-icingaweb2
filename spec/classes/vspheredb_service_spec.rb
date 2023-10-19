@@ -4,7 +4,7 @@ describe('icingaweb2::module::vspheredb::service', type: :class) do
   let(:pre_condition) do
     [
       "class { 'icingaweb2': db_type => 'mysql' }",
-      "class { 'icingaweb2::module::vspheredb': db_type => 'mysql' }",
+      "class { 'icingaweb2::module::vspheredb': db_type => 'mysql', manage_service => false }",
     ]
   end
 
