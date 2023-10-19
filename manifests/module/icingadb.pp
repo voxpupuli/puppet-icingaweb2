@@ -118,12 +118,12 @@
 class icingaweb2::module::icingadb (
   String                          $package_name,
   Enum['mysql', 'pgsql']          $db_type,
-  Icingaweb2::Secret              $db_password,
   Enum['absent', 'present']       $ensure                   = 'present',
   Stdlib::Host                    $db_host                  = 'localhost',
   Optional[Stdlib::Port]          $db_port                  = undef,
   String                          $db_name                  = 'icingadb',
   String                          $db_username              = 'icingadb',
+  Optional[Icingaweb2::Secret]    $db_password              = undef,
   Optional[String]                $db_charset               = undef,
   Optional[Boolean]               $db_use_tls               = undef,
   Optional[String]                $db_tls_cert              = undef,
