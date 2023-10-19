@@ -79,6 +79,9 @@
 # @param mail
 #   Mails are sent with this sender address.
 #
+# @param manage_service
+#   Also manage the service (daemon), running and enabled. Otherwise do your config via hiera.
+#
 # @example
 #   class { 'icingaweb2::module::reporting':
 #     ensure       => present,
@@ -104,6 +107,7 @@ class icingaweb2::module::reporting (
   Optional[Icingaweb2::Secret]               $db_password     = undef,
   Optional[String]                           $db_charset      = undef,
   Variant[Boolean, Enum['mariadb', 'mysql']] $import_schema   = false,
+  Boolean                                    $manage_service  = true,
   Optional[Boolean]                          $use_tls         = undef,
   Optional[Stdlib::Absolutepath]             $tls_key_file    = undef,
   Optional[Stdlib::Absolutepath]             $tls_cert_file   = undef,
@@ -237,4 +241,8 @@ class icingaweb2::module::reporting (
       }
     }
   } # schema import
+
+  if $manage_service {
+    include icingaweb2::module::reporting::service
+  }
 }

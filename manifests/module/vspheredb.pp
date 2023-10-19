@@ -76,6 +76,9 @@
 #   both means true. With mariadb its cli options are used for the import,
 #   whereas with mysql its different options.
 #
+# @param manage_service
+#   Also manage the service (daemon), running and enabled. Otherwise do your config via hiera.
+#
 # @example
 #   class { 'icingaweb2::module::vspheredb':
 #     ensure       => 'present',
@@ -101,6 +104,7 @@ class icingaweb2::module::vspheredb (
   Optional[Icingaweb2::Secret]               $db_password     = undef,
   String                                     $db_charset      = 'utf8mb4',
   Variant[Boolean, Enum['mariadb', 'mysql']] $import_schema   = false,
+  Boolean                                    $manage_service  = true,
   Optional[Boolean]                          $use_tls         = undef,
   Optional[Stdlib::Absolutepath]             $tls_key_file    = undef,
   Optional[Stdlib::Absolutepath]             $tls_cert_file   = undef,
@@ -216,4 +220,8 @@ class icingaweb2::module::vspheredb (
       }
     }
   } # schema import
+
+  if $manage_service {
+    include icingaweb2::module::vspheredb::service
+  }
 }

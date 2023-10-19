@@ -1038,6 +1038,7 @@ The following parameters are available in the `icingaweb2::module::director` cla
 * [`api_port`](#-icingaweb2--module--director--api_port)
 * [`api_username`](#-icingaweb2--module--director--api_username)
 * [`api_password`](#-icingaweb2--module--director--api_password)
+* [`manage_service`](#-icingaweb2--module--director--manage_service)
 
 ##### <a name="-icingaweb2--module--director--ensure"></a>`ensure`
 
@@ -1278,6 +1279,14 @@ Data type: `Optional[Icingaweb2::Secret]`
 Icinga 2 API password. This setting is only valid if `kickstart` is `true`.
 
 Default value: `undef`
+
+##### <a name="-icingaweb2--module--director--manage_service"></a>`manage_service`
+
+Data type: `Boolean`
+
+Also manage the service (daemon), running and enabled. Otherwise do your config via hiera.
+
+Default value: `true`
 
 ### <a name="icingaweb2--module--director--service"></a>`icingaweb2::module::director::service`
 
@@ -2991,6 +3000,7 @@ The following parameters are available in the `icingaweb2::module::reporting` cl
 * [`tls_cipher`](#-icingaweb2--module--reporting--tls_cipher)
 * [`import_schema`](#-icingaweb2--module--reporting--import_schema)
 * [`mail`](#-icingaweb2--module--reporting--mail)
+* [`manage_service`](#-icingaweb2--module--reporting--manage_service)
 
 ##### <a name="-icingaweb2--module--reporting--ensure"></a>`ensure`
 
@@ -3186,6 +3196,14 @@ Mails are sent with this sender address.
 
 Default value: `undef`
 
+##### <a name="-icingaweb2--module--reporting--manage_service"></a>`manage_service`
+
+Data type: `Boolean`
+
+Also manage the service (daemon), running and enabled. Otherwise do your config via hiera.
+
+Default value: `true`
+
 ### <a name="icingaweb2--module--reporting--service"></a>`icingaweb2::module::reporting::service`
 
 Installs and configures the reporting scheduler.
@@ -3318,6 +3336,7 @@ The following parameters are available in the `icingaweb2::module::vspheredb` cl
 * [`tls_noverify`](#-icingaweb2--module--vspheredb--tls_noverify)
 * [`tls_cipher`](#-icingaweb2--module--vspheredb--tls_cipher)
 * [`import_schema`](#-icingaweb2--module--vspheredb--import_schema)
+* [`manage_service`](#-icingaweb2--module--vspheredb--manage_service)
 
 ##### <a name="-icingaweb2--module--vspheredb--ensure"></a>`ensure`
 
@@ -3512,6 +3531,14 @@ both means true. With mariadb its cli options are used for the import,
 whereas with mysql its different options.
 
 Default value: `false`
+
+##### <a name="-icingaweb2--module--vspheredb--manage_service"></a>`manage_service`
+
+Data type: `Boolean`
+
+Also manage the service (daemon), running and enabled. Otherwise do your config via hiera.
+
+Default value: `true`
 
 ### <a name="icingaweb2--module--vspheredb--service"></a>`icingaweb2::module::vspheredb::service`
 

@@ -13,9 +13,9 @@ describe('icingaweb2::module::vspheredb', type: :class) do
         facts
       end
 
-      context "#{os} with git_revision 'v1.1.0'" do
+      context "#{os} with git_revision 'v1.7.1'" do
         let(:params) do
-          { git_revision: 'v1.1.0',
+          { git_revision: 'v1.7.1',
             db_type: 'mysql',
             db_host: 'localhost',
             db_name: 'vspheredb',
@@ -37,7 +37,7 @@ describe('icingaweb2::module::vspheredb', type: :class) do
         it {
           is_expected.to contain_icingaweb2__module('vspheredb')
             .with_install_method('git')
-            .with_git_revision('v1.1.0')
+            .with_git_revision('v1.7.1')
             .with_package_name('icingaweb2-module-vspheredb')
             .with_settings('icingaweb2-module-vspheredb' => {
                              'section_name' => 'db',
@@ -46,6 +46,33 @@ describe('icingaweb2::module::vspheredb', type: :class) do
                                'resource' => 'icingaweb2-module-vspheredb',
                              },
                            })
+        }
+
+        it {
+          is_expected.to contain_class('icingaweb2::module::vspheredb::service')
+            .with_ensure('running')
+            .with_enable(true)
+        }
+      end
+
+      context "#{os} with install_method 'package', manage_service 'false'" do
+        let(:params) do
+          { install_method: 'package',
+            manage_service: false,
+            db_type: 'mysql',
+            db_host: 'localhost',
+            db_name: 'vspheredb',
+            db_username: 'vspheredb',
+            db_password: 'vspheredb' }
+        end
+
+        it {
+          is_expected.to contain_package('icingaweb2-module-vspheredb')
+            .with_ensure('installed')
+        }
+
+        it {
+          is_expected.not_to contain_class('icingaweb2::module::vspheredb::service')
         }
       end
     end

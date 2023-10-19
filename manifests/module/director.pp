@@ -95,6 +95,9 @@
 # @param api_password
 #   Icinga 2 API password. This setting is only valid if `kickstart` is `true`.
 #
+# @param manage_service
+#   Also manage the service (daemon), running and enabled. Otherwise do your config via hiera.
+#
 # @note Please checkout the [Director module documentation](https://www.icinga.com/docs/director/latest/) for requirements.
 #
 # @example
@@ -126,6 +129,7 @@ class icingaweb2::module::director (
   String                         $db_username     = 'director',
   Optional[Icingaweb2::Secret]   $db_password     = undef,
   String                         $db_charset      = 'utf8',
+  Boolean                        $manage_service  = true,
   Optional[Boolean]              $use_tls         = undef,
   Optional[Stdlib::Absolutepath] $tls_key_file    = undef,
   Optional[Stdlib::Absolutepath] $tls_cert_file   = undef,
@@ -251,5 +255,9 @@ class icingaweb2::module::director (
     module_dir     => $module_dir,
     package_name   => $package_name,
     settings       => $db_settings + $kickstart_settings,
+  }
+
+  if $manage_service {
+    include icingaweb2::module::director::service
   }
 }
