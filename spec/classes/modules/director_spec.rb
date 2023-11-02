@@ -116,6 +116,68 @@ describe('icingaweb2::module::director', type: :class) do
         it { is_expected.not_to contain_exec('director-migration') }
         it { is_expected.not_to contain_exec('director-kickstart') }
       end
+
+      context "#{os} with use_tls 'true', tls_cacert 'cacert', tls_capath '/foo/bar', tls_noverify 'true', tls_cipher 'cipher'" do
+        let(:params) do
+          {
+            db_type: 'pgsql',
+            use_tls: true,
+            tls_cacert_file: '/foo/bar',
+            tls_capath: '/foo/bar',
+            tls_noverify: true,
+            tls_cipher: 'cipher',
+          }
+        end
+
+        it {
+          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-director').with(
+            {
+              'type' => 'pgsql',
+              'host' => 'localhost',
+              'port' => 5432,
+              'database' => 'director',
+              'username' => 'director',
+              'use_tls' => true,
+              'tls_cacert' => '/foo/bar',
+              'tls_capath' => '/foo/bar',
+              'tls_noverify' => true,
+              'tls_cipher' => 'cipher',
+            },
+          )
+        }
+      end
+
+      context "#{os} with use_tls 'true'" do
+        let(:pre_condition) do
+          [
+            "class { 'icingaweb2': db_type => 'mysql', tls_cacert_file => '/foo/bar', tls_capath => '/foo/bar', tls_noverify => true, tls_cipher => 'cipher' }",
+          ]
+        end
+
+        let(:params) do
+          {
+            db_type: 'mysql',
+            use_tls: true,
+          }
+        end
+
+        it {
+          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-director').with(
+            {
+              'type' => 'mysql',
+              'host' => 'localhost',
+              'port' => 3306,
+              'database' => 'director',
+              'username' => 'director',
+              'use_tls' => true,
+              'tls_cacert' => '/foo/bar',
+              'tls_capath' => '/foo/bar',
+              'tls_noverify' => true,
+              'tls_cipher' => 'cipher',
+            },
+          )
+        }
+      end
     end
   end
 end

@@ -150,25 +150,23 @@ class icingaweb2::module::director (
 ) {
   icingaweb2::assert_module()
 
-  $conf_dir        = $icingaweb2::globals::conf_dir
+  $module_conf_dir = "${icingaweb2::globals::conf_dir}/modules/director"
+  $cert_dir        = "${icingaweb2::globals::state_dir}/director/certs"
+  $conf_user       = $icingaweb2::conf_user
+  $conf_group      = $icingaweb2::conf_group
   $icingacli_bin   = $icingaweb2::globals::icingacli_bin
-  $module_conf_dir = "${conf_dir}/modules/director"
   $stdlib_version  = $icingaweb2::globals::stdlib_version
 
-  $tls = delete($icingaweb2::config::tls, ['key', 'cert', 'cacert']) + delete_undef_values(icingaweb2::cert::files(
-      'client',
-      $module_conf_dir,
+  $tls = delete_undef_values(icinga::cert::files(
+      $db_username,
+      $cert_dir,
       $tls_key_file,
       $tls_cert_file,
       $tls_cacert_file,
       $tls_key,
       $tls_cert,
       $tls_cacert,
-    ) + {
-      capath   => $tls_capath,
-      noverify => $tls_noverify,
-      cipher   => $tls_cipher,
-  })
+  ))
 
   Exec {
     user     => 'root',
@@ -176,8 +174,17 @@ class icingaweb2::module::director (
     provider => 'shell',
   }
 
-  icingaweb2::tls::client { 'icingaweb2::module::director tls client config':
-    args => $tls,
+  file { $cert_dir:
+    ensure => directory,
+    owner  => 'root',
+    group  => $conf_group,
+    mode   => '2770',
+  }
+
+  icinga::cert { 'icingaweb2::module::director tls client config':
+    owner => $conf_user,
+    group => $conf_group,
+    args  => $tls,
   }
 
   icingaweb2::resource::database { 'icingaweb2-module-director':
@@ -189,12 +196,12 @@ class icingaweb2::module::director (
     password     => $db_password,
     charset      => $db_charset,
     use_tls      => $use_tls,
-    tls_noverify => $tls['noverify'],
+    tls_noverify => unless $tls_noverify { $icingaweb2::config::tls['noverify'] } else { $tls_noverify },
     tls_key      => $tls['key_file'],
     tls_cert     => $tls['cert_file'],
-    tls_cacert   => $tls['cacert_file'],
-    tls_capath   => $tls['capath'],
-    tls_cipher   => $tls['cipher'],
+    tls_cacert   => unless $tls_cacert_file { $icingaweb2::config::tls['cacert_file'] } else { $tls_cacert_file },
+    tls_capath   => unless $tls_capath { $icingaweb2::config::tls['capath'] } else { $tls_capath },
+    tls_cipher   => unless $tls_cipher { $icingaweb2::config::tls['cipher'] } else { $tls_cipher },
   }
 
   $db_settings = {
@@ -217,7 +224,7 @@ class icingaweb2::module::director (
     exec { 'director-migration':
       command => "${icingacli_bin} director migration run",
       onlyif  => "${icingacli_bin} director migration pending",
-      require => [Icingaweb2::Tls::Client['icingaweb2::module::director tls client config'], Icingaweb2::Module['director'], Package['icingacli']],
+      require => [Icinga::Cert['icingaweb2::module::director tls client config'], Icingaweb2::Module['director'], Package['icingacli']],
     }
 
     if $kickstart {
