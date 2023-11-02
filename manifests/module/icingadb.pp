@@ -155,13 +155,15 @@ class icingaweb2::module::icingadb (
 ) {
   icingaweb2::assert_module()
 
-  $conf_dir        = $icingaweb2::globals::conf_dir
-  $module_conf_dir = "${conf_dir}/modules/icingadb"
+  $module_conf_dir = "${icingaweb2::globals::conf_dir}/modules/icingadb"
+  $cert_dir        = "${icingaweb2::globals::state_dir}/icingadb/certs"
+  $conf_user       = $icingaweb2::conf_user
+  $conf_group      = $icingaweb2::conf_group
 
   if $redis_use_tls {
-    $redis_tls_files = icingaweb2::cert::files(
+    $redis_tls_files = icinga::cert::files(
       'redis',
-      $module_conf_dir,
+      $cert_dir,
       $redis_tls_key_file,
       $redis_tls_cert_file,
       $redis_tls_cacert_file,
@@ -175,7 +177,7 @@ class icingaweb2::module::icingadb (
         key  => $redis_tls_files['key_file'],
         ca   => $redis_tls_files['cacert_file'],
     })
-    icingaweb2::tls::client { 'icingaweb2::module::icingadb redis client tls config':
+    icinga::cert { 'icingaweb2::module::icingadb redis client tls config':
       args  => $redis_tls_files,
     }
   } else {
@@ -215,23 +217,28 @@ class icingaweb2::module::icingadb (
     },
   }
 
-  $db_tls = delete($icingaweb2::config::tls, ['key', 'cert', 'cacert']) + delete_undef_values(icingaweb2::cert::files(
-      'client',
-      $module_conf_dir,
+  $db_tls = delete_undef_values(icinga::cert::files(
+      $db_username,
+      $cert_dir,
       $db_tls_key_file,
       $db_tls_cert_file,
       $db_tls_cacert_file,
       $db_tls_key,
       $db_tls_cert,
       $db_tls_cacert,
-    ), {
-      capath   => $db_tls_capath,
-      noverify => $db_tls_noverify,
-      cipher   => $db_tls_cipher,
-  })
+  ))
 
-  icingaweb2::tls::client { 'icingaweb2::module::icingadb tls client config':
-    args => $db_tls,
+  file { $cert_dir:
+    ensure => directory,
+    owner  => 'root',
+    group  => $conf_group,
+    mode   => '2770',
+  }
+
+  icinga::cert { 'icingaweb2::module::icingadb tls client config':
+    owner => $conf_user,
+    group => $conf_group,
+    args  => $db_tls,
   }
 
   icingaweb2::resource::database { 'icingaweb2-module-icingadb':
@@ -243,12 +250,12 @@ class icingaweb2::module::icingadb (
     password     => $db_password,
     charset      => $db_charset,
     use_tls      => $db_use_tls,
-    tls_noverify => $db_tls['noverify'],
+    tls_noverify => unless $db_tls_noverify { $icingaweb2::config::tls['noverify'] } else { $db_tls_noverify },
     tls_key      => $db_tls['key_file'],
     tls_cert     => $db_tls['cert_file'],
-    tls_cacert   => $db_tls['cacert_file'],
-    tls_capath   => $db_tls['capath'],
-    tls_cipher   => $db_tls['cipher'],
+    tls_cacert   => unless $db_tls_cacert_file { $icingaweb2::config::tls['cacert_file'] } else { $db_tls_cacert_file },
+    tls_capath   => unless $db_tls_capath { $icingaweb2::config::tls['capath'] } else { $db_tls_capath },
+    tls_cipher   => unless $db_tls_cipher { $icingaweb2::config::tls['cipher'] } else { $db_tls_cipher },
   }
 
   create_resources('icingaweb2::module::icingadb::commandtransport', $commandtransports)

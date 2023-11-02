@@ -131,7 +131,7 @@ describe('icingaweb2', type: :class) do
       end
 
       context "with db_type 'mysql', import_schema 'true'" do
-        let(:params) {{ import_schema: true, db_type: 'mysql' }}
+        let(:params) { { import_schema: true, db_type: 'mysql' } }
 
         it { is_expected.to contain_icingaweb2__resource__database('mysql-icingaweb2') }
         it { is_expected.to contain_icingaweb2__config__authmethod('mysql-auth') }
@@ -141,7 +141,7 @@ describe('icingaweb2', type: :class) do
       end
 
       context "with db_type 'pgsql', import_schema 'true'" do
-        let(:params) {{ import_schema: true, db_type: 'pgsql' }}
+        let(:params) { { import_schema: true, db_type: 'pgsql' } }
 
         it { is_expected.to contain_icingaweb2__resource__database('pgsql-icingaweb2') }
         it { is_expected.to contain_icingaweb2__config__authmethod('pgsql-auth') }
@@ -151,7 +151,7 @@ describe('icingaweb2', type: :class) do
       end
 
       context 'with import_schema => true and admin_role => false' do
-        let(:params) {{ import_schema: true, db_type: 'mysql', admin_role: false }}
+        let(:params) { { import_schema: true, db_type: 'mysql', admin_role: false } }
 
         it { is_expected.not_to contain_icingaweb2__config__role('default admin user') }
       end
