@@ -2536,11 +2536,11 @@ Default value: `'mysql'`
 
 ##### <a name="-icingaweb2--module--monitoring--ido_host"></a>`ido_host`
 
-Data type: `Optional[Stdlib::Host]`
+Data type: `Stdlib::Host`
 
 Hostname of the IDO database.
 
-Default value: `undef`
+Default value: `'localhost'`
 
 ##### <a name="-icingaweb2--module--monitoring--ido_port"></a>`ido_port`
 
@@ -2552,19 +2552,19 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--monitoring--ido_db_name"></a>`ido_db_name`
 
-Data type: `Optional[String]`
+Data type: `String`
 
 Name of the IDO database.
 
-Default value: `undef`
+Default value: `'icinga2'`
 
 ##### <a name="-icingaweb2--module--monitoring--ido_db_username"></a>`ido_db_username`
 
-Data type: `Optional[String]`
+Data type: `String`
 
 Username for IDO DB connection.
 
-Default value: `undef`
+Default value: `'icinga2'`
 
 ##### <a name="-icingaweb2--module--monitoring--ido_db_password"></a>`ido_db_password`
 

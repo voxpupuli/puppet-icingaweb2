@@ -118,12 +118,6 @@ describe('icingaweb2::module::monitoring', type: :class) do
         }
       end
 
-      context "#{os} with invalid ido_type" do
-        let(:params) { { ido_type: 'foobar' } }
-
-        it { is_expected.to raise_error(Puppet::Error, %r{expects a match for Enum\['mysql', 'pgsql'\]}) }
-      end
-
       context "#{os} with array protected_customvars" do
         let(:params) do
           { ido_type: 'mysql',
@@ -156,6 +150,68 @@ describe('icingaweb2::module::monitoring', type: :class) do
                                'protected_customvars' => 'foo,bar,*baz*',
                              },
                            })
+        }
+      end
+
+      context "#{os} with use_tls 'true', tls_cacert 'cacert', tls_capath '/foo/bar', tls_noverify 'true', tls_cipher 'cipher'" do
+        let(:params) do
+          {
+            ido_type: 'pgsql',
+            use_tls: true,
+            tls_cacert_file: '/foo/bar',
+            tls_capath: '/foo/bar',
+            tls_noverify: true,
+            tls_cipher: 'cipher',
+          }
+        end
+
+        it {
+          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-monitoring').with(
+            {
+              'type' => 'pgsql',
+              'host' => 'localhost',
+              'port' => 5432,
+              'database' => 'icinga2',
+              'username' => 'icinga2',
+              'use_tls' => true,
+              'tls_cacert' => '/foo/bar',
+              'tls_capath' => '/foo/bar',
+              'tls_noverify' => true,
+              'tls_cipher' => 'cipher',
+            },
+          )
+        }
+      end
+
+      context "#{os} with use_tls 'true'" do
+        let(:pre_condition) do
+          [
+            "class { 'icingaweb2': db_type => 'mysql', tls_cacert_file => '/foo/bar', tls_capath => '/foo/bar', tls_noverify => true, tls_cipher => 'cipher' }",
+          ]
+        end
+
+        let(:params) do
+          {
+            ido_type: 'mysql',
+            use_tls: true,
+          }
+        end
+
+        it {
+          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-monitoring').with(
+            {
+              'type' => 'mysql',
+              'host' => 'localhost',
+              'port' => 3306,
+              'database' => 'icinga2',
+              'username' => 'icinga2',
+              'use_tls' => true,
+              'tls_cacert' => '/foo/bar',
+              'tls_capath' => '/foo/bar',
+              'tls_noverify' => true,
+              'tls_cipher' => 'cipher',
+            },
+          )
         }
       end
     end

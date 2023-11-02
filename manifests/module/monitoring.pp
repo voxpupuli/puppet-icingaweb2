@@ -91,10 +91,10 @@ class icingaweb2::module::monitoring (
   Enum['absent', 'present']      $ensure               = 'present',
   Variant[String, Array[String]] $protected_customvars = ['*pw*', '*pass*', 'community'],
   Enum['mysql', 'pgsql']         $ido_type             = 'mysql',
-  Optional[Stdlib::Host]         $ido_host             = undef,
+  Stdlib::Host                   $ido_host             = 'localhost',
   Optional[Stdlib::Port]         $ido_port             = undef,
-  Optional[String]               $ido_db_name          = undef,
-  Optional[String]               $ido_db_username      = undef,
+  String                         $ido_db_name          = 'icinga2',
+  String                         $ido_db_username      = 'icinga2',
   Optional[Icingaweb2::Secret]   $ido_db_password      = undef,
   Optional[String]               $ido_db_charset       = undef,
   Optional[Boolean]              $use_tls              = undef,
@@ -111,26 +111,33 @@ class icingaweb2::module::monitoring (
 ) {
   icingaweb2::assert_module()
 
-  $conf_dir        = $icingaweb2::globals::conf_dir
-  $module_conf_dir = "${conf_dir}/modules/monitoring"
+  $module_conf_dir = "${icingaweb2::globals::conf_dir}/modules/monitoring"
+  $cert_dir        = "${icingaweb2::globals::state_dir}/monitoring/certs"
+  $conf_user       = $icingaweb2::conf_user
+  $conf_group      = $icingaweb2::conf_group
 
-  $tls = delete($icingaweb2::config::tls, ['key', 'cert', 'cacert']) + delete_undef_values(icingaweb2::cert::files(
-      'client',
-      $module_conf_dir,
+  $tls = delete_undef_values(icinga::cert::files(
+      $ido_db_username,
+      $cert_dir,
       $tls_key_file,
       $tls_cert_file,
       $tls_cacert_file,
       $tls_key,
       $tls_cert,
       $tls_cacert,
-    ) + {
-      capath   => $tls_capath,
-      noverify => $tls_noverify,
-      cipher   => $tls_cipher,
-  })
+  ))
 
-  icingaweb2::tls::client { 'icingaweb2::module::monitoring tls client config':
-    args => $tls,
+  file { $cert_dir:
+    ensure => directory,
+    owner  => 'root',
+    group  => $conf_group,
+    mode   => '2770',
+  }
+
+  icinga::cert { 'icingaweb2::module::monitoring tls client config':
+    owner => $conf_user,
+    group => $conf_group,
+    args  => $tls,
   }
 
   icingaweb2::resource::database { 'icingaweb2-module-monitoring':
@@ -142,12 +149,12 @@ class icingaweb2::module::monitoring (
     password     => $ido_db_password,
     charset      => $ido_db_charset,
     use_tls      => $use_tls,
-    tls_noverify => $tls['noverify'],
+    tls_noverify => unless $tls_noverify { $icingaweb2::config::tls['noverify'] } else { $tls_noverify },
     tls_key      => $tls['key_file'],
     tls_cert     => $tls['cert_file'],
-    tls_cacert   => $tls['cacert_file'],
-    tls_capath   => $tls['capath'],
-    tls_cipher   => $tls['cipher'],
+    tls_cacert   => unless $tls_cacert_file { $icingaweb2::config::tls['cacert_file'] } else { $tls_cacert_file },
+    tls_capath   => unless $tls_capath { $icingaweb2::config::tls['capath'] } else { $tls_capath },
+    tls_cipher   => unless $tls_cipher { $icingaweb2::config::tls['cipher'] } else { $tls_cipher },
   }
 
   $backend_settings = {
