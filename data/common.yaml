@@ -14,13 +14,7 @@ icingaweb2::module::generictts::git_repository: https://github.com/Icinga/icinga
 icingaweb2::module::graphite::git_repository: https://github.com/Icinga/icingaweb2-module-graphite.git
 icingaweb2::module::incubator::git_repository: https://github.com/Icinga/icingaweb2-module-incubator.git
 icingaweb2::module::incubator::git_revision: v0.19.0
-icingaweb2::module::ipl::git_repository: https://github.com/Icinga/icingaweb2-module-ipl.git
-icingaweb2::module::ipl::git_revision: v0.5.0
 icingaweb2::module::puppetdb::git_repository: https://github.com/Icinga/icingaweb2-module-puppetdb.git
-icingaweb2::module::reactbundle::git_repository: https://github.com/Icinga/icingaweb2-module-reactbundle.git
-icingaweb2::module::reactbundle::git_revision: v0.9.0
-icingaweb2::module::vsphere::git_repository: https://github.com/Icinga/icingaweb2-module-vsphere.git
-icingaweb2::module::vspheredb::git_repository: https://github.com/Icinga/icingaweb2-module-vspheredb.git
 icingaweb2::module::reporting::ensure: present
 icingaweb2::module::reporting::install_method: git
 icingaweb2::module::reporting::git_repository: https://github.com/Icinga/icingaweb2-module-reporting.git
@@ -33,3 +27,16 @@ icingaweb2::module::x509::ensure: present
 icingaweb2::module::x509::install_method: git
 icingaweb2::module::x509::git_repository: https://github.com/Icinga/icingaweb2-module-x509.git
 icingaweb2::module::x509::package_name: icingaweb2-module-x509
+
+icingaweb2::globals::mysql_vspheredb_schema: /schema/mysql.sql
+icingaweb2::globals::pgsql_vspheredb_schema: /schema/pgsql.sql
+icingaweb2::module::vspheredb::ensure: present
+icingaweb2::module::vspheredb::install_method: git
+icingaweb2::module::vspheredb::git_repository: https://github.com/Icinga/icingaweb2-module-vspheredb.git
+icingaweb2::module::vspheredb::manage_service: true
+icingaweb2::module::vspheredb::service_ensure: running
+icingaweb2::module::vspheredb::service_enable: true
+icingaweb2::module::vspheredb::service_user: icingavspheredb
+icingaweb2::module::vspheredb::db_host: localhost
+icingaweb2::module::vspheredb::db_name: vspheredb
+icingaweb2::module::vspheredb::db_username: vspheredb

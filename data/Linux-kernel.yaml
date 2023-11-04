@@ -6,8 +6,6 @@ icingaweb2::globals::data_dir: /usr/share/icingaweb2
 icingaweb2::globals::comp_db_schema_dir: /usr/share/doc/icingaweb2
 icingaweb2::globals::mysql_db_schema: /usr/share/doc/icingaweb2/schema/mysql.schema.sql
 icingaweb2::globals::pgsql_db_schema: /usr/share/doc/icingaweb2/schema/pgsql.schema.sql
-icingaweb2::globals::mysql_vspheredb_schema: /usr/share/icingaweb2/modules/vspheredb/schema/mysql.sql
-icingaweb2::globals::pgsql_vspheredb_schema: /usr/share/icingaweb2/modules/vspheredb/schema/pgsql.sql
 icingaweb2::globals::mysql_reporting_schema: /usr/share/icingaweb2/modules/reporting/schema/mysql.sql
 icingaweb2::globals::pgsql_reporting_schema: /usr/share/icingaweb2/modules/reporting/schema/postgresql.sql
 icingaweb2::globals::mysql_idoreports_slaperiods: /usr/share/icingaweb2/modules/idoreports/schema/mysql/slaperiods.sql
@@ -21,4 +19,6 @@ icingaweb2::globals::icingacli_bin: /usr/bin/icingacli
 icingaweb2::globals::default_module_path: /usr/share/icingaweb2/modules
 icingaweb2::conf_group: icingaweb2
 icingaweb2::logging_file: /var/log/icingaweb2/icingaweb2.log
+
 icingaweb2::module::icingadb::package_name: icingadb-web
+icingaweb2::module::vspheredb::package_name: icingaweb2-module-vspheredb

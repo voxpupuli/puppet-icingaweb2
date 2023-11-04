@@ -32,7 +32,6 @@
 * [`icingaweb2::module::reporting::service`](#icingaweb2--module--reporting--service): Installs and configures the reporting scheduler.
 * [`icingaweb2::module::translation`](#icingaweb2--module--translation): Installs and configures the translation module.
 * [`icingaweb2::module::vspheredb`](#icingaweb2--module--vspheredb): Installs the vsphereDB plugin
-* [`icingaweb2::module::vspheredb::service`](#icingaweb2--module--vspheredb--service): Installs and configures the vspheredb service.
 * [`icingaweb2::module::x509`](#icingaweb2--module--x509): Installs the x509 module
 * [`icingaweb2::module::x509::service`](#icingaweb2--module--x509--service): Installs and configures the x509 job scheduler.
 
@@ -40,6 +39,9 @@
 
 * `icingaweb2::config`: Configures Icinga Web 2.
 * `icingaweb2::install`: Installs Icinga Web 2 and extra packages.
+* `icingaweb2::module::vspheredb::config`: Configure the VSphereDB module
+* `icingaweb2::module::vspheredb::install`: Installs the VSphereDB module
+* `icingaweb2::module::vspheredb::service`: Manage the vspheredb service.
 
 ### Defined types
 
@@ -75,6 +77,7 @@ that store groups.
 * [`icingaweb2::cert::files`](#icingaweb2--cert--files): Choose the path of tls key, cert and ca file.
 * [`icingaweb2::db::connect`](#icingaweb2--db--connect): This function returns a string to connect databases
 with or without TLS information.
+* [`icingaweb2::pick`](#icingaweb2--pick): This function returns first parameter if set.
 * [`icingaweb2::unwrap`](#icingaweb2--unwrap): This function returns an unwrap string if necessary.
 
 ### Data types
@@ -3337,6 +3340,9 @@ The following parameters are available in the `icingaweb2::module::vspheredb` cl
 * [`tls_cipher`](#-icingaweb2--module--vspheredb--tls_cipher)
 * [`import_schema`](#-icingaweb2--module--vspheredb--import_schema)
 * [`manage_service`](#-icingaweb2--module--vspheredb--manage_service)
+* [`service_ensure`](#-icingaweb2--module--vspheredb--service_ensure)
+* [`service_enable`](#-icingaweb2--module--vspheredb--service_enable)
+* [`service_user`](#-icingaweb2--module--vspheredb--service_user)
 
 ##### <a name="-icingaweb2--module--vspheredb--ensure"></a>`ensure`
 
@@ -3344,23 +3350,19 @@ Data type: `Enum['absent', 'present']`
 
 Ensur es the state of the vspheredb module.
 
-Default value: `'present'`
-
 ##### <a name="-icingaweb2--module--vspheredb--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/vspheredb"`
 
 ##### <a name="-icingaweb2--module--vspheredb--git_repository"></a>`git_repository`
 
-Data type: `String`
+Data type: `Stdlib::HTTPUrl`
 
 The upstream module repository.
-
-Default value: `'https://github.com/Icinga/icingaweb2-module-vspheredb.git'`
 
 ##### <a name="-icingaweb2--module--vspheredb--git_revision"></a>`git_revision`
 
@@ -3376,15 +3378,11 @@ Data type: `Enum['git', 'none', 'package']`
 
 Install methods are `git`, `package` and `none` is supported as installation method.
 
-Default value: `'git'`
-
 ##### <a name="-icingaweb2--module--vspheredb--package_name"></a>`package_name`
 
 Data type: `String`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
-
-Default value: `'icingaweb2-module-vspheredb'`
 
 ##### <a name="-icingaweb2--module--vspheredb--db_type"></a>`db_type`
 
@@ -3397,8 +3395,6 @@ The database type. Either mysql or postgres.
 Data type: `Stdlib::Host`
 
 The host where the vspheredb-database will be running
-
-Default value: `'localhost'`
 
 ##### <a name="-icingaweb2--module--vspheredb--db_port"></a>`db_port`
 
@@ -3414,15 +3410,11 @@ Data type: `String`
 
 The name of the database this module should use.
 
-Default value: `'vspheredb'`
-
 ##### <a name="-icingaweb2--module--vspheredb--db_username"></a>`db_username`
 
 Data type: `String`
 
 The username needed to access the database.
-
-Default value: `'vspheredb'`
 
 ##### <a name="-icingaweb2--module--vspheredb--db_password"></a>`db_password`
 
@@ -3434,11 +3426,11 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--vspheredb--db_charset"></a>`db_charset`
 
-Data type: `String`
+Data type: `Optional[String]`
 
 The charset the database is set to.
 
-Default value: `'utf8mb4'`
+Default value: `undef`
 
 ##### <a name="-icingaweb2--module--vspheredb--use_tls"></a>`use_tls`
 
@@ -3536,76 +3528,25 @@ Default value: `false`
 
 Data type: `Boolean`
 
-Also manage the service (daemon), running and enabled. Otherwise do your config via hiera.
+If set to true the service (daemon) is managed.
 
-Default value: `true`
-
-### <a name="icingaweb2--module--vspheredb--service"></a>`icingaweb2::module::vspheredb::service`
-
-Installs and configures the vspheredb service.
-
-* **Note** Only systemd is supported by the Icinga Team and this module.
-
-#### Examples
-
-##### 
-
-```puppet
-include icingaweb2::module::vspheredb::service
-```
-
-#### Parameters
-
-The following parameters are available in the `icingaweb2::module::vspheredb::service` class:
-
-* [`ensure`](#-icingaweb2--module--vspheredb--service--ensure)
-* [`enable`](#-icingaweb2--module--vspheredb--service--enable)
-* [`user`](#-icingaweb2--module--vspheredb--service--user)
-* [`group`](#-icingaweb2--module--vspheredb--service--group)
-* [`manage_user`](#-icingaweb2--module--vspheredb--service--manage_user)
-
-##### <a name="-icingaweb2--module--vspheredb--service--ensure"></a>`ensure`
+##### <a name="-icingaweb2--module--vspheredb--service_ensure"></a>`service_ensure`
 
 Data type: `Stdlib::Ensure::Service`
 
-Whether the vspheredb service should be running.
+Wether the service is `running` or `stopped`.
 
-Default value: `'running'`
-
-##### <a name="-icingaweb2--module--vspheredb--service--enable"></a>`enable`
+##### <a name="-icingaweb2--module--vspheredb--service_enable"></a>`service_enable`
 
 Data type: `Boolean`
 
-Enable or disable the service.
+Whether the service should be started at boot time.
 
-Default value: `true`
-
-##### <a name="-icingaweb2--module--vspheredb--service--user"></a>`user`
+##### <a name="-icingaweb2--module--vspheredb--service_user"></a>`service_user`
 
 Data type: `String`
 
-Specifies the user to run the vsphere service daemon as.
-Only available if install_method package is not used.
-
-Default value: `'icingavspheredb'`
-
-##### <a name="-icingaweb2--module--vspheredb--service--group"></a>`group`
-
-Data type: `String`
-
-Specifies the primary group to run the vspheredb service daemon as.
-Only available if install_method package is not used.
-
-Default value: `'icingaweb2'`
-
-##### <a name="-icingaweb2--module--vspheredb--service--manage_user"></a>`manage_user`
-
-Data type: `Boolean`
-
-Whether to manage the server user resource. Only available if
-install_method package is not used.
-
-Default value: `true`
+The user as which the service is running. Only valid if `install_method` is set to `git`.
 
 ### <a name="icingaweb2--module--x509"></a>`icingaweb2::module::x509`
 
@@ -4741,9 +4682,11 @@ MySQL and the path to the unix domain socket and the directory for PostgreSQL.
 
 ##### <a name="-icingaweb2--resource--database--port"></a>`port`
 
-Data type: `Stdlib::Port`
+Data type: `Optional[Stdlib::Port]`
 
 Port number to use.
+
+Default value: `undef`
 
 ##### <a name="-icingaweb2--resource--database--database"></a>`database`
 
@@ -5050,6 +4993,30 @@ Data type: `Hash[String, Any]`
 ##### `use_tls`
 
 Data type: `Optional[Boolean]`
+
+
+
+### <a name="icingaweb2--pick"></a>`icingaweb2::pick`
+
+Type: Puppet Language
+
+This function returns first parameter if set.
+
+#### `icingaweb2::pick(Any $arg1, Any $arg2)`
+
+The icingaweb2::pick function.
+
+Returns: `Any` One of the two parameters.
+
+##### `arg1`
+
+Data type: `Any`
+
+
+
+##### `arg2`
+
+Data type: `Any`
 
 
 

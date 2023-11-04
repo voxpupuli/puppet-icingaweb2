@@ -64,7 +64,7 @@ define icingaweb2::resource::database (
   'oci', 'oracle', 'ibm', 'sqlite']  $type,
   Stdlib::Host                       $host,
   String                             $database,
-  Stdlib::Port                       $port,
+  Optional[Stdlib::Port]             $port          = undef,
   String                             $resource_name = $title,
   Optional[String]                   $username      = undef,
   Optional[Icingaweb2::Secret]       $password      = undef,

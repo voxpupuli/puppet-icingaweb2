@@ -7,6 +7,7 @@ class icingaweb2::install {
   assert_private("You're not supposed to use this defined type manually.")
 
   $conf_dir       = $icingaweb2::globals::conf_dir
+  $stdlib_version = $icingaweb2::globals::stdlib_version
   $cert_dir       = $icingaweb2::cert_dir
   $package_name   = $icingaweb2::globals::package_name
   $data_dir       = $icingaweb2::globals::data_dir
@@ -28,8 +29,7 @@ class icingaweb2::install {
   }
 
   if $extra_packages {
-    $metadata = load_module_metadata('stdlib')
-    if versioncmp($metadata['version'], '9.0.0') < 0 {
+    if versioncmp($stdlib_version, '9.0.0') < 0 {
       ensure_packages($extra_packages, { 'ensure' => installed })
     } else {
       stdlib::ensure_packages($extra_packages, { 'ensure' => installed })
