@@ -29,7 +29,6 @@
 * [`icingaweb2::module::puppetdb`](#icingaweb2--module--puppetdb): Installs and configures the puppetdb module.
 * [`icingaweb2::module::reactbundle`](#icingaweb2--module--reactbundle): Installs and enables the reactbundle module.
 * [`icingaweb2::module::reporting`](#icingaweb2--module--reporting): Installs the reporting module
-* [`icingaweb2::module::reporting::service`](#icingaweb2--module--reporting--service): Installs and configures the reporting scheduler.
 * [`icingaweb2::module::translation`](#icingaweb2--module--translation): Installs and configures the translation module.
 * [`icingaweb2::module::vspheredb`](#icingaweb2--module--vspheredb): Installs the vsphereDB plugin
 * [`icingaweb2::module::x509`](#icingaweb2--module--x509): Installs the x509 module
@@ -39,8 +38,11 @@
 
 * `icingaweb2::config`: Configures Icinga Web 2.
 * `icingaweb2::install`: Installs Icinga Web 2 and extra packages.
+* `icingaweb2::module::reporting::config`: Configure the reporting module.
+* `icingaweb2::module::reporting::install`: Install the reporting module.
+* `icingaweb2::module::reporting::service`: Manage the reporting service.
 * `icingaweb2::module::vspheredb::config`: Configure the VSphereDB module
-* `icingaweb2::module::vspheredb::install`: Installs the VSphereDB module
+* `icingaweb2::module::vspheredb::install`: Install the VSphereDB module
 * `icingaweb2::module::vspheredb::service`: Manage the vspheredb service.
 
 ### Defined types
@@ -3004,6 +3006,9 @@ The following parameters are available in the `icingaweb2::module::reporting` cl
 * [`import_schema`](#-icingaweb2--module--reporting--import_schema)
 * [`mail`](#-icingaweb2--module--reporting--mail)
 * [`manage_service`](#-icingaweb2--module--reporting--manage_service)
+* [`service_ensure`](#-icingaweb2--module--reporting--service_ensure)
+* [`service_enable`](#-icingaweb2--module--reporting--service_enable)
+* [`service_user`](#-icingaweb2--module--reporting--service_user)
 
 ##### <a name="-icingaweb2--module--reporting--ensure"></a>`ensure`
 
@@ -3013,11 +3018,11 @@ Ensures the state of the reporting module.
 
 ##### <a name="-icingaweb2--module--reporting--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/reporting"`
 
 ##### <a name="-icingaweb2--module--reporting--git_repository"></a>`git_repository`
 
@@ -3057,8 +3062,6 @@ Data type: `Stdlib::Host`
 
 The host where the reporting database will be running
 
-Default value: `'localhost'`
-
 ##### <a name="-icingaweb2--module--reporting--db_port"></a>`db_port`
 
 Data type: `Optional[Stdlib::Port]`
@@ -3073,15 +3076,11 @@ Data type: `String`
 
 The name of the database this module should use.
 
-Default value: `'reporting'`
-
 ##### <a name="-icingaweb2--module--reporting--db_username"></a>`db_username`
 
 Data type: `String`
 
 The username needed to access the database.
-
-Default value: `'reporting'`
 
 ##### <a name="-icingaweb2--module--reporting--db_password"></a>`db_password`
 
@@ -3203,76 +3202,25 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-Also manage the service (daemon), running and enabled. Otherwise do your config via hiera.
+If set to true the service (daemon) is managed.
 
-Default value: `true`
-
-### <a name="icingaweb2--module--reporting--service"></a>`icingaweb2::module::reporting::service`
-
-Installs and configures the reporting scheduler.
-
-* **Note** Only systemd is supported by the Icinga Team and this module.
-
-#### Examples
-
-##### 
-
-```puppet
-include icingaweb2::module::reporting::service
-```
-
-#### Parameters
-
-The following parameters are available in the `icingaweb2::module::reporting::service` class:
-
-* [`ensure`](#-icingaweb2--module--reporting--service--ensure)
-* [`enable`](#-icingaweb2--module--reporting--service--enable)
-* [`user`](#-icingaweb2--module--reporting--service--user)
-* [`group`](#-icingaweb2--module--reporting--service--group)
-* [`manage_user`](#-icingaweb2--module--reporting--service--manage_user)
-
-##### <a name="-icingaweb2--module--reporting--service--ensure"></a>`ensure`
+##### <a name="-icingaweb2--module--reporting--service_ensure"></a>`service_ensure`
 
 Data type: `Stdlib::Ensure::Service`
 
-Whether the reporting service should be running.
+Wether the service is `running` or `stopped`.
 
-Default value: `'running'`
-
-##### <a name="-icingaweb2--module--reporting--service--enable"></a>`enable`
+##### <a name="-icingaweb2--module--reporting--service_enable"></a>`service_enable`
 
 Data type: `Boolean`
 
-Enable or disable the service.
+Whether the service should be started at boot time.
 
-Default value: `true`
-
-##### <a name="-icingaweb2--module--reporting--service--user"></a>`user`
+##### <a name="-icingaweb2--module--reporting--service_user"></a>`service_user`
 
 Data type: `String`
 
-Specifies the user to run the reporting service daemon as.
-Only available if install_method package is not used.
-
-Default value: `'icingareporting'`
-
-##### <a name="-icingaweb2--module--reporting--service--group"></a>`group`
-
-Data type: `String`
-
-Specifies the primary group to run the reporting service daemon as.
-Only available if install_method package is not used.
-
-Default value: `'icingaweb2'`
-
-##### <a name="-icingaweb2--module--reporting--service--manage_user"></a>`manage_user`
-
-Data type: `Boolean`
-
-Whether to manage the server user resource. Only available if
-install_method package is not used.
-
-Default value: `true`
+The user as which the service is running. Only valid if `install_method` is set to `git`.
 
 ### <a name="icingaweb2--module--translation"></a>`icingaweb2::module::translation`
 

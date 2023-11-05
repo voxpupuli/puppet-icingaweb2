@@ -15,10 +15,6 @@ icingaweb2::module::graphite::git_repository: https://github.com/Icinga/icingawe
 icingaweb2::module::incubator::git_repository: https://github.com/Icinga/icingaweb2-module-incubator.git
 icingaweb2::module::incubator::git_revision: v0.19.0
 icingaweb2::module::puppetdb::git_repository: https://github.com/Icinga/icingaweb2-module-puppetdb.git
-icingaweb2::module::reporting::ensure: present
-icingaweb2::module::reporting::install_method: git
-icingaweb2::module::reporting::git_repository: https://github.com/Icinga/icingaweb2-module-reporting.git
-icingaweb2::module::reporting::package_name: icingaweb2-module-reporting
 icingaweb2::module::idoreports::ensure: present
 icingaweb2::module::idoreports::install_method: git
 icingaweb2::module::idoreports::git_repository: https://github.com/Icinga/icingaweb2-module-idoreports.git
@@ -27,6 +23,19 @@ icingaweb2::module::x509::ensure: present
 icingaweb2::module::x509::install_method: git
 icingaweb2::module::x509::git_repository: https://github.com/Icinga/icingaweb2-module-x509.git
 icingaweb2::module::x509::package_name: icingaweb2-module-x509
+
+icingaweb2::globals::mysql_reporting_schema: /schema/mysql.sql
+icingaweb2::globals::pgsql_reporting_schema: /schema/postgresql.sql
+icingaweb2::module::reporting::ensure: present
+icingaweb2::module::reporting::install_method: git
+icingaweb2::module::reporting::git_repository: https://github.com/Icinga/icingaweb2-module-reporting.git
+icingaweb2::module::reporting::manage_service: true
+icingaweb2::module::reporting::service_ensure: running
+icingaweb2::module::reporting::service_enable: true
+icingaweb2::module::reporting::service_user: icingareporting
+icingaweb2::module::reporting::db_host: localhost
+icingaweb2::module::reporting::db_name: reporting
+icingaweb2::module::reporting::db_username: reporting
 
 icingaweb2::globals::mysql_vspheredb_schema: /schema/mysql.sql
 icingaweb2::globals::pgsql_vspheredb_schema: /schema/pgsql.sql

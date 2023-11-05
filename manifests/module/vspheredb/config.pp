@@ -6,22 +6,22 @@
 class icingaweb2::module::vspheredb::config {
   assert_private()
 
-  $module_conf_dir        = "${icingaweb2::globals::conf_dir}/modules/vspheredb"
-  $conf_group             = $icingaweb2::conf_group
-  $mysql_vspheredb_schema = "${icingaweb2::module::vspheredb::module_dir}${icingaweb2::globals::mysql_vspheredb_schema}"
-  $pgsql_vspheredb_schema = "${icingaweb2::module::vspheredb::module_dir}${icingaweb2::globals::pgsql_vspheredb_schema}"
-  $db                     = $icingaweb2::module::vspheredb::db
-  $import_schema          = $icingaweb2::module::vspheredb::import_schema
-  $use_tls                = $icingaweb2::module::vspheredb::use_tls
-  $tls                    = $icingaweb2::module::vspheredb::tls + {
+  $module_conf_dir = "${icingaweb2::globals::conf_dir}/modules/vspheredb"
+  $conf_group      = $icingaweb2::conf_group
+  $mysql_schema    = "${icingaweb2::module::vspheredb::module_dir}${icingaweb2::globals::mysql_vspheredb_schema}"
+  $pgsql_schema    = "${icingaweb2::module::vspheredb::module_dir}${icingaweb2::globals::pgsql_vspheredb_schema}"
+  $db              = $icingaweb2::module::vspheredb::db
+  $import_schema   = $icingaweb2::module::vspheredb::import_schema
+  $use_tls         = $icingaweb2::module::vspheredb::use_tls
+  $tls             = $icingaweb2::module::vspheredb::tls + {
     cacert_file => icingaweb2::pick($icingaweb2::module::vspheredb::tls['cacert_file'], $icingaweb2::config::tls['cacert_file']),
     capath      => icingaweb2::pick($icingaweb2::module::vspheredb::tls_capath, $icingaweb2::config::tls['capath']),
     noverify    => icingaweb2::pick($icingaweb2::module::vspheredb::tls_noverify, $icingaweb2::config::tls['noverify']),
     cipher      => icingaweb2::pick($icingaweb2::module::vspheredb::tls_cipher, $icingaweb2::config::tls['cipher']),
   }
-  $icingacli_bin          = $icingaweb2::globals::icingacli_bin
-  $service_user           = $icingaweb2::module::vspheredb::service_user
-  $install_method         = $icingaweb2::module::vspheredb::install_method
+  $icingacli_bin   = $icingaweb2::globals::icingacli_bin
+  $service_user    = $icingaweb2::module::vspheredb::service_user
+  $install_method  = $icingaweb2::module::vspheredb::install_method
 
   Exec {
     user     => 'root',
@@ -70,7 +70,7 @@ class icingaweb2::module::vspheredb::config {
     case $db['type'] {
       'mysql': {
         exec { 'import icingaweb2::module::vspheredb schema':
-          command => "mysql ${db_cli_options} < '${mysql_vspheredb_schema}'",
+          command => "mysql ${db_cli_options} < '${mysql_schema}'",
           unless  => "mysql ${db_cli_options} -Ns -e 'SELECT schema_version FROM vspheredb_schema_migration'",
         }
       }
@@ -78,7 +78,7 @@ class icingaweb2::module::vspheredb::config {
         $_db_password = icingaweb2::unwrap($db['password'])
         exec { 'import icingaweb2::module::vspheredb schema':
           environment => ["PGPASSWORD=${_db_password}"],
-          command     => "psql '${db_cli_options}' -w -f ${pgsql_vspheredb_schema}",
+          command     => "psql '${db_cli_options}' -w -f ${pgsql_schema}",
           unless      => "psql '${db_cli_options}' -w -c 'SELECT schema_version FROM vspheredb_schema_migration'",
         }
       } # pgsql (not supported)

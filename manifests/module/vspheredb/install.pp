@@ -1,5 +1,5 @@
 # @summary
-#   Installs the VSphereDB module
+#   Install the VSphereDB module
 #
 # @api private
 #
