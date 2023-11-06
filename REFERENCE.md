@@ -24,7 +24,7 @@
 * [`icingaweb2::module::idoreports`](#icingaweb2--module--idoreports): Installs, configures and enables the idoreports module.
 * [`icingaweb2::module::incubator`](#icingaweb2--module--incubator): Installs and enables the incubator module.
 * [`icingaweb2::module::ipl`](#icingaweb2--module--ipl): Installs and enables the ipl module.
-* [`icingaweb2::module::monitoring`](#icingaweb2--module--monitoring): Manages the monitoring module. This module is mandatory for probably every setup.
+* [`icingaweb2::module::monitoring`](#icingaweb2--module--monitoring): Manages the monitoring module. This module is deprecated.
 * [`icingaweb2::module::pdfexport`](#icingaweb2--module--pdfexport): Installs, configures and enables the pdfexport module.
 * [`icingaweb2::module::puppetdb`](#icingaweb2--module--puppetdb): Installs and configures the puppetdb module.
 * [`icingaweb2::module::reactbundle`](#icingaweb2--module--reactbundle): Installs and enables the reactbundle module.
@@ -40,6 +40,8 @@
 * `icingaweb2::install`: Installs Icinga Web 2 and extra packages.
 * `icingaweb2::module::icingadb::config`: Configure the icingadb module.
 * `icingaweb2::module::icingadb::install`: Install the icingadb module.
+* `icingaweb2::module::monitoring::config`: Configure the monitoring module.
+* `icingaweb2::module::monitoring::install`: Installs the monitoring module.
 * `icingaweb2::module::reporting::config`: Configure the reporting module.
 * `icingaweb2::module::reporting::install`: Install the reporting module.
 * `icingaweb2::module::reporting::service`: Manage the reporting service.
@@ -2512,8 +2514,6 @@ Data type: `Enum['absent', 'present']`
 
 Enable or disable module.
 
-Default value: `'present'`
-
 ##### <a name="-icingaweb2--module--monitoring--protected_customvars"></a>`protected_customvars`
 
 Data type: `Variant[String, Array[String]]`
@@ -2521,23 +2521,17 @@ Data type: `Variant[String, Array[String]]`
 Custom variables in Icinga 2 may contain sensible information. Set patterns for custom variables
 that should be hidden in the web interface.
 
-Default value: `['*pw*', '*pass*', 'community']`
-
 ##### <a name="-icingaweb2--module--monitoring--ido_type"></a>`ido_type`
 
 Data type: `Enum['mysql', 'pgsql']`
 
 Type of your IDO database. Either `mysql` or `pgsql`.
 
-Default value: `'mysql'`
-
 ##### <a name="-icingaweb2--module--monitoring--ido_host"></a>`ido_host`
 
 Data type: `Stdlib::Host`
 
 Hostname of the IDO database.
-
-Default value: `'localhost'`
 
 ##### <a name="-icingaweb2--module--monitoring--ido_port"></a>`ido_port`
 
@@ -2553,15 +2547,11 @@ Data type: `String`
 
 Name of the IDO database.
 
-Default value: `'icinga2'`
-
 ##### <a name="-icingaweb2--module--monitoring--ido_db_username"></a>`ido_db_username`
 
 Data type: `String`
 
 Username for IDO DB connection.
-
-Default value: `'icinga2'`
 
 ##### <a name="-icingaweb2--module--monitoring--ido_db_password"></a>`ido_db_password`
 

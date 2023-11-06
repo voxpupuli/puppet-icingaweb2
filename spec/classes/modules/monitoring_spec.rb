@@ -16,9 +16,7 @@ describe('icingaweb2::module::monitoring', type: :class) do
       context "#{os} with ido_type 'mysql' and commandtransport 'api'" do
         let(:params) do
           { ido_type: 'mysql',
-            ido_host: 'localhost',
-            ido_db_name: 'icinga2',
-            ido_db_username: 'icinga2',
+            ido_port: 4711,
             ido_db_password: 'icinga2',
             commandtransports: {
               'foo' => {
@@ -30,30 +28,31 @@ describe('icingaweb2::module::monitoring', type: :class) do
 
         it {
           is_expected.to contain_icingaweb2__module('monitoring')
+            .with_ensure('present')
             .with_install_method('none')
             .with_module_dir('/usr/share/icingaweb2/modules/monitoring')
-            .with_settings('module-monitoring-backends' => {
-                             'section_name' => 'backends',
-                             'target' => '/etc/icingaweb2/modules/monitoring/backends.ini',
-                             'settings' => {
-                               'type' => 'ido',
-                               'resource' => 'icingaweb2-module-monitoring',
-                             },
-                           },
-                           'module-monitoring-security' => {
-                             'section_name' => 'security',
-                             'target' => '/etc/icingaweb2/modules/monitoring/config.ini',
-                             'settings' => {
-                               'protected_customvars' => '*pw*,*pass*,community',
-                             },
-                           })
+            .with_settings({})
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('module-monitoring-backends')
+            .with_section_name('backends')
+            .with_target('/etc/icingaweb2/modules/monitoring/backends.ini')
+            .with_settings({ 'type' => 'ido', 'resource' => 'icingaweb2-module-monitoring' })
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('module-monitoring-security')
+            .with_section_name('security')
+            .with_target('/etc/icingaweb2/modules/monitoring/config.ini')
+            .with_settings({ 'protected_customvars' => '*pw*,*pass*,community', })
         }
 
         it {
           is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-monitoring')
             .with_type('mysql')
             .with_host('localhost')
-            .with_port('3306')
+            .with_port(4711)
             .with_database('icinga2')
             .with_username('icinga2')
             .with_password('icinga2')
@@ -70,7 +69,6 @@ describe('icingaweb2::module::monitoring', type: :class) do
         let(:params) do
           { ido_type: 'pgsql',
             ido_host: 'localhost',
-            ido_port: 5432,
             ido_db_name: 'icinga2',
             ido_db_username: 'icinga2',
             ido_db_password: 'icinga2',
@@ -81,32 +79,10 @@ describe('icingaweb2::module::monitoring', type: :class) do
             } }
         end
 
-        it do
-          is_expected.to contain_icingaweb2__module('monitoring')
-            .with_install_method('none')
-            .with_module_dir('/usr/share/icingaweb2/modules/monitoring')
-            .with_settings('module-monitoring-backends' => {
-                             'section_name' => 'backends',
-                             'target' => '/etc/icingaweb2/modules/monitoring/backends.ini',
-                             'settings' => {
-                               'type' => 'ido',
-                               'resource' => 'icingaweb2-module-monitoring',
-                             },
-                           },
-                           'module-monitoring-security' => {
-                             'section_name' => 'security',
-                             'target' => '/etc/icingaweb2/modules/monitoring/config.ini',
-                             'settings' => {
-                               'protected_customvars' => '*pw*,*pass*,community',
-                             },
-                           })
-        end
-
         it {
           is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-monitoring')
             .with_type('pgsql')
             .with_host('localhost')
-            .with_port(5432)
             .with_database('icinga2')
             .with_username('icinga2')
             .with_password('icinga2')
@@ -118,7 +94,7 @@ describe('icingaweb2::module::monitoring', type: :class) do
         }
       end
 
-      context "#{os} with array protected_customvars" do
+      context "#{os} with array protected_customvars and API commandtransport" do
         let(:params) do
           { ido_type: 'mysql',
             ido_host: 'localhost',
@@ -127,29 +103,30 @@ describe('icingaweb2::module::monitoring', type: :class) do
             ido_db_password: 'icinga2',
             commandtransports: {
               'foo' => {
-                'transport' => 'local',
+                'transport' => 'api',
+                'host' => 'api.icinga.com',
+                'port' => 4711,
+                'username' => 'icingaweb2',
+                'password' => 'secret',
               },
             },
             protected_customvars: ['foo', 'bar', '*baz*'] }
         end
 
         it {
-          is_expected.to contain_icingaweb2__module('monitoring')
-            .with_settings('module-monitoring-backends' => {
-                             'section_name' => 'backends',
-                             'target' => '/etc/icingaweb2/modules/monitoring/backends.ini',
-                             'settings' => {
-                               'type' => 'ido',
-                               'resource' => 'icingaweb2-module-monitoring',
-                             },
-                           },
-                           'module-monitoring-security' => {
-                             'section_name' => 'security',
-                             'target' => '/etc/icingaweb2/modules/monitoring/config.ini',
-                             'settings' => {
-                               'protected_customvars' => 'foo,bar,*baz*',
-                             },
-                           })
+          is_expected.to contain_icingaweb2__module__monitoring__commandtransport('foo')
+            .with_transport('api')
+            .with_host('api.icinga.com')
+            .with_port(4711)
+            .with_username('icingaweb2')
+            .with_password('secret')
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('module-monitoring-security')
+            .with_section_name('security')
+            .with_target('/etc/icingaweb2/modules/monitoring/config.ini')
+            .with_settings({ 'protected_customvars' => 'foo,bar,*baz*' })
         }
       end
 
@@ -170,7 +147,6 @@ describe('icingaweb2::module::monitoring', type: :class) do
             {
               'type' => 'pgsql',
               'host' => 'localhost',
-              'port' => 5432,
               'database' => 'icinga2',
               'username' => 'icinga2',
               'use_tls' => true,
@@ -202,7 +178,6 @@ describe('icingaweb2::module::monitoring', type: :class) do
             {
               'type' => 'mysql',
               'host' => 'localhost',
-              'port' => 3306,
               'database' => 'icinga2',
               'username' => 'icinga2',
               'use_tls' => true,
