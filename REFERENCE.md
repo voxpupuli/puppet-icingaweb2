@@ -21,7 +21,7 @@
 * [`icingaweb2::module::generictts`](#icingaweb2--module--generictts): Installs and enables the generictts module.
 * [`icingaweb2::module::graphite`](#icingaweb2--module--graphite): The Graphite module draws graphs out of time series data stored in Graphite.
 * [`icingaweb2::module::icingadb`](#icingaweb2--module--icingadb): Manages the icingadb module. This module is still optional at the moment.
-* [`icingaweb2::module::idoreports`](#icingaweb2--module--idoreports): Installs, configures and enables the idoreports module.
+* [`icingaweb2::module::idoreports`](#icingaweb2--module--idoreports): Installs, configures and enables the idoreports module. The module is deprecated.
 * [`icingaweb2::module::incubator`](#icingaweb2--module--incubator): Installs and enables the incubator module.
 * [`icingaweb2::module::ipl`](#icingaweb2--module--ipl): Installs and enables the ipl module.
 * [`icingaweb2::module::monitoring`](#icingaweb2--module--monitoring): Manages the monitoring module. This module is deprecated.
@@ -2171,7 +2171,7 @@ Default value: `{}`
 
 ### <a name="icingaweb2--module--idoreports"></a>`icingaweb2::module::idoreports`
 
-Installs, configures and enables the idoreports module.
+Installs, configures and enables the idoreports module. The module is deprecated.
 
 * **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 
@@ -2196,18 +2196,6 @@ The following parameters are available in the `icingaweb2::module::idoreports` c
 * [`install_method`](#-icingaweb2--module--idoreports--install_method)
 * [`package_name`](#-icingaweb2--module--idoreports--package_name)
 * [`import_schema`](#-icingaweb2--module--idoreports--import_schema)
-* [`ido_db_username`](#-icingaweb2--module--idoreports--ido_db_username)
-* [`ido_db_password`](#-icingaweb2--module--idoreports--ido_db_password)
-* [`use_tls`](#-icingaweb2--module--idoreports--use_tls)
-* [`tls_key_file`](#-icingaweb2--module--idoreports--tls_key_file)
-* [`tls_cert_file`](#-icingaweb2--module--idoreports--tls_cert_file)
-* [`tls_cacert_file`](#-icingaweb2--module--idoreports--tls_cacert_file)
-* [`tls_key`](#-icingaweb2--module--idoreports--tls_key)
-* [`tls_cert`](#-icingaweb2--module--idoreports--tls_cert)
-* [`tls_cacert`](#-icingaweb2--module--idoreports--tls_cacert)
-* [`tls_capath`](#-icingaweb2--module--idoreports--tls_capath)
-* [`tls_noverify`](#-icingaweb2--module--idoreports--tls_noverify)
-* [`tls_cipher`](#-icingaweb2--module--idoreports--tls_cipher)
 
 ##### <a name="-icingaweb2--module--idoreports--ensure"></a>`ensure`
 
@@ -2217,11 +2205,11 @@ Enable or disable module.
 
 ##### <a name="-icingaweb2--module--idoreports--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/idoreports"`
 
 ##### <a name="-icingaweb2--module--idoreports--git_repository"></a>`git_repository`
 
@@ -2258,113 +2246,6 @@ Options `mariadb` and `mysql`, both means true. With mariadb its cli options are
 whereas with mysql its different options.
 
 Default value: `false`
-
-##### <a name="-icingaweb2--module--idoreports--ido_db_username"></a>`ido_db_username`
-
-Data type: `Optional[String]`
-
-An alternative username to login into the database. By default, the user from
-the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::ido_db_username`
-
-##### <a name="-icingaweb2--module--idoreports--ido_db_password"></a>`ido_db_password`
-
-Data type: `Optional[Icingaweb2::Secret]`
-
-The password for the alternative user. By default, the password from
-the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::ido_db_password`
-
-##### <a name="-icingaweb2--module--idoreports--use_tls"></a>`use_tls`
-
-Data type: `Optional[Boolean]`
-
-Either enable or disable TLS encryption to the database. Other TLS parameters
-are only affected if this is set to 'true'. By default, same value from
-the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::use_tls`
-
-##### <a name="-icingaweb2--module--idoreports--tls_key_file"></a>`tls_key_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-Location of the private key for client authentication. Only valid if tls is enabled.
-By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_key_file`
-
-##### <a name="-icingaweb2--module--idoreports--tls_cert_file"></a>`tls_cert_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-Location of the certificate for client authentication. Only valid if tls is enabled.
-By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_cert_file`
-
-##### <a name="-icingaweb2--module--idoreports--tls_cacert_file"></a>`tls_cacert_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-Location of the ca certificate. Only valid if tls is enabled.
-By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_cacert_file`
-
-##### <a name="-icingaweb2--module--idoreports--tls_key"></a>`tls_key`
-
-Data type: `Optional[Icingaweb2::Secret]`
-
-The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
-By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_key`
-
-##### <a name="-icingaweb2--module--idoreports--tls_cert"></a>`tls_cert`
-
-Data type: `Optional[String]`
-
-The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
-By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_cert`
-
-##### <a name="-icingaweb2--module--idoreports--tls_cacert"></a>`tls_cacert`
-
-Data type: `Optional[String]`
-
-The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
-By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_cacert`
-
-##### <a name="-icingaweb2--module--idoreports--tls_capath"></a>`tls_capath`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-The file path to the directory that contains the trusted SSL CA certificates, which are stored in PEM format.
-Only available for the mysql database. By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_capath`
-
-##### <a name="-icingaweb2--module--idoreports--tls_noverify"></a>`tls_noverify`
-
-Data type: `Optional[Boolean]`
-
-Disable validation of the server certificate. By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_noverify`
-
-##### <a name="-icingaweb2--module--idoreports--tls_cipher"></a>`tls_cipher`
-
-Data type: `Optional[String]`
-
-Cipher to use for the encrypted database connection. By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_cipher`
 
 ### <a name="icingaweb2--module--incubator"></a>`icingaweb2::module::incubator`
 
