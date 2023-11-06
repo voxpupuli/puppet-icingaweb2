@@ -134,7 +134,8 @@ class icingaweb2::module::reporting (
 ) {
   icingaweb2::assert_module()
 
-  $cert_dir = "${icingaweb2::globals::state_dir}/reporting/certs"
+  $module_conf_dir = "${icingaweb2::globals::conf_dir}/modules/reporting"
+  $cert_dir        = "${icingaweb2::globals::state_dir}/reporting/certs"
 
   $db = {
     type     => $db_type,
@@ -155,6 +156,23 @@ class icingaweb2::module::reporting (
     $tls_cert,
     $tls_cacert,
   )
+
+  $settings = {
+    'icingaweb2-module-reporting-backend' => {
+      'section_name' => 'backend',
+      'target'       => "${module_conf_dir}/config.ini",
+      'settings'     => {
+        'resource' => 'reporting',
+      },
+    },
+    'icingaweb2-module-reporting-mail'    => {
+      'section_name' => 'mail',
+      'target'       => "${module_conf_dir}/config.ini",
+      'settings'     => delete_undef_values({
+          'from' => $mail,
+      }),
+    },
+  }
 
   class { 'icingaweb2::module::reporting::install': }
   -> class { 'icingaweb2::module::reporting::config': }

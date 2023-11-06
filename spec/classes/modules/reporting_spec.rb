@@ -39,18 +39,20 @@ describe('icingaweb2::module::reporting', type: :class) do
             .with_install_method('git')
             .with_git_revision('v1.0.0')
             .with_package_name('icingaweb2-module-reporting')
-            .with_settings('icingaweb2-module-reporting-backend' => {
-                             'section_name' => 'backend',
-                             'target' => '/etc/icingaweb2/modules/reporting/config.ini',
-                             'settings' => {
-                               'resource' => 'reporting',
-                             },
-                           },
-                           'icingaweb2-module-reporting-mail' => {
-                             'section_name' => 'mail',
-                             'target' => '/etc/icingaweb2/modules/reporting/config.ini',
-                             'settings' => { 'from' => 'foo@icinga.com' },
-                           })
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('icingaweb2-module-reporting-backend')
+            .with_section_name('backend')
+            .with_target('/etc/icingaweb2/modules/reporting/config.ini')
+            .with_settings({ 'resource' => 'reporting' })
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('icingaweb2-module-reporting-mail')
+            .with_section_name('mail')
+            .with_target('/etc/icingaweb2/modules/reporting/config.ini')
+            .with_settings({ 'from' => 'foo@icinga.com' })
         }
 
         it {

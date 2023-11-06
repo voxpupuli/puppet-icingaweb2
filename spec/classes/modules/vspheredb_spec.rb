@@ -38,13 +38,13 @@ describe('icingaweb2::module::vspheredb', type: :class) do
             .with_install_method('git')
             .with_git_revision('v1.7.1')
             .with_package_name('icingaweb2-module-vspheredb')
-            .with_settings('icingaweb2-module-vspheredb' => {
-                             'section_name' => 'db',
-                             'target' => '/etc/icingaweb2/modules/vspheredb/config.ini',
-                             'settings' => {
-                               'resource' => 'icingaweb2-module-vspheredb',
-                             },
-                           })
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('icingaweb2-module-vspheredb')
+            .with_section_name('db')
+            .with_target('/etc/icingaweb2/modules/vspheredb/config.ini')
+            .with_settings({ 'resource' => 'icingaweb2-module-vspheredb' })
         }
 
         it {

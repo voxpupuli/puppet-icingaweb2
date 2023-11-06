@@ -6,7 +6,6 @@
 class icingaweb2::module::vspheredb::install {
   assert_private()
 
-  $module_conf_dir = "${icingaweb2::globals::conf_dir}/modules/vspheredb"
   $conf_user       = $icingaweb2::conf_user
   $conf_group      = $icingaweb2::conf_group
   $ensure          = $icingaweb2::module::vspheredb::ensure
@@ -27,15 +26,6 @@ class icingaweb2::module::vspheredb::install {
     install_method => $install_method,
     module_dir     => $module_dir,
     package_name   => $package_name,
-    settings       => {
-      'icingaweb2-module-vspheredb' => {
-        'section_name' => 'db',
-        'target'       => "${module_conf_dir}/config.ini",
-        'settings'     => {
-          'resource' => 'icingaweb2-module-vspheredb',
-        },
-      },
-    },
   }
 
   if $use_tls {

@@ -130,7 +130,8 @@ class icingaweb2::module::vspheredb (
 ) {
   icingaweb2::assert_module()
 
-  $cert_dir = "${icingaweb2::globals::state_dir}/vspheredb/certs"
+  $module_conf_dir = "${icingaweb2::globals::conf_dir}/modules/vspheredb"
+  $cert_dir        = "${icingaweb2::globals::state_dir}/vspheredb/certs"
 
   $db = {
     type     => $db_type,
@@ -151,6 +152,16 @@ class icingaweb2::module::vspheredb (
     $tls_cert,
     $tls_cacert,
   )
+
+  $settings = {
+    'icingaweb2-module-vspheredb' => {
+      'section_name' => 'db',
+      'target'       => "${module_conf_dir}/config.ini",
+      'settings'     => {
+        'resource' => 'icingaweb2-module-vspheredb',
+      },
+    },
+  }
 
   class { 'icingaweb2::module::vspheredb::install': }
   -> class { 'icingaweb2::module::vspheredb::config': }

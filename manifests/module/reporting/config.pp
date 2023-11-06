@@ -22,6 +22,7 @@ class icingaweb2::module::reporting::config {
   $icingacli_bin   = $icingaweb2::globals::icingacli_bin
   $service_user    = $icingaweb2::module::reporting::service_user
   $install_method  = $icingaweb2::module::reporting::install_method
+  $settings        = $icingaweb2::module::reporting::settings
 
   Exec {
     user     => 'root',
@@ -55,6 +56,8 @@ class icingaweb2::module::reporting::config {
     tls_capath   => $tls['capath'],
     tls_cipher   => $tls['cipher'],
   }
+
+  create_resources('icingaweb2::inisection', $settings)
 
   if $import_schema {
     $real_db_type = if $import_schema =~ Boolean {
