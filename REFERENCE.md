@@ -38,6 +38,8 @@
 
 * `icingaweb2::config`: Configures Icinga Web 2.
 * `icingaweb2::install`: Installs Icinga Web 2 and extra packages.
+* `icingaweb2::module::icingadb::config`: Configure the icingadb module.
+* `icingaweb2::module::icingadb::install`: Install the icingadb module.
 * `icingaweb2::module::reporting::config`: Configure the reporting module.
 * `icingaweb2::module::reporting::install`: Install the reporting module.
 * `icingaweb2::module::reporting::service`: Manage the reporting service.
@@ -1893,8 +1895,6 @@ Data type: `Enum['absent', 'present']`
 
 Enable or disable module.
 
-Default value: `'present'`
-
 ##### <a name="-icingaweb2--module--icingadb--package_name"></a>`package_name`
 
 Data type: `String`
@@ -1913,8 +1913,6 @@ Data type: `Stdlib::Host`
 
 Hostname of the IcingaDB database.
 
-Default value: `'localhost'`
-
 ##### <a name="-icingaweb2--module--icingadb--db_port"></a>`db_port`
 
 Data type: `Optional[Stdlib::Port]`
@@ -1929,15 +1927,11 @@ Data type: `String`
 
 Name of the IcingaDB database.
 
-Default value: `'icingadb'`
-
 ##### <a name="-icingaweb2--module--icingadb--db_username"></a>`db_username`
 
 Data type: `String`
 
 Username for IcingaDB database connection.
-
-Default value: `'icingadb'`
 
 ##### <a name="-icingaweb2--module--icingadb--db_password"></a>`db_password`
 
@@ -2042,8 +2036,6 @@ Default value: `undef`
 Data type: `Stdlib::Host`
 
 Redis host to connect.
-
-Default value: `'localhost'`
 
 ##### <a name="-icingaweb2--module--icingadb--redis_port"></a>`redis_port`
 

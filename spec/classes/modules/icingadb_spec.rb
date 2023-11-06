@@ -17,42 +17,43 @@ describe('icingaweb2::module::icingadb', type: :class) do
         let(:params) do
           {
             db_type: 'mysql',
+            db_password: 'secret',
           }
         end
 
         it {
-          is_expected.to contain_icingaweb2__module('icingadb').with(
-            {
-              'ensure'         => 'present',
-              'install_method' => 'package',
-              'settings'       => {
-                'icingaweb2-module-icingadb-config' => {
-                  'section_name' => 'icingadb',
-                  'target'       => '/etc/icingaweb2/modules/icingadb/config.ini',
-                  'settings'     => {
-                    'resource' => 'icingaweb2-module-icingadb',
-                  },
-                },
-                'icingaweb2-module-icingadb-redis' => {
-                  'section_name' => 'redis',
-                  'target'       => '/etc/icingaweb2/modules/icingadb/config.ini',
-                  'settings'     => {},
-                },
-                'icingaweb2-module-icingadb-redis1' => {
-                  'section_name' => 'redis1',
-                  'target'       => '/etc/icingaweb2/modules/icingadb/redis.ini',
-                  'settings'     => {
-                    'host' => 'localhost',
-                  },
-                },
-                'icingaweb2-module-icingadb-redis2' => {
-                  'section_name' => 'redis2',
-                  'target'       => '/etc/icingaweb2/modules/icingadb/redis.ini',
-                  'settings'     => {},
-                },
-              },
-            },
-          )
+          is_expected.to contain_icingaweb2__module('icingadb')
+            .with_ensure('present')
+            .with_install_method('package')
+            .with_settings({})
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('icingaweb2-module-icingadb-config')
+            .with_section_name('icingadb')
+            .with_target('/etc/icingaweb2/modules/icingadb/config.ini')
+            .with_settings({ 'resource' => 'icingaweb2-module-icingadb' })
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('icingaweb2-module-icingadb-redis')
+            .with_section_name('redis')
+            .with_target('/etc/icingaweb2/modules/icingadb/config.ini')
+            .with_settings({})
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('icingaweb2-module-icingadb-redis1')
+            .with_section_name('redis1')
+            .with_target('/etc/icingaweb2/modules/icingadb/redis.ini')
+            .with_settings({ 'host' => 'localhost' })
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('icingaweb2-module-icingadb-redis2')
+            .with_section_name('redis2')
+            .with_target('/etc/icingaweb2/modules/icingadb/redis.ini')
+            .with_settings({})
         }
 
         it {
@@ -60,9 +61,9 @@ describe('icingaweb2::module::icingadb', type: :class) do
             {
               'type' => 'mysql',
               'host' => 'localhost',
-              'port' => 3306,
               'database' => 'icingadb',
               'username' => 'icingadb',
+              'password' => 'secret',
               'charset'  => nil,
               'use_tls'  => nil,
             },
@@ -70,52 +71,45 @@ describe('icingaweb2::module::icingadb', type: :class) do
         }
       end
 
-      context "#{os} with local PostgreSQL and Redis" do
+      context "#{os} with local PostgreSQL and two Redis with TLS, different ports and own passwords" do
         let(:pre_condition) do
           [
-            "class { 'icingaweb2': db_type => 'mysql' }",
+            "class { 'icingaweb2': db_type => 'pgsql', tls_cacert_file => '/foo/bar' }",
           ]
         end
 
         let(:params) do
           {
             db_type: 'pgsql',
+            redis_use_tls: true,
+            redis_primary_host: 'redis1.icinga.com',
+            redis_primary_port: 4711,
+            redis_primary_password: 'secret1',
+            redis_secondary_host: 'redis2.icinga.com',
+            redis_secondary_port: 4712,
+            redis_secondary_password: 'secret2',
           }
         end
 
         it {
-          is_expected.to contain_icingaweb2__module('icingadb').with(
-            {
-              'ensure'         => 'present',
-              'install_method' => 'package',
-              'settings'       => {
-                'icingaweb2-module-icingadb-config' => {
-                  'section_name' => 'icingadb',
-                  'target'       => '/etc/icingaweb2/modules/icingadb/config.ini',
-                  'settings'     => {
-                    'resource' => 'icingaweb2-module-icingadb',
-                  },
-                },
-                'icingaweb2-module-icingadb-redis' => {
-                  'section_name' => 'redis',
-                  'target'       => '/etc/icingaweb2/modules/icingadb/config.ini',
-                  'settings'     => {},
-                },
-                'icingaweb2-module-icingadb-redis1' => {
-                  'section_name' => 'redis1',
-                  'target'       => '/etc/icingaweb2/modules/icingadb/redis.ini',
-                  'settings'     => {
-                    'host' => 'localhost',
-                  },
-                },
-                'icingaweb2-module-icingadb-redis2' => {
-                  'section_name' => 'redis2',
-                  'target'       => '/etc/icingaweb2/modules/icingadb/redis.ini',
-                  'settings'     => {},
-                },
-              },
-            },
-          )
+          is_expected.to contain_icingaweb2__inisection('icingaweb2-module-icingadb-redis')
+            .with_section_name('redis')
+            .with_target('/etc/icingaweb2/modules/icingadb/config.ini')
+            .with_settings({ 'tls' => true, 'ca' => '/foo/bar' })
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('icingaweb2-module-icingadb-redis1')
+            .with_section_name('redis1')
+            .with_target('/etc/icingaweb2/modules/icingadb/redis.ini')
+            .with_settings({ 'host' => 'redis1.icinga.com', 'port' => 4711, 'password' => 'secret1' })
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('icingaweb2-module-icingadb-redis2')
+            .with_section_name('redis2')
+            .with_target('/etc/icingaweb2/modules/icingadb/redis.ini')
+            .with_settings({ 'host' => 'redis2.icinga.com', 'port' => 4712, 'password' => 'secret2' })
         }
 
         it {
@@ -123,7 +117,6 @@ describe('icingaweb2::module::icingadb', type: :class) do
             {
               'type' => 'pgsql',
               'host' => 'localhost',
-              'port' => 5432,
               'database' => 'icingadb',
               'username' => 'icingadb',
               'charset'  => nil,
@@ -133,7 +126,7 @@ describe('icingaweb2::module::icingadb', type: :class) do
         }
       end
 
-      context "#{os} with db_use_tls 'true'" do
+      context "#{os} with db_use_tls 'true', db_port '4711', db_charset 'foo'" do
         let(:pre_condition) do
           [
             "class { 'icingaweb2': db_type => 'mysql', tls_cacert_file => '/foo/bar', tls_capath => '/foo/bar', tls_noverify => true, tls_cipher => 'cipher' }",
@@ -143,6 +136,8 @@ describe('icingaweb2::module::icingadb', type: :class) do
         let(:params) do
           {
             db_type: 'mysql',
+            db_port: 4711,
+            db_charset: 'foo',
             db_use_tls: true,
           }
         end
@@ -152,9 +147,10 @@ describe('icingaweb2::module::icingadb', type: :class) do
             {
               'type' => 'mysql',
               'host' => 'localhost',
-              'port' => 3306,
+              'port' => 4711,
               'database' => 'icingadb',
               'username' => 'icingadb',
+              'charset' => 'foo',
               'use_tls' => true,
               'tls_cacert' => '/foo/bar',
               'tls_capath' => '/foo/bar',
@@ -188,7 +184,6 @@ describe('icingaweb2::module::icingadb', type: :class) do
             {
               'type' => 'pgsql',
               'host' => 'localhost',
-              'port' => 5432,
               'database' => 'icingadb',
               'username' => 'icingadb',
               'use_tls' => true,

@@ -24,6 +24,12 @@ icingaweb2::module::x509::install_method: git
 icingaweb2::module::x509::git_repository: https://github.com/Icinga/icingaweb2-module-x509.git
 icingaweb2::module::x509::package_name: icingaweb2-module-x509
 
+icingaweb2::module::icingadb::ensure: present
+icingaweb2::module::icingadb::redis_host: localhost
+icingaweb2::module::icingadb::db_host: localhost
+icingaweb2::module::icingadb::db_name: icingadb
+icingaweb2::module::icingadb::db_username: icingadb
+
 icingaweb2::globals::mysql_reporting_schema: /schema/mysql.sql
 icingaweb2::globals::pgsql_reporting_schema: /schema/postgresql.sql
 icingaweb2::module::reporting::ensure: present
