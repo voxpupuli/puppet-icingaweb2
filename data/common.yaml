@@ -7,7 +7,6 @@ icingaweb2::default_admin_password: icinga
 icingaweb2::globals::role_replace: true
 icingaweb2::module::businessprocess::git_repository: https://github.com/Icinga/icingaweb2-module-businessprocess.git
 icingaweb2::module::cube::git_repository: https://github.com/Icinga/icingaweb2-module-cube.git
-icingaweb2::module::director::git_repository: https://github.com/Icinga/icingaweb2-module-director.git
 icingaweb2::module::elasticsearch::git_repository: https://github.com/Icinga/icingaweb2-module-elasticsearch.git
 icingaweb2::module::fileshipper::git_repository: https://github.com/Icinga/icingaweb2-module-fileshipper.git
 icingaweb2::module::generictts::git_repository: https://github.com/Icinga/icingaweb2-module-generictts.git
@@ -15,10 +14,6 @@ icingaweb2::module::graphite::git_repository: https://github.com/Icinga/icingawe
 icingaweb2::module::incubator::git_repository: https://github.com/Icinga/icingaweb2-module-incubator.git
 icingaweb2::module::incubator::git_revision: v0.19.0
 icingaweb2::module::puppetdb::git_repository: https://github.com/Icinga/icingaweb2-module-puppetdb.git
-icingaweb2::module::idoreports::ensure: present
-icingaweb2::module::idoreports::install_method: git
-icingaweb2::module::idoreports::git_repository: https://github.com/Icinga/icingaweb2-module-idoreports.git
-icingaweb2::module::idoreports::package_name: icingaweb2-module-idoreports
 icingaweb2::module::x509::ensure: present
 icingaweb2::module::x509::install_method: git
 icingaweb2::module::x509::git_repository: https://github.com/Icinga/icingaweb2-module-x509.git
@@ -39,6 +34,19 @@ icingaweb2::module::icingadb::db_host: localhost
 icingaweb2::module::icingadb::db_name: icingadb
 icingaweb2::module::icingadb::db_username: icingadb
 
+icingaweb2::module::director::ensure: present
+icingaweb2::module::director::install_method: git
+icingaweb2::module::director::git_repository: https://github.com/Icinga/icingaweb2-module-director.git
+icingaweb2::module::director::api_host: localhost
+icingaweb2::module::director::api_port: 5665
+icingaweb2::module::director::manage_service: true
+icingaweb2::module::director::service_ensure: running
+icingaweb2::module::director::service_enable: true
+icingaweb2::module::director::service_user: icingadirector
+icingaweb2::module::director::db_host: localhost
+icingaweb2::module::director::db_name: director
+icingaweb2::module::director::db_username: director
+
 icingaweb2::globals::mysql_reporting_schema: /schema/mysql.sql
 icingaweb2::globals::pgsql_reporting_schema: /schema/postgresql.sql
 icingaweb2::module::reporting::ensure: present
@@ -51,6 +59,10 @@ icingaweb2::module::reporting::service_user: icingareporting
 icingaweb2::module::reporting::db_host: localhost
 icingaweb2::module::reporting::db_name: reporting
 icingaweb2::module::reporting::db_username: reporting
+
+icingaweb2::module::idoreports::ensure: present
+icingaweb2::module::idoreports::install_method: git
+icingaweb2::module::idoreports::git_repository: https://github.com/Icinga/icingaweb2-module-idoreports.git
 
 icingaweb2::globals::mysql_vspheredb_schema: /schema/mysql.sql
 icingaweb2::globals::pgsql_vspheredb_schema: /schema/pgsql.sql

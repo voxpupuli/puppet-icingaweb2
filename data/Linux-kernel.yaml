@@ -19,5 +19,7 @@ icingaweb2::conf_group: icingaweb2
 icingaweb2::logging_file: /var/log/icingaweb2/icingaweb2.log
 
 icingaweb2::module::icingadb::package_name: icingadb-web
+icingaweb2::module::director::package_name: icingaweb2-module-director
 icingaweb2::module::reporting::package_name: icingaweb2-module-reporting
+icingaweb2::module::idoreports::package_name: icingaweb2-module-idoreports
 icingaweb2::module::vspheredb::package_name: icingaweb2-module-vspheredb

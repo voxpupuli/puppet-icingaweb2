@@ -43,28 +43,24 @@ describe('icingaweb2::module::director', type: :class) do
             .with_install_method('git')
             .with_git_revision('foobar')
             .with_module_dir('/usr/share/icingaweb2/modules/director')
-            .with_settings('module-director-db' => {
-                             'section_name' => 'db',
-                             'target' => '/etc/icingaweb2/modules/director/config.ini',
-                             'settings' => {
-                               'resource' => 'icingaweb2-module-director',
-                             },
-                           },
-                           'module-director-config' => {
-                             'section_name' => 'config',
-                             'target' => '/etc/icingaweb2/modules/director/kickstart.ini',
-                             'settings' => {
-                               'endpoint' => 'foobar',
-                               'host' => 'localhost',
-                               'port' => '5665',
-                               'username' => 'root',
-                               'password' => 'secret',
-                             },
-                           })
         }
 
         it {
-          is_expected.to contain_class('icingaweb2::module::director::service')
+          is_expected.to contain_icingaweb2__inisection('module-director-db')
+            .with_section_name('db')
+            .with_target('/etc/icingaweb2/modules/director/config.ini')
+            .with_settings({ 'resource' => 'icingaweb2-module-director' })
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('module-director-config')
+            .with_section_name('config')
+            .with_target('/etc/icingaweb2/modules/director/kickstart.ini')
+            .with_settings({ 'endpoint' => 'foobar', 'host' => 'localhost', 'port' => '5665', 'username' => 'root', 'password' => 'secret' })
+        }
+
+        it {
+          is_expected.to contain_service('icinga-director')
             .with_ensure('running')
             .with_enable(true)
         }
@@ -100,17 +96,10 @@ describe('icingaweb2::module::director', type: :class) do
             .with_install_method('git')
             .with_git_revision('foobar')
             .with_module_dir('/usr/share/icingaweb2/modules/director')
-            .with_settings('module-director-db' => {
-                             'section_name' => 'db',
-                             'target' => '/etc/icingaweb2/modules/director/config.ini',
-                             'settings' => {
-                               'resource' => 'icingaweb2-module-director',
-                             },
-                           })
         }
 
         it {
-          is_expected.not_to contain_class('icingaweb2::module::director::service')
+          is_expected.not_to contain_service('icinga-director')
         }
 
         it { is_expected.not_to contain_exec('director-migration') }
@@ -134,9 +123,9 @@ describe('icingaweb2::module::director', type: :class) do
             {
               'type' => 'pgsql',
               'host' => 'localhost',
-              'port' => 5432,
               'database' => 'director',
               'username' => 'director',
+              'charset' => 'UTF8',
               'use_tls' => true,
               'tls_cacert' => '/foo/bar',
               'tls_capath' => '/foo/bar',
@@ -147,7 +136,7 @@ describe('icingaweb2::module::director', type: :class) do
         }
       end
 
-      context "#{os} with use_tls 'true'" do
+      context "#{os} with use_tls 'true', db_port '4711'" do
         let(:pre_condition) do
           [
             "class { 'icingaweb2': db_type => 'mysql', tls_cacert_file => '/foo/bar', tls_capath => '/foo/bar', tls_noverify => true, tls_cipher => 'cipher' }",
@@ -157,6 +146,7 @@ describe('icingaweb2::module::director', type: :class) do
         let(:params) do
           {
             db_type: 'mysql',
+            db_port: 4711,
             use_tls: true,
           }
         end
@@ -166,7 +156,7 @@ describe('icingaweb2::module::director', type: :class) do
             {
               'type' => 'mysql',
               'host' => 'localhost',
-              'port' => 3306,
+              'port' => 4711,
               'database' => 'director',
               'username' => 'director',
               'use_tls' => true,

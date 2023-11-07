@@ -13,8 +13,7 @@
 * [`icingaweb2::module::audit`](#icingaweb2--module--audit): Installs and enables the audit  module.
 * [`icingaweb2::module::businessprocess`](#icingaweb2--module--businessprocess): Installs and enables the businessprocess module.
 * [`icingaweb2::module::cube`](#icingaweb2--module--cube): Installs and enables the cube module.
-* [`icingaweb2::module::director`](#icingaweb2--module--director): Installs and configures the director module.
-* [`icingaweb2::module::director::service`](#icingaweb2--module--director--service): Installs and configures the director service.
+* [`icingaweb2::module::director`](#icingaweb2--module--director): Install and configure the director module.
 * [`icingaweb2::module::doc`](#icingaweb2--module--doc): The doc module provides an interface to the Icinga 2 and Icinga Web 2 documentation.
 * [`icingaweb2::module::elasticsearch`](#icingaweb2--module--elasticsearch): The Elasticsearch module displays events from data stored in Elasticsearch.
 * [`icingaweb2::module::fileshipper`](#icingaweb2--module--fileshipper): The fileshipper module extends the Director. It offers import sources to deal with CSV, JSON, YAML and XML files.
@@ -38,6 +37,9 @@
 
 * `icingaweb2::config`: Configures Icinga Web 2.
 * `icingaweb2::install`: Installs Icinga Web 2 and extra packages.
+* `icingaweb2::module::director::config`: Configure the director module.
+* `icingaweb2::module::director::install`: Install the director module.
+* `icingaweb2::module::director::service`: Manage the director service.
 * `icingaweb2::module::icingadb::config`: Configure the icingadb module.
 * `icingaweb2::module::icingadb::install`: Install the icingadb module.
 * `icingaweb2::module::monitoring::config`: Configure the monitoring module.
@@ -989,7 +991,7 @@ Default value: `'icingaweb2-module-cube'`
 
 ### <a name="icingaweb2--module--director"></a>`icingaweb2::module::director`
 
-Installs and configures the director module.
+Install and configure the director module.
 
 * **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 
@@ -1048,6 +1050,9 @@ The following parameters are available in the `icingaweb2::module::director` cla
 * [`api_username`](#-icingaweb2--module--director--api_username)
 * [`api_password`](#-icingaweb2--module--director--api_password)
 * [`manage_service`](#-icingaweb2--module--director--manage_service)
+* [`service_ensure`](#-icingaweb2--module--director--service_ensure)
+* [`service_enable`](#-icingaweb2--module--director--service_enable)
+* [`service_user`](#-icingaweb2--module--director--service_user)
 
 ##### <a name="-icingaweb2--module--director--ensure"></a>`ensure`
 
@@ -1055,23 +1060,19 @@ Data type: `Enum['absent', 'present']`
 
 Enable or disable module.
 
-Default value: `'present'`
-
 ##### <a name="-icingaweb2--module--director--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/director"`
 
 ##### <a name="-icingaweb2--module--director--git_repository"></a>`git_repository`
 
-Data type: `String`
+Data type: `Stdlib::HTTPUrl`
 
 Set a git repository URL.
-
-Default value: `'https://github.com/Icinga/icingaweb2-module-director.git'`
 
 ##### <a name="-icingaweb2--module--director--git_revision"></a>`git_revision`
 
@@ -1087,15 +1088,11 @@ Data type: `Enum['git', 'package', 'none']`
 
 Install methods are `git`, `package` and `none` is supported as installation method.
 
-Default value: `'git'`
-
 ##### <a name="-icingaweb2--module--director--package_name"></a>`package_name`
 
 Data type: `String`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
-
-Default value: `'icingaweb2-module-director'`
 
 ##### <a name="-icingaweb2--module--director--db_type"></a>`db_type`
 
@@ -1108,8 +1105,6 @@ Type of your database. Either `mysql` or `pgsql`.
 Data type: `Stdlib::Host`
 
 Hostname of the database.
-
-Default value: `'localhost'`
 
 ##### <a name="-icingaweb2--module--director--db_port"></a>`db_port`
 
@@ -1125,15 +1120,11 @@ Data type: `String`
 
 Name of the database.
 
-Default value: `'director'`
-
 ##### <a name="-icingaweb2--module--director--db_username"></a>`db_username`
 
 Data type: `String`
 
 Username for DB connection.
-
-Default value: `'director'`
 
 ##### <a name="-icingaweb2--module--director--db_password"></a>`db_password`
 
@@ -1145,11 +1136,11 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--director--db_charset"></a>`db_charset`
 
-Data type: `String`
+Data type: `Optional[String]`
 
 Character set to use for the database.
 
-Default value: `'utf8'`
+Default value: `undef`
 
 ##### <a name="-icingaweb2--module--director--use_tls"></a>`use_tls`
 
@@ -1263,15 +1254,11 @@ Data type: `Stdlib::Host`
 
 Icinga 2 API hostname. This setting is only valid if `kickstart` is `true`.
 
-Default value: `'localhost'`
-
 ##### <a name="-icingaweb2--module--director--api_port"></a>`api_port`
 
 Data type: `Stdlib::Port`
 
 Icinga 2 API port. This setting is only valid if `kickstart` is `true`.
-
-Default value: `5665`
 
 ##### <a name="-icingaweb2--module--director--api_username"></a>`api_username`
 
@@ -1293,68 +1280,25 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-Also manage the service (daemon), running and enabled. Otherwise do your config via hiera.
+If set to true the service (daemon) is managed.
 
-Default value: `true`
-
-### <a name="icingaweb2--module--director--service"></a>`icingaweb2::module::director::service`
-
-Installs and configures the director service.
-
-* **Note** Only systemd is supported by the Icinga Team and this module.
-
-#### Parameters
-
-The following parameters are available in the `icingaweb2::module::director::service` class:
-
-* [`ensure`](#-icingaweb2--module--director--service--ensure)
-* [`enable`](#-icingaweb2--module--director--service--enable)
-* [`user`](#-icingaweb2--module--director--service--user)
-* [`group`](#-icingaweb2--module--director--service--group)
-* [`manage_user`](#-icingaweb2--module--director--service--manage_user)
-
-##### <a name="-icingaweb2--module--director--service--ensure"></a>`ensure`
+##### <a name="-icingaweb2--module--director--service_ensure"></a>`service_ensure`
 
 Data type: `Stdlib::Ensure::Service`
 
-Whether the director service should be running.
+Wether the service is `running` or `stopped`.
 
-Default value: `'running'`
-
-##### <a name="-icingaweb2--module--director--service--enable"></a>`enable`
+##### <a name="-icingaweb2--module--director--service_enable"></a>`service_enable`
 
 Data type: `Boolean`
 
-Enable or disable the service.
+Whether the service should be started at boot time.
 
-Default value: `true`
-
-##### <a name="-icingaweb2--module--director--service--user"></a>`user`
+##### <a name="-icingaweb2--module--director--service_user"></a>`service_user`
 
 Data type: `String`
 
-Specifies user to run director service daemon. Only available if
-install_method package is not used.
-
-Default value: `'icingadirector'`
-
-##### <a name="-icingaweb2--module--director--service--group"></a>`group`
-
-Data type: `String`
-
-Specifies primary group for user to run director service daemon.
- Only available if install_method package is not used.
-
-Default value: `'icingaweb2'`
-
-##### <a name="-icingaweb2--module--director--service--manage_user"></a>`manage_user`
-
-Data type: `Boolean`
-
-Whether to manage the server user resource. Only available if
-install_method package is not used.
-
-Default value: `true`
+The user as which the service is running. Only valid if `install_method` is set to `git`.
 
 ### <a name="icingaweb2--module--doc"></a>`icingaweb2::module::doc`
 

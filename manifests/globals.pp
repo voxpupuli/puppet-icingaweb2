@@ -93,10 +93,12 @@ class icingaweb2::globals (
 
   $db_charset = {
     'mysql' => {
+      'director'  => 'utf8',
       'vspheredb' => 'utf8mb4',
       'reporting' => 'utf8mb4',
     },
     'pgsql' => {
+      'director' => 'UTF8',
       'vspheredb' => 'UTF8',
       'reporting' => 'UTF8',
     },
