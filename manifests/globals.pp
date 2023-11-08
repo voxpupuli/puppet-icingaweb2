@@ -96,11 +96,13 @@ class icingaweb2::globals (
       'director'  => 'utf8',
       'vspheredb' => 'utf8mb4',
       'reporting' => 'utf8mb4',
+      'x509' => 'utf8',
     },
     'pgsql' => {
       'director' => 'UTF8',
       'vspheredb' => 'UTF8',
       'reporting' => 'UTF8',
+      'x509' => 'UTF8',
     },
   }
 

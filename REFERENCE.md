@@ -31,7 +31,7 @@
 * [`icingaweb2::module::translation`](#icingaweb2--module--translation): Installs and configures the translation module.
 * [`icingaweb2::module::vspheredb`](#icingaweb2--module--vspheredb): Installs the vsphereDB plugin
 * [`icingaweb2::module::x509`](#icingaweb2--module--x509): Installs the x509 module
-* [`icingaweb2::module::x509::service`](#icingaweb2--module--x509--service): Installs and configures the x509 job scheduler.
+* [`icingaweb2::module::x509::install`](#icingaweb2--module--x509--install): Install the x509 module
 
 #### Private Classes
 
@@ -50,6 +50,8 @@
 * `icingaweb2::module::vspheredb::config`: Configure the VSphereDB module
 * `icingaweb2::module::vspheredb::install`: Install the VSphereDB module
 * `icingaweb2::module::vspheredb::service`: Manage the vspheredb service.
+* `icingaweb2::module::x509::config`: Configure the x509 module
+* `icingaweb2::module::x509::service`: Manage the x509 job scheduler.
 
 ### Defined types
 
@@ -3350,6 +3352,10 @@ The following parameters are available in the `icingaweb2::module::x509` class:
 * [`tls_noverify`](#-icingaweb2--module--x509--tls_noverify)
 * [`tls_cipher`](#-icingaweb2--module--x509--tls_cipher)
 * [`import_schema`](#-icingaweb2--module--x509--import_schema)
+* [`manage_service`](#-icingaweb2--module--x509--manage_service)
+* [`service_ensure`](#-icingaweb2--module--x509--service_ensure)
+* [`service_enable`](#-icingaweb2--module--x509--service_enable)
+* [`service_user`](#-icingaweb2--module--x509--service_user)
 
 ##### <a name="-icingaweb2--module--x509--ensure"></a>`ensure`
 
@@ -3359,15 +3365,15 @@ Ensures the state of the x509 module.
 
 ##### <a name="-icingaweb2--module--x509--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/x509"`
 
 ##### <a name="-icingaweb2--module--x509--git_repository"></a>`git_repository`
 
-Data type: `String`
+Data type: `Stdlib::HTTPUrl`
 
 The upstream module repository.
 
@@ -3397,15 +3403,11 @@ Data type: `Enum['mysql', 'pgsql']`
 
 The database type. Either mysql or pgsql.
 
-Default value: `'mysql'`
-
 ##### <a name="-icingaweb2--module--x509--db_host"></a>`db_host`
 
 Data type: `Stdlib::Host`
 
 The host where the database will be running
-
-Default value: `'localhost'`
 
 ##### <a name="-icingaweb2--module--x509--db_port"></a>`db_port`
 
@@ -3421,15 +3423,11 @@ Data type: `String`
 
 The name of the database this module should use.
 
-Default value: `'x509'`
-
 ##### <a name="-icingaweb2--module--x509--db_username"></a>`db_username`
 
 Data type: `String`
 
 The username needed to access the database.
-
-Default value: `'x509'`
 
 ##### <a name="-icingaweb2--module--x509--db_password"></a>`db_password`
 
@@ -3539,42 +3537,33 @@ whereas with mysql its different options.
 
 Default value: `false`
 
-### <a name="icingaweb2--module--x509--service"></a>`icingaweb2::module::x509::service`
-
-Installs and configures the x509 job scheduler.
-
-* **Note** Only systemd is supported by the Icinga Team and this module.
-
-#### Examples
-
-##### 
-
-```puppet
-include icingaweb2::module::x509::service
-```
-
-#### Parameters
-
-The following parameters are available in the `icingaweb2::module::x509::service` class:
-
-* [`ensure`](#-icingaweb2--module--x509--service--ensure)
-* [`enable`](#-icingaweb2--module--x509--service--enable)
-
-##### <a name="-icingaweb2--module--x509--service--ensure"></a>`ensure`
-
-Data type: `Stdlib::Ensure::Service`
-
-Whether the x509 service should be running.
-
-Default value: `'running'`
-
-##### <a name="-icingaweb2--module--x509--service--enable"></a>`enable`
+##### <a name="-icingaweb2--module--x509--manage_service"></a>`manage_service`
 
 Data type: `Boolean`
 
-Enable or disable the service.
+If set to true the service (daemon) is managed.
 
-Default value: `true`
+##### <a name="-icingaweb2--module--x509--service_ensure"></a>`service_ensure`
+
+Data type: `Stdlib::Ensure::Service`
+
+Wether the service is `running` or `stopped`.
+
+##### <a name="-icingaweb2--module--x509--service_enable"></a>`service_enable`
+
+Data type: `Boolean`
+
+Whether the service should be started at boot time.
+
+##### <a name="-icingaweb2--module--x509--service_user"></a>`service_user`
+
+Data type: `String`
+
+The user as which the service is running. Only valid if `install_method` is set to `git`.
+
+### <a name="icingaweb2--module--x509--install"></a>`icingaweb2::module::x509::install`
+
+Install the x509 module
 
 ## Defined types
 
