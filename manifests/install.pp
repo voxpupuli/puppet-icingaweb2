@@ -7,13 +7,17 @@ class icingaweb2::install {
   assert_private("You're not supposed to use this defined type manually.")
 
   $conf_dir       = $icingaweb2::globals::conf_dir
-  $state_dir      = $icingaweb2::globals::state_dir
+  $stdlib_version = $icingaweb2::globals::stdlib_version
+  $cert_dir       = $icingaweb2::cert_dir
   $package_name   = $icingaweb2::globals::package_name
   $data_dir       = $icingaweb2::globals::data_dir
   $comp_dir       = $icingaweb2::globals::comp_db_schema_dir
   $manage_package = $icingaweb2::manage_package
   $extra_packages = $icingaweb2::extra_packages
+  $conf_user      = $icingaweb2::conf_user
   $conf_group     = $icingaweb2::conf_group
+  $use_tls        = $icingaweb2::use_tls
+  $tls            = $icingaweb2::tls
 
   #
   # Packages
@@ -25,8 +29,7 @@ class icingaweb2::install {
   }
 
   if $extra_packages {
-    $metadata = load_module_metadata('stdlib')
-    if versioncmp($metadata['version'], '9.0.0') < 0 {
+    if versioncmp($stdlib_version, '9.0.0') < 0 {
       ensure_packages($extra_packages, { 'ensure' => installed })
     } else {
       stdlib::ensure_packages($extra_packages, { 'ensure' => installed })
@@ -45,9 +48,17 @@ class icingaweb2::install {
     prefix(['modules', 'enabledModules', 'navigation', 'preferences', 'dashboards'], "${conf_dir}/"):
       mode => '2770',
       ;
-    "${state_dir}/certs":
+    $cert_dir:
       mode  => '2770',
       ;
+  }
+
+  if $use_tls {
+    icinga::cert { 'icingaweb2 tls client config':
+      owner => $conf_user,
+      group => $conf_group,
+      args  => $tls,
+    }
   }
 
   #

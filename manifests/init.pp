@@ -249,9 +249,31 @@ class icingaweb2 (
 ) {
   require icingaweb2::globals
 
+  $cert_dir = "${icingaweb2::globals::state_dir}/certs"
+
   if $manage_repos {
     require icinga::repos
   }
+
+  $db  = {
+    type     => $db_type,
+    database => $db_name,
+    host     => $db_host,
+    port     => pick($db_port, $icingaweb2::globals::port[$db_type]),
+    username => $db_username,
+    password => $db_password,
+  }
+
+  $tls = icinga::cert::files(
+    $db_username,
+    $cert_dir,
+    $tls_key_file,
+    $tls_cert_file,
+    $tls_cacert_file,
+    $tls_key,
+    $tls_cert,
+    $tls_cacert,
+  )
 
   class { 'icingaweb2::install': }
   -> class { 'icingaweb2::config': }

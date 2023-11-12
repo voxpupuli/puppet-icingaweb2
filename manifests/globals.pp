@@ -91,6 +91,22 @@ class icingaweb2::globals (
 ) {
   $stdlib_version = load_module_metadata('stdlib')['version']
 
+  $db_charset = {
+    'mysql' => {
+      'director'  => 'utf8',
+      'vspheredb' => 'utf8mb4',
+      'reporting' => 'utf8mb4',
+      'x509' => 'utf8',
+    },
+    'pgsql' => {
+      'director' => 'UTF8',
+      'vspheredb' => 'UTF8',
+      'reporting' => 'UTF8',
+      'x509' => 'UTF8',
+    },
+  }
+
+  # deprecated
   $port = {
     'mysql' => 3306,
     'pgsql' => 5432,

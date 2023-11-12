@@ -4,7 +4,7 @@ describe('icingaweb2::config::navigation', type: :define) do
   let(:title) { 'myitem' }
   let(:pre_condition) do
     [
-      "class { 'icingaweb2': db_type => 'mysql', db_password => 'secret' }",
+      "class { 'icingaweb2': db_type => 'mysql', conf_user => 'foo', conf_group => 'bar' }",
     ]
   end
 
@@ -29,6 +29,9 @@ describe('icingaweb2::config::navigation', type: :define) do
         it {
           is_expected.to contain_file('/etc/icingaweb2/preferences/foobar')
             .with_ensure('directory')
+            .with_owner('foo')
+            .with_group('bar')
+            .with_mode('2770')
         }
 
         it {
@@ -112,6 +115,9 @@ describe('icingaweb2::config::navigation', type: :define) do
         it {
           is_expected.to contain_file('/etc/icingaweb2/preferences/foobar')
             .with_ensure('directory')
+            .with_owner('foo')
+            .with_group('bar')
+            .with_mode('2770')
         }
 
         it {

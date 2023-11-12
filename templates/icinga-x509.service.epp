@@ -1,0 +1,16 @@
+<%- |
+  String $conf_user,
+  String $icingacli_bin,
+| -%>
+[Unit]
+Description=Icinga Certificate Monitoring Module Jobs Runner
+
+[Service]
+Type=simple
+ExecStart=<%= $icingacli_bin %> x509 jobs run
+User=<%= $conf_user %>
+SyslogIdentifier=icingax509
+Restart=on-success
+
+[Install]
+WantedBy=multi-user.target

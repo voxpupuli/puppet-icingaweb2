@@ -1,3 +1,7 @@
+<%- |
+  String $conf_user,
+  String $icingacli_bin,
+| -%>
 [Unit]
 Description=Icinga Director - Monitoring Configuration
 Documentation=https://icinga.com/docs/director/latest/
@@ -6,9 +10,9 @@ Wants=network.target
 [Service]
 EnvironmentFile=-/etc/default/icinga-director
 EnvironmentFile=-/etc/sysconfig/icinga-director
-ExecStart=<%= @icingacli_bin %> director daemon run
+ExecStart=<%= $icingacli_bin %> director daemon run
 ExecReload=/bin/kill -HUP ${MAINPID}
-User=<%= @user %>
+User=<%= $conf_user %>
 SyslogIdentifier=icingadirector
 Type=notify
 

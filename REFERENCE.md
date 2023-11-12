@@ -13,33 +13,45 @@
 * [`icingaweb2::module::audit`](#icingaweb2--module--audit): Installs and enables the audit  module.
 * [`icingaweb2::module::businessprocess`](#icingaweb2--module--businessprocess): Installs and enables the businessprocess module.
 * [`icingaweb2::module::cube`](#icingaweb2--module--cube): Installs and enables the cube module.
-* [`icingaweb2::module::director`](#icingaweb2--module--director): Installs and configures the director module.
-* [`icingaweb2::module::director::service`](#icingaweb2--module--director--service): Installs and configures the director service.
+* [`icingaweb2::module::director`](#icingaweb2--module--director): Install and configure the director module.
 * [`icingaweb2::module::doc`](#icingaweb2--module--doc): The doc module provides an interface to the Icinga 2 and Icinga Web 2 documentation.
 * [`icingaweb2::module::elasticsearch`](#icingaweb2--module--elasticsearch): The Elasticsearch module displays events from data stored in Elasticsearch.
 * [`icingaweb2::module::fileshipper`](#icingaweb2--module--fileshipper): The fileshipper module extends the Director. It offers import sources to deal with CSV, JSON, YAML and XML files.
 * [`icingaweb2::module::generictts`](#icingaweb2--module--generictts): Installs and enables the generictts module.
 * [`icingaweb2::module::graphite`](#icingaweb2--module--graphite): The Graphite module draws graphs out of time series data stored in Graphite.
 * [`icingaweb2::module::icingadb`](#icingaweb2--module--icingadb): Manages the icingadb module. This module is still optional at the moment.
-* [`icingaweb2::module::idoreports`](#icingaweb2--module--idoreports): Installs, configures and enables the idoreports module.
+* [`icingaweb2::module::idoreports`](#icingaweb2--module--idoreports): Installs, configures and enables the idoreports module. The module is deprecated.
 * [`icingaweb2::module::incubator`](#icingaweb2--module--incubator): Installs and enables the incubator module.
 * [`icingaweb2::module::ipl`](#icingaweb2--module--ipl): Installs and enables the ipl module.
-* [`icingaweb2::module::monitoring`](#icingaweb2--module--monitoring): Manages the monitoring module. This module is mandatory for probably every setup.
+* [`icingaweb2::module::monitoring`](#icingaweb2--module--monitoring): Manages the monitoring module. This module is deprecated.
 * [`icingaweb2::module::pdfexport`](#icingaweb2--module--pdfexport): Installs, configures and enables the pdfexport module.
 * [`icingaweb2::module::puppetdb`](#icingaweb2--module--puppetdb): Installs and configures the puppetdb module.
 * [`icingaweb2::module::reactbundle`](#icingaweb2--module--reactbundle): Installs and enables the reactbundle module.
 * [`icingaweb2::module::reporting`](#icingaweb2--module--reporting): Installs the reporting module
-* [`icingaweb2::module::reporting::service`](#icingaweb2--module--reporting--service): Installs and configures the reporting scheduler.
 * [`icingaweb2::module::translation`](#icingaweb2--module--translation): Installs and configures the translation module.
 * [`icingaweb2::module::vspheredb`](#icingaweb2--module--vspheredb): Installs the vsphereDB plugin
-* [`icingaweb2::module::vspheredb::service`](#icingaweb2--module--vspheredb--service): Installs and configures the vspheredb service.
 * [`icingaweb2::module::x509`](#icingaweb2--module--x509): Installs the x509 module
-* [`icingaweb2::module::x509::service`](#icingaweb2--module--x509--service): Installs and configures the x509 job scheduler.
+* [`icingaweb2::module::x509::install`](#icingaweb2--module--x509--install): Install the x509 module
 
 #### Private Classes
 
 * `icingaweb2::config`: Configures Icinga Web 2.
 * `icingaweb2::install`: Installs Icinga Web 2 and extra packages.
+* `icingaweb2::module::director::config`: Configure the director module.
+* `icingaweb2::module::director::install`: Install the director module.
+* `icingaweb2::module::director::service`: Manage the director service.
+* `icingaweb2::module::icingadb::config`: Configure the icingadb module.
+* `icingaweb2::module::icingadb::install`: Install the icingadb module.
+* `icingaweb2::module::monitoring::config`: Configure the monitoring module.
+* `icingaweb2::module::monitoring::install`: Installs the monitoring module.
+* `icingaweb2::module::reporting::config`: Configure the reporting module.
+* `icingaweb2::module::reporting::install`: Install the reporting module.
+* `icingaweb2::module::reporting::service`: Manage the reporting service.
+* `icingaweb2::module::vspheredb::config`: Configure the VSphereDB module
+* `icingaweb2::module::vspheredb::install`: Install the VSphereDB module
+* `icingaweb2::module::vspheredb::service`: Manage the vspheredb service.
+* `icingaweb2::module::x509::config`: Configure the x509 module
+* `icingaweb2::module::x509::service`: Manage the x509 job scheduler.
 
 ### Defined types
 
@@ -75,6 +87,7 @@ that store groups.
 * [`icingaweb2::cert::files`](#icingaweb2--cert--files): Choose the path of tls key, cert and ca file.
 * [`icingaweb2::db::connect`](#icingaweb2--db--connect): This function returns a string to connect databases
 with or without TLS information.
+* [`icingaweb2::pick`](#icingaweb2--pick): This function returns first parameter if set.
 * [`icingaweb2::unwrap`](#icingaweb2--unwrap): This function returns an unwrap string if necessary.
 
 ### Data types
@@ -980,7 +993,7 @@ Default value: `'icingaweb2-module-cube'`
 
 ### <a name="icingaweb2--module--director"></a>`icingaweb2::module::director`
 
-Installs and configures the director module.
+Install and configure the director module.
 
 * **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 
@@ -1039,6 +1052,9 @@ The following parameters are available in the `icingaweb2::module::director` cla
 * [`api_username`](#-icingaweb2--module--director--api_username)
 * [`api_password`](#-icingaweb2--module--director--api_password)
 * [`manage_service`](#-icingaweb2--module--director--manage_service)
+* [`service_ensure`](#-icingaweb2--module--director--service_ensure)
+* [`service_enable`](#-icingaweb2--module--director--service_enable)
+* [`service_user`](#-icingaweb2--module--director--service_user)
 
 ##### <a name="-icingaweb2--module--director--ensure"></a>`ensure`
 
@@ -1046,23 +1062,19 @@ Data type: `Enum['absent', 'present']`
 
 Enable or disable module.
 
-Default value: `'present'`
-
 ##### <a name="-icingaweb2--module--director--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/director"`
 
 ##### <a name="-icingaweb2--module--director--git_repository"></a>`git_repository`
 
-Data type: `String`
+Data type: `Stdlib::HTTPUrl`
 
 Set a git repository URL.
-
-Default value: `'https://github.com/Icinga/icingaweb2-module-director.git'`
 
 ##### <a name="-icingaweb2--module--director--git_revision"></a>`git_revision`
 
@@ -1078,15 +1090,11 @@ Data type: `Enum['git', 'package', 'none']`
 
 Install methods are `git`, `package` and `none` is supported as installation method.
 
-Default value: `'git'`
-
 ##### <a name="-icingaweb2--module--director--package_name"></a>`package_name`
 
 Data type: `String`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
-
-Default value: `'icingaweb2-module-director'`
 
 ##### <a name="-icingaweb2--module--director--db_type"></a>`db_type`
 
@@ -1099,8 +1107,6 @@ Type of your database. Either `mysql` or `pgsql`.
 Data type: `Stdlib::Host`
 
 Hostname of the database.
-
-Default value: `'localhost'`
 
 ##### <a name="-icingaweb2--module--director--db_port"></a>`db_port`
 
@@ -1116,15 +1122,11 @@ Data type: `String`
 
 Name of the database.
 
-Default value: `'director'`
-
 ##### <a name="-icingaweb2--module--director--db_username"></a>`db_username`
 
 Data type: `String`
 
 Username for DB connection.
-
-Default value: `'director'`
 
 ##### <a name="-icingaweb2--module--director--db_password"></a>`db_password`
 
@@ -1136,11 +1138,11 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--director--db_charset"></a>`db_charset`
 
-Data type: `String`
+Data type: `Optional[String]`
 
 Character set to use for the database.
 
-Default value: `'utf8'`
+Default value: `undef`
 
 ##### <a name="-icingaweb2--module--director--use_tls"></a>`use_tls`
 
@@ -1254,15 +1256,11 @@ Data type: `Stdlib::Host`
 
 Icinga 2 API hostname. This setting is only valid if `kickstart` is `true`.
 
-Default value: `'localhost'`
-
 ##### <a name="-icingaweb2--module--director--api_port"></a>`api_port`
 
 Data type: `Stdlib::Port`
 
 Icinga 2 API port. This setting is only valid if `kickstart` is `true`.
-
-Default value: `5665`
 
 ##### <a name="-icingaweb2--module--director--api_username"></a>`api_username`
 
@@ -1284,68 +1282,25 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-Also manage the service (daemon), running and enabled. Otherwise do your config via hiera.
+If set to true the service (daemon) is managed.
 
-Default value: `true`
-
-### <a name="icingaweb2--module--director--service"></a>`icingaweb2::module::director::service`
-
-Installs and configures the director service.
-
-* **Note** Only systemd is supported by the Icinga Team and this module.
-
-#### Parameters
-
-The following parameters are available in the `icingaweb2::module::director::service` class:
-
-* [`ensure`](#-icingaweb2--module--director--service--ensure)
-* [`enable`](#-icingaweb2--module--director--service--enable)
-* [`user`](#-icingaweb2--module--director--service--user)
-* [`group`](#-icingaweb2--module--director--service--group)
-* [`manage_user`](#-icingaweb2--module--director--service--manage_user)
-
-##### <a name="-icingaweb2--module--director--service--ensure"></a>`ensure`
+##### <a name="-icingaweb2--module--director--service_ensure"></a>`service_ensure`
 
 Data type: `Stdlib::Ensure::Service`
 
-Whether the director service should be running.
+Wether the service is `running` or `stopped`.
 
-Default value: `'running'`
-
-##### <a name="-icingaweb2--module--director--service--enable"></a>`enable`
+##### <a name="-icingaweb2--module--director--service_enable"></a>`service_enable`
 
 Data type: `Boolean`
 
-Enable or disable the service.
+Whether the service should be started at boot time.
 
-Default value: `true`
-
-##### <a name="-icingaweb2--module--director--service--user"></a>`user`
+##### <a name="-icingaweb2--module--director--service_user"></a>`service_user`
 
 Data type: `String`
 
-Specifies user to run director service daemon. Only available if
-install_method package is not used.
-
-Default value: `'icingadirector'`
-
-##### <a name="-icingaweb2--module--director--service--group"></a>`group`
-
-Data type: `String`
-
-Specifies primary group for user to run director service daemon.
- Only available if install_method package is not used.
-
-Default value: `'icingaweb2'`
-
-##### <a name="-icingaweb2--module--director--service--manage_user"></a>`manage_user`
-
-Data type: `Boolean`
-
-Whether to manage the server user resource. Only available if
-install_method package is not used.
-
-Default value: `true`
+The user as which the service is running. Only valid if `install_method` is set to `git`.
 
 ### <a name="icingaweb2--module--doc"></a>`icingaweb2::module::doc`
 
@@ -1888,8 +1843,6 @@ Data type: `Enum['absent', 'present']`
 
 Enable or disable module.
 
-Default value: `'present'`
-
 ##### <a name="-icingaweb2--module--icingadb--package_name"></a>`package_name`
 
 Data type: `String`
@@ -1908,8 +1861,6 @@ Data type: `Stdlib::Host`
 
 Hostname of the IcingaDB database.
 
-Default value: `'localhost'`
-
 ##### <a name="-icingaweb2--module--icingadb--db_port"></a>`db_port`
 
 Data type: `Optional[Stdlib::Port]`
@@ -1924,15 +1875,11 @@ Data type: `String`
 
 Name of the IcingaDB database.
 
-Default value: `'icingadb'`
-
 ##### <a name="-icingaweb2--module--icingadb--db_username"></a>`db_username`
 
 Data type: `String`
 
 Username for IcingaDB database connection.
-
-Default value: `'icingadb'`
 
 ##### <a name="-icingaweb2--module--icingadb--db_password"></a>`db_password`
 
@@ -2037,8 +1984,6 @@ Default value: `undef`
 Data type: `Stdlib::Host`
 
 Redis host to connect.
-
-Default value: `'localhost'`
 
 ##### <a name="-icingaweb2--module--icingadb--redis_port"></a>`redis_port`
 
@@ -2172,7 +2117,7 @@ Default value: `{}`
 
 ### <a name="icingaweb2--module--idoreports"></a>`icingaweb2::module::idoreports`
 
-Installs, configures and enables the idoreports module.
+Installs, configures and enables the idoreports module. The module is deprecated.
 
 * **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 
@@ -2197,18 +2142,6 @@ The following parameters are available in the `icingaweb2::module::idoreports` c
 * [`install_method`](#-icingaweb2--module--idoreports--install_method)
 * [`package_name`](#-icingaweb2--module--idoreports--package_name)
 * [`import_schema`](#-icingaweb2--module--idoreports--import_schema)
-* [`ido_db_username`](#-icingaweb2--module--idoreports--ido_db_username)
-* [`ido_db_password`](#-icingaweb2--module--idoreports--ido_db_password)
-* [`use_tls`](#-icingaweb2--module--idoreports--use_tls)
-* [`tls_key_file`](#-icingaweb2--module--idoreports--tls_key_file)
-* [`tls_cert_file`](#-icingaweb2--module--idoreports--tls_cert_file)
-* [`tls_cacert_file`](#-icingaweb2--module--idoreports--tls_cacert_file)
-* [`tls_key`](#-icingaweb2--module--idoreports--tls_key)
-* [`tls_cert`](#-icingaweb2--module--idoreports--tls_cert)
-* [`tls_cacert`](#-icingaweb2--module--idoreports--tls_cacert)
-* [`tls_capath`](#-icingaweb2--module--idoreports--tls_capath)
-* [`tls_noverify`](#-icingaweb2--module--idoreports--tls_noverify)
-* [`tls_cipher`](#-icingaweb2--module--idoreports--tls_cipher)
 
 ##### <a name="-icingaweb2--module--idoreports--ensure"></a>`ensure`
 
@@ -2218,11 +2151,11 @@ Enable or disable module.
 
 ##### <a name="-icingaweb2--module--idoreports--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/idoreports"`
 
 ##### <a name="-icingaweb2--module--idoreports--git_repository"></a>`git_repository`
 
@@ -2259,113 +2192,6 @@ Options `mariadb` and `mysql`, both means true. With mariadb its cli options are
 whereas with mysql its different options.
 
 Default value: `false`
-
-##### <a name="-icingaweb2--module--idoreports--ido_db_username"></a>`ido_db_username`
-
-Data type: `Optional[String]`
-
-An alternative username to login into the database. By default, the user from
-the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::ido_db_username`
-
-##### <a name="-icingaweb2--module--idoreports--ido_db_password"></a>`ido_db_password`
-
-Data type: `Optional[Icingaweb2::Secret]`
-
-The password for the alternative user. By default, the password from
-the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::ido_db_password`
-
-##### <a name="-icingaweb2--module--idoreports--use_tls"></a>`use_tls`
-
-Data type: `Optional[Boolean]`
-
-Either enable or disable TLS encryption to the database. Other TLS parameters
-are only affected if this is set to 'true'. By default, same value from
-the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::use_tls`
-
-##### <a name="-icingaweb2--module--idoreports--tls_key_file"></a>`tls_key_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-Location of the private key for client authentication. Only valid if tls is enabled.
-By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_key_file`
-
-##### <a name="-icingaweb2--module--idoreports--tls_cert_file"></a>`tls_cert_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-Location of the certificate for client authentication. Only valid if tls is enabled.
-By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_cert_file`
-
-##### <a name="-icingaweb2--module--idoreports--tls_cacert_file"></a>`tls_cacert_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-Location of the ca certificate. Only valid if tls is enabled.
-By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_cacert_file`
-
-##### <a name="-icingaweb2--module--idoreports--tls_key"></a>`tls_key`
-
-Data type: `Optional[Icingaweb2::Secret]`
-
-The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
-By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_key`
-
-##### <a name="-icingaweb2--module--idoreports--tls_cert"></a>`tls_cert`
-
-Data type: `Optional[String]`
-
-The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
-By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_cert`
-
-##### <a name="-icingaweb2--module--idoreports--tls_cacert"></a>`tls_cacert`
-
-Data type: `Optional[String]`
-
-The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
-By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_cacert`
-
-##### <a name="-icingaweb2--module--idoreports--tls_capath"></a>`tls_capath`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-The file path to the directory that contains the trusted SSL CA certificates, which are stored in PEM format.
-Only available for the mysql database. By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_capath`
-
-##### <a name="-icingaweb2--module--idoreports--tls_noverify"></a>`tls_noverify`
-
-Data type: `Optional[Boolean]`
-
-Disable validation of the server certificate. By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_noverify`
-
-##### <a name="-icingaweb2--module--idoreports--tls_cipher"></a>`tls_cipher`
-
-Data type: `Optional[String]`
-
-Cipher to use for the encrypted database connection. By default, same value from the `monitoring` module is used.
-
-Default value: `$icingaweb2::module::monitoring::tls_cipher`
 
 ### <a name="icingaweb2--module--incubator"></a>`icingaweb2::module::incubator`
 
@@ -2515,8 +2341,6 @@ Data type: `Enum['absent', 'present']`
 
 Enable or disable module.
 
-Default value: `'present'`
-
 ##### <a name="-icingaweb2--module--monitoring--protected_customvars"></a>`protected_customvars`
 
 Data type: `Variant[String, Array[String]]`
@@ -2524,23 +2348,17 @@ Data type: `Variant[String, Array[String]]`
 Custom variables in Icinga 2 may contain sensible information. Set patterns for custom variables
 that should be hidden in the web interface.
 
-Default value: `['*pw*', '*pass*', 'community']`
-
 ##### <a name="-icingaweb2--module--monitoring--ido_type"></a>`ido_type`
 
 Data type: `Enum['mysql', 'pgsql']`
 
 Type of your IDO database. Either `mysql` or `pgsql`.
 
-Default value: `'mysql'`
-
 ##### <a name="-icingaweb2--module--monitoring--ido_host"></a>`ido_host`
 
-Data type: `Optional[Stdlib::Host]`
+Data type: `Stdlib::Host`
 
 Hostname of the IDO database.
-
-Default value: `undef`
 
 ##### <a name="-icingaweb2--module--monitoring--ido_port"></a>`ido_port`
 
@@ -2552,19 +2370,15 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--monitoring--ido_db_name"></a>`ido_db_name`
 
-Data type: `Optional[String]`
+Data type: `String`
 
 Name of the IDO database.
 
-Default value: `undef`
-
 ##### <a name="-icingaweb2--module--monitoring--ido_db_username"></a>`ido_db_username`
 
-Data type: `Optional[String]`
+Data type: `String`
 
 Username for IDO DB connection.
-
-Default value: `undef`
 
 ##### <a name="-icingaweb2--module--monitoring--ido_db_password"></a>`ido_db_password`
 
@@ -3001,6 +2815,9 @@ The following parameters are available in the `icingaweb2::module::reporting` cl
 * [`import_schema`](#-icingaweb2--module--reporting--import_schema)
 * [`mail`](#-icingaweb2--module--reporting--mail)
 * [`manage_service`](#-icingaweb2--module--reporting--manage_service)
+* [`service_ensure`](#-icingaweb2--module--reporting--service_ensure)
+* [`service_enable`](#-icingaweb2--module--reporting--service_enable)
+* [`service_user`](#-icingaweb2--module--reporting--service_user)
 
 ##### <a name="-icingaweb2--module--reporting--ensure"></a>`ensure`
 
@@ -3010,11 +2827,11 @@ Ensures the state of the reporting module.
 
 ##### <a name="-icingaweb2--module--reporting--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/reporting"`
 
 ##### <a name="-icingaweb2--module--reporting--git_repository"></a>`git_repository`
 
@@ -3054,8 +2871,6 @@ Data type: `Stdlib::Host`
 
 The host where the reporting database will be running
 
-Default value: `'localhost'`
-
 ##### <a name="-icingaweb2--module--reporting--db_port"></a>`db_port`
 
 Data type: `Optional[Stdlib::Port]`
@@ -3070,15 +2885,11 @@ Data type: `String`
 
 The name of the database this module should use.
 
-Default value: `'reporting'`
-
 ##### <a name="-icingaweb2--module--reporting--db_username"></a>`db_username`
 
 Data type: `String`
 
 The username needed to access the database.
-
-Default value: `'reporting'`
 
 ##### <a name="-icingaweb2--module--reporting--db_password"></a>`db_password`
 
@@ -3200,76 +3011,25 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-Also manage the service (daemon), running and enabled. Otherwise do your config via hiera.
+If set to true the service (daemon) is managed.
 
-Default value: `true`
-
-### <a name="icingaweb2--module--reporting--service"></a>`icingaweb2::module::reporting::service`
-
-Installs and configures the reporting scheduler.
-
-* **Note** Only systemd is supported by the Icinga Team and this module.
-
-#### Examples
-
-##### 
-
-```puppet
-include icingaweb2::module::reporting::service
-```
-
-#### Parameters
-
-The following parameters are available in the `icingaweb2::module::reporting::service` class:
-
-* [`ensure`](#-icingaweb2--module--reporting--service--ensure)
-* [`enable`](#-icingaweb2--module--reporting--service--enable)
-* [`user`](#-icingaweb2--module--reporting--service--user)
-* [`group`](#-icingaweb2--module--reporting--service--group)
-* [`manage_user`](#-icingaweb2--module--reporting--service--manage_user)
-
-##### <a name="-icingaweb2--module--reporting--service--ensure"></a>`ensure`
+##### <a name="-icingaweb2--module--reporting--service_ensure"></a>`service_ensure`
 
 Data type: `Stdlib::Ensure::Service`
 
-Whether the reporting service should be running.
+Wether the service is `running` or `stopped`.
 
-Default value: `'running'`
-
-##### <a name="-icingaweb2--module--reporting--service--enable"></a>`enable`
+##### <a name="-icingaweb2--module--reporting--service_enable"></a>`service_enable`
 
 Data type: `Boolean`
 
-Enable or disable the service.
+Whether the service should be started at boot time.
 
-Default value: `true`
-
-##### <a name="-icingaweb2--module--reporting--service--user"></a>`user`
+##### <a name="-icingaweb2--module--reporting--service_user"></a>`service_user`
 
 Data type: `String`
 
-Specifies the user to run the reporting service daemon as.
-Only available if install_method package is not used.
-
-Default value: `'icingareporting'`
-
-##### <a name="-icingaweb2--module--reporting--service--group"></a>`group`
-
-Data type: `String`
-
-Specifies the primary group to run the reporting service daemon as.
-Only available if install_method package is not used.
-
-Default value: `'icingaweb2'`
-
-##### <a name="-icingaweb2--module--reporting--service--manage_user"></a>`manage_user`
-
-Data type: `Boolean`
-
-Whether to manage the server user resource. Only available if
-install_method package is not used.
-
-Default value: `true`
+The user as which the service is running. Only valid if `install_method` is set to `git`.
 
 ### <a name="icingaweb2--module--translation"></a>`icingaweb2::module::translation`
 
@@ -3337,6 +3097,9 @@ The following parameters are available in the `icingaweb2::module::vspheredb` cl
 * [`tls_cipher`](#-icingaweb2--module--vspheredb--tls_cipher)
 * [`import_schema`](#-icingaweb2--module--vspheredb--import_schema)
 * [`manage_service`](#-icingaweb2--module--vspheredb--manage_service)
+* [`service_ensure`](#-icingaweb2--module--vspheredb--service_ensure)
+* [`service_enable`](#-icingaweb2--module--vspheredb--service_enable)
+* [`service_user`](#-icingaweb2--module--vspheredb--service_user)
 
 ##### <a name="-icingaweb2--module--vspheredb--ensure"></a>`ensure`
 
@@ -3344,23 +3107,19 @@ Data type: `Enum['absent', 'present']`
 
 Ensur es the state of the vspheredb module.
 
-Default value: `'present'`
-
 ##### <a name="-icingaweb2--module--vspheredb--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/vspheredb"`
 
 ##### <a name="-icingaweb2--module--vspheredb--git_repository"></a>`git_repository`
 
-Data type: `String`
+Data type: `Stdlib::HTTPUrl`
 
 The upstream module repository.
-
-Default value: `'https://github.com/Icinga/icingaweb2-module-vspheredb.git'`
 
 ##### <a name="-icingaweb2--module--vspheredb--git_revision"></a>`git_revision`
 
@@ -3376,15 +3135,11 @@ Data type: `Enum['git', 'none', 'package']`
 
 Install methods are `git`, `package` and `none` is supported as installation method.
 
-Default value: `'git'`
-
 ##### <a name="-icingaweb2--module--vspheredb--package_name"></a>`package_name`
 
 Data type: `String`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
-
-Default value: `'icingaweb2-module-vspheredb'`
 
 ##### <a name="-icingaweb2--module--vspheredb--db_type"></a>`db_type`
 
@@ -3397,8 +3152,6 @@ The database type. Either mysql or postgres.
 Data type: `Stdlib::Host`
 
 The host where the vspheredb-database will be running
-
-Default value: `'localhost'`
 
 ##### <a name="-icingaweb2--module--vspheredb--db_port"></a>`db_port`
 
@@ -3414,15 +3167,11 @@ Data type: `String`
 
 The name of the database this module should use.
 
-Default value: `'vspheredb'`
-
 ##### <a name="-icingaweb2--module--vspheredb--db_username"></a>`db_username`
 
 Data type: `String`
 
 The username needed to access the database.
-
-Default value: `'vspheredb'`
 
 ##### <a name="-icingaweb2--module--vspheredb--db_password"></a>`db_password`
 
@@ -3434,11 +3183,11 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--vspheredb--db_charset"></a>`db_charset`
 
-Data type: `String`
+Data type: `Optional[String]`
 
 The charset the database is set to.
 
-Default value: `'utf8mb4'`
+Default value: `undef`
 
 ##### <a name="-icingaweb2--module--vspheredb--use_tls"></a>`use_tls`
 
@@ -3536,76 +3285,25 @@ Default value: `false`
 
 Data type: `Boolean`
 
-Also manage the service (daemon), running and enabled. Otherwise do your config via hiera.
+If set to true the service (daemon) is managed.
 
-Default value: `true`
-
-### <a name="icingaweb2--module--vspheredb--service"></a>`icingaweb2::module::vspheredb::service`
-
-Installs and configures the vspheredb service.
-
-* **Note** Only systemd is supported by the Icinga Team and this module.
-
-#### Examples
-
-##### 
-
-```puppet
-include icingaweb2::module::vspheredb::service
-```
-
-#### Parameters
-
-The following parameters are available in the `icingaweb2::module::vspheredb::service` class:
-
-* [`ensure`](#-icingaweb2--module--vspheredb--service--ensure)
-* [`enable`](#-icingaweb2--module--vspheredb--service--enable)
-* [`user`](#-icingaweb2--module--vspheredb--service--user)
-* [`group`](#-icingaweb2--module--vspheredb--service--group)
-* [`manage_user`](#-icingaweb2--module--vspheredb--service--manage_user)
-
-##### <a name="-icingaweb2--module--vspheredb--service--ensure"></a>`ensure`
+##### <a name="-icingaweb2--module--vspheredb--service_ensure"></a>`service_ensure`
 
 Data type: `Stdlib::Ensure::Service`
 
-Whether the vspheredb service should be running.
+Wether the service is `running` or `stopped`.
 
-Default value: `'running'`
-
-##### <a name="-icingaweb2--module--vspheredb--service--enable"></a>`enable`
+##### <a name="-icingaweb2--module--vspheredb--service_enable"></a>`service_enable`
 
 Data type: `Boolean`
 
-Enable or disable the service.
+Whether the service should be started at boot time.
 
-Default value: `true`
-
-##### <a name="-icingaweb2--module--vspheredb--service--user"></a>`user`
+##### <a name="-icingaweb2--module--vspheredb--service_user"></a>`service_user`
 
 Data type: `String`
 
-Specifies the user to run the vsphere service daemon as.
-Only available if install_method package is not used.
-
-Default value: `'icingavspheredb'`
-
-##### <a name="-icingaweb2--module--vspheredb--service--group"></a>`group`
-
-Data type: `String`
-
-Specifies the primary group to run the vspheredb service daemon as.
-Only available if install_method package is not used.
-
-Default value: `'icingaweb2'`
-
-##### <a name="-icingaweb2--module--vspheredb--service--manage_user"></a>`manage_user`
-
-Data type: `Boolean`
-
-Whether to manage the server user resource. Only available if
-install_method package is not used.
-
-Default value: `true`
+The user as which the service is running. Only valid if `install_method` is set to `git`.
 
 ### <a name="icingaweb2--module--x509"></a>`icingaweb2::module::x509`
 
@@ -3654,6 +3352,10 @@ The following parameters are available in the `icingaweb2::module::x509` class:
 * [`tls_noverify`](#-icingaweb2--module--x509--tls_noverify)
 * [`tls_cipher`](#-icingaweb2--module--x509--tls_cipher)
 * [`import_schema`](#-icingaweb2--module--x509--import_schema)
+* [`manage_service`](#-icingaweb2--module--x509--manage_service)
+* [`service_ensure`](#-icingaweb2--module--x509--service_ensure)
+* [`service_enable`](#-icingaweb2--module--x509--service_enable)
+* [`service_user`](#-icingaweb2--module--x509--service_user)
 
 ##### <a name="-icingaweb2--module--x509--ensure"></a>`ensure`
 
@@ -3663,15 +3365,15 @@ Ensures the state of the x509 module.
 
 ##### <a name="-icingaweb2--module--x509--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/x509"`
 
 ##### <a name="-icingaweb2--module--x509--git_repository"></a>`git_repository`
 
-Data type: `String`
+Data type: `Stdlib::HTTPUrl`
 
 The upstream module repository.
 
@@ -3701,15 +3403,11 @@ Data type: `Enum['mysql', 'pgsql']`
 
 The database type. Either mysql or pgsql.
 
-Default value: `'mysql'`
-
 ##### <a name="-icingaweb2--module--x509--db_host"></a>`db_host`
 
 Data type: `Stdlib::Host`
 
 The host where the database will be running
-
-Default value: `'localhost'`
 
 ##### <a name="-icingaweb2--module--x509--db_port"></a>`db_port`
 
@@ -3725,15 +3423,11 @@ Data type: `String`
 
 The name of the database this module should use.
 
-Default value: `'x509'`
-
 ##### <a name="-icingaweb2--module--x509--db_username"></a>`db_username`
 
 Data type: `String`
 
 The username needed to access the database.
-
-Default value: `'x509'`
 
 ##### <a name="-icingaweb2--module--x509--db_password"></a>`db_password`
 
@@ -3843,42 +3537,33 @@ whereas with mysql its different options.
 
 Default value: `false`
 
-### <a name="icingaweb2--module--x509--service"></a>`icingaweb2::module::x509::service`
-
-Installs and configures the x509 job scheduler.
-
-* **Note** Only systemd is supported by the Icinga Team and this module.
-
-#### Examples
-
-##### 
-
-```puppet
-include icingaweb2::module::x509::service
-```
-
-#### Parameters
-
-The following parameters are available in the `icingaweb2::module::x509::service` class:
-
-* [`ensure`](#-icingaweb2--module--x509--service--ensure)
-* [`enable`](#-icingaweb2--module--x509--service--enable)
-
-##### <a name="-icingaweb2--module--x509--service--ensure"></a>`ensure`
-
-Data type: `Stdlib::Ensure::Service`
-
-Whether the x509 service should be running.
-
-Default value: `'running'`
-
-##### <a name="-icingaweb2--module--x509--service--enable"></a>`enable`
+##### <a name="-icingaweb2--module--x509--manage_service"></a>`manage_service`
 
 Data type: `Boolean`
 
-Enable or disable the service.
+If set to true the service (daemon) is managed.
 
-Default value: `true`
+##### <a name="-icingaweb2--module--x509--service_ensure"></a>`service_ensure`
+
+Data type: `Stdlib::Ensure::Service`
+
+Wether the service is `running` or `stopped`.
+
+##### <a name="-icingaweb2--module--x509--service_enable"></a>`service_enable`
+
+Data type: `Boolean`
+
+Whether the service should be started at boot time.
+
+##### <a name="-icingaweb2--module--x509--service_user"></a>`service_user`
+
+Data type: `String`
+
+The user as which the service is running. Only valid if `install_method` is set to `git`.
+
+### <a name="icingaweb2--module--x509--install"></a>`icingaweb2::module::x509::install`
+
+Install the x509 module
 
 ## Defined types
 
@@ -4741,9 +4426,11 @@ MySQL and the path to the unix domain socket and the directory for PostgreSQL.
 
 ##### <a name="-icingaweb2--resource--database--port"></a>`port`
 
-Data type: `Stdlib::Port`
+Data type: `Optional[Stdlib::Port]`
 
 Port number to use.
+
+Default value: `undef`
 
 ##### <a name="-icingaweb2--resource--database--database"></a>`database`
 
@@ -5050,6 +4737,30 @@ Data type: `Hash[String, Any]`
 ##### `use_tls`
 
 Data type: `Optional[Boolean]`
+
+
+
+### <a name="icingaweb2--pick"></a>`icingaweb2::pick`
+
+Type: Puppet Language
+
+This function returns first parameter if set.
+
+#### `icingaweb2::pick(Any $arg1, Any $arg2)`
+
+The icingaweb2::pick function.
+
+Returns: `Any` One of the two parameters.
+
+##### `arg1`
+
+Data type: `Any`
+
+
+
+##### `arg2`
+
+Data type: `Any`
 
 
 

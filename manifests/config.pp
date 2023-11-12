@@ -6,6 +6,7 @@
 class icingaweb2::config {
   $conf_dir             = $icingaweb2::globals::conf_dir
   $default_module_path  = $icingaweb2::globals::default_module_path
+  $ssl_dir              = "${icingaweb2::globals::state_dir}/certs"
 
   $logging              = $icingaweb2::logging
   $logging_file         = $icingaweb2::logging_file
@@ -27,14 +28,7 @@ class icingaweb2::config {
   $import_schema        = $icingaweb2::import_schema
   $mysql_db_schema      = $icingaweb2::globals::mysql_db_schema
   $pgsql_db_schema      = $icingaweb2::globals::pgsql_db_schema
-  $db                   = {
-    type => $icingaweb2::db_type,
-    name => $icingaweb2::db_name,
-    host => $icingaweb2::db_host,
-    port => pick($icingaweb2::db_port, $icingaweb2::globals::port[$icingaweb2::db_type]),
-    user => $icingaweb2::db_username,
-    pass => $icingaweb2::db_password,
-  }
+  $db                   = $icingaweb2::db
 
   $default_domain       = $icingaweb2::default_domain
   $admin_role           = $icingaweb2::admin_role
@@ -43,16 +37,7 @@ class icingaweb2::config {
   $config_resource      = "${db['type']}-icingaweb2"
 
   $use_tls              = $icingaweb2::use_tls
-  $tls                  = icingaweb2::cert::files(
-    'client',
-    $conf_dir,
-    $icingaweb2::tls_key_file,
-    $icingaweb2::tls_cert_file,
-    $icingaweb2::tls_cacert_file,
-    $icingaweb2::tls_key,
-    $icingaweb2::tls_cert,
-    $icingaweb2::tls_cacert,
-  ) + {
+  $tls                  = $icingaweb2::tls + {
     capath   => $icingaweb2::tls_capath,
     noverify => $icingaweb2::tls_noverify,
     cipher   => $icingaweb2::tls_cipher,
@@ -62,7 +47,6 @@ class icingaweb2::config {
     path     => $facts['path'],
     provider => shell,
     user     => 'root',
-    require  => Icingaweb2::Tls::Client['icingaweb2 tls client config'],
   }
 
   icingaweb2::inisection { 'config-logging':
@@ -149,17 +133,13 @@ class icingaweb2::config {
     }
   }
 
-  icingaweb2::tls::client { 'icingaweb2 tls client config':
-    args => $tls,
-  }
-
-  -> icingaweb2::resource::database { "${db['type']}-icingaweb2":
+  icingaweb2::resource::database { "${db['type']}-icingaweb2":
     type         => $db['type'],
     host         => $db['host'],
     port         => $db['port'],
-    database     => $db['name'],
-    username     => $db['user'],
-    password     => $db['pass'],
+    database     => $db['database'],
+    username     => $db['username'],
+    password     => $db['password'],
     use_tls      => $use_tls,
     tls_noverify => $tls['noverify'],
     tls_key      => $tls['key_file'],
@@ -187,7 +167,7 @@ class icingaweb2::config {
     } else {
       $import_schema
     }
-    $db_cli_options = icingaweb2::db::connect($db + { type => $real_db_type }, $tls, $use_tls)
+    $db_cli_options = icinga::db::connect($db + { type => $real_db_type }, $tls, $use_tls)
 
     if $admin_role {
       icingaweb2::config::role { $admin_role['name']:

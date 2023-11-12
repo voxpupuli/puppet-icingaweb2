@@ -4,7 +4,7 @@ describe('icingaweb2::config::groupbackend', type: :define) do
   let(:title) { 'mygroupbackend' }
   let(:pre_condition) do
     [
-      "class { 'icingaweb2': db_type => 'mysql', db_password => 'secret' }",
+      "class { 'icingaweb2': db_type => 'mysql' }",
     ]
   end
 

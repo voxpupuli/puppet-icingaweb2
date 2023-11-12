@@ -1,5 +1,5 @@
 # @summary
-#   Manages the monitoring module. This module is mandatory for probably every setup.
+#   Manages the monitoring module. This module is deprecated.
 #
 # @note At first have a look at the [Monitoring module documentation](https://www.icinga.com/docs/icingaweb2/latest/modules/monitoring/doc/01-About/).
 #
@@ -88,13 +88,13 @@
 #   }
 #
 class icingaweb2::module::monitoring (
-  Enum['absent', 'present']      $ensure               = 'present',
-  Variant[String, Array[String]] $protected_customvars = ['*pw*', '*pass*', 'community'],
-  Enum['mysql', 'pgsql']         $ido_type             = 'mysql',
-  Optional[Stdlib::Host]         $ido_host             = undef,
+  Enum['absent', 'present']      $ensure,
+  Variant[String, Array[String]] $protected_customvars,
+  Enum['mysql', 'pgsql']         $ido_type,
+  Stdlib::Host                   $ido_host,
+  String                         $ido_db_name,
+  String                         $ido_db_username,
   Optional[Stdlib::Port]         $ido_port             = undef,
-  Optional[String]               $ido_db_name          = undef,
-  Optional[String]               $ido_db_username      = undef,
   Optional[Icingaweb2::Secret]   $ido_db_password      = undef,
   Optional[String]               $ido_db_charset       = undef,
   Optional[Boolean]              $use_tls              = undef,
@@ -111,44 +111,28 @@ class icingaweb2::module::monitoring (
 ) {
   icingaweb2::assert_module()
 
-  $conf_dir        = $icingaweb2::globals::conf_dir
-  $module_conf_dir = "${conf_dir}/modules/monitoring"
+  $module_conf_dir = "${icingaweb2::globals::conf_dir}/modules/monitoring"
+  $cert_dir        = "${icingaweb2::globals::state_dir}/monitoring/certs"
 
-  $tls = delete($icingaweb2::config::tls, ['key', 'cert', 'cacert']) + delete_undef_values(icingaweb2::cert::files(
-      'client',
-      $module_conf_dir,
-      $tls_key_file,
-      $tls_cert_file,
-      $tls_cacert_file,
-      $tls_key,
-      $tls_cert,
-      $tls_cacert,
-    ) + {
-      capath   => $tls_capath,
-      noverify => $tls_noverify,
-      cipher   => $tls_cipher,
-  })
-
-  icingaweb2::tls::client { 'icingaweb2::module::monitoring tls client config':
-    args => $tls,
+  $db = {
+    type     => $ido_type,
+    database => $ido_db_name,
+    host     => $ido_host,
+    port     => $ido_port,
+    username => $ido_db_username,
+    password => $ido_db_password,
   }
 
-  icingaweb2::resource::database { 'icingaweb2-module-monitoring':
-    type         => $ido_type,
-    host         => $ido_host,
-    port         => pick($ido_port, $icingaweb2::globals::port[$ido_type]),
-    database     => $ido_db_name,
-    username     => $ido_db_username,
-    password     => $ido_db_password,
-    charset      => $ido_db_charset,
-    use_tls      => $use_tls,
-    tls_noverify => $tls['noverify'],
-    tls_key      => $tls['key_file'],
-    tls_cert     => $tls['cert_file'],
-    tls_cacert   => $tls['cacert_file'],
-    tls_capath   => $tls['capath'],
-    tls_cipher   => $tls['cipher'],
-  }
+  $tls = icinga::cert::files(
+    $ido_db_username,
+    $cert_dir,
+    $tls_key_file,
+    $tls_cert_file,
+    $tls_cacert_file,
+    $tls_key,
+    $tls_cert,
+    $tls_cacert,
+  )
 
   $backend_settings = {
     'type'     => 'ido',
@@ -175,11 +159,8 @@ class icingaweb2::module::monitoring (
     },
   }
 
-  create_resources('icingaweb2::module::monitoring::commandtransport', $commandtransports)
-
-  icingaweb2::module { 'monitoring':
-    ensure         => $ensure,
-    install_method => 'none',
-    settings       => $settings,
-  }
+  class { 'icingaweb2::module::monitoring::install': }
+  -> class { 'icingaweb2::module::monitoring::config': }
+  contain icingaweb2::module::monitoring::install
+  contain icingaweb2::module::monitoring::config
 }
