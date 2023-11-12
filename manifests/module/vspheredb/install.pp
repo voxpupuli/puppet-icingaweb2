@@ -48,6 +48,7 @@ class icingaweb2::module::vspheredb::install {
       ensure => 'present',
       gid    => $conf_group,
       shell  => '/bin/false',
+      system => true,
     }
   }
 }

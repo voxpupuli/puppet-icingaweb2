@@ -31,6 +31,7 @@ class icingaweb2::module::x509::install {
       ensure => present,
       gid    => $conf_group,
       shell  => '/bin/false',
+      system => true,
     }
   }
 

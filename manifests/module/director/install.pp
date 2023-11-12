@@ -35,6 +35,7 @@ class icingaweb2::module::director::install {
       ensure => present,
       gid    => $conf_group,
       shell  => '/bin/false',
+      system => true,
     }
   }
 
