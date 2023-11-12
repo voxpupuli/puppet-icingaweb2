@@ -60,6 +60,7 @@ describe('icingaweb2::module::reporting', type: :class) do
             .with_ensure('present')
             .with_gid('bar')
             .with_shell('/bin/false')
+            .with_system(true)
         }
 
         it {
@@ -109,7 +110,20 @@ describe('icingaweb2::module::reporting', type: :class) do
             .with_unless(%r{^mysql.* -Ns -e 'SELECT \* FROM report'$})
         }
 
-        it { is_expected.not_to contain_user('icingareporting') }
+        it {
+          is_expected.to contain_user('icingareporting')
+            .with_ensure('present')
+            .with_gid('bar')
+            .with_shell('/bin/false')
+            .with_system(true)
+        }
+
+        it {
+          is_expected.to contain_systemd__dropin_file('icinga-reporting.conf')
+            .with_unit('icinga-reporting.service')
+            .with_content(%r{User=icingareporting})
+        }
+
         it { is_expected.not_to contain_systemd__unit_file('icinga-reporting.service') }
         it { is_expected.not_to contain_service('icinga-reporting') }
       end

@@ -52,6 +52,7 @@ describe('icingaweb2::module::x509', type: :class) do
             .with_ensure('present')
             .with_gid('bar')
             .with_shell('/bin/false')
+            .with_system(true)
         }
 
         it {
@@ -101,7 +102,20 @@ describe('icingaweb2::module::x509', type: :class) do
             .with_unless(%r{^mysql.* -Ns -e 'SELECT \* FROM x509_certificate'$})
         }
 
-        it { is_expected.not_to contain_user('icingax509') }
+        it {
+          is_expected.to contain_user('icingax509')
+            .with_ensure('present')
+            .with_gid('bar')
+            .with_shell('/bin/false')
+            .with_system(true)
+        }
+
+        it {
+          is_expected.to contain_systemd__dropin_file('icinga-x509.conf')
+            .with_unit('icinga-x509.service')
+            .with_content(%r{User=icingax509})
+        }
+
         it { is_expected.not_to contain_systemd__unit_file('icinga-x509.service') }
         it { is_expected.not_to contain_service('icinga-x509') }
       end

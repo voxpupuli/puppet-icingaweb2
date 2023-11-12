@@ -52,6 +52,7 @@ describe('icingaweb2::module::vspheredb', type: :class) do
             .with_ensure('present')
             .with_gid('bar')
             .with_shell('/bin/false')
+            .with_system(true)
         }
 
         it {
@@ -106,7 +107,20 @@ describe('icingaweb2::module::vspheredb', type: :class) do
             .with_unless(%r{^mysql.*-Ns -e 'SELECT schema_version FROM vspheredb_schema_migration'$})
         }
 
-        it { is_expected.not_to contain_user('icingavspheredb') }
+        it {
+          is_expected.to contain_user('icingavspheredb')
+            .with_ensure('present')
+            .with_gid('bar')
+            .with_shell('/bin/false')
+            .with_system(true)
+        }
+
+        it {
+          is_expected.to contain_systemd__dropin_file('icinga-vspheredb.conf')
+            .with_unit('icinga-vspheredb.service')
+            .with_content(%r{User=icingavspheredb})
+        }
+
         it { is_expected.not_to contain_systemd__tmpfile('icinga-vspheredb.conf') }
         it { is_expected.not_to contain_systemd__unit_file('icinga-vspheredb.service') }
         it { is_expected.not_to contain_service('icinga-vspheredb') }

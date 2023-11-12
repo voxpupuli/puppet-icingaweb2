@@ -56,6 +56,13 @@ class icingaweb2::module::director::config {
     }
   }
 
+  if $install_method == 'package' {
+    systemd::dropin_file { 'icinga-director.conf':
+      unit    => 'icinga-director.service',
+      content => "[Service]\nUser=${service_user}",
+    }
+  }
+
   if $import_schema {
     exec { 'director-migration':
       command => "${icingacli_bin} director migration run",

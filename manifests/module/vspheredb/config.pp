@@ -43,6 +43,13 @@ class icingaweb2::module::vspheredb::config {
     }
   }
 
+  if $install_method == 'package' {
+    systemd::dropin_file { 'icinga-vspheredb.conf':
+      unit    => 'icinga-vspheredb.service',
+      content => "[Service]\nUser=${service_user}",
+    }
+  }
+
   icingaweb2::resource::database { 'icingaweb2-module-vspheredb':
     type         => $db['type'],
     host         => $db['host'],

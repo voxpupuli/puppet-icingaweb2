@@ -3,7 +3,7 @@ require 'spec_helper'
 describe('icingaweb2::module::director', type: :class) do
   let(:pre_condition) do
     [
-      "class { 'icingaweb2': db_type => 'mysql' }",
+      "class { 'icingaweb2': db_type => 'mysql', conf_user => 'foo', conf_group => 'bar' }",
     ]
   end
 
@@ -22,6 +22,7 @@ describe('icingaweb2::module::director', type: :class) do
             db_username: 'director',
             db_password: 'director',
             import_schema: true,
+            service_user: 'foobaz',
             kickstart: true,
             endpoint: 'foobar',
             api_username: 'root',
@@ -60,6 +61,20 @@ describe('icingaweb2::module::director', type: :class) do
         }
 
         it {
+          is_expected.to contain_user('foobaz')
+            .with_ensure('present')
+            .with_gid('bar')
+            .with_shell('/bin/false')
+            .with_system(true)
+        }
+
+        it {
+          is_expected.to contain_systemd__unit_file('icinga-director.service')
+            .with_content(%r{User=foobaz})
+            .with_content(%r{ExecStart=/usr/bin/icingacli})
+        }
+
+        it {
           is_expected.to contain_service('icinga-director')
             .with_ensure('running')
             .with_enable(true)
@@ -69,7 +84,7 @@ describe('icingaweb2::module::director', type: :class) do
         it { is_expected.to contain_exec('director-kickstart') }
       end
 
-      context "#{os} with import_schema 'false', manage_service 'false'" do
+      context "#{os} with import_schema 'false', install_method 'package', manage_service 'false'" do
         let(:params) do
           { git_revision: 'foobar',
             db_type: 'mysql',
@@ -77,6 +92,7 @@ describe('icingaweb2::module::director', type: :class) do
             db_name: 'director',
             db_username: 'director',
             db_password: 'director',
+            install_method: 'package',
             manage_service: false,
             import_schema: false }
         end
@@ -93,15 +109,26 @@ describe('icingaweb2::module::director', type: :class) do
 
         it {
           is_expected.to contain_icingaweb2__module('director')
-            .with_install_method('git')
-            .with_git_revision('foobar')
+            .with_install_method('package')
             .with_module_dir('/usr/share/icingaweb2/modules/director')
         }
 
         it {
-          is_expected.not_to contain_service('icinga-director')
+          is_expected.to contain_user('icingadirector')
+            .with_ensure('present')
+            .with_gid('bar')
+            .with_shell('/bin/false')
+            .with_system(true)
         }
 
+        it {
+          is_expected.to contain_systemd__dropin_file('icinga-director.conf')
+            .with_unit('icinga-director.service')
+            .with_content(%r{User=icingadirector})
+        }
+
+        it { is_expected.not_to contain_systemd__unit_file('icinga-director.service') }
+        it { is_expected.not_to contain_service('icinga-director') }
         it { is_expected.not_to contain_exec('director-migration') }
         it { is_expected.not_to contain_exec('director-kickstart') }
       end

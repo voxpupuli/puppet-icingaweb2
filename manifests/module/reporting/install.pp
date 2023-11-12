@@ -43,7 +43,7 @@ class icingaweb2::module::reporting::install {
     }
   }
 
-  if $install_method == 'git' {
+  if $install_method != 'none' {
     user { $service_user:
       ensure => 'present',
       gid    => $conf_group,

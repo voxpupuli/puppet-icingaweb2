@@ -38,6 +38,13 @@ class icingaweb2::module::x509::config {
     }
   }
 
+  if $install_method == 'package' {
+    systemd::dropin_file { 'icinga-x509.conf':
+      unit    => 'icinga-x509.service',
+      content => "[Service]\nUser=${service_user}",
+    }
+  }
+
   icingaweb2::resource::database { 'x509':
     type         => $db['type'],
     host         => $db['host'],

@@ -40,6 +40,13 @@ class icingaweb2::module::reporting::config {
     }
   }
 
+  if $install_method == 'package' {
+    systemd::dropin_file { 'icinga-reporting.conf':
+      unit    => 'icinga-reporting.service',
+      content => "[Service]\nUser=${service_user}",
+    }
+  }
+
   icingaweb2::resource::database { 'reporting':
     type         => $db['type'],
     host         => $db['host'],

@@ -26,7 +26,7 @@ class icingaweb2::module::x509::install {
     package_name   => $package_name,
   }
 
-  if $install_method == 'git' {
+  if $install_method != 'none' {
     user { $service_user:
       ensure => present,
       gid    => $conf_group,
