@@ -56,6 +56,10 @@ icingaweb2::module::reporting::db_host: localhost
 icingaweb2::module::reporting::db_name: reporting
 icingaweb2::module::reporting::db_username: reporting
 
+icingaweb2::globals::mysql_idoreports_slaperiods: /schema/mysql/slaperiods.sql
+icingaweb2::globals::mysql_idoreports_sla_percent: /schema/mysql/get_sla_ok_percent.sql
+icingaweb2::globals::pgsql_idoreports_slaperiods: /schema/postgresql/slaperiods.sql
+icingaweb2::globals::pgsql_idoreports_sla_percent: /schema/postgresql/get_sla_ok_percent.sql
 icingaweb2::module::idoreports::ensure: present
 icingaweb2::module::idoreports::install_method: git
 icingaweb2::module::idoreports::git_repository: https://github.com/Icinga/icingaweb2-module-idoreports.git

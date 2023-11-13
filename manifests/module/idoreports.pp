@@ -44,8 +44,12 @@ class icingaweb2::module::idoreports (
     fail('You must declare the icingaweb2::module::monitoring class before using icingaweb2::module::idoreports!')
   }
 
-  $conf_dir        = $icingaweb2::globals::conf_dir
-  $module_conf_dir = "${conf_dir}/modules/idoreports"
+  $conf_dir          = $icingaweb2::globals::conf_dir
+  $module_conf_dir   = "${conf_dir}/modules/idoreports"
+  $mysql_slaperiods  = "${icingaweb2::module::idoreports::module_dir}${icingaweb2::globals::mysql_idoreports_slaperiods}"
+  $mysql_sla_percent = "${icingaweb2::module::idoreports::module_dir}${icingaweb2::globals::mysql_idoreports_sla_percent}"
+  $pgsql_slaperiods  = "${icingaweb2::module::idoreports::module_dir}${icingaweb2::globals::pgsql_idoreports_slaperiods}"
+  $pgsql_sla_percent = "${icingaweb2::module::idoreports::module_dir}${icingaweb2::globals::pgsql_idoreports_sla_percent}"
 
   Exec {
     path     => $facts['path'],
@@ -85,11 +89,11 @@ class icingaweb2::module::idoreports (
     case $db['type'] {
       'mysql': {
         exec { 'import slaperiods':
-          command => "mysql ${db_cli_options} < '${icingaweb2::globals::mysql_idoreports_slaperiods}'",
+          command => "mysql ${db_cli_options} < '${mysql_slaperiods}'",
           unless  => "mysql ${db_cli_options} -Ns -e 'SELECT 1 FROM icinga_sla_periods'",
         }
         exec { 'import get_sla_ok_percent':
-          command => "mysql ${db_cli_options} < '${icingaweb2::globals::mysql_idoreports_sla_percent}'",
+          command => "mysql ${db_cli_options} < '${mysql_sla_percent}'",
           unless  => "if [ \"X$(mysql ${db_cli_options} -Ns -e 'SELECT 1 FROM information_schema.routines WHERE routine_name=\"idoreports_get_sla_ok_percent\"')\" != \"X1\" ];then exit 1; fi",
         }
       }
@@ -97,12 +101,12 @@ class icingaweb2::module::idoreports (
         $_db_password = icingaweb2::unwrap($db['pass'])
         exec { 'import slaperiods':
           environment => ["PGPASSWORD=${_db_password}"],
-          command     => "psql '${db_cli_options}' -w -f ${icingaweb2::globals::pgsql_idoreports_slaperiods}",
+          command     => "psql '${db_cli_options}' -w -f ${pgsql_slaperiods}",
           unless      => "psql '${db_cli_options}' -w -c 'SELECT 1 FROM icinga_outofsla_periods'",
         }
         exec { 'import get_sla_ok_percent':
           environment => ["PGPASSWORD=${_db_password}"],
-          command     => "psql '${db_cli_options}' -w -f ${icingaweb2::globals::pgsql_idoreports_sla_percent}",
+          command     => "psql '${db_cli_options}' -w -f ${pgsql_sla_percent}",
           unless      => "if [ \"X$(psql '${db_cli_options}' -w -t -c \"SELECT 1 FROM information_schema.routines WHERE routine_name='idoreports_get_sla_ok_percent'\"|xargs)\" != \"X1\" ];then exit 1; fi",
         }
       }

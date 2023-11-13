@@ -26,8 +26,8 @@ class icingaweb2::config {
   $group_backends       = $icingaweb2::group_backends
 
   $import_schema        = $icingaweb2::import_schema
-  $mysql_db_schema      = $icingaweb2::globals::mysql_db_schema
-  $pgsql_db_schema      = $icingaweb2::globals::pgsql_db_schema
+  $mysql_schema         = $icingaweb2::globals::mysql_db_schema
+  $pgsql_schema         = $icingaweb2::globals::pgsql_db_schema
   $db                   = $icingaweb2::db
 
   $default_domain       = $icingaweb2::default_domain
@@ -180,7 +180,7 @@ class icingaweb2::config {
     case $db['type'] {
       'mysql': {
         exec { 'import schema':
-          command => "mysql ${db_cli_options} < '${mysql_db_schema}'",
+          command => "mysql ${db_cli_options} < '${mysql_schema}'",
           unless  => "mysql ${db_cli_options} -Ns -e 'SELECT 1 FROM icingaweb_user'",
           notify  => Exec['create default admin user'],
         }
@@ -194,7 +194,7 @@ class icingaweb2::config {
         $_db_password = icingaweb2::unwrap($db['pass'])
         exec { 'import schema':
           environment => ["PGPASSWORD=${_db_password}"],
-          command     => "psql '${db_cli_options}' -w -f ${pgsql_db_schema}",
+          command     => "psql '${db_cli_options}' -w -f ${pgsql_schema}",
           unless      => "psql '${db_cli_options}' -w -c 'SELECT 1 FROM icingaweb_user'",
           notify      => Exec['create default admin user'],
         }
