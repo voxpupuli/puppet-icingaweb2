@@ -34,11 +34,11 @@
 class icingaweb2::module::idoreports (
   Enum['absent', 'present']                  $ensure,
   Enum['git', 'none', 'package']             $install_method,
-  String                                     $git_repository,
+  Stdlib::HTTPUrl                            $git_repository,
   String                                     $package_name,
+  Variant[Boolean, Enum['mariadb', 'mysql']] $import_schema,
   Stdlib::Absolutepath                       $module_dir    = "${icingaweb2::globals::default_module_path}/idoreports",
   Optional[String]                           $git_revision  = undef,
-  Variant[Boolean, Enum['mariadb', 'mysql']] $import_schema = false,
 ) {
   unless defined(Class['icingaweb2::module::monitoring']) {
     fail('You must declare the icingaweb2::module::monitoring class before using icingaweb2::module::idoreports!')

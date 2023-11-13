@@ -60,13 +60,13 @@
 #   }
 #
 class icingaweb2::module::graphite (
-  Enum['absent', 'present']      $ensure                                = 'present',
-  Optional[Stdlib::Absolutepath] $module_dir                            = undef,
-  String                         $git_repository                        = 'https://github.com/Icinga/icingaweb2-module-graphite.git',
+  Enum['absent', 'present']      $ensure,
+  Stdlib::HTTPUrl                $git_repository,
+  Enum['git', 'none', 'package'] $install_method,
+  String                         $package_name,
+  Stdlib::Absolutepath           $module_dir                            = "${icingaweb2::globals::default_module_path}/graphite",
   Optional[String]               $git_revision                          = undef,
-  Enum['git', 'none', 'package'] $install_method                        = 'git',
-  String                         $package_name                          = 'icingaweb2-module-graphite',
-  Optional[String]               $url                                   = undef,
+  Optional[Stdlib::HTTPUrl]      $url                                   = undef,
   Optional[Boolean]              $insecure                              = undef,
   Optional[String]               $user                                  = undef,
   Optional[Icingaweb2::Secret]   $password                              = undef,

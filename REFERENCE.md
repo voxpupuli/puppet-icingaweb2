@@ -238,8 +238,6 @@ Data type: `Enum['file', 'syslog', 'php', 'none']`
 
 Whether Icinga Web 2 should log to 'file', 'syslog' or 'php' (web server's error log). Setting 'none' disables logging.
 
-Default value: `'syslog'`
-
 ##### <a name="-icingaweb2--logging_file"></a>`logging_file`
 
 Data type: `Stdlib::Absolutepath`
@@ -252,15 +250,11 @@ Data type: `Enum['ERROR', 'WARNING', 'INFO', 'DEBUG']`
 
 Logging verbosity. Possible values are 'ERROR', 'WARNING', 'INFO' and 'DEBUG'.
 
-Default value: `'INFO'`
-
 ##### <a name="-icingaweb2--logging_facility"></a>`logging_facility`
 
 Data type: `Pattern[/user|local[0-7]/]`
 
 Logging facility when using syslog. Possible values are 'user' or 'local0' up to 'local7'.
-
-Default value: `'user'`
 
 ##### <a name="-icingaweb2--logging_application"></a>`logging_application`
 
@@ -268,15 +262,11 @@ Data type: `String`
 
 Logging application name when using syslog.
 
-Default value: `'icingaweb2'`
-
 ##### <a name="-icingaweb2--show_stacktraces"></a>`show_stacktraces`
 
 Data type: `Boolean`
 
 Whether to display stacktraces in the web interface or not.
-
-Default value: `false`
 
 ##### <a name="-icingaweb2--module_path"></a>`module_path`
 
@@ -297,15 +287,11 @@ Data type: `String`
 
 The default theme setting. Users may override this settings.
 
-Default value: `'Icinga'`
-
 ##### <a name="-icingaweb2--theme_disabled"></a>`theme_disabled`
 
 Data type: `Boolean`
 
 Whether users can change themes or not.
-
-Default value: `false`
 
 ##### <a name="-icingaweb2--manage_repos"></a>`manage_repos`
 
@@ -315,15 +301,11 @@ When set to true this module will use the module icinga/puppet-icinga to manage 
 e.g. the release repo on packages.icinga.com repository by default, the EPEL repository or Backports.
 For more information, see http://github.com/icinga/puppet-icinga.
 
-Default value: `false`
-
 ##### <a name="-icingaweb2--manage_package"></a>`manage_package`
 
 Data type: `Boolean`
 
 If set to `false` packages aren't managed.
-
-Default value: `true`
 
 ##### <a name="-icingaweb2--extra_packages"></a>`extra_packages`
 
@@ -341,8 +323,6 @@ Whether to import the MySQL schema or not. New options `mariadb` and `mysql`,
 both means true. With mariadb its cli options are used for the import,
 whereas with mysql its different options.
 
-Default value: `false`
-
 ##### <a name="-icingaweb2--db_type"></a>`db_type`
 
 Data type: `Enum['mysql', 'pgsql']`
@@ -354,8 +334,6 @@ Database type, can be either `mysql` or `pgsql`.
 Data type: `Stdlib::Host`
 
 Database hostname.
-
-Default value: `'localhost'`
 
 ##### <a name="-icingaweb2--db_port"></a>`db_port`
 
@@ -371,15 +349,11 @@ Data type: `String`
 
 Database name.
 
-Default value: `'icingaweb2'`
-
 ##### <a name="-icingaweb2--db_username"></a>`db_username`
 
 Data type: `String`
 
 Username for database access.
-
-Default value: `'icingaweb2'`
 
 ##### <a name="-icingaweb2--db_password"></a>`db_password`
 
@@ -527,23 +501,17 @@ Data type: `Hash[String, Hash[String, Any]]`
 Additional resources. Option `type` has to be set as hash key. Type of `ldap`
 declares a define resource of `icingaweb2::resource::ldap`, a type of `mysql`, `pgsql`,
 
-Default value: `{}`
-
 ##### <a name="-icingaweb2--user_backends"></a>`user_backends`
 
 Data type: `Hash[String, Hash[String, Any]]`
 
 Additional user backends for access control. See `icingaweb2::config::authmethod`.
 
-Default value: `{}`
-
 ##### <a name="-icingaweb2--group_backends"></a>`group_backends`
 
 Data type: `Hash[String, Hash[String, Any]]`
 
 Additional group backends for access control. See `icingaweb2::config::groupbackend`.
-
-Default value: `{}`
 
 ### <a name="icingaweb2--globals"></a>`icingaweb2::globals`
 
@@ -744,23 +712,19 @@ Data type: `Enum['absent', 'present']`
 
 Enable or disable module.
 
-Default value: `'present'`
-
 ##### <a name="-icingaweb2--module--audit--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/audit"`
 
 ##### <a name="-icingaweb2--module--audit--git_repository"></a>`git_repository`
 
-Data type: `String`
+Data type: `Stdlib::HTTPUrl`
 
 Set a git repository URL.
-
-Default value: `'https://github.com/Icinga/icingaweb2-module-audit.git'`
 
 ##### <a name="-icingaweb2--module--audit--git_revision"></a>`git_revision`
 
@@ -776,23 +740,17 @@ Data type: `Enum['git', 'none', 'package']`
 
 Install methods are `git`, `package` and `none` is supported as installation method.
 
-Default value: `'git'`
-
 ##### <a name="-icingaweb2--module--audit--package_name"></a>`package_name`
 
 Data type: `String`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
-Default value: `'icingaweb2-module-audit'`
-
 ##### <a name="-icingaweb2--module--audit--log_type"></a>`log_type`
 
 Data type: `Enum['file', 'syslog', 'none']`
 
 Logging type to use.
-
-Default value: `'none'`
 
 ##### <a name="-icingaweb2--module--audit--log_file"></a>`log_file`
 
@@ -823,15 +781,11 @@ Variant[
 
 Facility to log to. Only valid if `log_type` is set to `syslog`.
 
-Default value: `'auth'`
-
 ##### <a name="-icingaweb2--module--audit--stream_format"></a>`stream_format`
 
 Data type: `Enum['json', 'none']`
 
 Set to `json` to stream in JSON format. Disabled by setting to `none`.
-
-Default value: `'none'`
 
 ##### <a name="-icingaweb2--module--audit--stream_file"></a>`stream_file`
 
@@ -874,23 +828,19 @@ Data type: `Enum['absent', 'present']`
 
 Enable or disable module.
 
-Default value: `'present'`
-
 ##### <a name="-icingaweb2--module--businessprocess--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/businessprocess"`
 
 ##### <a name="-icingaweb2--module--businessprocess--git_repository"></a>`git_repository`
 
-Data type: `String`
+Data type: `Stdlib::HTTPUrl`
 
 Set a git repository URL.
-
-Default value: `'https://github.com/Icinga/icingaweb2-module-businessprocess.git'`
 
 ##### <a name="-icingaweb2--module--businessprocess--git_revision"></a>`git_revision`
 
@@ -906,15 +856,11 @@ Data type: `Enum['git', 'none', 'package']`
 
 Install methods are `git`, `package` and `none` is supported as installation method.
 
-Default value: `'git'`
-
 ##### <a name="-icingaweb2--module--businessprocess--package_name"></a>`package_name`
 
 Data type: `String`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
-
-Default value: `'icingaweb2-module-businessprocess'`
 
 ### <a name="icingaweb2--module--cube"></a>`icingaweb2::module::cube`
 
@@ -949,23 +895,19 @@ Data type: `Enum['absent', 'present']`
 
 Enable or disable module.
 
-Default value: `'present'`
-
 ##### <a name="-icingaweb2--module--cube--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/cube"`
 
 ##### <a name="-icingaweb2--module--cube--git_repository"></a>`git_repository`
 
-Data type: `String`
+Data type: `Stdlib::HTTPUrl`
 
 Set a git repository URL.
-
-Default value: `'https://github.com/Icinga/icingaweb2-module-cube.git'`
 
 ##### <a name="-icingaweb2--module--cube--git_revision"></a>`git_revision`
 
@@ -981,15 +923,11 @@ Data type: `Enum['git', 'none', 'package']`
 
 Install methods are `git`, `package` and `none` is supported as installation method.
 
-Default value: `'git'`
-
 ##### <a name="-icingaweb2--module--cube--package_name"></a>`package_name`
 
 Data type: `String`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
-
-Default value: `'icingaweb2-module-cube'`
 
 ### <a name="icingaweb2--module--director"></a>`icingaweb2::module::director`
 
@@ -1232,15 +1170,11 @@ Data type: `Boolean`
 
 Import database schema.
 
-Default value: `false`
-
 ##### <a name="-icingaweb2--module--director--kickstart"></a>`kickstart`
 
 Data type: `Boolean`
 
 Run kickstart command after database migration. This requires `import_schema` to be `true`.
-
-Default value: `false`
 
 ##### <a name="-icingaweb2--module--director--endpoint"></a>`endpoint`
 
@@ -1318,8 +1252,6 @@ Data type: `Enum['absent', 'present']`
 
 Enable or disable module. Defaults to `present`
 
-Default value: `'present'`
-
 ### <a name="icingaweb2--module--elasticsearch"></a>`icingaweb2::module::elasticsearch`
 
 The Elasticsearch module displays events from data stored in Elasticsearch.
@@ -1370,23 +1302,19 @@ Data type: `Enum['absent', 'present']`
 
 Enable or disable module.
 
-Default value: `'present'`
-
 ##### <a name="-icingaweb2--module--elasticsearch--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/elasticsearch"`
 
 ##### <a name="-icingaweb2--module--elasticsearch--git_repository"></a>`git_repository`
 
-Data type: `String`
+Data type: `Stdlib::HTTPUrl`
 
 Set a git repository URL.
-
-Default value: `'https://github.com/Icinga/icingaweb2-module-elasticsearch.git'`
 
 ##### <a name="-icingaweb2--module--elasticsearch--install_method"></a>`install_method`
 
@@ -1394,15 +1322,11 @@ Data type: `Enum['git', 'none', 'package']`
 
 Install methods are `git`, `package` and `none` is supported as installation method.
 
-Default value: `'git'`
-
 ##### <a name="-icingaweb2--module--elasticsearch--package_name"></a>`package_name`
 
 Data type: `String`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
-
-Default value: `'icingaweb2-module-elasticsearch'`
 
 ##### <a name="-icingaweb2--module--elasticsearch--git_revision"></a>`git_revision`
 
@@ -1467,23 +1391,19 @@ Data type: `Enum['absent', 'present']`
 
 Enables or disables module.
 
-Default value: `'present'`
-
 ##### <a name="-icingaweb2--module--fileshipper--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/fileshipper"`
 
 ##### <a name="-icingaweb2--module--fileshipper--git_repository"></a>`git_repository`
 
-Data type: `String`
+Data type: `Stdlib::HTTPUrl`
 
 Set a git repository URL.
-
-Default value: `'https://github.com/Icinga/icingaweb2-module-fileshipper.git'`
 
 ##### <a name="-icingaweb2--module--fileshipper--install_method"></a>`install_method`
 
@@ -1491,15 +1411,11 @@ Data type: `Enum['git', 'none', 'package']`
 
 Install methods are `git`, `package` and `none` is supported as installation method.
 
-Default value: `'git'`
-
 ##### <a name="-icingaweb2--module--fileshipper--package_name"></a>`package_name`
 
 Data type: `String`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
-
-Default value: `'icingaweb2-module-fileshipper'`
 
 ##### <a name="-icingaweb2--module--fileshipper--git_revision"></a>`git_revision`
 
@@ -1515,15 +1431,11 @@ Data type: `Hash`
 
 Hash of base directories. These directories can later be selected in the import source (Director).
 
-Default value: `{}`
-
 ##### <a name="-icingaweb2--module--fileshipper--directories"></a>`directories`
 
 Data type: `Hash`
 
 Deploy plain Icinga 2 configuration files through the Director to your Icinga 2 master.
-
-Default value: `{}`
 
 ### <a name="icingaweb2--module--generictts"></a>`icingaweb2::module::generictts`
 
@@ -1565,23 +1477,19 @@ Data type: `Enum['absent', 'present']`
 
 Enable or disable module.
 
-Default value: `'present'`
-
 ##### <a name="-icingaweb2--module--generictts--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/generictts"`
 
 ##### <a name="-icingaweb2--module--generictts--git_repository"></a>`git_repository`
 
-Data type: `String`
+Data type: `Stdlib::HTTPUrl`
 
 Set a git repository URL.
-
-Default value: `'https://github.com/Icinga/icingaweb2-module-generictts.git'`
 
 ##### <a name="-icingaweb2--module--generictts--git_revision"></a>`git_revision`
 
@@ -1597,15 +1505,11 @@ Data type: `Enum['git', 'none', 'package']`
 
 Install methods are `git`, `package` and `none` is supported as installation method.
 
-Default value: `'git'`
-
 ##### <a name="-icingaweb2--module--generictts--package_name"></a>`package_name`
 
 Data type: `String`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
-
-Default value: `'icingaweb2-module-generictts'`
 
 ##### <a name="-icingaweb2--module--generictts--ticketsystems"></a>`ticketsystems`
 
@@ -1614,8 +1518,6 @@ Data type: `Hash`
 A hash of ticketsystems. The hash expects a `patten` and a `url` for each ticketsystem.
 The regex pattern is to match the ticket ID, eg. `/#([0-9]{4,6})/`. Place the ticket ID
 in the URL, eg. `https://my.ticket.system/tickets/id=$1`.
-
-Default value: `{}`
 
 ### <a name="icingaweb2--module--graphite"></a>`icingaweb2::module::graphite`
 
@@ -1661,23 +1563,19 @@ Data type: `Enum['absent', 'present']`
 
 Enables or disables module.
 
-Default value: `'present'`
-
 ##### <a name="-icingaweb2--module--graphite--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/graphite"`
 
 ##### <a name="-icingaweb2--module--graphite--git_repository"></a>`git_repository`
 
-Data type: `String`
+Data type: `Stdlib::HTTPUrl`
 
 Set a git repository URL.
-
-Default value: `'https://github.com/Icinga/icingaweb2-module-graphite.git'`
 
 ##### <a name="-icingaweb2--module--graphite--git_revision"></a>`git_revision`
 
@@ -1693,19 +1591,15 @@ Data type: `Enum['git', 'none', 'package']`
 
 Install methods are `git`, `package` and `none` is supported as installation method.
 
-Default value: `'git'`
-
 ##### <a name="-icingaweb2--module--graphite--package_name"></a>`package_name`
 
 Data type: `String`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
-Default value: `'icingaweb2-module-graphite'`
-
 ##### <a name="-icingaweb2--module--graphite--url"></a>`url`
 
-Data type: `Optional[String]`
+Data type: `Optional[Stdlib::HTTPUrl]`
 
 URL to your Graphite Web/API.
 
@@ -2113,8 +2007,6 @@ Data type: `Hash[String, Hash]`
 
 A hash of command transports.
 
-Default value: `{}`
-
 ### <a name="icingaweb2--module--idoreports"></a>`icingaweb2::module::idoreports`
 
 Installs, configures and enables the idoreports module. The module is deprecated.
@@ -2159,7 +2051,7 @@ Default value: `"${icingaweb2::globals::default_module_path}/idoreports"`
 
 ##### <a name="-icingaweb2--module--idoreports--git_repository"></a>`git_repository`
 
-Data type: `String`
+Data type: `Stdlib::HTTPUrl`
 
 Set a git repository URL.
 
@@ -2190,8 +2082,6 @@ Data type: `Variant[Boolean, Enum['mariadb', 'mysql']]`
 The IDO database needs some extensions for reorting. Whether to import the database extensions or not.
 Options `mariadb` and `mysql`, both means true. With mariadb its cli options are used for the import,
 whereas with mysql its different options.
-
-Default value: `false`
 
 ### <a name="icingaweb2--module--incubator"></a>`icingaweb2::module::incubator`
 
@@ -2484,8 +2374,6 @@ Data type: `Hash`
 
 A hash of command transports.
 
-Default value: `{}`
-
 ### <a name="icingaweb2--module--pdfexport"></a>`icingaweb2::module::pdfexport`
 
 Installs, configures and enables the pdfexport module.
@@ -2524,23 +2412,19 @@ Data type: `Enum['absent', 'present']`
 
 Enable or disable module.
 
-Default value: `'present'`
-
 ##### <a name="-icingaweb2--module--pdfexport--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/pdfexport"`
 
 ##### <a name="-icingaweb2--module--pdfexport--git_repository"></a>`git_repository`
 
-Data type: `String`
+Data type: `Stdlib::HTTPUrl`
 
 Set a git repository URL.
-
-Default value: `'https://github.com/Icinga/icingaweb2-module-pdfexport.git'`
 
 ##### <a name="-icingaweb2--module--pdfexport--git_revision"></a>`git_revision`
 
@@ -2556,15 +2440,11 @@ Data type: `Enum['git', 'none', 'package']`
 
 Install methods are `git`, `package` and `none` is supported as installation method.
 
-Default value: `'git'`
-
 ##### <a name="-icingaweb2--module--pdfexport--package_name"></a>`package_name`
 
 Data type: `String`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
-
-Default value: `'icingaweb2-module-pdfexport'`
 
 ##### <a name="-icingaweb2--module--pdfexport--chrome_binary"></a>`chrome_binary`
 
@@ -2657,23 +2537,19 @@ Data type: `Enum['absent', 'present']`
 
 Enable or disable module.
 
-Default value: `'present'`
-
 ##### <a name="-icingaweb2--module--puppetdb--module_dir"></a>`module_dir`
 
-Data type: `Optional[Stdlib::Absolutepath]`
+Data type: `Stdlib::Absolutepath`
 
 Target directory of the module.
 
-Default value: `undef`
+Default value: `"${icingaweb2::globals::default_module_path}/puppetdb"`
 
 ##### <a name="-icingaweb2--module--puppetdb--git_repository"></a>`git_repository`
 
-Data type: `String`
+Data type: `Stdlib::HTTPUrl`
 
 Set a git repository URL.
-
-Default value: `'https://github.com/Icinga/icingaweb2-module-puppetdb.git'`
 
 ##### <a name="-icingaweb2--module--puppetdb--git_revision"></a>`git_revision`
 
@@ -2689,23 +2565,17 @@ Data type: `Enum['git', 'none', 'package']`
 
 Install methods are `git`, `package` and `none` is supported as installation method.
 
-Default value: `'git'`
-
 ##### <a name="-icingaweb2--module--puppetdb--package_name"></a>`package_name`
 
 Data type: `String`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
-Default value: `'icingaweb2-module-puppetdb'`
-
 ##### <a name="-icingaweb2--module--puppetdb--ssl"></a>`ssl`
 
 Data type: `Enum['none', 'puppet']`
 
 How to set up ssl certificates. To copy certificates from the local puppet installation, use `puppet`.
-
-Default value: `'none'`
 
 ##### <a name="-icingaweb2--module--puppetdb--host"></a>`host`
 
@@ -2720,8 +2590,6 @@ Default value: `undef`
 Data type: `Hash`
 
 Hash with icingaweb2::module::puppetdb::certificate resources.
-
-Default value: `{}`
 
 ### <a name="icingaweb2--module--reactbundle"></a>`icingaweb2::module::reactbundle`
 
@@ -2835,7 +2703,7 @@ Default value: `"${icingaweb2::globals::default_module_path}/reporting"`
 
 ##### <a name="-icingaweb2--module--reporting--git_repository"></a>`git_repository`
 
-Data type: `String`
+Data type: `Stdlib::HTTPUrl`
 
 The upstream module repository.
 
@@ -2997,8 +2865,6 @@ Whether to import the database schema or not. Options `mariadb` and `mysql`,
 both means true. With mariadb its cli options are used for the import,
 whereas with mysql its different options.
 
-Default value: `false`
-
 ##### <a name="-icingaweb2--module--reporting--mail"></a>`mail`
 
 Data type: `Optional[String]`
@@ -3046,8 +2912,6 @@ The following parameters are available in the `icingaweb2::module::translation` 
 Data type: `Enum['absent', 'present']`
 
 Enable or disable module.
-
-Default value: `'present'`
 
 ### <a name="icingaweb2--module--vspheredb"></a>`icingaweb2::module::vspheredb`
 
@@ -3278,8 +3142,6 @@ Data type: `Variant[Boolean, Enum['mariadb', 'mysql']]`
 Whether to import the database schema or not. New options `mariadb` and `mysql`,
 both means true. With mariadb its cli options are used for the import,
 whereas with mysql its different options.
-
-Default value: `false`
 
 ##### <a name="-icingaweb2--module--vspheredb--manage_service"></a>`manage_service`
 
@@ -3534,8 +3396,6 @@ Data type: `Variant[Boolean, Enum['mariadb', 'mysql']]`
 Whether to import the database schema or not. Options `mariadb` and `mysql`,
 both means true. With mariadb its cli options are used for the import,
 whereas with mysql its different options.
-
-Default value: `false`
 
 ##### <a name="-icingaweb2--module--x509--manage_service"></a>`manage_service`
 

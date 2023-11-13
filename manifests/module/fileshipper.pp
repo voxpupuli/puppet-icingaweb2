@@ -46,19 +46,18 @@
 #   }
 #
 class icingaweb2::module::fileshipper (
-  Enum['absent', 'present']      $ensure           = 'present',
-  Optional[Stdlib::Absolutepath] $module_dir       = undef,
-  String                         $git_repository   = 'https://github.com/Icinga/icingaweb2-module-fileshipper.git',
-  Optional[String]               $git_revision     = undef,
-  Enum['git', 'none', 'package'] $install_method   = 'git',
-  String                         $package_name     = 'icingaweb2-module-fileshipper',
-  Hash                           $base_directories = {},
-  Hash                           $directories      = {},
+  Enum['absent', 'present']      $ensure,
+  Stdlib::HTTPUrl                $git_repository,
+  Enum['git', 'none', 'package'] $install_method,
+  String                         $package_name,
+  Hash                           $base_directories,
+  Hash                           $directories,
+  Stdlib::Absolutepath           $module_dir   = "${icingaweb2::globals::default_module_path}/fileshipper",
+  Optional[String]               $git_revision = undef,
 ) {
   icingaweb2::assert_module()
 
-  $conf_dir        = $icingaweb2::globals::conf_dir
-  $module_conf_dir = "${conf_dir}/modules/fileshipper"
+  $module_conf_dir = "${icingaweb2::globals::conf_dir}/modules/fileshipper"
 
   if $base_directories {
     $base_directories.each |$identifier, $directory| {

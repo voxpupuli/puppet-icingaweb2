@@ -90,6 +90,7 @@
 class icingaweb2::module::monitoring (
   Enum['absent', 'present']      $ensure,
   Variant[String, Array[String]] $protected_customvars,
+  Hash                           $commandtransports,
   Enum['mysql', 'pgsql']         $ido_type,
   Stdlib::Host                   $ido_host,
   String                         $ido_db_name,
@@ -107,7 +108,6 @@ class icingaweb2::module::monitoring (
   Optional[String]               $tls_cacert           = undef,
   Optional[Boolean]              $tls_noverify         = undef,
   Optional[String]               $tls_cipher           = undef,
-  Hash                           $commandtransports    = {},
 ) {
   icingaweb2::assert_module()
 

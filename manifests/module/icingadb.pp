@@ -119,6 +119,7 @@ class icingaweb2::module::icingadb (
   Enum['absent', 'present']       $ensure,
   String                          $package_name,
   Stdlib::Host                    $redis_host,
+  Hash[String, Hash]              $commandtransports,
   Stdlib::Host                    $db_host,
   Enum['mysql', 'pgsql']          $db_type,
   String                          $db_name,
@@ -151,7 +152,6 @@ class icingaweb2::module::icingadb (
   Optional[Stdlib::Absolutepath]  $redis_tls_cert_file      = undef,
   Optional[Stdlib::Absolutepath]  $redis_tls_key_file       = undef,
   Optional[Stdlib::Absolutepath]  $redis_tls_cacert_file    = undef,
-  Hash[String, Hash]              $commandtransports        = {},
 ) {
   icingaweb2::assert_module()
 

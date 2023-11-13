@@ -1,19 +1,26 @@
 ---
+icingaweb2::globals::role_replace: true
 icingaweb2::conf_group: icingaweb2
+icingaweb2::logging: syslog
+icingaweb2::logging_level: INFO
+icingaweb2::logging_facility: user
+icingaweb2::logging_application: icingaweb2
+icingaweb2::show_stacktraces: false
+icingaweb2::theme: Icinga
+icingaweb2::theme_disabled: false
+icingaweb2::manage_repos: false
+icingaweb2::manage_package: true
+icingaweb2::import_schema: false
+icingaweb2::db_host: localhost
+icingaweb2::db_name: icingaweb2
+icingaweb2::db_username: icingaweb2
+icingaweb2::resources: {}
+icingaweb2::user_backends: {}
+icingaweb2::group_backends: {}
 icingaweb2::admin_role:
   name: default admin user
 icingaweb2::default_admin_username: icingaadmin
 icingaweb2::default_admin_password: icinga
-icingaweb2::globals::role_replace: true
-icingaweb2::module::businessprocess::git_repository: https://github.com/Icinga/icingaweb2-module-businessprocess.git
-icingaweb2::module::cube::git_repository: https://github.com/Icinga/icingaweb2-module-cube.git
-icingaweb2::module::elasticsearch::git_repository: https://github.com/Icinga/icingaweb2-module-elasticsearch.git
-icingaweb2::module::fileshipper::git_repository: https://github.com/Icinga/icingaweb2-module-fileshipper.git
-icingaweb2::module::generictts::git_repository: https://github.com/Icinga/icingaweb2-module-generictts.git
-icingaweb2::module::graphite::git_repository: https://github.com/Icinga/icingaweb2-module-graphite.git
-icingaweb2::module::incubator::git_repository: https://github.com/Icinga/icingaweb2-module-incubator.git
-icingaweb2::module::incubator::git_revision: v0.19.0
-icingaweb2::module::puppetdb::git_repository: https://github.com/Icinga/icingaweb2-module-puppetdb.git
 
 icingaweb2::module::monitoring::ensure: present
 icingaweb2::module::monitoring::protected_customvars:
@@ -23,8 +30,10 @@ icingaweb2::module::monitoring::protected_customvars:
 icingaweb2::module::monitoring::ido_host: localhost
 icingaweb2::module::monitoring::ido_db_name: icinga2
 icingaweb2::module::monitoring::ido_db_username: icinga2
+icingaweb2::module::monitoring::commandtransports: {}
 
 icingaweb2::module::icingadb::ensure: present
+icingaweb2::module::icingadb::commandtransports: {}
 icingaweb2::module::icingadb::redis_host: localhost
 icingaweb2::module::icingadb::db_host: localhost
 icingaweb2::module::icingadb::db_name: icingadb
@@ -35,6 +44,8 @@ icingaweb2::module::director::install_method: git
 icingaweb2::module::director::git_repository: https://github.com/Icinga/icingaweb2-module-director.git
 icingaweb2::module::director::api_host: localhost
 icingaweb2::module::director::api_port: 5665
+icingaweb2::module::director::import_schema: false
+icingaweb2::module::director::kickstart: false
 icingaweb2::module::director::manage_service: true
 icingaweb2::module::director::service_ensure: running
 icingaweb2::module::director::service_enable: true
@@ -52,6 +63,7 @@ icingaweb2::module::reporting::manage_service: true
 icingaweb2::module::reporting::service_ensure: running
 icingaweb2::module::reporting::service_enable: true
 icingaweb2::module::reporting::service_user: icingareporting
+icingaweb2::module::reporting::import_schema: false
 icingaweb2::module::reporting::db_host: localhost
 icingaweb2::module::reporting::db_name: reporting
 icingaweb2::module::reporting::db_username: reporting
@@ -63,6 +75,7 @@ icingaweb2::globals::pgsql_idoreports_sla_percent: /schema/postgresql/get_sla_ok
 icingaweb2::module::idoreports::ensure: present
 icingaweb2::module::idoreports::install_method: git
 icingaweb2::module::idoreports::git_repository: https://github.com/Icinga/icingaweb2-module-idoreports.git
+icingaweb2::module::idoreports::import_schema: false
 
 icingaweb2::globals::mysql_x509_schema: /schema/mysql.schema.sql
 icingaweb2::globals::pgsql_x509_schema: /schema/pgsql.schema.sql
@@ -74,6 +87,7 @@ icingaweb2::module::x509::manage_service: true
 icingaweb2::module::x509::service_ensure: running
 icingaweb2::module::x509::service_enable: true
 icingaweb2::module::x509::service_user: icingax509
+icingaweb2::module::x509::import_schema: false
 icingaweb2::module::x509::db_host: localhost
 icingaweb2::module::x509::db_name: x509
 icingaweb2::module::x509::db_username: x509
@@ -87,6 +101,54 @@ icingaweb2::module::vspheredb::manage_service: true
 icingaweb2::module::vspheredb::service_ensure: running
 icingaweb2::module::vspheredb::service_enable: true
 icingaweb2::module::vspheredb::service_user: icingavspheredb
+icingaweb2::module::vspheredb::import_schema: false
 icingaweb2::module::vspheredb::db_host: localhost
 icingaweb2::module::vspheredb::db_name: vspheredb
 icingaweb2::module::vspheredb::db_username: vspheredb
+
+icingaweb2::module::audit::ensure: present
+icingaweb2::module::audit::install_method: git
+icingaweb2::module::audit::git_repository: https://github.com/Icinga/icingaweb2-module-audit.git
+icingaweb2::module::audit::log_type: none
+icingaweb2::module::audit::stream_format: none
+icingaweb2::module::audit::log_facility: auth
+
+icingaweb2::module::businessprocess::ensure: present
+icingaweb2::module::businessprocess::install_method: git
+icingaweb2::module::businessprocess::git_repository: https://github.com/Icinga/icingaweb2-module-businessprocess.git
+
+icingaweb2::module::cube::ensure: present
+icingaweb2::module::cube::git_repository: https://github.com/Icinga/icingaweb2-module-cube.git
+icingaweb2::module::cube::install_method: git
+
+icingaweb2::module::doc: present
+icingaweb2::module::translation: present
+
+icingaweb2::module::elasticsearch::ensure: present
+icingaweb2::module::elasticsearch::git_repository: https://github.com/Icinga/icingaweb2-module-elasticsearch.git
+icingaweb2::module::elasticsearch::install_method: git
+
+icingaweb2::module::fileshipper::ensure: present
+icingaweb2::module::fileshipper::git_repository: https://github.com/Icinga/icingaweb2-module-fileshipper.git
+icingaweb2::module::fileshipper::install_method: git
+icingaweb2::module::fileshipper::base_directories: {}
+icingaweb2::module::fileshipper::directories: {}
+
+icingaweb2::module::generictts::ensure: present
+icingaweb2::module::generictts::git_repository: https://github.com/Icinga/icingaweb2-module-generictts.git
+icingaweb2::module::generictts::install_method: git
+icingaweb2::module::generictts::ticketsystems: {}
+
+icingaweb2::module::graphite::ensure: present
+icingaweb2::module::graphite::git_repository: https://github.com/Icinga/icingaweb2-module-graphite.git
+icingaweb2::module::graphite::install_method: git
+
+icingaweb2::module::pdfexport::ensure: present
+icingaweb2::module::pdfexport::git_repository: https://github.com/Icinga/icingaweb2-module-pdfexport.git
+icingaweb2::module::pdfexport::install_method: git
+
+icingaweb2::module::puppetdb::ensure: present
+icingaweb2::module::puppetdb::git_repository: https://github.com/Icinga/icingaweb2-module-puppetdb.git
+icingaweb2::module::puppetdb::install_method: git
+icingaweb2::module::puppetdb::ssl: none
+icingaweb2::module::puppetdb::certificates: {}

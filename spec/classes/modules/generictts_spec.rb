@@ -30,7 +30,7 @@ describe('icingaweb2::module::generictts', type: :class) do
             ticketsystems: {
               'foo' => {
                 'pattern' => 'foobar',
-                'url' => 'barfoo',
+                'url' => 'http://bar.foo',
               },
             },
           }
@@ -39,14 +39,14 @@ describe('icingaweb2::module::generictts', type: :class) do
         it {
           is_expected.to contain_icingaweb2__module__generictts__ticketsystem('foo')
             .with_pattern('foobar')
-            .with_url('barfoo')
+            .with_url('http://bar.foo')
         }
 
         it {
           is_expected.to contain_icingaweb2__inisection('generictts-ticketsystem-foo')
             .with_section_name('foo')
             .with_target('/etc/icingaweb2/modules/generictts/config.ini')
-            .with_settings('pattern' => 'foobar', 'url' => 'barfoo')
+            .with_settings('pattern' => 'foobar', 'url' => 'http://bar.foo')
         }
 
         it {
