@@ -21,11 +21,9 @@
 * [`icingaweb2::module::graphite`](#icingaweb2--module--graphite): The Graphite module draws graphs out of time series data stored in Graphite.
 * [`icingaweb2::module::icingadb`](#icingaweb2--module--icingadb): Manages the icingadb module. This module is still optional at the moment.
 * [`icingaweb2::module::idoreports`](#icingaweb2--module--idoreports): Installs, configures and enables the idoreports module. The module is deprecated.
-* [`icingaweb2::module::ipl`](#icingaweb2--module--ipl): Installs and enables the ipl module.
 * [`icingaweb2::module::monitoring`](#icingaweb2--module--monitoring): Manages the monitoring module. This module is deprecated.
 * [`icingaweb2::module::pdfexport`](#icingaweb2--module--pdfexport): Installs, configures and enables the pdfexport module.
 * [`icingaweb2::module::puppetdb`](#icingaweb2--module--puppetdb): Installs and configures the puppetdb module.
-* [`icingaweb2::module::reactbundle`](#icingaweb2--module--reactbundle): Installs and enables the reactbundle module.
 * [`icingaweb2::module::reporting`](#icingaweb2--module--reporting): Installs the reporting module
 * [`icingaweb2::module::translation`](#icingaweb2--module--translation): Installs and configures the translation module.
 * [`icingaweb2::module::vspheredb`](#icingaweb2--module--vspheredb): Installs the vsphereDB plugin
@@ -2081,49 +2079,7 @@ Data type: `Variant[Boolean, Enum['mariadb', 'mysql']]`
 The IDO database needs some extensions for reorting. Whether to import the database extensions or not.
 Options `mariadb` and `mysql`, both means true. With mariadb its cli options are used for the import,
 whereas with mysql its different options.
-
-### <a name="icingaweb2--module--ipl"></a>`icingaweb2::module::ipl`
-
-Installs and enables the ipl module.
-
-* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
-
-#### Parameters
-
-The following parameters are available in the `icingaweb2::module::ipl` class:
-
-* [`ensure`](#-icingaweb2--module--ipl--ensure)
-* [`module_dir`](#-icingaweb2--module--ipl--module_dir)
-* [`git_repository`](#-icingaweb2--module--ipl--git_repository)
-* [`git_revision`](#-icingaweb2--module--ipl--git_revision)
-
-##### <a name="-icingaweb2--module--ipl--ensure"></a>`ensure`
-
-Data type: `Enum['absent', 'present']`
-
-Enable or disable module.
-
-Default value: `'present'`
-
-##### <a name="-icingaweb2--module--ipl--module_dir"></a>`module_dir`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-Target directory of the module.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--ipl--git_repository"></a>`git_repository`
-
-Data type: `String`
-
-Set a git repository URL.
-
-##### <a name="-icingaweb2--module--ipl--git_revision"></a>`git_revision`
-
-Data type: `String`
-
-Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
+resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 
 ### <a name="icingaweb2--module--monitoring"></a>`icingaweb2::module::monitoring`
 
@@ -2546,49 +2502,6 @@ Default value: `undef`
 Data type: `Hash`
 
 Hash with icingaweb2::module::puppetdb::certificate resources.
-
-### <a name="icingaweb2--module--reactbundle"></a>`icingaweb2::module::reactbundle`
-
-Installs and enables the reactbundle module.
-
-* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
-
-#### Parameters
-
-The following parameters are available in the `icingaweb2::module::reactbundle` class:
-
-* [`ensure`](#-icingaweb2--module--reactbundle--ensure)
-* [`module_dir`](#-icingaweb2--module--reactbundle--module_dir)
-* [`git_repository`](#-icingaweb2--module--reactbundle--git_repository)
-* [`git_revision`](#-icingaweb2--module--reactbundle--git_revision)
-
-##### <a name="-icingaweb2--module--reactbundle--ensure"></a>`ensure`
-
-Data type: `Enum['absent', 'present']`
-
-Enable or disable module.
-
-Default value: `'present'`
-
-##### <a name="-icingaweb2--module--reactbundle--module_dir"></a>`module_dir`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-Target directory of the module.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--reactbundle--git_repository"></a>`git_repository`
-
-Data type: `String`
-
-Set a git repository URL.
-
-##### <a name="-icingaweb2--module--reactbundle--git_revision"></a>`git_revision`
-
-Data type: `String`
-
-Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
 
 ### <a name="icingaweb2--module--reporting"></a>`icingaweb2::module::reporting`
 
