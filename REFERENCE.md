@@ -2079,7 +2079,6 @@ Data type: `Variant[Boolean, Enum['mariadb', 'mysql']]`
 The IDO database needs some extensions for reorting. Whether to import the database extensions or not.
 Options `mariadb` and `mysql`, both means true. With mariadb its cli options are used for the import,
 whereas with mysql its different options.
-resource or declare the package name in icingaweb2 class parameter `extra_packages`.
 
 ### <a name="icingaweb2--module--monitoring"></a>`icingaweb2::module::monitoring`
 
