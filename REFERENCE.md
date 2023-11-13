@@ -22,7 +22,6 @@
 * [`icingaweb2::module::icingadb`](#icingaweb2--module--icingadb): Manages the icingadb module. This module is still optional at the moment.
 * [`icingaweb2::module::idoreports`](#icingaweb2--module--idoreports): Installs, configures and enables the idoreports module. The module is deprecated.
 * [`icingaweb2::module::incubator`](#icingaweb2--module--incubator): Installs and enables the incubator module.
-* [`icingaweb2::module::ipl`](#icingaweb2--module--ipl): Installs and enables the ipl module.
 * [`icingaweb2::module::monitoring`](#icingaweb2--module--monitoring): Manages the monitoring module. This module is deprecated.
 * [`icingaweb2::module::pdfexport`](#icingaweb2--module--pdfexport): Installs, configures and enables the pdfexport module.
 * [`icingaweb2::module::puppetdb`](#icingaweb2--module--puppetdb): Installs and configures the puppetdb module.
@@ -2121,49 +2120,6 @@ Data type: `String`
 Set a git repository URL. Defaults to github.
 
 ##### <a name="-icingaweb2--module--incubator--git_revision"></a>`git_revision`
-
-Data type: `String`
-
-Set either a branch or a tag name, eg. `stable/0.7.0` or `v0.7.0`.
-
-### <a name="icingaweb2--module--ipl"></a>`icingaweb2::module::ipl`
-
-Installs and enables the ipl module.
-
-* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
-
-#### Parameters
-
-The following parameters are available in the `icingaweb2::module::ipl` class:
-
-* [`ensure`](#-icingaweb2--module--ipl--ensure)
-* [`module_dir`](#-icingaweb2--module--ipl--module_dir)
-* [`git_repository`](#-icingaweb2--module--ipl--git_repository)
-* [`git_revision`](#-icingaweb2--module--ipl--git_revision)
-
-##### <a name="-icingaweb2--module--ipl--ensure"></a>`ensure`
-
-Data type: `Enum['absent', 'present']`
-
-Enable or disable module.
-
-Default value: `'present'`
-
-##### <a name="-icingaweb2--module--ipl--module_dir"></a>`module_dir`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-Target directory of the module.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--ipl--git_repository"></a>`git_repository`
-
-Data type: `String`
-
-Set a git repository URL.
-
-##### <a name="-icingaweb2--module--ipl--git_revision"></a>`git_revision`
 
 Data type: `String`
 
