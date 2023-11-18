@@ -9,6 +9,7 @@ class icingaweb2::module::monitoring::config {
   $settings          = $icingaweb2::module::monitoring::settings
   $db                = $icingaweb2::module::monitoring::db
   $db_charset        = $icingaweb2::module::monitoring::ido_db_charset
+  $db_resource       = $icingaweb2::module::monitoring::ido_resource_name
   $commandtransports = $icingaweb2::module::monitoring::commandtransports
   $use_tls           = $icingaweb2::module::monitoring::use_tls
   $tls               = $icingaweb2::module::monitoring::tls + {
@@ -18,7 +19,7 @@ class icingaweb2::module::monitoring::config {
     cipher      => icingaweb2::pick($icingaweb2::module::monitoring::tls_cipher, $icingaweb2::config::tls['cipher']),
   }
 
-  icingaweb2::resource::database { 'icingaweb2-module-monitoring':
+  icingaweb2::resource::database { $db_resource:
     type         => $db['type'],
     host         => $db['host'],
     port         => $db['port'],

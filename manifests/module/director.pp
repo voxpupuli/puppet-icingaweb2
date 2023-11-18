@@ -24,6 +24,9 @@
 # @param db_type
 #   Type of your database. Either `mysql` or `pgsql`.
 #
+# @param db_resource_name
+#   Name for the director database resource.
+#
 # @param db_host
 #   Hostname of the database.
 #
@@ -138,6 +141,7 @@ class icingaweb2::module::director (
   Boolean                        $import_schema,
   Boolean                        $kickstart,
   Enum['mysql', 'pgsql']         $db_type,
+  String                         $db_resource_name,
   Stdlib::Host                   $db_host,
   String                         $db_name,
   String                         $db_username,
@@ -190,7 +194,7 @@ class icingaweb2::module::director (
       'section_name' => 'db',
       'target'       => "${module_conf_dir}/config.ini",
       'settings'     => {
-        'resource'   => 'icingaweb2-module-director',
+        'resource'   => $db_resource_name,
       },
     },
   }

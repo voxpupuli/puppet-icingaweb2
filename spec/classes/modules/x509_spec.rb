@@ -120,10 +120,11 @@ describe('icingaweb2::module::x509', type: :class) do
         it { is_expected.not_to contain_service('icinga-x509') }
       end
 
-      context "#{os} with use_tls 'true', tls_cacert 'cacert', tls_capath '/foo/bar', tls_noverify 'true', tls_cipher 'cipher'" do
+      context "#{os} with db_resource_name 'foobaz', use_tls 'true', tls_cacert 'cacert', tls_capath '/foo/bar', tls_noverify 'true', tls_cipher 'cipher'" do
         let(:params) do
           {
             db_type: 'mysql',
+            db_resource_name: 'foobaz',
             use_tls: true,
             tls_cacert_file: '/foo/bar',
             tls_capath: '/foo/bar',
@@ -133,7 +134,14 @@ describe('icingaweb2::module::x509', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('x509').with(
+          is_expected.to contain_icingaweb2__inisection('icingaweb2-module-x509-backend')
+            .with_section_name('backend')
+            .with_target('/etc/icingaweb2/modules/x509/config.ini')
+            .with_settings({ 'resource' => 'foobaz' })
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__resource__database('foobaz').with(
             {
               'type' => 'mysql',
               'host' => 'localhost',

@@ -203,6 +203,7 @@ The following parameters are available in the `icingaweb2` class:
 * [`extra_packages`](#-icingaweb2--extra_packages)
 * [`import_schema`](#-icingaweb2--import_schema)
 * [`db_type`](#-icingaweb2--db_type)
+* [`db_resource_name`](#-icingaweb2--db_resource_name)
 * [`db_host`](#-icingaweb2--db_host)
 * [`db_port`](#-icingaweb2--db_port)
 * [`db_name`](#-icingaweb2--db_name)
@@ -325,6 +326,12 @@ whereas with mysql its different options.
 Data type: `Enum['mysql', 'pgsql']`
 
 Database type, can be either `mysql` or `pgsql`.
+
+##### <a name="-icingaweb2--db_resource_name"></a>`db_resource_name`
+
+Data type: `String`
+
+Name for the icingaweb2 database resource.
 
 ##### <a name="-icingaweb2--db_host"></a>`db_host`
 
@@ -963,6 +970,7 @@ The following parameters are available in the `icingaweb2::module::director` cla
 * [`install_method`](#-icingaweb2--module--director--install_method)
 * [`package_name`](#-icingaweb2--module--director--package_name)
 * [`db_type`](#-icingaweb2--module--director--db_type)
+* [`db_resource_name`](#-icingaweb2--module--director--db_resource_name)
 * [`db_host`](#-icingaweb2--module--director--db_host)
 * [`db_port`](#-icingaweb2--module--director--db_port)
 * [`db_name`](#-icingaweb2--module--director--db_name)
@@ -1036,6 +1044,12 @@ Package name of the module. This setting is only valid in combination with the i
 Data type: `Enum['mysql', 'pgsql']`
 
 Type of your database. Either `mysql` or `pgsql`.
+
+##### <a name="-icingaweb2--module--director--db_resource_name"></a>`db_resource_name`
+
+Data type: `String`
+
+Name for the director database resource.
 
 ##### <a name="-icingaweb2--module--director--db_host"></a>`db_host`
 
@@ -1694,6 +1708,7 @@ The following parameters are available in the `icingaweb2::module::icingadb` cla
 * [`ensure`](#-icingaweb2--module--icingadb--ensure)
 * [`package_name`](#-icingaweb2--module--icingadb--package_name)
 * [`db_type`](#-icingaweb2--module--icingadb--db_type)
+* [`db_resource_name`](#-icingaweb2--module--icingadb--db_resource_name)
 * [`db_host`](#-icingaweb2--module--icingadb--db_host)
 * [`db_port`](#-icingaweb2--module--icingadb--db_port)
 * [`db_name`](#-icingaweb2--module--icingadb--db_name)
@@ -1745,6 +1760,12 @@ IicngaDB-Web module package name.
 Data type: `Enum['mysql', 'pgsql']`
 
 Type of your IDO database. Either `mysql` or `pgsql`.
+
+##### <a name="-icingaweb2--module--icingadb--db_resource_name"></a>`db_resource_name`
+
+Data type: `String`
+
+Name for the icingadb database resource.
 
 ##### <a name="-icingaweb2--module--icingadb--db_host"></a>`db_host`
 
@@ -2120,6 +2141,7 @@ The following parameters are available in the `icingaweb2::module::monitoring` c
 * [`ido_type`](#-icingaweb2--module--monitoring--ido_type)
 * [`ido_host`](#-icingaweb2--module--monitoring--ido_host)
 * [`ido_port`](#-icingaweb2--module--monitoring--ido_port)
+* [`ido_resource_name`](#-icingaweb2--module--monitoring--ido_resource_name)
 * [`ido_db_name`](#-icingaweb2--module--monitoring--ido_db_name)
 * [`ido_db_username`](#-icingaweb2--module--monitoring--ido_db_username)
 * [`ido_db_password`](#-icingaweb2--module--monitoring--ido_db_password)
@@ -2168,6 +2190,12 @@ Data type: `Optional[Stdlib::Port]`
 Port of the IDO database.
 
 Default value: `undef`
+
+##### <a name="-icingaweb2--module--monitoring--ido_resource_name"></a>`ido_resource_name`
+
+Data type: `String`
+
+Resource name for the IDO database.
 
 ##### <a name="-icingaweb2--module--monitoring--ido_db_name"></a>`ido_db_name`
 
@@ -2532,6 +2560,7 @@ The following parameters are available in the `icingaweb2::module::reporting` cl
 * [`install_method`](#-icingaweb2--module--reporting--install_method)
 * [`package_name`](#-icingaweb2--module--reporting--package_name)
 * [`db_type`](#-icingaweb2--module--reporting--db_type)
+* [`db_resource_name`](#-icingaweb2--module--reporting--db_resource_name)
 * [`db_host`](#-icingaweb2--module--reporting--db_host)
 * [`db_port`](#-icingaweb2--module--reporting--db_port)
 * [`db_name`](#-icingaweb2--module--reporting--db_name)
@@ -2600,6 +2629,12 @@ Package name of the module. This setting is only valid in combination with the i
 Data type: `Enum['mysql', 'pgsql']`
 
 The database type. Either mysql or postgres.
+
+##### <a name="-icingaweb2--module--reporting--db_resource_name"></a>`db_resource_name`
+
+Data type: `String`
+
+Name for the reporting database resource.
 
 ##### <a name="-icingaweb2--module--reporting--db_host"></a>`db_host`
 
@@ -2811,6 +2846,7 @@ The following parameters are available in the `icingaweb2::module::vspheredb` cl
 * [`install_method`](#-icingaweb2--module--vspheredb--install_method)
 * [`package_name`](#-icingaweb2--module--vspheredb--package_name)
 * [`db_type`](#-icingaweb2--module--vspheredb--db_type)
+* [`db_resource_name`](#-icingaweb2--module--vspheredb--db_resource_name)
 * [`db_host`](#-icingaweb2--module--vspheredb--db_host)
 * [`db_port`](#-icingaweb2--module--vspheredb--db_port)
 * [`db_name`](#-icingaweb2--module--vspheredb--db_name)
@@ -2878,6 +2914,12 @@ Package name of the module. This setting is only valid in combination with the i
 Data type: `Enum['mysql']`
 
 The database type. Either mysql or postgres.
+
+##### <a name="-icingaweb2--module--vspheredb--db_resource_name"></a>`db_resource_name`
+
+Data type: `String`
+
+Name for the vspheredb database resource.
 
 ##### <a name="-icingaweb2--module--vspheredb--db_host"></a>`db_host`
 
@@ -3065,6 +3107,7 @@ The following parameters are available in the `icingaweb2::module::x509` class:
 * [`install_method`](#-icingaweb2--module--x509--install_method)
 * [`package_name`](#-icingaweb2--module--x509--package_name)
 * [`db_type`](#-icingaweb2--module--x509--db_type)
+* [`db_resource_name`](#-icingaweb2--module--x509--db_resource_name)
 * [`db_host`](#-icingaweb2--module--x509--db_host)
 * [`db_port`](#-icingaweb2--module--x509--db_port)
 * [`db_name`](#-icingaweb2--module--x509--db_name)
@@ -3132,6 +3175,12 @@ Package name of the module. This setting is only valid in combination with the i
 Data type: `Enum['mysql', 'pgsql']`
 
 The database type. Either mysql or pgsql.
+
+##### <a name="-icingaweb2--module--x509--db_resource_name"></a>`db_resource_name`
+
+Data type: `String`
+
+Name for the x509 database resource.
 
 ##### <a name="-icingaweb2--module--x509--db_host"></a>`db_host`
 

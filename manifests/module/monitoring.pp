@@ -19,6 +19,9 @@
 # @param ido_port
 #   Port of the IDO database.
 #
+# @param ido_resource_name
+#   Resource name for the IDO database.
+#
 # @param ido_db_name
 #   Name of the IDO database.
 #
@@ -93,6 +96,7 @@ class icingaweb2::module::monitoring (
   Hash                           $commandtransports,
   Enum['mysql', 'pgsql']         $ido_type,
   Stdlib::Host                   $ido_host,
+  String                         $ido_resource_name,
   String                         $ido_db_name,
   String                         $ido_db_username,
   Optional[Stdlib::Port]         $ido_port             = undef,
@@ -136,7 +140,7 @@ class icingaweb2::module::monitoring (
 
   $backend_settings = {
     'type'     => 'ido',
-    'resource' => 'icingaweb2-module-monitoring',
+    'resource' => $ido_resource_name,
   }
 
   $security_settings = {

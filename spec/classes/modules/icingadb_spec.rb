@@ -32,7 +32,7 @@ describe('icingaweb2::module::icingadb', type: :class) do
           is_expected.to contain_icingaweb2__inisection('icingaweb2-module-icingadb-config')
             .with_section_name('icingadb')
             .with_target('/etc/icingaweb2/modules/icingadb/config.ini')
-            .with_settings({ 'resource' => 'icingaweb2-module-icingadb' })
+            .with_settings({ 'resource' => 'icingadb' })
         }
 
         it {
@@ -57,7 +57,7 @@ describe('icingaweb2::module::icingadb', type: :class) do
         }
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-icingadb').with(
+          is_expected.to contain_icingaweb2__resource__database('icingadb').with(
             {
               'type' => 'mysql',
               'host' => 'localhost',
@@ -71,7 +71,7 @@ describe('icingaweb2::module::icingadb', type: :class) do
         }
       end
 
-      context "#{os} with local PostgreSQL and two Redis with TLS, different ports and own passwords" do
+      context "#{os} with local PostgreSQL, db_resource_name 'foobaz'  and two Redis with TLS, different ports and own passwords" do
         let(:pre_condition) do
           [
             "class { 'icingaweb2': db_type => 'pgsql', tls_cacert_file => '/foo/bar' }",
@@ -81,6 +81,7 @@ describe('icingaweb2::module::icingadb', type: :class) do
         let(:params) do
           {
             db_type: 'pgsql',
+            db_resource_name: 'foobaz',
             redis_use_tls: true,
             redis_primary_host: 'redis1.icinga.com',
             redis_primary_port: 4711,
@@ -90,6 +91,13 @@ describe('icingaweb2::module::icingadb', type: :class) do
             redis_secondary_password: 'secret2',
           }
         end
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('icingaweb2-module-icingadb-config')
+            .with_section_name('icingadb')
+            .with_target('/etc/icingaweb2/modules/icingadb/config.ini')
+            .with_settings({ 'resource' => 'foobaz' })
+        }
 
         it {
           is_expected.to contain_icingaweb2__inisection('icingaweb2-module-icingadb-redis')
@@ -113,7 +121,7 @@ describe('icingaweb2::module::icingadb', type: :class) do
         }
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-icingadb').with(
+          is_expected.to contain_icingaweb2__resource__database('foobaz').with(
             {
               'type' => 'pgsql',
               'host' => 'localhost',
@@ -143,7 +151,7 @@ describe('icingaweb2::module::icingadb', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-icingadb').with(
+          is_expected.to contain_icingaweb2__resource__database('icingadb').with(
             {
               'type' => 'mysql',
               'host' => 'localhost',
@@ -180,7 +188,7 @@ describe('icingaweb2::module::icingadb', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-icingadb').with(
+          is_expected.to contain_icingaweb2__resource__database('icingadb').with(
             {
               'type' => 'pgsql',
               'host' => 'localhost',

@@ -11,6 +11,7 @@ class icingaweb2::module::vspheredb::config {
   $mysql_schema    = "${icingaweb2::module::vspheredb::module_dir}${icingaweb2::globals::mysql_vspheredb_schema}"
   $pgsql_schema    = "${icingaweb2::module::vspheredb::module_dir}${icingaweb2::globals::pgsql_vspheredb_schema}"
   $db              = $icingaweb2::module::vspheredb::db
+  $db_resource     = $icingaweb2::module::vspheredb::db_resource_name
   $import_schema   = $icingaweb2::module::vspheredb::import_schema
   $use_tls         = $icingaweb2::module::vspheredb::use_tls
   $tls             = $icingaweb2::module::vspheredb::tls + {
@@ -50,7 +51,7 @@ class icingaweb2::module::vspheredb::config {
     }
   }
 
-  icingaweb2::resource::database { 'icingaweb2-module-vspheredb':
+  icingaweb2::resource::database { $db_resource:
     type         => $db['type'],
     host         => $db['host'],
     port         => $db['port'],

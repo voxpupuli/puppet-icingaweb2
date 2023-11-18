@@ -11,6 +11,7 @@ class icingaweb2::module::reporting::config {
   $mysql_schema    = "${icingaweb2::module::reporting::module_dir}${icingaweb2::globals::mysql_reporting_schema}"
   $pgsql_schema    = "${icingaweb2::module::reporting::module_dir}${icingaweb2::globals::pgsql_reporting_schema}"
   $db              = $icingaweb2::module::reporting::db
+  $db_resource     = $icingaweb2::module::reporting::db_resource_name
   $import_schema   = $icingaweb2::module::reporting::import_schema
   $use_tls         = $icingaweb2::module::reporting::use_tls
   $tls             = $icingaweb2::module::reporting::tls + {
@@ -47,7 +48,7 @@ class icingaweb2::module::reporting::config {
     }
   }
 
-  icingaweb2::resource::database { 'reporting':
+  icingaweb2::resource::database { $db_resource:
     type         => $db['type'],
     host         => $db['host'],
     port         => $db['port'],

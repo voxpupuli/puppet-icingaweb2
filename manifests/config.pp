@@ -29,12 +29,12 @@ class icingaweb2::config {
   $mysql_schema         = $icingaweb2::globals::mysql_db_schema
   $pgsql_schema         = $icingaweb2::globals::pgsql_db_schema
   $db                   = $icingaweb2::db
+  $db_resource          = $icingaweb2::db_resource_name
 
   $default_domain       = $icingaweb2::default_domain
   $admin_role           = $icingaweb2::admin_role
   $admin_username       = $icingaweb2::default_admin_username
   $admin_password       = icingaweb2::unwrap($icingaweb2::default_admin_password)
-  $config_resource      = "${db['type']}-icingaweb2"
 
   $use_tls              = $icingaweb2::use_tls
   $tls                  = $icingaweb2::tls + {
@@ -64,7 +64,7 @@ class icingaweb2::config {
   $settings = {
     'show_stacktraces' => $show_stacktraces,
     'module_path'      => join(unique([$default_module_path] + $module_path), ':'),
-    'config_resource'  => $config_resource,
+    'config_resource'  => $db_resource,
   }
 
   icingaweb2::inisection { 'config-global':
@@ -133,7 +133,7 @@ class icingaweb2::config {
     }
   }
 
-  icingaweb2::resource::database { "${db['type']}-icingaweb2":
+  icingaweb2::resource::database { $db_resource:
     type         => $db['type'],
     host         => $db['host'],
     port         => $db['port'],
@@ -151,12 +151,12 @@ class icingaweb2::config {
 
   icingaweb2::config::groupbackend { "${db['type']}-group":
     backend  => 'db',
-    resource => "${db['type']}-icingaweb2",
+    resource => $db_resource,
   }
 
   icingaweb2::config::authmethod { "${db['type']}-auth":
     backend  => 'db',
-    resource => "${db['type']}-icingaweb2",
+    resource => $db_resource,
   }
 
   if $import_schema {

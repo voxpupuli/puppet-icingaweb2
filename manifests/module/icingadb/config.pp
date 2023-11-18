@@ -9,6 +9,7 @@ class icingaweb2::module::icingadb::config {
   $ensure            = $icingaweb2::module::icingadb::ensure
   $module_conf_dir   = "${icingaweb2::globals::conf_dir}/modules/icingadb"
   $db_type           = $icingaweb2::module::icingadb::db_type
+  $db_resource       = $icingaweb2::module::icingadb::db_resource_name
   $db_host           = $icingaweb2::module::icingadb::db_host
   $db_port           = $icingaweb2::module::icingadb::db_port
   $db_name           = $icingaweb2::module::icingadb::db_name
@@ -25,7 +26,7 @@ class icingaweb2::module::icingadb::config {
   $settings          = $icingaweb2::module::icingadb::settings
   $commandtransports = $icingaweb2::module::icingadb::commandtransports
 
-  icingaweb2::resource::database { 'icingaweb2-module-icingadb':
+  icingaweb2::resource::database { $db_resource:
     type         => $db_type,
     host         => $db_host,
     port         => $db_port,

@@ -38,7 +38,7 @@ describe('icingaweb2::module::monitoring', type: :class) do
           is_expected.to contain_icingaweb2__inisection('module-monitoring-backends')
             .with_section_name('backends')
             .with_target('/etc/icingaweb2/modules/monitoring/backends.ini')
-            .with_settings({ 'type' => 'ido', 'resource' => 'icingaweb2-module-monitoring' })
+            .with_settings({ 'type' => 'ido', 'resource' => 'icinga2' })
         }
 
         it {
@@ -49,7 +49,7 @@ describe('icingaweb2::module::monitoring', type: :class) do
         }
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-monitoring')
+          is_expected.to contain_icingaweb2__resource__database('icinga2')
             .with_type('mysql')
             .with_host('localhost')
             .with_port(4711)
@@ -65,9 +65,10 @@ describe('icingaweb2::module::monitoring', type: :class) do
         }
       end
 
-      context "#{os} with ido_type 'pgsql' and commandtransport 'local'" do
+      context "#{os} with ido_type 'pgsql', ido_resource_name 'foobar'  and commandtransport 'local'" do
         let(:params) do
           { ido_type: 'pgsql',
+            ido_resource_name: 'foobar',
             ido_host: 'localhost',
             ido_db_name: 'icinga2',
             ido_db_username: 'icinga2',
@@ -80,7 +81,14 @@ describe('icingaweb2::module::monitoring', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-monitoring')
+          is_expected.to contain_icingaweb2__inisection('module-monitoring-backends')
+            .with_section_name('backends')
+            .with_target('/etc/icingaweb2/modules/monitoring/backends.ini')
+            .with_settings({ 'type' => 'ido', 'resource' => 'foobar' })
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__resource__database('foobar')
             .with_type('pgsql')
             .with_host('localhost')
             .with_database('icinga2')
@@ -143,7 +151,7 @@ describe('icingaweb2::module::monitoring', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-monitoring').with(
+          is_expected.to contain_icingaweb2__resource__database('icinga2').with(
             {
               'type' => 'pgsql',
               'host' => 'localhost',
@@ -174,7 +182,7 @@ describe('icingaweb2::module::monitoring', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-monitoring').with(
+          is_expected.to contain_icingaweb2__resource__database('icinga2').with(
             {
               'type' => 'mysql',
               'host' => 'localhost',
