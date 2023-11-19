@@ -79,13 +79,13 @@ describe('icingaweb2', type: :class) do
         }
 
         it {
-          is_expected.to contain_icingaweb2__config__authmethod('mysql-auth')
+          is_expected.to contain_icingaweb2__config__authmethod('Icinga Web 2')
             .with_backend('db')
             .with_resource('icingaweb2')
         }
 
         it {
-          is_expected.to contain_icingaweb2__config__groupbackend('mysql-group')
+          is_expected.to contain_icingaweb2__config__groupbackend('Icinga Web 2')
             .with_backend('db')
             .with_resource('icingaweb2')
         }
@@ -120,7 +120,7 @@ describe('icingaweb2', type: :class) do
         }
       end
 
-      context '#{os} with additional resources, user and group backend' do
+      context "#{os} with default_auth_backend 'false', additional resources, user and group backend" do
         let(:params) do
           {
             db_type: 'mysql',
@@ -128,6 +128,7 @@ describe('icingaweb2', type: :class) do
               foo: { type: 'ldap' },
               baz: { type: 'pgsql', host: 'localhost', database: 'baz', port: 5432 },
             },
+            default_auth_backend: false,
             user_backends: {
               bar: { backend: 'ldap', resource: 'foo' },
             },
@@ -137,6 +138,8 @@ describe('icingaweb2', type: :class) do
           }
         end
 
+        it { is_expected.not_to contain_icingaweb2__config__authmethod('Icinga Web 2') }
+        it { is_expected.not_to contain_icingaweb2__config__groupbackend('Icinga Web 2') }
         it { is_expected.to contain_icingaweb2__resource__ldap('foo') }
         it { is_expected.to contain_icingaweb2__resource__database('baz').with('type' => 'pgsql') }
         it { is_expected.to contain_icingaweb2__config__authmethod('bar').with('resource' => 'foo') }
@@ -147,14 +150,20 @@ describe('icingaweb2', type: :class) do
         let(:params) { { import_schema: true, db_type: 'mysql' } }
 
         it { is_expected.to contain_icingaweb2__resource__database('icingaweb2') }
-        it { is_expected.to contain_icingaweb2__config__authmethod('mysql-auth') }
         it { is_expected.to contain_icingaweb2__config__role('default admin user') }
         it { is_expected.to contain_exec('import schema') }
         it { is_expected.to contain_exec('create default admin user') }
       end
 
-      context "#{os} with db_type 'pgsql', db_resource_name 'foobar', import_schema 'true'" do
-        let(:params) { {  db_type: 'pgsql', import_schema: true, db_resource_name: 'foobar' } }
+      context "#{os} with db_type 'pgsql', db_resource_name 'foobar', import_schema 'true', default_auth_backend 'foobaz'" do
+        let(:params) do
+          {
+            db_type: 'pgsql',
+            import_schema: true,
+            db_resource_name: 'foobar',
+            default_auth_backend: 'foobaz',
+          }
+        end
 
         it {
           is_expected.to contain_icingaweb2__inisection('config-global')
@@ -170,13 +179,13 @@ describe('icingaweb2', type: :class) do
         }
 
         it {
-          is_expected.to contain_icingaweb2__config__authmethod('pgsql-auth')
+          is_expected.to contain_icingaweb2__config__authmethod('foobaz')
             .with_backend('db')
             .with_resource('foobar')
         }
 
         it {
-          is_expected.to contain_icingaweb2__config__groupbackend('pgsql-group')
+          is_expected.to contain_icingaweb2__config__groupbackend('foobaz')
             .with_backend('db')
             .with_resource('foobar')
         }
@@ -187,7 +196,7 @@ describe('icingaweb2', type: :class) do
         it { is_expected.to contain_exec('create default admin user') }
       end
 
-      context 'with import_schema => true and admin_role => false' do
+      context "#{os} with import_schema 'true' and admin_role 'false'" do
         let(:params) { { import_schema: true, db_type: 'mysql', admin_role: false } }
 
         it { is_expected.not_to contain_icingaweb2__config__role('default admin user') }

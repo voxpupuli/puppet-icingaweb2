@@ -227,6 +227,7 @@ The following parameters are available in the `icingaweb2` class:
 * [`default_admin_username`](#-icingaweb2--default_admin_username)
 * [`default_admin_password`](#-icingaweb2--default_admin_password)
 * [`resources`](#-icingaweb2--resources)
+* [`default_auth_backend`](#-icingaweb2--default_auth_backend)
 * [`user_backends`](#-icingaweb2--user_backends)
 * [`group_backends`](#-icingaweb2--group_backends)
 
@@ -504,6 +505,13 @@ Data type: `Hash[String, Hash[String, Any]]`
 
 Additional resources. Option `type` has to be set as hash key. Type of `ldap`
 declares a define resource of `icingaweb2::resource::ldap`, a type of `mysql`, `pgsql`,
+
+##### <a name="-icingaweb2--default_auth_backend"></a>`default_auth_backend`
+
+Data type: `Variant[String, Boolean[false]]`
+
+Name of the user and group backend authentication of the icingaweb2 resource.
+If set to `false` the default authentication method is deactivated.
 
 ##### <a name="-icingaweb2--user_backends"></a>`user_backends`
 
@@ -3447,7 +3455,7 @@ Data type: `Variant[String, Integer]`
 Multiple authentication methods can be chained. The order of entries in the authentication
 configuration determines the order of the authentication methods.
 
-Default value: `'01'`
+Default value: `'30'`
 
 ### <a name="icingaweb2--config--dashboard"></a>`icingaweb2::config::dashboard`
 
@@ -3689,7 +3697,7 @@ Data type: `Variant[String, Integer]`
 Multiple authentication methods can be chained. The order of entries in the authentication
 configuration determines the order of the authentication methods.
 
-Default value: `'01'`
+Default value: `'30'`
 
 ### <a name="icingaweb2--config--navigation"></a>`icingaweb2::config::navigation`
 

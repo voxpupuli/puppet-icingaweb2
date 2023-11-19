@@ -16,6 +16,7 @@ icingaweb2::db_host: localhost
 icingaweb2::db_name: icingaweb2
 icingaweb2::db_username: icingaweb2
 icingaweb2::resources: {}
+icingaweb2::default_auth_backend: 'Icinga Web 2'
 icingaweb2::user_backends: {}
 icingaweb2::group_backends: {}
 icingaweb2::admin_role:
