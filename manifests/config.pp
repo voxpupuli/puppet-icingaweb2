@@ -22,6 +22,7 @@ class icingaweb2::config {
   $cookie_path          = $icingaweb2::cookie_path
 
   $resources            = $icingaweb2::resources
+  $default_auth_backend = $icingaweb2::default_auth_backend
   $user_backends        = $icingaweb2::user_backends
   $group_backends       = $icingaweb2::group_backends
 
@@ -149,14 +150,16 @@ class icingaweb2::config {
     tls_cipher   => $tls['cipher'],
   }
 
-  icingaweb2::config::groupbackend { "${db['type']}-group":
-    backend  => 'db',
-    resource => $db_resource,
-  }
+  if $default_auth_backend {
+    icingaweb2::config::groupbackend { $default_auth_backend:
+      backend  => 'db',
+      resource => $db_resource,
+    }
 
-  icingaweb2::config::authmethod { "${db['type']}-auth":
-    backend  => 'db',
-    resource => $db_resource,
+    icingaweb2::config::authmethod { $default_auth_backend:
+      backend  => 'db',
+      resource => $db_resource,
+    }
   }
 
   if $import_schema {

@@ -126,6 +126,10 @@
 #   declares a define resource of `icingaweb2::resource::ldap`, a type of `mysql`, `pgsql`,
 #  `oracle`, `mssql`, `ibm`, `oci`, `sqlite` goes to `icingaweb2::resource::database`.
 #
+# @param default_auth_backend
+#   Name of the user and group backend authentication of the icingaweb2 resource.
+#   If set to `false` the default authentication method is deactivated.
+#
 # @param user_backends
 #   Additional user backends for access control. See `icingaweb2::config::authmethod`.
 #
@@ -226,6 +230,7 @@ class icingaweb2 (
   Boolean                                         $manage_repos,
   Boolean                                         $manage_package,
   Hash[String, Hash[String, Any]]                 $resources,
+  Variant[String, Boolean[false]]                 $default_auth_backend,
   Hash[String, Hash[String, Any]]                 $user_backends,
   Hash[String, Hash[String, Any]]                 $group_backends,
   Variant[Boolean, Enum['mariadb', 'mysql']]      $import_schema,

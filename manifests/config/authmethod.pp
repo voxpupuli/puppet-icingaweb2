@@ -51,7 +51,7 @@ define icingaweb2::config::authmethod (
   Optional[String]                         $ldap_filter              = undef,
   Optional[String]                         $ldap_base_dn             = undef,
   Optional[String]                         $domain                   = undef,
-  Variant[String, Integer]                 $order                    = '01',
+  Variant[String, Integer]                 $order                    = '30',
 ) {
   $conf_dir = $icingaweb2::globals::conf_dir
 
