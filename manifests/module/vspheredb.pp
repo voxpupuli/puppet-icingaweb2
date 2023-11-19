@@ -21,6 +21,9 @@
 # @param db_type
 #   The database type. Either mysql or postgres.
 #
+# @param db_resource_name
+#   Name for the vspheredb database resource.
+#
 # @param db_host
 #   The host where the vspheredb-database will be running
 #
@@ -109,6 +112,7 @@ class icingaweb2::module::vspheredb (
   String                                     $service_user,
   Variant[Boolean, Enum['mariadb', 'mysql']] $import_schema,
   Enum['mysql']                              $db_type,
+  String                                     $db_resource_name,
   Stdlib::Host                               $db_host,
   String                                     $db_name,
   String                                     $db_username,
@@ -158,7 +162,7 @@ class icingaweb2::module::vspheredb (
       'section_name' => 'db',
       'target'       => "${module_conf_dir}/config.ini",
       'settings'     => {
-        'resource' => 'icingaweb2-module-vspheredb',
+        'resource' => $db_resource_name,
       },
     },
   }

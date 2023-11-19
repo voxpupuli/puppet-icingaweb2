@@ -30,7 +30,7 @@ describe('icingaweb2::module::director', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-director')
+          is_expected.to contain_icingaweb2__resource__database('director')
             .with_type('mysql')
             .with_host('localhost')
             .with_database('director')
@@ -50,7 +50,7 @@ describe('icingaweb2::module::director', type: :class) do
           is_expected.to contain_icingaweb2__inisection('module-director-db')
             .with_section_name('db')
             .with_target('/etc/icingaweb2/modules/director/config.ini')
-            .with_settings({ 'resource' => 'icingaweb2-module-director' })
+            .with_settings({ 'resource' => 'director' })
         }
 
         it {
@@ -84,10 +84,11 @@ describe('icingaweb2::module::director', type: :class) do
         it { is_expected.to contain_exec('director-kickstart') }
       end
 
-      context "#{os} with import_schema 'false', install_method 'package', manage_service 'false'" do
+      context "#{os} with db_resource_name 'foobaz', import_schema 'false', install_method 'package', manage_service 'false'" do
         let(:params) do
           { git_revision: 'foobar',
             db_type: 'mysql',
+            db_resource_name: 'foobaz',
             db_host: 'localhost',
             db_name: 'director',
             db_username: 'director',
@@ -98,7 +99,14 @@ describe('icingaweb2::module::director', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-director')
+          is_expected.to contain_icingaweb2__inisection('module-director-db')
+            .with_section_name('db')
+            .with_target('/etc/icingaweb2/modules/director/config.ini')
+            .with_settings({ 'resource' => 'foobaz' })
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__resource__database('foobaz')
             .with_type('mysql')
             .with_host('localhost')
             .with_database('director')
@@ -146,7 +154,7 @@ describe('icingaweb2::module::director', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-director').with(
+          is_expected.to contain_icingaweb2__resource__database('director').with(
             {
               'type' => 'pgsql',
               'host' => 'localhost',
@@ -179,7 +187,7 @@ describe('icingaweb2::module::director', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-director').with(
+          is_expected.to contain_icingaweb2__resource__database('director').with(
             {
               'type' => 'mysql',
               'host' => 'localhost',

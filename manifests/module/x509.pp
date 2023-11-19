@@ -21,6 +21,9 @@
 # @param db_type
 #   The database type. Either mysql or pgsql.
 #
+# @param db_resource_name
+#   Name for the x509 database resource.
+#
 # @param db_host
 #   The host where the database will be running
 #
@@ -109,6 +112,7 @@ class icingaweb2::module::x509 (
   String                                     $service_user,
   Variant[Boolean, Enum['mariadb', 'mysql']] $import_schema,
   Enum['mysql', 'pgsql']                     $db_type,
+  String                                     $db_resource_name,
   Stdlib::Host                               $db_host,
   String                                     $db_name,
   String                                     $db_username,
@@ -158,7 +162,7 @@ class icingaweb2::module::x509 (
       'section_name' => 'backend',
       'target'       => "${module_conf_dir}/config.ini",
       'settings'     => {
-        'resource' => 'x509',
+        'resource' => $db_resource_name,
       },
     },
   }

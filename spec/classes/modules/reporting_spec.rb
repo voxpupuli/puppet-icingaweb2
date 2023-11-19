@@ -157,7 +157,7 @@ describe('icingaweb2::module::reporting', type: :class) do
         }
       end
 
-      context "#{os} with db_type 'pgsql', use_tls 'true', import_schema 'true', service_ensure 'stopped', service_enabe 'false'" do
+      context "#{os} with db_type 'pgsql', db_resource_name 'foobaz', use_tls 'true', import_schema 'true', service_ensure 'stopped', service_enabe 'false'" do
         let(:pre_condition) do
           [
             "class { 'icingaweb2': db_type => 'pgsql', tls_cacert_file => '/foo/bar', tls_capath => '/foo/bar', tls_noverify => true, tls_cipher => 'cipher' }",
@@ -167,6 +167,7 @@ describe('icingaweb2::module::reporting', type: :class) do
         let(:params) do
           {
             db_type: 'pgsql',
+            db_resource_name: 'foobaz',
             db_password: 'foo',
             import_schema: true,
             use_tls: true,
@@ -176,7 +177,14 @@ describe('icingaweb2::module::reporting', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('reporting').with(
+          is_expected.to contain_icingaweb2__inisection('icingaweb2-module-reporting-backend')
+            .with_section_name('backend')
+            .with_target('/etc/icingaweb2/modules/reporting/config.ini')
+            .with_settings({ 'resource' => 'foobaz' })
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__resource__database('foobaz').with(
             {
               'type' => 'pgsql',
               'host' => 'localhost',

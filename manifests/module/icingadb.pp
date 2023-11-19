@@ -12,6 +12,9 @@
 # @param db_type
 #   Type of your IDO database. Either `mysql` or `pgsql`.
 #
+# @param db_resource_name
+#   Name for the icingadb database resource.
+#
 # @param db_host
 #   Hostname of the IcingaDB database.
 #
@@ -120,8 +123,9 @@ class icingaweb2::module::icingadb (
   String                          $package_name,
   Stdlib::Host                    $redis_host,
   Hash[String, Hash]              $commandtransports,
-  Stdlib::Host                    $db_host,
   Enum['mysql', 'pgsql']          $db_type,
+  String                          $db_resource_name,
+  Stdlib::Host                    $db_host,
   String                          $db_name,
   String                          $db_username,
   Optional[Stdlib::Port]          $db_port                  = undef,
@@ -196,7 +200,7 @@ class icingaweb2::module::icingadb (
       'section_name' => 'icingadb',
       'target'       => "${module_conf_dir}/config.ini",
       'settings'     => {
-        resource => 'icingaweb2-module-icingadb',
+        resource => $db_resource_name,
       },
     },
     'icingaweb2-module-icingadb-redis' => {

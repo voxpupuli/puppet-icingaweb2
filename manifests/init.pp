@@ -47,6 +47,9 @@
 # @param db_type
 #   Database type, can be either `mysql` or `pgsql`.
 #
+# @param db_resource_name
+#   Name for the icingaweb2 database resource.
+#
 # @param db_host
 #   Database hostname.
 #
@@ -226,6 +229,7 @@ class icingaweb2 (
   Hash[String, Hash[String, Any]]                 $user_backends,
   Hash[String, Hash[String, Any]]                 $group_backends,
   Variant[Boolean, Enum['mariadb', 'mysql']]      $import_schema,
+  String                                          $db_resource_name,
   Stdlib::Host                                    $db_host,
   String                                          $db_name,
   String                                          $db_username,

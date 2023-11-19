@@ -7,7 +7,7 @@ describe('icingaweb2', type: :class) do
         facts
       end
 
-      context 'with defaults' do
+      context "#{os} with db_type 'mysql'" do
         let(:params) { { db_type: 'mysql' } }
 
         it { is_expected.to compile }
@@ -52,7 +52,7 @@ describe('icingaweb2', type: :class) do
               {
                 'show_stacktraces' => false,
                  'module_path' => '/usr/share/icingaweb2/modules',
-                 'config_resource' => 'mysql-icingaweb2',
+                 'config_resource' => 'icingaweb2',
               },
             )
         }
@@ -70,19 +70,32 @@ describe('icingaweb2', type: :class) do
         it { is_expected.not_to contain_icingaweb2__inisection('config-authentication') }
         it { is_expected.not_to contain_icingaweb2__inisection('config-cookie') }
         it {
-          is_expected.to contain_icingaweb2__resource__database('mysql-icingaweb2')
+          is_expected.to contain_icingaweb2__resource__database('icingaweb2')
             .with_type('mysql')
             .with_host('localhost')
             .with_port(3306)
             .with_database('icingaweb2')
             .with_username('icingaweb2')
         }
+
+        it {
+          is_expected.to contain_icingaweb2__config__authmethod('mysql-auth')
+            .with_backend('db')
+            .with_resource('icingaweb2')
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__config__groupbackend('mysql-group')
+            .with_backend('db')
+            .with_resource('icingaweb2')
+        }
+
         it { is_expected.not_to contain_exec('import schema') }
         it { is_expected.not_to contain_exec('create default admin user') }
         it { is_expected.not_to contain_icingaweb2__config__role('default admin user') }
       end
 
-      context "with manage_package 'false', cookie_path '/foo/bar', default_domain 'foobar'" do
+      context "#{os} with manage_package 'false', cookie_path '/foo/bar', default_domain 'foobar'" do
         let(:params) do
           {
             manage_package: false,
@@ -107,7 +120,7 @@ describe('icingaweb2', type: :class) do
         }
       end
 
-      context 'with additional resources, user and group backend' do
+      context '#{os} with additional resources, user and group backend' do
         let(:params) do
           {
             db_type: 'mysql',
@@ -130,22 +143,46 @@ describe('icingaweb2', type: :class) do
         it { is_expected.to contain_icingaweb2__config__groupbackend('bar').with('resource' => 'foo') }
       end
 
-      context "with db_type 'mysql', import_schema 'true'" do
+      context "#{os} with db_type 'mysql', import_schema 'true'" do
         let(:params) { { import_schema: true, db_type: 'mysql' } }
 
-        it { is_expected.to contain_icingaweb2__resource__database('mysql-icingaweb2') }
+        it { is_expected.to contain_icingaweb2__resource__database('icingaweb2') }
         it { is_expected.to contain_icingaweb2__config__authmethod('mysql-auth') }
         it { is_expected.to contain_icingaweb2__config__role('default admin user') }
         it { is_expected.to contain_exec('import schema') }
         it { is_expected.to contain_exec('create default admin user') }
       end
 
-      context "with db_type 'pgsql', import_schema 'true'" do
-        let(:params) { { import_schema: true, db_type: 'pgsql' } }
+      context "#{os} with db_type 'pgsql', db_resource_name 'foobar', import_schema 'true'" do
+        let(:params) { {  db_type: 'pgsql', import_schema: true, db_resource_name: 'foobar' } }
 
-        it { is_expected.to contain_icingaweb2__resource__database('pgsql-icingaweb2') }
-        it { is_expected.to contain_icingaweb2__config__authmethod('pgsql-auth') }
+        it {
+          is_expected.to contain_icingaweb2__inisection('config-global')
+            .with_section_name('global')
+            .with_target('/etc/icingaweb2/config.ini')
+            .with_settings(
+              {
+                'show_stacktraces' => false,
+                 'module_path' => '/usr/share/icingaweb2/modules',
+                 'config_resource' => 'foobar',
+              },
+            )
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__config__authmethod('pgsql-auth')
+            .with_backend('db')
+            .with_resource('foobar')
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__config__groupbackend('pgsql-group')
+            .with_backend('db')
+            .with_resource('foobar')
+        }
+
         it { is_expected.to contain_icingaweb2__config__role('default admin user') }
+        it { is_expected.to contain_icingaweb2__resource__database('foobar') }
         it { is_expected.to contain_exec('import schema') }
         it { is_expected.to contain_exec('create default admin user') }
       end

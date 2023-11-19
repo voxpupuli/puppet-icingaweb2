@@ -24,7 +24,7 @@ describe('icingaweb2::module::vspheredb', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-vspheredb')
+          is_expected.to contain_icingaweb2__resource__database('vspheredb')
             .with_type('mysql')
             .with_host('localhost')
             .with_database('vspheredb')
@@ -44,7 +44,7 @@ describe('icingaweb2::module::vspheredb', type: :class) do
           is_expected.to contain_icingaweb2__inisection('icingaweb2-module-vspheredb')
             .with_section_name('db')
             .with_target('/etc/icingaweb2/modules/vspheredb/config.ini')
-            .with_settings({ 'resource' => 'icingaweb2-module-vspheredb' })
+            .with_settings({ 'resource' => 'vspheredb' })
         }
 
         it {
@@ -75,12 +75,13 @@ describe('icingaweb2::module::vspheredb', type: :class) do
         it { is_expected.not_to contain_exec('import icingaweb2::module::vspheredb schema') }
       end
 
-      context "#{os} with db_type 'mysql', db_port '4711', install_method 'package', manage_service 'false', import_schema 'true'" do
+      context "#{os} with db_type 'mysql', db_resource_name 'foobaz', db_port '4711', install_method 'package', manage_service 'false', import_schema 'true'" do
         let(:params) do
           {
             install_method: 'package',
             manage_service: false,
             db_type: 'mysql',
+            db_resource_name: 'foobaz',
             db_port: 4711,
             import_schema: true,
           }
@@ -92,7 +93,14 @@ describe('icingaweb2::module::vspheredb', type: :class) do
         }
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-vspheredb')
+          is_expected.to contain_icingaweb2__inisection('icingaweb2-module-vspheredb')
+            .with_section_name('db')
+            .with_target('/etc/icingaweb2/modules/vspheredb/config.ini')
+            .with_settings({ 'resource' => 'foobaz' })
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__resource__database('foobaz')
             .with_type('mysql')
             .with_host('localhost')
             .with_port(4711)
@@ -139,7 +147,7 @@ describe('icingaweb2::module::vspheredb', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-vspheredb').with(
+          is_expected.to contain_icingaweb2__resource__database('vspheredb').with(
             {
               'type' => 'mysql',
               'host' => 'localhost',
@@ -172,7 +180,7 @@ describe('icingaweb2::module::vspheredb', type: :class) do
         end
 
         it {
-          is_expected.to contain_icingaweb2__resource__database('icingaweb2-module-vspheredb').with(
+          is_expected.to contain_icingaweb2__resource__database('vspheredb').with(
             {
               'type' => 'mysql',
               'host' => 'localhost',

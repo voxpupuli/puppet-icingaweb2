@@ -10,6 +10,7 @@ class icingaweb2::module::director::config {
   $icingacli_bin  = $icingaweb2::globals::icingacli_bin
   $install_method = $icingaweb2::module::director::install_method
   $db             = $icingaweb2::module::director::db
+  $db_resource    = $icingaweb2::module::director::db_resource_name
   $import_schema  = $icingaweb2::module::director::import_schema
   $kickstart      = $icingaweb2::module::director::kickstart
   $use_tls        = $icingaweb2::module::director::use_tls
@@ -28,7 +29,7 @@ class icingaweb2::module::director::config {
     provider => 'shell',
   }
 
-  icingaweb2::resource::database { 'icingaweb2-module-director':
+  icingaweb2::resource::database { $db_resource:
     type         => $db['type'],
     host         => $db['host'],
     port         => $db['port'],

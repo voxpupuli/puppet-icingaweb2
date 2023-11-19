@@ -11,6 +11,7 @@ icingaweb2::theme_disabled: false
 icingaweb2::manage_repos: false
 icingaweb2::manage_package: true
 icingaweb2::import_schema: false
+icingaweb2::db_resource_name: icingaweb2
 icingaweb2::db_host: localhost
 icingaweb2::db_name: icingaweb2
 icingaweb2::db_username: icingaweb2
@@ -28,6 +29,7 @@ icingaweb2::module::monitoring::protected_customvars:
   - '*pass*'
   - 'community'
 icingaweb2::module::monitoring::ido_host: localhost
+icingaweb2::module::monitoring::ido_resource_name: icinga2
 icingaweb2::module::monitoring::ido_db_name: icinga2
 icingaweb2::module::monitoring::ido_db_username: icinga2
 icingaweb2::module::monitoring::commandtransports: {}
@@ -35,6 +37,7 @@ icingaweb2::module::monitoring::commandtransports: {}
 icingaweb2::module::icingadb::ensure: present
 icingaweb2::module::icingadb::commandtransports: {}
 icingaweb2::module::icingadb::redis_host: localhost
+icingaweb2::module::icingadb::db_resource_name: icingadb
 icingaweb2::module::icingadb::db_host: localhost
 icingaweb2::module::icingadb::db_name: icingadb
 icingaweb2::module::icingadb::db_username: icingadb
@@ -50,6 +53,7 @@ icingaweb2::module::director::manage_service: true
 icingaweb2::module::director::service_ensure: running
 icingaweb2::module::director::service_enable: true
 icingaweb2::module::director::service_user: icingadirector
+icingaweb2::module::director::db_resource_name: director
 icingaweb2::module::director::db_host: localhost
 icingaweb2::module::director::db_name: director
 icingaweb2::module::director::db_username: director
@@ -64,6 +68,7 @@ icingaweb2::module::reporting::service_ensure: running
 icingaweb2::module::reporting::service_enable: true
 icingaweb2::module::reporting::service_user: icingareporting
 icingaweb2::module::reporting::import_schema: false
+icingaweb2::module::reporting::db_resource_name: reporting
 icingaweb2::module::reporting::db_host: localhost
 icingaweb2::module::reporting::db_name: reporting
 icingaweb2::module::reporting::db_username: reporting
@@ -88,6 +93,7 @@ icingaweb2::module::x509::service_ensure: running
 icingaweb2::module::x509::service_enable: true
 icingaweb2::module::x509::service_user: icingax509
 icingaweb2::module::x509::import_schema: false
+icingaweb2::module::x509::db_resource_name: x509
 icingaweb2::module::x509::db_host: localhost
 icingaweb2::module::x509::db_name: x509
 icingaweb2::module::x509::db_username: x509
@@ -102,6 +108,7 @@ icingaweb2::module::vspheredb::service_ensure: running
 icingaweb2::module::vspheredb::service_enable: true
 icingaweb2::module::vspheredb::service_user: icingavspheredb
 icingaweb2::module::vspheredb::import_schema: false
+icingaweb2::module::vspheredb::db_resource_name: vspheredb
 icingaweb2::module::vspheredb::db_host: localhost
 icingaweb2::module::vspheredb::db_name: vspheredb
 icingaweb2::module::vspheredb::db_username: vspheredb

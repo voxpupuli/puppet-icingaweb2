@@ -9,6 +9,7 @@ class icingaweb2::module::x509::config {
   $icingacli_bin  = $icingaweb2::globals::icingacli_bin
   $install_method = $icingaweb2::module::x509::install_method
   $db             = $icingaweb2::module::x509::db
+  $db_resource    = $icingaweb2::module::x509::db_resource_name
   $import_schema  = $icingaweb2::module::x509::import_schema
   $use_tls        = $icingaweb2::module::x509::use_tls
   $tls            = $icingaweb2::module::x509::tls + {
@@ -45,7 +46,7 @@ class icingaweb2::module::x509::config {
     }
   }
 
-  icingaweb2::resource::database { 'x509':
+  icingaweb2::resource::database { $db_resource:
     type         => $db['type'],
     host         => $db['host'],
     port         => $db['port'],
