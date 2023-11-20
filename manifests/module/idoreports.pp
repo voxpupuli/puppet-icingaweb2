@@ -36,8 +36,8 @@ class icingaweb2::module::idoreports (
   Enum['git', 'none', 'package']             $install_method,
   Stdlib::HTTPUrl                            $git_repository,
   String                                     $package_name,
-  Variant[Boolean, Enum['mariadb', 'mysql']] $import_schema,
   Stdlib::Absolutepath                       $module_dir    = "${icingaweb2::globals::default_module_path}/idoreports",
+  Optional[Icingaweb2::ImportSchema]         $import_schema = undef,
   Optional[String]                           $git_revision  = undef,
 ) {
   unless defined(Class['icingaweb2::module::monitoring']) {
