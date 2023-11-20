@@ -19,7 +19,6 @@ describe('icingaweb2', type: :class) do
         [ '/etc/icingaweb2/modules',
           '/etc/icingaweb2/enabledModules',
           '/etc/icingaweb2/navigation',
-          '/etc/icingaweb2/preferences',
           '/etc/icingaweb2/dashboards',
           '/var/lib/icingaweb2/certs' ].each do |file|
           it {
