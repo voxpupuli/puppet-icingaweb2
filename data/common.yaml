@@ -10,7 +10,6 @@ icingaweb2::theme: Icinga
 icingaweb2::theme_disabled: false
 icingaweb2::manage_repos: false
 icingaweb2::manage_package: true
-icingaweb2::import_schema: false
 icingaweb2::db_resource_name: icingaweb2
 icingaweb2::db_host: localhost
 icingaweb2::db_name: icingaweb2
@@ -48,7 +47,6 @@ icingaweb2::module::director::install_method: git
 icingaweb2::module::director::git_repository: https://github.com/Icinga/icingaweb2-module-director.git
 icingaweb2::module::director::api_host: localhost
 icingaweb2::module::director::api_port: 5665
-icingaweb2::module::director::import_schema: false
 icingaweb2::module::director::kickstart: false
 icingaweb2::module::director::manage_service: true
 icingaweb2::module::director::service_ensure: running
@@ -68,7 +66,6 @@ icingaweb2::module::reporting::manage_service: true
 icingaweb2::module::reporting::service_ensure: running
 icingaweb2::module::reporting::service_enable: true
 icingaweb2::module::reporting::service_user: icingareporting
-icingaweb2::module::reporting::import_schema: false
 icingaweb2::module::reporting::db_resource_name: reporting
 icingaweb2::module::reporting::db_host: localhost
 icingaweb2::module::reporting::db_name: reporting
@@ -81,7 +78,6 @@ icingaweb2::globals::pgsql_idoreports_sla_percent: /schema/postgresql/get_sla_ok
 icingaweb2::module::idoreports::ensure: present
 icingaweb2::module::idoreports::install_method: git
 icingaweb2::module::idoreports::git_repository: https://github.com/Icinga/icingaweb2-module-idoreports.git
-icingaweb2::module::idoreports::import_schema: false
 
 icingaweb2::globals::mysql_x509_schema: /schema/mysql.schema.sql
 icingaweb2::globals::pgsql_x509_schema: /schema/pgsql.schema.sql
@@ -93,7 +89,6 @@ icingaweb2::module::x509::manage_service: true
 icingaweb2::module::x509::service_ensure: running
 icingaweb2::module::x509::service_enable: true
 icingaweb2::module::x509::service_user: icingax509
-icingaweb2::module::x509::import_schema: false
 icingaweb2::module::x509::db_resource_name: x509
 icingaweb2::module::x509::db_host: localhost
 icingaweb2::module::x509::db_name: x509
@@ -108,7 +103,6 @@ icingaweb2::module::vspheredb::manage_service: true
 icingaweb2::module::vspheredb::service_ensure: running
 icingaweb2::module::vspheredb::service_enable: true
 icingaweb2::module::vspheredb::service_user: icingavspheredb
-icingaweb2::module::vspheredb::import_schema: false
 icingaweb2::module::vspheredb::db_resource_name: vspheredb
 icingaweb2::module::vspheredb::db_host: localhost
 icingaweb2::module::vspheredb::db_name: vspheredb

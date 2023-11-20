@@ -90,6 +90,7 @@ with or without TLS information.
 ### Data types
 
 * [`Icingaweb2::AdminRole`](#Icingaweb2--AdminRole): A strict type for the default admin role
+* [`Icingaweb2::ImportSchema`](#Icingaweb2--ImportSchema): A type for setting import database schemata
 * [`Icingaweb2::Secret`](#Icingaweb2--Secret): A strict type for the secrets like passwords or keys
 
 ## Classes
@@ -316,11 +317,13 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--import_schema"></a>`import_schema`
 
-Data type: `Variant[Boolean, Enum['mariadb', 'mysql']]`
+Data type: `Optional[Icingaweb2::ImportSchema]`
 
 Whether to import the MySQL schema or not. New options `mariadb` and `mysql`,
 both means true. With mariadb its cli options are used for the import,
 whereas with mysql its different options.
+
+Default value: `undef`
 
 ##### <a name="-icingaweb2--db_type"></a>`db_type`
 
@@ -1185,9 +1188,11 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--director--import_schema"></a>`import_schema`
 
-Data type: `Boolean`
+Data type: `Optional[Boolean]`
 
 Import database schema.
+
+Default value: `undef`
 
 ##### <a name="-icingaweb2--module--director--kickstart"></a>`kickstart`
 
@@ -2103,11 +2108,13 @@ Package name of the module. This setting is only valid in combination with the i
 
 ##### <a name="-icingaweb2--module--idoreports--import_schema"></a>`import_schema`
 
-Data type: `Variant[Boolean, Enum['mariadb', 'mysql']]`
+Data type: `Optional[Icingaweb2::ImportSchema]`
 
 The IDO database needs some extensions for reorting. Whether to import the database extensions or not.
 Options `mariadb` and `mysql`, both means true. With mariadb its cli options are used for the import,
 whereas with mysql its different options.
+
+Default value: `undef`
 
 ### <a name="icingaweb2--module--monitoring"></a>`icingaweb2::module::monitoring`
 
@@ -2770,11 +2777,13 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--reporting--import_schema"></a>`import_schema`
 
-Data type: `Variant[Boolean, Enum['mariadb', 'mysql']]`
+Data type: `Optional[Icingaweb2::ImportSchema]`
 
 Whether to import the database schema or not. Options `mariadb` and `mysql`,
 both means true. With mariadb its cli options are used for the import,
 whereas with mysql its different options.
+
+Default value: `undef`
 
 ##### <a name="-icingaweb2--module--reporting--mail"></a>`mail`
 
@@ -3055,11 +3064,13 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--vspheredb--import_schema"></a>`import_schema`
 
-Data type: `Variant[Boolean, Enum['mariadb', 'mysql']]`
+Data type: `Optional[Icingaweb2::ImportSchema]`
 
 Whether to import the database schema or not. New options `mariadb` and `mysql`,
 both means true. With mariadb its cli options are used for the import,
 whereas with mysql its different options.
+
+Default value: `undef`
 
 ##### <a name="-icingaweb2--module--vspheredb--manage_service"></a>`manage_service`
 
@@ -3316,11 +3327,13 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--x509--import_schema"></a>`import_schema`
 
-Data type: `Variant[Boolean, Enum['mariadb', 'mysql']]`
+Data type: `Optional[Icingaweb2::ImportSchema]`
 
 Whether to import the database schema or not. Options `mariadb` and `mysql`,
 both means true. With mariadb its cli options are used for the import,
 whereas with mysql its different options.
+
+Default value: `undef`
 
 ##### <a name="-icingaweb2--module--x509--manage_service"></a>`manage_service`
 
@@ -4582,6 +4595,12 @@ Struct[{
     groups => Optional[Array[String]],
 }]
 ```
+
+### <a name="Icingaweb2--ImportSchema"></a>`Icingaweb2::ImportSchema`
+
+A type for setting import database schemata
+
+Alias of `Variant[Boolean, Enum['mariadb', 'mysql']]`
 
 ### <a name="Icingaweb2--Secret"></a>`Icingaweb2::Secret`
 
