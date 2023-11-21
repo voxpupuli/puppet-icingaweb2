@@ -204,7 +204,7 @@ class icingaweb2::module::monitoring (
       'section_name' => 'settings',
       'target'       => "${module_conf_dir}/config.ini",
       'settings'     => delete_undef_values($settings),
-    }
+    },
   }
 
   create_resources('icingaweb2::module::monitoring::commandtransport', $commandtransports)

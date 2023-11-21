@@ -112,6 +112,10 @@
 # @param redis_tls_cacert_file
 #   Location of the CA certificate. Only valid if redis_use_tls is enabled.
 #
+# @param settings
+#   General configuration of module icingadb.
+#   See official Icinga [documentation](https://icinga.com/docs/icinga-web/latest/modules/monitoring/doc/03-Configuration)
+#
 # @param commandtransports
 #   A hash of command transports.
 #
@@ -151,6 +155,7 @@ class icingaweb2::module::icingadb (
   Optional[Stdlib::Absolutepath]  $redis_tls_cert_file      = undef,
   Optional[Stdlib::Absolutepath]  $redis_tls_key_file       = undef,
   Optional[Stdlib::Absolutepath]  $redis_tls_cacert_file    = undef,
+  Hash[String, Any]               $settings                 = {},
   Hash[String, Hash]              $commandtransports        = {},
 ) {
   icingaweb2::assert_module()
@@ -182,7 +187,7 @@ class icingaweb2::module::icingadb (
     $redis_settings = {}
   }
 
-  $settings = {
+  $_settings = {
     'icingaweb2-module-icingadb-config' => {
       'section_name' => 'icingadb',
       'target'       => "${module_conf_dir}/config.ini",
@@ -212,6 +217,11 @@ class icingaweb2::module::icingadb (
           port     => $redis_secondary_port,
           password => $redis_secondary_password,
       }),
+    },
+    'icingaweb2-module-icingadb-settings' => {
+      'section_name' => 'settings',
+      'target'       => "${module_conf_dir}/config.ini",
+      'settings'     => delete_undef_values($settings),
     },
   }
 
@@ -257,6 +267,6 @@ class icingaweb2::module::icingadb (
     ensure         => $ensure,
     install_method => 'package',
     package_name   => $package_name,
-    settings       => $settings,
+    settings       => $_settings,
   }
 }

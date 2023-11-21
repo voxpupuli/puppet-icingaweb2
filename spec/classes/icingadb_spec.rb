@@ -13,9 +13,12 @@ describe('icingaweb2::module::icingadb', type: :class) do
         facts
       end
 
-      context "#{os} with local MySQL and Redis" do
+      context "#{os} with some settings, local MySQL and Redis" do
         let(:params) do
           {
+            settings: {
+              'foo' => 'bar',
+            },
             db_password: 'foobar',
           }
         end
@@ -49,6 +52,11 @@ describe('icingaweb2::module::icingadb', type: :class) do
                   'section_name' => 'redis2',
                   'target'       => '/etc/icingaweb2/modules/icingadb/redis.ini',
                   'settings'     => {},
+                },
+                'icingaweb2-module-icingadb-settings' => {
+                  'section_name' => 'settings',
+                  'target'       => '/etc/icingaweb2/modules/icingadb/config.ini',
+                  'settings'     => { 'foo' => 'bar' },
                 },
               },
             },
@@ -107,6 +115,11 @@ describe('icingaweb2::module::icingadb', type: :class) do
                 'icingaweb2-module-icingadb-redis2' => {
                   'section_name' => 'redis2',
                   'target'       => '/etc/icingaweb2/modules/icingadb/redis.ini',
+                  'settings'     => {},
+                },
+                'icingaweb2-module-icingadb-settings' => {
+                  'section_name' => 'settings',
+                  'target'       => '/etc/icingaweb2/modules/icingadb/config.ini',
                   'settings'     => {},
                 },
               },
