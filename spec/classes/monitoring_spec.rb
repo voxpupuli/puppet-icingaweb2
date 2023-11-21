@@ -56,6 +56,11 @@ describe('icingaweb2::module::monitoring', type: :class) do
                              'settings' => {
                                'protected_customvars' => '*pw*,*pass*,community',
                              },
+                           },
+                           'module-monitoring-general' => {
+                             'section_name' => 'settings',
+                             'target' => '/etc/icingaweb2/modules/monitoring/config.ini',
+                             'settings' => {},
                            })
         }
 
@@ -110,6 +115,11 @@ describe('icingaweb2::module::monitoring', type: :class) do
                              'settings' => {
                                'protected_customvars' => '*pw*,*pass*,community',
                              },
+                           },
+                           'module-monitoring-general' => {
+                             'section_name' => 'settings',
+                             'target' => '/etc/icingaweb2/modules/monitoring/config.ini',
+                             'settings' => {},
                            })
         end
 
@@ -156,13 +166,16 @@ describe('icingaweb2::module::monitoring', type: :class) do
         it { is_expected.to raise_error(Puppet::Error, %r{expects a match for Enum\['mysql', 'pgsql'\]}) }
       end
 
-      context "#{os} with array protected_customvars" do
+      context "#{os} with array protected_customvars and some general settings" do
         let(:params) do
           { ido_type: 'mysql',
             ido_host: 'localhost',
             ido_db_name: 'icinga2',
             ido_db_username: 'icinga2',
             ido_db_password: 'icinga2',
+            settings: {
+              'foo' => 'bar',
+            },
             commandtransports: {
               'foo' => {
                 'transport' => 'local',
@@ -186,6 +199,13 @@ describe('icingaweb2::module::monitoring', type: :class) do
                              'target' => '/etc/icingaweb2/modules/monitoring/config.ini',
                              'settings' => {
                                'protected_customvars' => 'foo,bar,*baz*',
+                             },
+                           },
+                           'module-monitoring-general' => {
+                             'section_name' => 'settings',
+                             'target' => '/etc/icingaweb2/modules/monitoring/config.ini',
+                             'settings' => {
+                               'foo' => 'bar',
                              },
                            })
         }

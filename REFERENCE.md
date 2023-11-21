@@ -2517,6 +2517,7 @@ The following parameters are available in the `icingaweb2::module::monitoring` c
 * [`tls_capath`](#-icingaweb2--module--monitoring--tls_capath)
 * [`tls_noverify`](#-icingaweb2--module--monitoring--tls_noverify)
 * [`tls_cipher`](#-icingaweb2--module--monitoring--tls_cipher)
+* [`settings`](#-icingaweb2--module--monitoring--settings)
 * [`commandtransports`](#-icingaweb2--module--monitoring--commandtransports)
 
 ##### <a name="-icingaweb2--module--monitoring--ensure"></a>`ensure`
@@ -2683,6 +2684,15 @@ Data type: `Optional[String]`
 Cipher to use for the encrypted database connection.
 
 Default value: `undef`
+
+##### <a name="-icingaweb2--module--monitoring--settings"></a>`settings`
+
+Data type: `Hash[String, Any]`
+
+General configuration of module monitoring.
+See official Icinga [documentation](https://icinga.com/docs/icinga-web/latest/modules/monitoring/doc/03-Configuration)
+
+Default value: `{}`
 
 ##### <a name="-icingaweb2--module--monitoring--commandtransports"></a>`commandtransports`
 
