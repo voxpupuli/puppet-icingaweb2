@@ -7,7 +7,7 @@ describe('icingaweb2::module::icingadb', type: :class) do
         facts
       end
 
-      context "#{os} with local MySQL and Redis" do
+      context "#{os} with some settings, local MySQL and Redis" do
         let(:pre_condition) do
           [
             "class { 'icingaweb2': db_type => 'mysql' }",
@@ -16,6 +16,9 @@ describe('icingaweb2::module::icingadb', type: :class) do
 
         let(:params) do
           {
+            settings: {
+              'foo' => 'bar',
+            },
             db_type: 'mysql',
             db_password: 'secret',
           }
@@ -54,6 +57,13 @@ describe('icingaweb2::module::icingadb', type: :class) do
             .with_section_name('redis2')
             .with_target('/etc/icingaweb2/modules/icingadb/redis.ini')
             .with_settings({})
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('icingaweb2-module-icingadb-settings')
+            .with_section_name('settings')
+            .with_target('/etc/icingaweb2/modules/icingadb/config.ini')
+            .with_settings({ 'foo' => 'bar' })
         }
 
         it {
@@ -118,6 +128,13 @@ describe('icingaweb2::module::icingadb', type: :class) do
             .with_section_name('redis2')
             .with_target('/etc/icingaweb2/modules/icingadb/redis.ini')
             .with_settings({ 'host' => 'redis2.icinga.com', 'port' => 4712, 'password' => 'secret2' })
+        }
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('icingaweb2-module-icingadb-settings')
+            .with_section_name('settings')
+            .with_target('/etc/icingaweb2/modules/icingadb/config.ini')
+            .with_settings({})
         }
 
         it {

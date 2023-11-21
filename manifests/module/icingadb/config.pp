@@ -23,7 +23,7 @@ class icingaweb2::module::icingadb::config {
     noverify    => icingaweb2::pick($icingaweb2::module::icingadb::db_tls_noverify, $icingaweb2::config::tls['noverify']),
     cipher      => icingaweb2::pick($icingaweb2::module::icingadb::db_tls_cipher, $icingaweb2::config::tls['cipher']),
   }
-  $settings          = $icingaweb2::module::icingadb::settings
+  $settings          = $icingaweb2::module::icingadb::_settings
   $commandtransports = $icingaweb2::module::icingadb::commandtransports
 
   icingaweb2::resource::database { $db_resource:
