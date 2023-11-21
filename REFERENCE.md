@@ -1889,6 +1889,7 @@ The following parameters are available in the `icingaweb2::module::icingadb` cla
 * [`redis_tls_cert_file`](#-icingaweb2--module--icingadb--redis_tls_cert_file)
 * [`redis_tls_key_file`](#-icingaweb2--module--icingadb--redis_tls_key_file)
 * [`redis_tls_cacert_file`](#-icingaweb2--module--icingadb--redis_tls_cacert_file)
+* [`settings`](#-icingaweb2--module--icingadb--settings)
 * [`commandtransports`](#-icingaweb2--module--icingadb--commandtransports)
 
 ##### <a name="-icingaweb2--module--icingadb--ensure"></a>`ensure`
@@ -2170,6 +2171,15 @@ Data type: `Optional[Stdlib::Absolutepath]`
 Location of the CA certificate. Only valid if redis_use_tls is enabled.
 
 Default value: `undef`
+
+##### <a name="-icingaweb2--module--icingadb--settings"></a>`settings`
+
+Data type: `Hash[String, Any]`
+
+General configuration of module icingadb.
+See official Icinga [documentation](https://icinga.com/docs/icinga-web/latest/modules/monitoring/doc/03-Configuration)
+
+Default value: `{}`
 
 ##### <a name="-icingaweb2--module--icingadb--commandtransports"></a>`commandtransports`
 
