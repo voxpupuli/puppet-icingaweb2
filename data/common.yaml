@@ -35,6 +35,7 @@ icingaweb2::module::monitoring::ido_db_username: icinga2
 icingaweb2::module::monitoring::commandtransports: {}
 
 icingaweb2::module::icingadb::ensure: present
+icingaweb2::module::icingadb::settings: {}
 icingaweb2::module::icingadb::commandtransports: {}
 icingaweb2::module::icingadb::redis_host: localhost
 icingaweb2::module::icingadb::db_resource_name: icingadb
