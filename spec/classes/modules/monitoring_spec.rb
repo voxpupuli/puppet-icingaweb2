@@ -49,6 +49,13 @@ describe('icingaweb2::module::monitoring', type: :class) do
         }
 
         it {
+          is_expected.to contain_icingaweb2__inisection('module-monitoring-general')
+            .with_section_name('settings')
+            .with_target('/etc/icingaweb2/modules/monitoring/config.ini')
+            .with_settings({})
+        }
+
+        it {
           is_expected.to contain_icingaweb2__resource__database('icinga2')
             .with_type('mysql')
             .with_host('localhost')
@@ -167,7 +174,7 @@ describe('icingaweb2::module::monitoring', type: :class) do
         }
       end
 
-      context "#{os} with use_tls 'true'" do
+      context "#{os} with use_tls 'true' and some settings" do
         let(:pre_condition) do
           [
             "class { 'icingaweb2': db_type => 'mysql', tls_cacert_file => '/foo/bar', tls_capath => '/foo/bar', tls_noverify => true, tls_cipher => 'cipher' }",
@@ -177,9 +184,19 @@ describe('icingaweb2::module::monitoring', type: :class) do
         let(:params) do
           {
             ido_type: 'mysql',
+            settings: {
+              'foo' => 'bar',
+            },
             use_tls: true,
           }
         end
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('module-monitoring-general')
+            .with_section_name('settings')
+            .with_target('/etc/icingaweb2/modules/monitoring/config.ini')
+            .with_settings({ 'foo' => 'bar' })
+        }
 
         it {
           is_expected.to contain_icingaweb2__resource__database('icinga2').with(
