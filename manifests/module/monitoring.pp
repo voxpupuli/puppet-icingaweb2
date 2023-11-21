@@ -68,6 +68,10 @@
 # @param tls_cipher
 #   Cipher to use for the encrypted database connection.
 #
+# @param settings
+#   General configuration of module monitoring.
+#   See official Icinga [documentation](https://icinga.com/docs/icinga-web/latest/modules/monitoring/doc/03-Configuration)
+#
 # @param commandtransports
 #   A hash of command transports.
 #
@@ -113,6 +117,7 @@ class icingaweb2::module::monitoring (
   Optional[String]               $tls_cacert           = undef,
   Optional[Boolean]              $tls_noverify         = undef,
   Optional[String]               $tls_cipher           = undef,
+  Hash[String, Any]              $settings             = {},
   Hash                           $commandtransports    = {},
 ) {
   icingaweb2::assert_module()
@@ -184,7 +189,7 @@ class icingaweb2::module::monitoring (
     },
   }
 
-  $settings = {
+  $_settings = {
     'module-monitoring-backends' => {
       'section_name' => 'backends',
       'target'       => "${module_conf_dir}/backends.ini",
@@ -195,6 +200,11 @@ class icingaweb2::module::monitoring (
       'target'       => "${module_conf_dir}/config.ini",
       'settings'     => delete_undef_values($security_settings),
     },
+    'module-monitoring-general' => {
+      'section_name' => 'settings',
+      'target'       => "${module_conf_dir}/config.ini",
+      'settings'     => delete_undef_values($settings),
+    }
   }
 
   create_resources('icingaweb2::module::monitoring::commandtransport', $commandtransports)
@@ -203,6 +213,6 @@ class icingaweb2::module::monitoring (
     ensure         => $ensure,
     install_method => $install_method,
     package_name   => $package_name,
-    settings       => $settings,
+    settings       => $_settings,
   }
 }
