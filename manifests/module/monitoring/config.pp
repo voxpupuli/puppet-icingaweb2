@@ -6,7 +6,7 @@
 class icingaweb2::module::monitoring::config {
   assert_private()
 
-  $settings          = $icingaweb2::module::monitoring::settings
+  $settings          = $icingaweb2::module::monitoring::_settings
   $db                = $icingaweb2::module::monitoring::db
   $db_charset        = $icingaweb2::module::monitoring::ido_db_charset
   $db_resource       = $icingaweb2::module::monitoring::ido_resource_name

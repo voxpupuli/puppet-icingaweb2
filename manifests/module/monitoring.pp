@@ -66,6 +66,10 @@
 # @param tls_cipher
 #   Cipher to use for the encrypted database connection.
 #
+# @param settings
+#   General configuration of module monitoring.
+#   See official Icinga [documentation](https://icinga.com/docs/icinga-web/latest/modules/monitoring/doc/03-Configuration)
+#
 # @param commandtransports
 #   A hash of command transports.
 #
@@ -94,6 +98,7 @@ class icingaweb2::module::monitoring (
   Enum['absent', 'present']      $ensure,
   Variant[String, Array[String]] $protected_customvars,
   Hash                           $commandtransports,
+  Hash[String,Any]               $settings,
   Enum['mysql', 'pgsql']         $ido_type,
   Stdlib::Host                   $ido_host,
   String                         $ido_resource_name,
@@ -150,7 +155,7 @@ class icingaweb2::module::monitoring (
     },
   }
 
-  $settings = {
+  $_settings = {
     'module-monitoring-backends' => {
       'section_name' => 'backends',
       'target'       => "${module_conf_dir}/backends.ini",
@@ -160,6 +165,11 @@ class icingaweb2::module::monitoring (
       'section_name' => 'security',
       'target'       => "${module_conf_dir}/config.ini",
       'settings'     => delete_undef_values($security_settings),
+    },
+    'module-monitoring-general' => {
+      'section_name' => 'settings',
+      'target'       => "${module_conf_dir}/config.ini",
+      'settings'     => delete_undef_values($settings),
     },
   }
 
