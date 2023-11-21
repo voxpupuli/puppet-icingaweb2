@@ -220,6 +220,7 @@ The following parameters are available in the `icingaweb2` class:
 * [`default_admin_username`](#-icingaweb2--default_admin_username)
 * [`default_admin_password`](#-icingaweb2--default_admin_password)
 * [`resources`](#-icingaweb2--resources)
+* [`default_auth_backend`](#-icingaweb2--default_auth_backend)
 * [`user_backends`](#-icingaweb2--user_backends)
 * [`group_backends`](#-icingaweb2--group_backends)
 
@@ -538,6 +539,15 @@ Additional resources. Option `type` has to be set as hash key. Type of `ldap`
 declares a define resource of `icingaweb2::resource::ldap`, a type of `mysql`, `pgsql`,
 
 Default value: `{}`
+
+##### <a name="-icingaweb2--default_auth_backend"></a>`default_auth_backend`
+
+Data type: `Variant[String, Boolean[false]]`
+
+Name of the user and group backend authentication of the icingaweb2 resource.
+If set to `false` the default authentication method is deactivated.
+
+Default value: `"${db_type}-auth"`
 
 ##### <a name="-icingaweb2--user_backends"></a>`user_backends`
 
