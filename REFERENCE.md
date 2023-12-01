@@ -36,6 +36,7 @@
 * `icingaweb2::install`: Installs Icinga Web 2 and extra packages.
 * `icingaweb2::module::director::config`: Configure the director module.
 * `icingaweb2::module::director::install`: Install the director module.
+* `icingaweb2::module::director::kickstart`: Import or update the database schema. Also start the initial kickstart run if required.
 * `icingaweb2::module::director::service`: Manage the director service.
 * `icingaweb2::module::icingadb::config`: Configure the icingadb module.
 * `icingaweb2::module::icingadb::install`: Install the icingadb module.

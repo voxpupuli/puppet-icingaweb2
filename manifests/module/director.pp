@@ -219,8 +219,12 @@ class icingaweb2::module::director (
 
   class { 'icingaweb2::module::director::install': }
   -> class { 'icingaweb2::module::director::config': }
-  ~> class { 'icingaweb2::module::director::service': }
+  -> class { 'icingaweb2::module::director::kickstart': }
+  -> class { 'icingaweb2::module::director::service':
+    subscribe => Class['icingaweb2::module::director::config'],
+  }
   contain icingaweb2::module::director::install
   contain icingaweb2::module::director::config
   contain icingaweb2::module::director::service
+  contain icingaweb2::module::director::kickstart
 }
