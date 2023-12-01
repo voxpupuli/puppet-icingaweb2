@@ -11,8 +11,6 @@ class icingaweb2::module::director::config {
   $install_method = $icingaweb2::module::director::install_method
   $db             = $icingaweb2::module::director::db
   $db_resource    = $icingaweb2::module::director::db_resource_name
-  $import_schema  = $icingaweb2::module::director::import_schema
-  $kickstart      = $icingaweb2::module::director::kickstart
   $use_tls        = $icingaweb2::module::director::use_tls
   $tls            = $icingaweb2::module::director::tls + {
     cacert_file => icingaweb2::pick($icingaweb2::module::director::tls['cacert_file'], $icingaweb2::config::tls['cacert_file']),
@@ -61,21 +59,6 @@ class icingaweb2::module::director::config {
     systemd::dropin_file { 'icinga-director.conf':
       unit    => 'icinga-director.service',
       content => "[Service]\nUser=${service_user}",
-    }
-  }
-
-  if $import_schema {
-    exec { 'director-migration':
-      command => "${icingacli_bin} director migration run",
-      onlyif  => "${icingacli_bin} director migration pending",
-    }
-
-    if $kickstart {
-      exec { 'director-kickstart':
-        command => "${icingacli_bin} director kickstart run",
-        onlyif  => "${icingacli_bin} director kickstart required",
-        require => Exec['director-migration'],
-      }
     }
   }
 }
