@@ -34,7 +34,7 @@ class icingaweb2::module::cube (
   Stdlib::Absolutepath           $module_dir   = "${icingaweb2::globals::default_module_path}/cube",
   Optional[String]               $git_revision = undef,
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
   icingaweb2::module { 'cube':
     ensure         => $ensure,

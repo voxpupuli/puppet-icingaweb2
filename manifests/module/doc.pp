@@ -7,7 +7,7 @@
 class icingaweb2::module::doc (
   Enum['absent', 'present']   $ensure,
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
   case $facts['os']['family'] {
     'Debian': {

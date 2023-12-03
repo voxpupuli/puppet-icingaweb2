@@ -36,7 +36,7 @@ class icingaweb2::module::businessprocess (
   Stdlib::Absolutepath           $module_dir   = "${icingaweb2::globals::default_module_path}/businessprocess",
   Optional[String]               $git_revision = undef,
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
   icingaweb2::module { 'businessprocess':
     ensure         => $ensure,

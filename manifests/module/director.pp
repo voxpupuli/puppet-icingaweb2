@@ -164,7 +164,7 @@ class icingaweb2::module::director (
   Optional[String]               $api_username    = undef,
   Optional[Icingaweb2::Secret]   $api_password    = undef,
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
   $module_conf_dir = "${icingaweb2::globals::conf_dir}/modules/director"
   $cert_dir        = "${icingaweb2::globals::state_dir}/director/certs"

@@ -55,7 +55,7 @@ class icingaweb2::module::fileshipper (
   Stdlib::Absolutepath           $module_dir   = "${icingaweb2::globals::default_module_path}/fileshipper",
   Optional[String]               $git_revision = undef,
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
   $module_conf_dir = "${icingaweb2::globals::conf_dir}/modules/fileshipper"
 

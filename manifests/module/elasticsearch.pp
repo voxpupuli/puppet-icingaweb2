@@ -59,7 +59,7 @@ class icingaweb2::module::elasticsearch (
   Optional[Hash]                 $instances    = undef,
   Optional[Hash]                 $eventtypes   = undef,
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
   if $instances {
     $instances.each |$name, $setting| {

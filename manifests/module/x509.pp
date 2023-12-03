@@ -132,7 +132,7 @@ class icingaweb2::module::x509 (
   Optional[Boolean]                          $tls_noverify    = undef,
   Optional[String]                           $tls_cipher      = undef,
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
   $module_conf_dir = "${icingaweb2::globals::conf_dir}/modules/x509"
   $cert_dir        = "${icingaweb2::globals::state_dir}/x509/certs"

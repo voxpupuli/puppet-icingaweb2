@@ -44,6 +44,8 @@ class icingaweb2::module::idoreports (
     fail('You must declare the icingaweb2::module::monitoring class before using icingaweb2::module::idoreports!')
   }
 
+  require icingaweb2
+
   $conf_dir          = $icingaweb2::globals::conf_dir
   $module_conf_dir   = "${conf_dir}/modules/idoreports"
   $mysql_slaperiods  = "${icingaweb2::module::idoreports::module_dir}${icingaweb2::globals::mysql_idoreports_slaperiods}"

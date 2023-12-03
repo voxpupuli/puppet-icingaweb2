@@ -80,7 +80,7 @@ class icingaweb2::module::graphite (
   Optional[Integer[1]]           $default_time_range                    = undef,
   Optional[Boolean]              $disable_no_graphs                     = undef,
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
   $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/graphite"

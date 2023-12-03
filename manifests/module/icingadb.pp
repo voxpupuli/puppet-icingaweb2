@@ -162,7 +162,7 @@ class icingaweb2::module::icingadb (
   Optional[Stdlib::Absolutepath]  $redis_tls_key_file       = undef,
   Optional[Stdlib::Absolutepath]  $redis_tls_cacert_file    = undef,
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
   $module_conf_dir = "${icingaweb2::globals::conf_dir}/modules/icingadb"
   $cert_dir        = "${icingaweb2::globals::state_dir}/icingadb/certs"

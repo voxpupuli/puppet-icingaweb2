@@ -63,7 +63,7 @@ class icingaweb2::module::audit (
   Stdlib::Absolutepath           $module_dir   = "${icingaweb2::globals::default_module_path}/audit",
   Optional[String]               $git_revision = undef,
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
   $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/audit"

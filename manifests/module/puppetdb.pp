@@ -68,7 +68,7 @@ class icingaweb2::module::puppetdb (
   Optional[Stdlib::Host]         $host           = undef,
   Optional[String]               $git_revision   = undef,
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
   $conf_dir   = "${icingaweb2::globals::conf_dir}/modules/puppetdb"
   $ssl_dir    = "${conf_dir}/ssl"

@@ -136,7 +136,7 @@ class icingaweb2::module::reporting (
   Optional[String]                           $tls_cipher      = undef,
   Optional[String]                           $mail            = undef,
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
   $module_conf_dir = "${icingaweb2::globals::conf_dir}/modules/reporting"
   $cert_dir        = "${icingaweb2::globals::state_dir}/reporting/certs"

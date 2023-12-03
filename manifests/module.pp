@@ -59,7 +59,7 @@ define icingaweb2::module (
   Optional[String]                  $package_name   = undef,
   Hash                              $settings       = {},
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
   $conf_dir   = $icingaweb2::globals::conf_dir
   $state_dir  = $icingaweb2::globals::state_dir

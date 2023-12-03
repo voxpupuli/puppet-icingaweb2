@@ -51,7 +51,7 @@ class icingaweb2::module::pdfexport (
   Optional[Stdlib::Host]         $remote_host        = undef,
   Optional[Stdlib::Port]         $remote_port        = undef,
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
   $module_conf_dir = "${icingaweb2::globals::conf_dir}/modules/pdfexport"
 
