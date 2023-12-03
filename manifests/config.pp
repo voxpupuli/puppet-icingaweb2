@@ -194,7 +194,8 @@ class icingaweb2::config {
         }
       }
       'pgsql': {
-        $_db_password = icingaweb2::unwrap($db['pass'])
+        $_db_password = icingaweb2::unwrap($db['password'])
+
         exec { 'import schema':
           environment => ["PGPASSWORD=${_db_password}"],
           command     => "psql '${db_cli_options}' -w -f ${pgsql_schema}",
