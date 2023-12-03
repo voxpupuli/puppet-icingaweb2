@@ -81,7 +81,6 @@ that store groups.
 
 ### Functions
 
-* [`icingaweb2::assert_module`](#icingaweb2--assert_module): This function returns a fail if the icingaweb2 class isn't declared.
 * [`icingaweb2::cert::files`](#icingaweb2--cert--files): Choose the path of tls key, cert and ca file.
 * [`icingaweb2::db::connect`](#icingaweb2--db--connect): This function returns a string to connect databases
 with or without TLS information.
@@ -4433,18 +4432,6 @@ Timeout for the ldap connection.
 Default value: `5`
 
 ## Functions
-
-### <a name="icingaweb2--assert_module"></a>`icingaweb2::assert_module`
-
-Type: Puppet Language
-
-This function returns a fail if the icingaweb2 class isn't declared.
-
-#### `icingaweb2::assert_module()`
-
-The icingaweb2::assert_module function.
-
-Returns: `Any` none
 
 ### <a name="icingaweb2--cert--files"></a>`icingaweb2::cert::files`
 
