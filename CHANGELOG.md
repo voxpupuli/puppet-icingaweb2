@@ -1,17 +1,33 @@
 # Changelog
 
+## [v3.10.1](https://github.com/icinga/puppet-icingaweb2/tree/v3.10.1) (2023-12-08)
+
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.10.0...v3.10.1)
+
+**Fixed bugs:**
+
+- Parameters host and port are optional for resource::database [\#397](https://github.com/Icinga/puppet-icingaweb2/pull/397) ([lbetz](https://github.com/lbetz))
+
 ## [v3.10.0](https://github.com/icinga/puppet-icingaweb2/tree/v3.10.0) (2023-11-21)
 
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.9.1...v3.10.0)
 
 **Implemented enhancements:**
 
-- Backport default_auth_backend param to name or disable default authentication [\#395](https://github.com/Icinga/puppet-icingaweb2/pull/395) ([lbetz](https://github.com/lbetz))
+- Drop support of Icinga Web 2 older than v2.9.0 [\#382](https://github.com/Icinga/puppet-icingaweb2/issues/382)
+- Drop Puppet 6 Support [\#365](https://github.com/Icinga/puppet-icingaweb2/issues/365)
+- Move more defaults to data in module [\#301](https://github.com/Icinga/puppet-icingaweb2/issues/301)
+- Background daemons of modules are not optional, so should not be treated like that in Puppet module [\#281](https://github.com/Icinga/puppet-icingaweb2/issues/281)
+-  Backport default\_auth\_backend param to name or disable default authentication  [\#395](https://github.com/Icinga/puppet-icingaweb2/pull/395) ([lbetz](https://github.com/lbetz))
 
 **Fixed bugs:**
 
-- Backport fix missing monitoring module settings [\392](https://github.com/Icinga/puppet-icingaweb2/pull/392) ([lbetz](https://github.com/lbetz))
-- Backport fix missing icingadb module settings [\393](https://github.com/Icinga/puppet-icingaweb2/pull/393) ([lbetz](https://github.com/lbetz))
+- Backport fix missing icingadb settings [\#393](https://github.com/Icinga/puppet-icingaweb2/pull/393) ([lbetz](https://github.com/lbetz))
+- Backport fix missing monitoring module settings [\#392](https://github.com/Icinga/puppet-icingaweb2/pull/392) ([lbetz](https://github.com/lbetz))
+
+**Closed issues:**
+
+- Fix Deprecation-Warning [\#381](https://github.com/Icinga/puppet-icingaweb2/issues/381)
 
 ## [v3.9.1](https://github.com/icinga/puppet-icingaweb2/tree/v3.9.1) (2023-09-28)
 
