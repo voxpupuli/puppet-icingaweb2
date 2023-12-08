@@ -17,9 +17,7 @@ describe('icingaweb2::resource::database', type: :define) do
       context "#{os} with required parameters" do
         let(:params) do
           {
-            type: 'pgsql',
-            host: 'host.icinga.com',
-            port: 5432,
+            type: 'oracle',
             database: 'foo',
           }
         end
@@ -30,9 +28,7 @@ describe('icingaweb2::resource::database', type: :define) do
             .with_target('/etc/icingaweb2/resources.ini')
             .with_settings(
               'type' => 'db',
-              'db' => 'pgsql',
-              'host' => 'host.icinga.com',
-              'port' => 5432,
+              'db' => 'oracle',
               'dbname' => 'foo',
             )
         }

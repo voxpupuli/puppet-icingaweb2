@@ -4233,10 +4233,12 @@ Set database type to connect.
 
 ##### <a name="-icingaweb2--resource--database--host"></a>`host`
 
-Data type: `Stdlib::Host`
+Data type: `Optional[Stdlib::Host]`
 
 Connect to the database on the given host. For using unix domain sockets, specify 'localhost' for
 MySQL and the path to the unix domain socket and the directory for PostgreSQL.
+
+Default value: `undef`
 
 ##### <a name="-icingaweb2--resource--database--port"></a>`port`
 
