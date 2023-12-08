@@ -62,10 +62,10 @@
 define icingaweb2::resource::database (
   Enum['mysql', 'pgsql', 'mssql',
   'oci', 'oracle', 'ibm', 'sqlite']  $type,
-  Stdlib::Host                       $host,
   String                             $database,
-  Stdlib::Port                       $port,
   String                             $resource_name = $title,
+  Optional[Stdlib::Host]             $host          = undef,
+  Optional[Stdlib::Port]             $port          = undef,
   Optional[String]                   $username      = undef,
   Optional[Icingaweb2::Secret]       $password      = undef,
   Optional[String]                   $charset       = undef,
