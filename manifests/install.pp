@@ -45,7 +45,7 @@ class icingaweb2::install {
       owner  => root,
       group  => $conf_group,
       ;
-    prefix(['modules', 'enabledModules', 'navigation', 'dashboards'], "${conf_dir}/"):
+    prefix(['modules', 'enabledModules', 'navigation', 'preferences', 'dashboards'], "${conf_dir}/"):
       mode => '2770',
       ;
     $cert_dir:
