@@ -50,16 +50,16 @@
 #   }
 #
 class icingaweb2::module::elasticsearch (
-  Enum['absent', 'present']      $ensure         = 'present',
-  Optional[Stdlib::Absolutepath] $module_dir     = undef,
-  String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-elasticsearch.git',
-  Optional[String]               $git_revision   = undef,
-  Enum['git', 'none', 'package'] $install_method = 'git',
-  String                         $package_name   = 'icingaweb2-module-elasticsearch',
-  Optional[Hash]                 $instances      = undef,
-  Optional[Hash]                 $eventtypes     = undef,
+  Enum['absent', 'present']      $ensure,
+  Stdlib::HTTPUrl                $git_repository,
+  Enum['git', 'none', 'package'] $install_method,
+  String                         $package_name,
+  Stdlib::Absolutepath           $module_dir   = "${icingaweb2::globals::default_module_path}/elasticsearch",
+  Optional[String]               $git_revision = undef,
+  Optional[Hash]                 $instances    = undef,
+  Optional[Hash]                 $eventtypes   = undef,
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
   if $instances {
     $instances.each |$name, $setting| {

@@ -11,6 +11,6 @@ Gemfile:
     ':development':
       - gem: 'concurrent-ruby'
         version: '< 1.2.0'
-#Rakefile:
-#  linter_options:
-#    - disable_140chars
+Rakefile:
+  linter_options:
+    - disable_140chars

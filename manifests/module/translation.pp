@@ -5,13 +5,12 @@
 #   Enable or disable module.
 #
 class icingaweb2::module::translation (
-  Enum['absent', 'present'] $ensure = 'present',
+  Enum['absent', 'present'] $ensure,
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
-  $conf_dir             = $icingaweb2::globals::conf_dir
+  $module_conf_dir      = "${icingaweb2::globals::conf_dir}/modules/translation"
   $gettext_package_name = $icingaweb2::globals::gettext_package_name
-  $module_conf_dir      = "${conf_dir}/modules/translation"
 
   # gettext-tools SUSE
   package { $gettext_package_name:

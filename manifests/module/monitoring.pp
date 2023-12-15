@@ -1,5 +1,5 @@
 # @summary
-#   Manages the monitoring module. This module is mandatory for probably every setup.
+#   Manages the monitoring module. This module is deprecated.
 #
 # @note At first have a look at the [Monitoring module documentation](https://www.icinga.com/docs/icingaweb2/latest/modules/monitoring/doc/01-About/).
 #
@@ -10,11 +10,6 @@
 #   Custom variables in Icinga 2 may contain sensible information. Set patterns for custom variables
 #   that should be hidden in the web interface.
 #
-# @param manage_package
-#   Set to `false` as Fix for Icinga Web >= 2.12.0 to do not manage the removed package
-#   `icingaweb2-module-monitoring` (only Debian/Ubuntu).
-#   See issue #368 (https://github.com/Icinga/puppet-icingaweb2/issues/368).
-#
 # @param ido_type
 #   Type of your IDO database. Either `mysql` or `pgsql`.
 #
@@ -23,6 +18,9 @@
 #
 # @param ido_port
 #   Port of the IDO database.
+#
+# @param ido_resource_name
+#   Resource name for the IDO database.
 #
 # @param ido_db_name
 #   Name of the IDO database.
@@ -97,14 +95,16 @@
 #   }
 #
 class icingaweb2::module::monitoring (
-  Enum['absent', 'present']      $ensure               = 'present',
-  Variant[String, Array[String]] $protected_customvars = ['*pw*', '*pass*', 'community'],
-  Enum['mysql', 'pgsql']         $ido_type             = 'mysql',
-  Boolean                        $manage_package       = true,
-  Optional[Stdlib::Host]         $ido_host             = undef,
+  Enum['absent', 'present']      $ensure,
+  Variant[String, Array[String]] $protected_customvars,
+  Hash                           $commandtransports,
+  Hash[String,Any]               $settings,
+  Enum['mysql', 'pgsql']         $ido_type,
+  Stdlib::Host                   $ido_host,
+  String                         $ido_resource_name,
+  String                         $ido_db_name,
+  String                         $ido_db_username,
   Optional[Stdlib::Port]         $ido_port             = undef,
-  Optional[String]               $ido_db_name          = undef,
-  Optional[String]               $ido_db_username      = undef,
   Optional[Icingaweb2::Secret]   $ido_db_password      = undef,
   Optional[String]               $ido_db_charset       = undef,
   Optional[Boolean]              $use_tls              = undef,
@@ -117,69 +117,35 @@ class icingaweb2::module::monitoring (
   Optional[String]               $tls_cacert           = undef,
   Optional[Boolean]              $tls_noverify         = undef,
   Optional[String]               $tls_cipher           = undef,
-  Hash[String, Any]              $settings             = {},
-  Hash                           $commandtransports    = {},
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
-  $conf_dir        = $icingaweb2::globals::conf_dir
-  $module_conf_dir = "${conf_dir}/modules/monitoring"
+  $module_conf_dir = "${icingaweb2::globals::conf_dir}/modules/monitoring"
+  $cert_dir        = "${icingaweb2::globals::state_dir}/monitoring/certs"
 
-  case $facts['os']['family'] {
-    'Debian': {
-      if $manage_package {
-        $install_method = 'package'
-        $package_name   = 'icingaweb2-module-monitoring'
-      } else {
-        $install_method = 'none'
-        $package_name   = undef
-      }
-    }
-    default: {
-      $install_method = 'none'
-      $package_name   = undef
-    }
+  $db = {
+    type     => $ido_type,
+    database => $ido_db_name,
+    host     => $ido_host,
+    port     => $ido_port,
+    username => $ido_db_username,
+    password => $ido_db_password,
   }
 
-  $tls = merge(delete($icingaweb2::config::tls, ['key', 'cert', 'cacert']), delete_undef_values(merge(icingaweb2::cert::files(
-          'client',
-          $module_conf_dir,
-          $tls_key_file,
-          $tls_cert_file,
-          $tls_cacert_file,
-          $tls_key,
-          $tls_cert,
-          $tls_cacert,
-        ), {
-          capath   => $tls_capath,
-          noverify => $tls_noverify,
-          cipher   => $tls_cipher,
-  })))
-
-  icingaweb2::tls::client { 'icingaweb2::module::monitoring tls client config':
-    args => $tls,
-  }
-
-  icingaweb2::resource::database { 'icingaweb2-module-monitoring':
-    type         => $ido_type,
-    host         => $ido_host,
-    port         => pick($ido_port, $icingaweb2::globals::port[$ido_type]),
-    database     => $ido_db_name,
-    username     => $ido_db_username,
-    password     => $ido_db_password,
-    charset      => $ido_db_charset,
-    use_tls      => $use_tls,
-    tls_noverify => $tls['noverify'],
-    tls_key      => $tls['key_file'],
-    tls_cert     => $tls['cert_file'],
-    tls_cacert   => $tls['cacert_file'],
-    tls_capath   => $tls['capath'],
-    tls_cipher   => $tls['cipher'],
-  }
+  $tls = icinga::cert::files(
+    $ido_db_username,
+    $cert_dir,
+    $tls_key_file,
+    $tls_cert_file,
+    $tls_cacert_file,
+    $tls_key,
+    $tls_cert,
+    $tls_cacert,
+  )
 
   $backend_settings = {
     'type'     => 'ido',
-    'resource' => 'icingaweb2-module-monitoring',
+    'resource' => $ido_resource_name,
   }
 
   $security_settings = {
@@ -207,12 +173,8 @@ class icingaweb2::module::monitoring (
     },
   }
 
-  create_resources('icingaweb2::module::monitoring::commandtransport', $commandtransports)
-
-  icingaweb2::module { 'monitoring':
-    ensure         => $ensure,
-    install_method => $install_method,
-    package_name   => $package_name,
-    settings       => $_settings,
-  }
+  class { 'icingaweb2::module::monitoring::install': }
+  -> class { 'icingaweb2::module::monitoring::config': }
+  contain icingaweb2::module::monitoring::install
+  contain icingaweb2::module::monitoring::config
 }

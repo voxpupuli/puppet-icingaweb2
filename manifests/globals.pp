@@ -9,6 +9,9 @@
 # @param conf_dir
 #   Path to the config files.
 #
+# @param state_dir
+#   Path to variable application data.
+#
 # @param data_dir
 #   Location of PHP data files.
 #
@@ -66,6 +69,7 @@
 class icingaweb2::globals (
   String                 $package_name,
   Stdlib::Absolutepath   $conf_dir,
+  Stdlib::Absolutepath   $state_dir,
   Stdlib::Absolutepath   $data_dir,
   Boolean                $role_replace,
   Stdlib::Absolutepath   $comp_db_schema_dir,
@@ -85,6 +89,24 @@ class icingaweb2::globals (
   String                 $gettext_package_name,
   Stdlib::Absolutepath   $icingacli_bin,
 ) {
+  $stdlib_version = load_module_metadata('stdlib')['version']
+
+  $db_charset = {
+    'mysql' => {
+      'director'  => 'utf8',
+      'vspheredb' => 'utf8mb4',
+      'reporting' => 'utf8mb4',
+      'x509' => 'utf8',
+    },
+    'pgsql' => {
+      'director' => 'UTF8',
+      'vspheredb' => 'UTF8',
+      'reporting' => 'UTF8',
+      'x509' => 'UTF8',
+    },
+  }
+
+  # deprecated
   $port = {
     'mysql' => 3306,
     'pgsql' => 5432,

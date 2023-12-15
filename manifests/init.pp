@@ -28,9 +28,6 @@
 # @param theme_disabled
 #   Whether users can change themes or not.
 #
-# @param manage_repo
-#   Deprecated, use manage_repos.
-#
 # @param manage_repos
 #   When set to true this module will use the module icinga/puppet-icinga to manage repositories,
 #   e.g. the release repo on packages.icinga.com repository by default, the EPEL repository or Backports.
@@ -49,6 +46,9 @@
 #
 # @param db_type
 #   Database type, can be either `mysql` or `pgsql`.
+#
+# @param db_resource_name
+#   Name for the icingaweb2 database resource.
 #
 # @param db_host
 #   Database hostname.
@@ -96,10 +96,6 @@
 #
 # @param tls_cipher
 #   Cipher to use for the encrypted database connection.
-#
-# @param config_backend
-#   The global Icinga Web 2 preferences can either be stored in a database or in ini files. This parameter can either
-#   be set to `db` or `ini`.
 #
 # @param conf_user
 #   By default this module expects Apache2 on the server. You can change the owner of the config files with this
@@ -220,55 +216,73 @@ class icingaweb2 (
   Stdlib::Absolutepath                            $logging_file,
   String                                          $conf_user,
   String                                          $conf_group,
+  Enum['mysql', 'pgsql']                          $db_type,
   Variant[Icingaweb2::AdminRole, Boolean[false]]  $admin_role,
   String                                          $default_admin_username,
   Icingaweb2::Secret                              $default_admin_password,
+  Enum['file', 'syslog', 'php', 'none']           $logging,
+  Enum['ERROR', 'WARNING', 'INFO', 'DEBUG']       $logging_level,
+  Pattern[/user|local[0-7]/]                      $logging_facility,
+  String                                          $logging_application,
+  Boolean                                         $show_stacktraces,
+  String                                          $theme,
+  Boolean                                         $theme_disabled,
+  Boolean                                         $manage_repos,
+  Boolean                                         $manage_package,
+  Hash[String, Hash[String, Any]]                 $resources,
+  Variant[String, Boolean[false]]                 $default_auth_backend,
+  Hash[String, Hash[String, Any]]                 $user_backends,
+  Hash[String, Hash[String, Any]]                 $group_backends,
+  String                                          $db_resource_name,
+  Stdlib::Host                                    $db_host,
+  String                                          $db_name,
+  String                                          $db_username,
+  Optional[Icingaweb2::Secret]                    $db_password         = undef,
+  Optional[Stdlib::Port]                          $db_port             = undef,
+  Optional[Icingaweb2::ImportSchema]              $import_schema       = undef,
+  Optional[Boolean]                               $use_tls             = undef,
+  Optional[Stdlib::Absolutepath]                  $tls_key_file        = undef,
+  Optional[Stdlib::Absolutepath]                  $tls_cert_file       = undef,
+  Optional[Stdlib::Absolutepath]                  $tls_cacert_file     = undef,
+  Optional[Stdlib::Absolutepath]                  $tls_capath          = undef,
+  Optional[Icingaweb2::Secret]                    $tls_key             = undef,
+  Optional[String]                                $tls_cert            = undef,
+  Optional[String]                                $tls_cacert          = undef,
+  Optional[Boolean]                               $tls_noverify        = undef,
+  Optional[String]                                $tls_cipher          = undef,
   Optional[Variant[Stdlib::Absolutepath,
-  Array[Stdlib::Absolutepath]]]                   $module_path          = undef,
-  Enum['file', 'syslog', 'php', 'none']           $logging              = 'file',
-  Enum['ERROR', 'WARNING', 'INFO', 'DEBUG']       $logging_level        = 'INFO',
-  Pattern[/user|local[0-7]/]                      $logging_facility     = 'user',
-  String                                          $logging_application  = 'icingaweb2',
-  Boolean                                         $show_stacktraces     = false,
-  String                                          $theme                = 'Icinga',
-  Boolean                                         $theme_disabled       = false,
-  Boolean                                         $manage_repo          = false,
-  Boolean                                         $manage_repos         = false,
-  Boolean                                         $manage_package       = true,
-  Optional[Array[String]]                         $extra_packages       = undef,
-  Variant[Boolean, Enum['mariadb', 'mysql']]      $import_schema        = false,
-  Enum['mysql', 'pgsql']                          $db_type              = 'mysql',
-  Stdlib::Host                                    $db_host              = 'localhost',
-  Optional[Stdlib::Port]                          $db_port              = undef,
-  String                                          $db_name              = 'icingaweb2',
-  String                                          $db_username          = 'icingaweb2',
-  Optional[Icingaweb2::Secret]                    $db_password          = undef,
-  Optional[Boolean]                               $use_tls              = undef,
-  Optional[Stdlib::Absolutepath]                  $tls_key_file         = undef,
-  Optional[Stdlib::Absolutepath]                  $tls_cert_file        = undef,
-  Optional[Stdlib::Absolutepath]                  $tls_cacert_file      = undef,
-  Optional[Stdlib::Absolutepath]                  $tls_capath           = undef,
-  Optional[Icingaweb2::Secret]                    $tls_key              = undef,
-  Optional[String]                                $tls_cert             = undef,
-  Optional[String]                                $tls_cacert           = undef,
-  Optional[Boolean]                               $tls_noverify         = undef,
-  Optional[String]                                $tls_cipher           = undef,
-  Enum['ini', 'db']                               $config_backend       = 'ini',
-  Optional[String]                                $default_domain       = undef,
-  Optional[Stdlib::Absolutepath]                  $cookie_path          = undef,
-  Variant[String, Boolean[false]]                 $default_auth_backend = "${db_type}-auth",
-  Hash[String, Hash[String, Any]]                 $resources            = {},
-  Hash[String, Hash[String, Any]]                 $user_backends        = {},
-  Hash[String, Hash[String, Any]]                 $group_backends       = {},
+  Array[Stdlib::Absolutepath]]]                   $module_path         = undef,
+  Optional[Array[String]]                         $extra_packages      = undef,
+  Optional[String]                                $default_domain      = undef,
+  Optional[Stdlib::Absolutepath]                  $cookie_path         = undef,
 ) {
   require icingaweb2::globals
 
-  if $manage_repos or $manage_repo {
+  $cert_dir = "${icingaweb2::globals::state_dir}/certs"
+
+  if $manage_repos {
     require icinga::repos
-    if $manage_repo {
-      deprecation('manage_repo', 'manage_repo is deprecated and will be replaced by manage_repos in the future.')
-    }
   }
+
+  $db  = {
+    type     => $db_type,
+    database => $db_name,
+    host     => $db_host,
+    port     => pick($db_port, $icingaweb2::globals::port[$db_type]),
+    username => $db_username,
+    password => $db_password,
+  }
+
+  $tls = icinga::cert::files(
+    $db_username,
+    $cert_dir,
+    $tls_key_file,
+    $tls_cert_file,
+    $tls_cacert_file,
+    $tls_key,
+    $tls_cert,
+    $tls_cacert,
+  )
 
   class { 'icingaweb2::install': }
   -> class { 'icingaweb2::config': }

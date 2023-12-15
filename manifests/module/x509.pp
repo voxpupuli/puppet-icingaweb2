@@ -21,6 +21,9 @@
 # @param db_type
 #   The database type. Either mysql or pgsql.
 #
+# @param db_resource_name
+#   Name for the x509 database resource.
+#
 # @param db_host
 #   The host where the database will be running
 #
@@ -76,6 +79,18 @@
 #   both means true. With mariadb its cli options are used for the import,
 #   whereas with mysql its different options.
 #
+# @param manage_service
+#   If set to true the service (daemon) is managed.
+#
+# @param service_ensure
+#   Wether the service is `running` or `stopped`.
+#
+# @param service_enable
+#   Whether the service should be started at boot time.
+#
+# @param service_user
+#   The user as which the service is running. Only valid if `install_method` is set to `git`.
+#
 # @example
 #   class { 'icingaweb2::module::x509':
 #     ensure       => present,
@@ -89,18 +104,23 @@
 class icingaweb2::module::x509 (
   Enum['absent', 'present']                  $ensure,
   Enum['git', 'none', 'package']             $install_method,
-  String                                     $git_repository,
+  Stdlib::HTTPUrl                            $git_repository,
   String                                     $package_name,
-  Optional[Stdlib::Absolutepath]             $module_dir      = undef,
-  Optional[String]                           $git_revision    = undef,
-  Enum['mysql', 'pgsql']                     $db_type         = 'mysql',
-  Stdlib::Host                               $db_host         = 'localhost',
-  Optional[Stdlib::Port]                     $db_port         = undef,
-  String                                     $db_name         = 'x509',
-  String                                     $db_username     = 'x509',
+  Boolean                                    $manage_service,
+  Stdlib::Ensure::Service                    $service_ensure,
+  Boolean                                    $service_enable,
+  String                                     $service_user,
+  Enum['mysql', 'pgsql']                     $db_type,
+  String                                     $db_resource_name,
+  Stdlib::Host                               $db_host,
+  String                                     $db_name,
+  String                                     $db_username,
   Optional[Icingaweb2::Secret]               $db_password     = undef,
+  Optional[Stdlib::Port]                     $db_port         = undef,
   Optional[String]                           $db_charset      = undef,
-  Variant[Boolean, Enum['mariadb', 'mysql']] $import_schema   = false,
+  Optional[Icingaweb2::ImportSchema]         $import_schema   = undef,
+  Stdlib::Absolutepath                       $module_dir      = "${icingaweb2::globals::default_module_path}/x509",
+  Optional[String]                           $git_revision    = undef,
   Optional[Boolean]                          $use_tls         = undef,
   Optional[Stdlib::Absolutepath]             $tls_key_file    = undef,
   Optional[Stdlib::Absolutepath]             $tls_cert_file   = undef,
@@ -112,118 +132,45 @@ class icingaweb2::module::x509 (
   Optional[Boolean]                          $tls_noverify    = undef,
   Optional[String]                           $tls_cipher      = undef,
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
-  $conf_dir          = $icingaweb2::globals::conf_dir
-  $mysql_x509_schema = $icingaweb2::globals::mysql_x509_schema
-  $pgsql_x509_schema = $icingaweb2::globals::pgsql_x509_schema
-  $module_conf_dir   = "${conf_dir}/modules/x509"
-  $_db_port          = pick($db_port, $icingaweb2::globals::port[$db_type])
+  $module_conf_dir = "${icingaweb2::globals::conf_dir}/modules/x509"
+  $cert_dir        = "${icingaweb2::globals::state_dir}/x509/certs"
 
-  $_db_charset = if $db_charset {
-    $db_charset
-  } else {
-    if $db_type == 'mysql' {
-      'utf8mb4'
-    } else {
-      'UTF8'
-    }
+  $db = {
+    type     => $db_type,
+    database => $db_name,
+    host     => $db_host,
+    port     => $db_port,
+    username => $db_username,
+    password => $db_password,
   }
 
-  $tls = merge(delete($icingaweb2::config::tls, ['key', 'cert', 'cacert']), delete_undef_values(merge(icingaweb2::cert::files(
-          'client',
-          $module_conf_dir,
-          $tls_key_file,
-          $tls_cert_file,
-          $tls_cacert_file,
-          $tls_key,
-          $tls_cert,
-          $tls_cacert,
-        ), {
-          capath   => $tls_capath,
-          noverify => $tls_noverify,
-          cipher   => $tls_cipher,
-  })))
+  $tls = icinga::cert::files(
+    $db_username,
+    $cert_dir,
+    $tls_key_file,
+    $tls_cert_file,
+    $tls_cacert_file,
+    $tls_key,
+    $tls_cert,
+    $tls_cacert,
+  )
 
-  Exec {
-    user     => 'root',
-    path     => $facts['path'],
-    provider => 'shell',
-    require  => [Icingaweb2::Module['x509'], Icingaweb2::Tls::Client['icingaweb2::module::x509 tls client config']],
-  }
-
-  icingaweb2::tls::client { 'icingaweb2::module::x509 tls client config':
-    args => $tls,
-  }
-
-  icingaweb2::resource::database { 'x509':
-    type         => $db_type,
-    host         => $db_host,
-    port         => $_db_port,
-    database     => $db_name,
-    username     => $db_username,
-    password     => $db_password,
-    charset      => $_db_charset,
-    use_tls      => $use_tls,
-    tls_noverify => $tls['noverify'],
-    tls_key      => $tls['key_file'],
-    tls_cert     => $tls['cert_file'],
-    tls_cacert   => $tls['cacert_file'],
-    tls_capath   => $tls['capath'],
-    tls_cipher   => $tls['cipher'],
-  }
-
-  icingaweb2::module { 'x509':
-    ensure         => $ensure,
-    git_repository => $git_repository,
-    git_revision   => $git_revision,
-    install_method => $install_method,
-    module_dir     => $module_dir,
-    package_name   => $package_name,
-    settings       => {
-      'icingaweb2-module-x509-backend' => {
-        'section_name' => 'backend',
-        'target'       => "${module_conf_dir}/config.ini",
-        'settings'     => {
-          'resource' => 'x509',
-        },
+  $settings = {
+    'icingaweb2-module-x509-backend' => {
+      'section_name' => 'backend',
+      'target'       => "${module_conf_dir}/config.ini",
+      'settings'     => {
+        'resource' => $db_resource_name,
       },
     },
   }
 
-  if $import_schema {
-    $real_db_type = if $import_schema =~ Boolean {
-      if $db_type == 'pgsql' { 'pgsql' } else { 'mariadb' }
-    } else {
-      $import_schema
-    }
-    $db_cli_options = icingaweb2::db::connect({
-        type => $real_db_type,
-        name => $db_name,
-        host => $db_host,
-        port => $_db_port,
-        user => $db_username,
-        pass => $db_password,
-    }, $tls, $use_tls)
-
-    case $db_type {
-      'mysql': {
-        exec { 'import icingaweb2::module::x509 schema':
-          command => "mysql ${db_cli_options} < '${mysql_x509_schema}'",
-          unless  => "mysql ${db_cli_options} -Ns -e 'SELECT * FROM report'",
-        }
-      }
-      'pgsql': {
-        $_db_password = icingaweb2::unwrap($db_password)
-        exec { 'import icingaweb2::module::x509 schema':
-          environment => ["PGPASSWORD=${_db_password}"],
-          command     => "psql '${db_cli_options}' -w -f ${pgsql_x509_schema}",
-          unless      => "psql '${db_cli_options}' -w -c 'SELECT * FROM report'",
-        }
-      } # pgsql (not supported)
-      default: {
-        fail('The database type you provided is not supported.')
-      }
-    }
-  } # schema import
+  class { 'icingaweb2::module::x509::install': }
+  -> class { 'icingaweb2::module::x509::config': }
+  ~> class { 'icingaweb2::module::x509::service': }
+  contain icingaweb2::module::x509::install
+  contain icingaweb2::module::x509::config
+  contain icingaweb2::module::x509::service
 }

@@ -27,14 +27,14 @@
 #   }
 #
 class icingaweb2::module::cube (
-  Enum['absent', 'present']      $ensure         = 'present',
-  Optional[Stdlib::Absolutepath] $module_dir     = undef,
-  String                         $git_repository = 'https://github.com/Icinga/icingaweb2-module-cube.git',
-  Optional[String]               $git_revision   = undef,
-  Enum['git', 'none', 'package'] $install_method = 'git',
-  String                         $package_name   = 'icingaweb2-module-cube',
+  Enum['absent', 'present']      $ensure,
+  Stdlib::HTTPUrl                $git_repository,
+  String                         $package_name,
+  Enum['git', 'none', 'package'] $install_method,
+  Stdlib::Absolutepath           $module_dir   = "${icingaweb2::globals::default_module_path}/cube",
+  Optional[String]               $git_revision = undef,
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
   icingaweb2::module { 'cube':
     ensure         => $ensure,

@@ -29,7 +29,7 @@
 #   The `module_name` should be used as target directory for the configuration files.
 #
 # @example
-#   $conf_dir        = $::icingaweb2::globals::conf_dir
+#   $conf_dir        = $icingaweb2::globals::conf_dir
 #   $module_conf_dir = "${conf_dir}/modules/mymodule"
 #
 #   $settings = {
@@ -59,16 +59,12 @@ define icingaweb2::module (
   Optional[String]                  $package_name   = undef,
   Hash                              $settings       = {},
 ) {
-  icingaweb2::assert_module()
+  require icingaweb2
 
   $conf_dir   = $icingaweb2::globals::conf_dir
+  $state_dir  = $icingaweb2::globals::state_dir
   $conf_user  = $icingaweb2::conf_user
   $conf_group = $icingaweb2::conf_group
-
-  File {
-    owner => $conf_user,
-    group => $conf_group,
-  }
 
   $enable_module = if $ensure == 'present' {
     'link'
@@ -76,19 +72,26 @@ define icingaweb2::module (
     'absent'
   }
 
-  file { "${conf_dir}/enabledModules/${module}":
-    ensure => $enable_module,
-    target => $module_dir,
-  }
-
-  file { "${conf_dir}/modules/${module}":
-    ensure => directory,
-    mode   => '2770',
+  file {
+    default:
+      owner => $conf_user,
+      group => $conf_group,
+      ;
+    "${conf_dir}/enabledModules/${module}":
+      ensure => $enable_module,
+      target => $module_dir,
+      ;
+    ["${conf_dir}/modules/${module}", "${state_dir}/${module}"]:
+      ensure => directory,
+      owner  => 'root',
+      mode   => '2770',
+      ;
   }
 
   create_resources('icingaweb2::inisection', $settings)
 
   case $install_method {
+    'none': {}
     'git': {
       vcsrepo { $module_dir:
         ensure   => present,
@@ -97,7 +100,6 @@ define icingaweb2::module (
         revision => $git_revision,
       }
     }
-    'none': {}
     'package': {
       package { $package_name:
         ensure => installed,
