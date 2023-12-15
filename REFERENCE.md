@@ -516,15 +516,6 @@ Data type: `Variant[String, Boolean[false]]`
 Name of the user and group backend authentication of the icingaweb2 resource.
 If set to `false` the default authentication method is deactivated.
 
-##### <a name="-icingaweb2--default_auth_backend"></a>`default_auth_backend`
-
-Data type: `Variant[String, Boolean[false]]`
-
-Name of the user and group backend authentication of the icingaweb2 resource.
-If set to `false` the default authentication method is deactivated.
-
-Default value: `"${db_type}-auth"`
-
 ##### <a name="-icingaweb2--user_backends"></a>`user_backends`
 
 Data type: `Hash[String, Hash[String, Any]]`
