@@ -27,15 +27,41 @@ This module can manage all configurations files of Icinga Web 2 and import an in
 manage all official [modules](https://www.icinga.com/products/icinga-web-2-modules/) as well as modules developed by the
 community.
 
+### What's new in version 4.0.0
+
+NOTICE: With this release come some breaking changes, please also read the CHANGELOG and test this new version with
+your manifests beforehand.
+
+The puppet module `icinga` is required. Some functions, data types and defined resources of this module are now used.
+Depends on [#380](https://github.com/Icinga/puppet-icingaweb2/pull/380).
+
+The additional services for the Director, reporting and x509 module are not optinal anymore. The service classes are
+private now and cannot declared individually. However, in order to still manage the service new parameters `manage_service`,
+`service_ensure` and `service_enable` are added. See [#281](https://github.com/Icinga/puppet-icingaweb2/issues/281) and
+[#379](https://github.com/Icinga/puppet-icingaweb2/pull/379).
+
+Support of INI files as configuration backend for user preferences is dropped. The parameter `config_backend` also dropped
+because the only supported backend by Icinga Web is `db` since v2.11.0.
+
+We switched the default logging to `syslog`. Done in [#376](https://github.com/Icinga/puppet-icingaweb2/pull/376).
+
+All parameters `db_type` must be set now ([#373](https://github.com/Icinga/puppet-icingaweb2/pull/376)), e.g. for `icingaweb2`,
+`icingaweb2::module::monitoring` and all other modules that require a database.
+
+The default location of all private keys and certificates for authentication or validation has changed
+to `/var/lib/icingaweb2/<module name>/`. For more details [#380](https://github.com/Icinga/puppet-icingaweb2/pull/380).
+
+Support of earlier version of Icinga Web as v2.9.0 is dropped. So we also removed the module classes of ipl, reactbundle and
+incubator. If you use Icinga Web modules installed from git that require the incubator, please use `icingaweb2::extra_packages`
+to install the official package `icinga-php-incubator`.
+
+For more flexibility, we have added a parameter `db_resource_name` for an individual name for the automatically maintained Icinga Web resources, e.g.
+the database resources for the Icinga Web backend, the Director database and so on. As a result, the default names have also changed.
+
 ### What's new in version 3.9.1
 
 The Icinga team removed package icingaweb2-module-monitoring (only on Debian/Ubuntu) for Icinga Web 2 >= 2.12.0. For now
 we add an parameter `manage_package` (set to `true` bye default) to do not managed the missing transition package.
-
-### What's new in version 3.0.0
-
-* The current version now uses the `icinga::repos` class from the new module `icinga` for the configuration of
-repositories including EPEL on RedHat and Backports on Debian. (see https://github.com/icinga/puppet-icinga)
 
 ## Setup
 
@@ -51,23 +77,24 @@ repositories including EPEL on RedHat and Backports on Debian. (see https://gith
 
 This module depends on
 
-* [icinga/icinga] >= 1.0.0
-    * needed if `manage_repos` is set to `true`
-* [puppetlabs/stdlib] >= 4.25.0
-* [puppetlabs/vcsrepo] >= 1.3.0
-* [puppetlabs/concat] >= 2.0.1
+* [icinga/icinga] >= 2.9.0 < 5.0.0
+* [puppetlabs/stdlib] >= 6.6.0 < 10.0.0
+* [puppetlabs/vcsrepo] >= 3.2.0 < 7.0.0
+  * required if modules use `git` (default) as `install_method`. 
+* [puppetlabs/concat] >= 6.4.0 < 10.0.0
+* [puppet/systemd] >= 3.1.0 < 7.0.0
+
 
 ### Limitations
 
 This module has been tested on:
 
-* Debian 10, 11
+* Debian 10, 11, 12
 * CentOS/RHEL 7
   * Requires [Software Collections Repository](https://wiki.centos.org/AdditionalResources/Repositories/SCL)
 * RHEL/AlmaLinux/Rocky 8, 9
   * Requires an [Icinga Subscription](https://icinga.com/subscription) for all versions >= 2.9.5 of Icinga Web 2.
 * Ubuntu 20.04, 22.04
-* SLES 15
 
 Other operating systems or versions may work but have not been tested.
 
@@ -145,62 +172,41 @@ icingaweb2::config::groupbackend { 'ldap-groups':
   domain                      => 'icinga.com',
 }
 ```
-So that a group gets admin rights a role has to manage:
+A role must be managed for a group to receive admin rights:
 ```
 icingaweb2::config::role { 'default admin user':
   groups      => 'icingaadmins',
   permissions => '*',
+  parent      => 'default protection',
 }
 ```
-All available permissions for module monitoring are listed below:
-| Description | Value |
-|-------------|-------|
-| Allow everything | `*` |
-| Allow to share navigation items | `application/share/navigation` |
-| Allow to adjust in the preferences whether to show stacktraces | `application/stacktraces` |
-| Allow to view the application log | `application/log` |
-| Grant admin permissions, e.g. manage announcements | `admin` |
-| Allow config access | `config/*` |
-| Allow access to module doc | `module/doc` |
-| Allow access to module monitoring | `module/monitoring` |
-| Allow all commands | `monitoring/command/*` |
-| Allow scheduling host and service checks | `monitoring/command/schedule-check` |
-| Allow acknowledging host and service problems | `monitoring/command/acknowledge-problem` |
-| Allow removing problem acknowledgements | `monitoring/command/remove-acknowledgement` |
-| Allow adding and deleting host and service comments | `monitoring/command/comment/*` |
-| Allow commenting on hosts and services | `monitoring/command/comment/add` |
-| Allow deleting host and service comments | `monitoring/command/comment/delete` |
-| Allow scheduling and deleting host and service downtimes | `monitoring/command/downtime/*` |
-| Allow scheduling host and service downtimes | `monitoring/command/downtime/schedule` |
-| Allow deleting host and service downtimes | `monitoring/command/downtime/delete` |
-| Allow processing host and service check results | `monitoring/command/process-check-result` |
-| Allow processing commands for toggling features on an instance-wide basis | `monitoring/command/feature/instance` |
-| Allow processing commands for toggling features on host and service objects | `monitoring/command/feature/object/*`) |
-| Allow processing commands for toggling active checks on host and service objects | `monitoring/command/feature/object/active-checks` |
-| Allow processing commands for toggling passive checks on host and service objects | `monitoring/command/feature/object/passive-checks` |
-| Allow processing commands for toggling notifications on host and service objects | `monitoring/command/feature/object/notifications` |
-| Allow processing commands for toggling event handlers on host and service objects | `monitoring/command/feature/object/event-handler` |
-| Allow processing commands for toggling flap detection on host and service objects | `monitoring/command/feature/object/flap-detection` |
-| Allow sending custom notifications for hosts and services | `monitoring/command/send-custom-notification` |
-| Allow access to module setup | `module/setup` |
-| Allow access to module test | `module/test` |
-| Allow access to module translation | `module/translation` |
-
-Finally we configure the monitoring with the needed connection to the IDO to get information and an API user to send commands to Icinga 2:
+But the values of some custom variables are not displayed via inheritance:
 ```
-class {'icingaweb2::module::monitoring':
-  ido_host        => 'localhost',
-  ido_db_type     => 'mysql',
-  ido_db_name     => 'icinga2',
-  ido_db_username => 'icinga2',
-  ido_db_password => 'supersecret',
+icingaweb2::config::role { 'default protection':
+  filters => {
+    'icingadb/protect/variables' => '*pw*, *pass*, community',
+  }
+}
+```
+All available permissions for module `icingadb` are listed [here](https://icinga.com/docs/icinga-db-web/latest/doc/04-Security).
+
+Finally we configure the icingadb with the needed connection to the database and the redis server and an API user to send commands to Icinga 2:
+```
+class {'icingaweb2::module::icingadb':
+  db_type     => 'mysql',
+  db_host     => 'db.icinga.com',
+  db_port     => 1800,
+  db_name     => 'icinga2',
+  db_username => 'icinga2',
+  db_password => Sensitive('supersecret'),
+  redis_host  => 'localhost',
   commandtransports => {
     icinga2 => {
       transport => 'api',
       username  => 'icingaweb2',
-      password  => 'supersecret',
+      password  => Sensitive('supersecret'),
     }
-  }
+  },
 }
 ```
 
