@@ -1,8 +1,47 @@
 # Changelog
 
+## [v4.0.0](https://github.com/icinga/puppet-icingaweb2/tree/v4.0.0) (2023-12-15)
+
+[Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.10.1...v4.0.0)
+
+**Implemented enhancements:**
+
+- Add default\_auth\_backend param to name or disable default authentication [\#387](https://github.com/Icinga/puppet-icingaweb2/pull/387) ([lbetz](https://github.com/lbetz))
+- Add parameter to name the database resources [\#386](https://github.com/Icinga/puppet-icingaweb2/pull/386) ([lbetz](https://github.com/lbetz))
+- Remove module incubator [\#385](https://github.com/Icinga/puppet-icingaweb2/pull/385) ([lbetz](https://github.com/lbetz))
+- Remove module reactbundle [\#384](https://github.com/Icinga/puppet-icingaweb2/pull/384) ([lbetz](https://github.com/lbetz))
+- Remove module ipl [\#383](https://github.com/Icinga/puppet-icingaweb2/pull/383) ([lbetz](https://github.com/lbetz))
+- Rework behavior of TLS, new default location of keys and certs [\#380](https://github.com/Icinga/puppet-icingaweb2/pull/380) ([lbetz](https://github.com/lbetz))
+- Add new param manage\_service for all module background daemons to start automatically [\#379](https://github.com/Icinga/puppet-icingaweb2/pull/379) ([lbetz](https://github.com/lbetz))
+- Switch all db\_type parameters to no defauts [\#377](https://github.com/Icinga/puppet-icingaweb2/pull/377) ([lbetz](https://github.com/lbetz))
+- Switch default logging to syslog [\#376](https://github.com/Icinga/puppet-icingaweb2/pull/376) ([lbetz](https://github.com/lbetz))
+- Remove management of logging\_file and logging\_dir [\#375](https://github.com/Icinga/puppet-icingaweb2/pull/375) ([lbetz](https://github.com/lbetz))
+- Remove deprecated Icinga Web 2 module vsphere [\#374](https://github.com/Icinga/puppet-icingaweb2/pull/374) ([lbetz](https://github.com/lbetz))
+- Remove config backend, only db is supported now [\#373](https://github.com/Icinga/puppet-icingaweb2/pull/373) ([lbetz](https://github.com/lbetz))
+- Remove management of package icingaweb2-module-monitoring on Debian/Ubuntu [\#372](https://github.com/Icinga/puppet-icingaweb2/pull/372) ([lbetz](https://github.com/lbetz))
+- Remove deprecated parameter manage\_repo [\#371](https://github.com/Icinga/puppet-icingaweb2/pull/371) ([lbetz](https://github.com/lbetz))
+- Remove the deprecated config::resource class [\#370](https://github.com/Icinga/puppet-icingaweb2/pull/370) ([lbetz](https://github.com/lbetz))
+- Add Puppet 8 Support [\#369](https://github.com/Icinga/puppet-icingaweb2/pull/369) ([lbetz](https://github.com/lbetz))
+
+**Fixed bugs:**
+
+- Fix ordering in director module class [\#396](https://github.com/Icinga/puppet-icingaweb2/pull/396) ([lbetz](https://github.com/lbetz))
+- Add missing icingadb module settings [\#391](https://github.com/Icinga/puppet-icingaweb2/pull/391) ([lbetz](https://github.com/lbetz))
+- Add missing monitoring module settings [\#390](https://github.com/Icinga/puppet-icingaweb2/pull/390) ([lbetz](https://github.com/lbetz))
+- Fix problem with import\_schema and \#301 [\#389](https://github.com/Icinga/puppet-icingaweb2/pull/389) ([lbetz](https://github.com/lbetz))
+- Fix icingadb::db\_password to be an optional parameter [\#378](https://github.com/Icinga/puppet-icingaweb2/pull/378) ([lbetz](https://github.com/lbetz))
+
+**Merged pull requests:**
+
+- Release v4.0.0 [\#398](https://github.com/Icinga/puppet-icingaweb2/pull/398) ([lbetz](https://github.com/lbetz))
+
 ## [v3.10.1](https://github.com/icinga/puppet-icingaweb2/tree/v3.10.1) (2023-12-08)
 
 [Full Changelog](https://github.com/icinga/puppet-icingaweb2/compare/v3.10.0...v3.10.1)
+
+**Implemented enhancements:**
+
+- Add Debian Bookworm Support [\#366](https://github.com/Icinga/puppet-icingaweb2/issues/366)
 
 **Fixed bugs:**
 
