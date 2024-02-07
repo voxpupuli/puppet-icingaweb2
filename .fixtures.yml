@@ -9,3 +9,4 @@ fixtures:
     zypprepo: "puppet/zypprepo"
     systemd: "camptocamp/systemd"
     icinga: "icinga/icinga"
+    icinga2: "icinga/icinga2"
