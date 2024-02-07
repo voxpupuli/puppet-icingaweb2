@@ -8,5 +8,3 @@ fixtures:
     zypprepo: "puppet/zypprepo"
     systemd: "camptocamp/systemd"
     icinga: "icinga/icinga"
-  symlinks:
-    icingaweb2: "#{source_dir}"
