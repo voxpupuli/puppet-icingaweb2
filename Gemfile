@@ -11,9 +11,8 @@ group :test do
 end
 
 group :development do
-  gem 'guard-rake',                  :require => false
-  gem 'overcommit', '>= 0.39.1',     :require => false
-  gem 'concurrent-ruby', '< 1.2.0',  :require => false
+  gem 'guard-rake',               :require => false
+  gem 'overcommit', '>= 0.39.1',  :require => false
 end
 
 group :system_tests do
