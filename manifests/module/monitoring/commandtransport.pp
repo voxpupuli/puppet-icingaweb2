@@ -43,7 +43,7 @@ define icingaweb2::module::monitoring::commandtransport (
         'host'      => $host,
         'port'      => $port,
         'username'  => $username,
-        'password'  => icingaweb2::unwrap($password),
+        'password'  => unwrap($password),
       }
     }
     'local': {

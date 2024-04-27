@@ -81,7 +81,7 @@ class icingaweb2::module::x509::config {
         }
       }
       'pgsql': {
-        $_db_password = icingaweb2::unwrap($db['password'])
+        $_db_password = unwrap($db['password'])
         exec { 'import icingaweb2::module::x509 schema':
           environment => ["PGPASSWORD=${_db_password}"],
           command     => "psql '${db_cli_options}' -w -f ${pgsql_schema}",

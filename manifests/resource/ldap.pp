@@ -53,7 +53,7 @@ define icingaweb2::resource::ldap (
     'port'       => $port,
     'root_dn'    => $root_dn,
     'bind_dn'    => $bind_dn,
-    'bind_pw'    => icingaweb2::unwrap($bind_pw),
+    'bind_pw'    => unwrap($bind_pw),
     'encryption' => $encryption,
     'timeout'    => $timeout,
   }

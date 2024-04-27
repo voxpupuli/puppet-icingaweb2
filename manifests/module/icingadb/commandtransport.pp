@@ -33,7 +33,7 @@ define icingaweb2::module::icingadb::commandtransport (
     host      => $host,
     port      => $port,
     username  => $username,
-    password  => icingaweb2::unwrap($password),
+    password  => unwrap($password),
   }
 
   icingaweb2::inisection { "icingadb-commandtransport-${commandtransport}":
