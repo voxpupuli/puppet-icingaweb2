@@ -15,7 +15,6 @@ class { 'icingaweb2':
   db_type                => 'pgsql',
   db_password            => $db_password,
   import_schema          => true,
-  config_backend         => 'db',
   default_admin_username => 'icingaadmin',
   default_admin_password => 'icinga',
   require                => Postgresql::Server::Db['icingaweb2'],
