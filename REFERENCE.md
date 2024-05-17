@@ -81,7 +81,6 @@ that store groups.
 ### Functions
 
 * [`icingaweb2::pick`](#icingaweb2--pick): This function returns first parameter if set.
-* [`icingaweb2::unwrap`](#icingaweb2--unwrap): This function returns an unwrap string if necessary.
 
 ### Data types
 
@@ -4404,24 +4403,6 @@ Data type: `Any`
 ##### `arg2`
 
 Data type: `Any`
-
-
-
-### <a name="icingaweb2--unwrap"></a>`icingaweb2::unwrap`
-
-Type: Puppet Language
-
-This function returns an unwrap string if necessary.
-
-#### `icingaweb2::unwrap(Optional[Variant[String, Sensitive[String]]] $arg = undef)`
-
-The icingaweb2::unwrap function.
-
-Returns: `Any` The unwraped string.
-
-##### `arg`
-
-Data type: `Optional[Variant[String, Sensitive[String]]]`
 
 
 
