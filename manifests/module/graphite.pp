@@ -88,7 +88,7 @@ class icingaweb2::module::graphite (
   $graphite_settings = {
     'url'      => $url,
     'user'     => $user,
-    'password' => icingaweb2::unwrap($password),
+    'password' => unwrap($password),
     'insecure' => $insecure,
   }
 

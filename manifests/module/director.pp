@@ -209,7 +209,7 @@ class icingaweb2::module::director (
           'host'       => $api_host,
           'port'       => $api_port,
           'username'   => $api_username,
-          'password'   => icingaweb2::unwrap($api_password),
+          'password'   => unwrap($api_password),
         },
       },
     }

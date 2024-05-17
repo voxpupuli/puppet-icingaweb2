@@ -35,7 +35,7 @@ class icingaweb2::config {
   $default_domain       = $icingaweb2::default_domain
   $admin_role           = $icingaweb2::admin_role
   $admin_username       = $icingaweb2::default_admin_username
-  $admin_password       = icingaweb2::unwrap($icingaweb2::default_admin_password)
+  $admin_password       = unwrap($icingaweb2::default_admin_password)
 
   $use_tls              = $icingaweb2::use_tls
   $tls                  = $icingaweb2::tls + {
@@ -194,7 +194,7 @@ class icingaweb2::config {
         }
       }
       'pgsql': {
-        $_db_password = icingaweb2::unwrap($db['password'])
+        $_db_password = unwrap($db['password'])
 
         exec { 'import schema':
           environment => ["PGPASSWORD=${_db_password}"],

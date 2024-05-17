@@ -42,7 +42,7 @@ define icingaweb2::module::elasticsearch::instance (
   $instance_settings = {
     'uri'                => $uri,
     'user'               => $user,
-    'password'           => icingaweb2::unwrap($password),
+    'password'           => unwrap($password),
     'ca'                 => $ca,
     'client_certificate' => $client_certificate,
     'client_private_key' => $client_private_key,

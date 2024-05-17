@@ -77,13 +77,9 @@ that store groups.
 * `icingaweb2::module::icingadb::commandtransport`: Manages commandtransport configuration for the icingadb module.
 * `icingaweb2::module::monitoring::commandtransport`: Manages commandtransport configuration for the monitoring module.
 * `icingaweb2::module::puppetdb::certificate`: Installs a certificate for the Icinga Web 2 puppetdb module.
-* `icingaweb2::tls::client`: A class to generate tls key, cert and cacert paths.
 
 ### Functions
 
-* [`icingaweb2::cert::files`](#icingaweb2--cert--files): Choose the path of tls key, cert and ca file.
-* [`icingaweb2::db::connect`](#icingaweb2--db--connect): This function returns a string to connect databases
-with or without TLS information.
 * [`icingaweb2::pick`](#icingaweb2--pick): This function returns first parameter if set.
 * [`icingaweb2::unwrap`](#icingaweb2--unwrap): This function returns an unwrap string if necessary.
 
@@ -4386,115 +4382,6 @@ Timeout for the ldap connection.
 Default value: `5`
 
 ## Functions
-
-### <a name="icingaweb2--cert--files"></a>`icingaweb2::cert::files`
-
-Type: Puppet Language
-
-Choose the path of tls key, cert and ca file.
-
-#### `icingaweb2::cert::files(String $name, Optional[Stdlib::Absolutepath] $default_dir, Optional[Stdlib::Absolutepath] $key_file = undef, Optional[Stdlib::Absolutepath] $cert_file = undef, Optional[Stdlib::Absolutepath] $cacert_file = undef, Optional[Icingaweb2::Secret] $key = undef, Optional[String] $cert = undef, Optional[String] $cacert = undef)`
-
-The icingaweb2::cert::files function.
-
-Returns: `Hash` Returned hash includes all paths and the key, cert and cacert.
-
-##### `name`
-
-Data type: `String`
-
-
-
-##### `default_dir`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-
-
-##### `key_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-
-
-##### `cert_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-
-
-##### `cacert_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-
-
-##### `key`
-
-Data type: `Optional[Icingaweb2::Secret]`
-
-
-
-##### `cert`
-
-Data type: `Optional[String]`
-
-
-
-##### `cacert`
-
-Data type: `Optional[String]`
-
-
-
-### <a name="icingaweb2--db--connect"></a>`icingaweb2::db::connect`
-
-Type: Puppet Language
-
-This function returns a string to connect databases
-with or without TLS information.
-
-#### `icingaweb2::db::connect(Struct[{
-      type => Enum['pgsql','mysql','mariadb'],
-      host => Stdlib::Host,
-      port => Stdlib::Port,
-      name => String,
-      user => String,
-      pass => Optional[Icingaweb2::Secret],
-  }] $db, Hash[String, Any] $tls, Optional[Boolean] $use_tls = undef)`
-
-The icingaweb2::db::connect function.
-
-Returns: `String` Connection string to connect database.
-
-##### `db`
-
-Data type:
-
-```puppet
-Struct[{
-      type => Enum['pgsql','mysql','mariadb'],
-      host => Stdlib::Host,
-      port => Stdlib::Port,
-      name => String,
-      user => String,
-      pass => Optional[Icingaweb2::Secret],
-  }]
-```
-
-
-
-##### `tls`
-
-Data type: `Hash[String, Any]`
-
-
-
-##### `use_tls`
-
-Data type: `Optional[Boolean]`
-
-
 
 ### <a name="icingaweb2--pick"></a>`icingaweb2::pick`
 

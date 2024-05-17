@@ -72,24 +72,6 @@ define icingaweb2::module (
     'absent'
   }
 
-  file {
-    default:
-      owner => $conf_user,
-      group => $conf_group,
-      ;
-    "${conf_dir}/enabledModules/${module}":
-      ensure => $enable_module,
-      target => $module_dir,
-      ;
-    ["${conf_dir}/modules/${module}", "${state_dir}/${module}"]:
-      ensure => directory,
-      owner  => 'root',
-      mode   => '2770',
-      ;
-  }
-
-  create_resources('icingaweb2::inisection', $settings)
-
   case $install_method {
     'none': {}
     'git': {
@@ -109,4 +91,22 @@ define icingaweb2::module (
       fail('The installation method you provided is not supported.')
     }
   }
+
+  file {
+    default:
+      owner => $conf_user,
+      group => $conf_group,
+      ;
+    "${conf_dir}/enabledModules/${module}":
+      ensure => $enable_module,
+      target => $module_dir,
+      ;
+    ["${conf_dir}/modules/${module}", "${state_dir}/${module}"]:
+      ensure => directory,
+      owner  => 'root',
+      mode   => '2770',
+      ;
+  }
+
+  create_resources('icingaweb2::inisection', $settings)
 }

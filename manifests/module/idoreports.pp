@@ -100,7 +100,7 @@ class icingaweb2::module::idoreports (
         }
       }
       'pgsql': {
-        $_db_password = icingaweb2::unwrap($db['pass'])
+        $_db_password = unwrap($db['pass'])
         exec { 'import slaperiods':
           environment => ["PGPASSWORD=${_db_password}"],
           command     => "psql '${db_cli_options}' -w -f ${pgsql_slaperiods}",

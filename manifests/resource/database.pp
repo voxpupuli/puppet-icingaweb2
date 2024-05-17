@@ -86,7 +86,7 @@ define icingaweb2::resource::database (
     'port'                          => $port,
     'dbname'                        => $database,
     'username'                      => $username,
-    'password'                      => icingaweb2::unwrap($password),
+    'password'                      => unwrap($password),
     'charset'                       => $charset,
     'use_ssl'                       => $use_tls,
     'ssl_do_not_verify_server_cert' => $tls_noverify,
