@@ -1,12 +1,12 @@
 {
   "name": "icinga-icingaweb2",
   "version": "4.0.0",
-  "author": "Icinga Team",
+  "author": "Vox Pupuli",
   "summary": "Icinga Web 2 Puppet Module",
   "license": "Apache-2.0",
-  "source": "git://github.com/Icinga/puppet-icingaweb2",
-  "project_page": "https://github.com/Icinga/puppet-icingaweb2",
-  "issues_url": "https://github.com/Icinga/puppet-icingaweb2/issues",
+  "source": "git://github.com/voxpupuli/puppet-icingaweb2",
+  "project_page": "https://github.com/voxpupuli/puppet-icingaweb2",
+  "issues_url": "https://github.com/voxpupuli/puppet-icingaweb2/issues",
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
@@ -91,7 +91,6 @@
   ],
   "tags": [
     "icinga",
-    "icinga2",
     "icingaweb2",
     "monitoring"
   ]
