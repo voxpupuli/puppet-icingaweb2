@@ -1,6 +1,14 @@
-[![Build Status](https://travis-ci.org/Icinga/puppet-icingaweb2.png?branch=main)](https://travis-ci.org/Icinga/puppet-icingaweb2)
-
 # Icinga Web 2 Puppet Module
+
+[![Build Status](https://github.com/voxpupuli/puppet-icingaweb2/workflows/CI/badge.svg)](https://github.com/voxpupuli/puppet-icingaweb2/actions?query=workflow%3ACI)
+[![Release](https://github.com/voxpupuli/puppet-icingaweb2/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/puppet-icingaweb2/actions/workflows/release.yml)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/icingaweb2.svg)](https://forge.puppet.com/modules/puppet/icingaweb2)
+[![puppet integration](http://www.puppetmodule.info/images/badge.png)](https://icinga.com/products/integrations/puppet)
+[![Apache-2.0 License](https://img.shields.io/github/license/voxpupuli/puppet-icingaweb2.svg)](LICENSE)
+[![Donated by Icinga](https://img.shields.io/badge/donated%20by-Icinga-fb7047.svg)](#transfer-notice)
+[![Sponsored by NETWAYS](https://img.shields.io/badge/Sponsored%20by-NETWAYS%20GmbH-blue.svg)](https://www.netways.de)
+
+[Icinga Logo](https://www.icinga.com/wp-content/uploads/2014/06/icinga_logo.png)
 
 #### Table of Contents
 
@@ -77,7 +85,7 @@ we add an parameter `manage_package` (set to `true` bye default) to do not manag
 
 This module depends on
 
-* [icinga/icinga] >= 2.9.0 < 5.0.0
+* [puppet/icinga] >= 2.9.0 < 6.0.0
 * [puppetlabs/stdlib] >= 6.6.0 < 10.0.0
 * [puppetlabs/vcsrepo] >= 3.2.0 < 7.0.0
   * required if modules use `git` (default) as `install_method`.
@@ -212,11 +220,11 @@ class {'icingaweb2::module::icingadb':
 
 ## Reference
 
-See [REFERENCE.md](https://github.com/Icinga/puppet-icingaweb2/blob/main/REFERENCE.md)
+See [REFERENCE.md](https://github.com/voxpupuli/puppet-icingaweb2/blob/main/REFERENCE.md)
 
 ## Development
 
-A roadmap of this project is located at https://github.com/Icinga/puppet-icingaweb2/milestones. Please consider
+A roadmap of this project is located at https://github.com/voxpupuli/puppet-icingaweb2/milestones. Please consider
 this roadmap when you start contributing to the project.
 
 ### Contributing
@@ -224,15 +232,10 @@ this roadmap when you start contributing to the project.
 When contributing several steps such as pull requests and proper testing implementations are required.
 Find a detailed step by step guide in [CONTRIBUTING.md].
 
-### Testing
-
-Testing is essential in our workflow to ensure a good quality. We use RSpec as well as Serverspec to test all components
-of this module. For a detailed description see [TESTING.md].
-
 ### Release Notes
 
 When releasing new versions we refer to [SemVer 1.0.0] for version numbers. All steps required when creating a new
-release are described in [RELEASE.md]
+release are described in [RELEASE]
 
 See also [CHANGELOG.md]
 
@@ -243,7 +246,7 @@ See also [CHANGELOG.md]
 
 [Icinga 2]: https://www.icinga.com/products/icinga-2/
 [Icinga Web 2]: https://www.icinga.com/products/icinga-web-2/
-[icinga/icinga]: https://github.com/icinga/puppet-icinga/
+[puppet/icinga]: https://github.com/voxpupuli/puppet-icinga/
 
 [puppetlabs/stdlib]: https://github.com/puppetlabs/puppetlabs-stdlib
 [puppetlabs/concat]: https://github.com/puppetlabs/puppetlabs-concat
@@ -254,6 +257,13 @@ See also [CHANGELOG.md]
 
 [CHANGELOG.md]: CHANGELOG.md
 [AUTHORS]: AUTHORS
-[RELEASE.md]: RELEASE.md
-[TESTING.md]: TESTING.md
-[CONTRIBUTING.md]: CONTRIBUTING.md
+[CONTRIBUTING.md]: .github/CONTRIBUTING.md
+[RELEASE]: https://voxpupuli.org/docs/releasing_version/
+
+## Transfer Notice
+
+This plugin was originally authored by [Icinga](http://www.icinga.com).
+The maintainer preferred that Vox Pupuli take ownership of the module for future improvement and maintenance.
+Existing pull requests and issues were transferred over, please fork and continue to contribute here instead of Icinga.
+
+Previously: https://github.com/icinga/puppet-icingaweb2
