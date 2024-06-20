@@ -1,12 +1,12 @@
 ---
 fixtures:
-  forge_modules:
-    stdlib: "puppetlabs/stdlib"
-    concat: "puppetlabs/concat"
-    vcsrepo: "puppetlabs/vcsrepo"
-    apt: "puppetlabs/apt"
-    yumrepo: "puppetlabs/yumrepo_core"
-    zypprepo: "puppet/zypprepo"
-    systemd: "camptocamp/systemd"
-    icinga: "icinga/icinga"
-    icinga2: "icinga/icinga2"
+  repositories:
+    stdlib: https://github.com/puppetlabs/puppetlabs-stdlib
+    concat: https://github.com/puppetlabs/puppetlabs-concat
+    vcsrepo: https://github.com/puppetlabs/puppetlabs-vcsrepo
+    apt: https://github.com/puppetlabs/puppetlabs-apt
+    yumrepo_core: https://github.com/puppetlabs/puppetlabs-yumrepo_core
+    zypprepo: https://github.com/voxpupuli/puppet-zypprepo
+    systemd: https://github.com/voxpupuli/puppet-systemd
+    icinga: https://github.com/voxpupuli/puppet-icinga
+    icinga2: https://github.com/voxpupuli/puppet-icinga2
