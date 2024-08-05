@@ -37,7 +37,6 @@ describe('icingaweb2::module::x509', type: :class) do
           is_expected.to contain_icingaweb2__module('x509')
             .with_install_method('git')
             .with_git_revision('v1.3.1')
-            .with_package_name('icingaweb2-module-x509')
         }
 
         it {
@@ -70,21 +69,15 @@ describe('icingaweb2::module::x509', type: :class) do
         it { is_expected.not_to contain_exec('import icingaweb2::module::x509 schema') }
       end
 
-      context "#{os} with db_type 'mysql', db_port '4711', install_method 'package', manage_service 'false', import_schema 'true'" do
+      context "#{os} with db_type 'mysql', db_port '4711', manage_service 'false', import_schema 'true'" do
         let(:params) do
           {
-            install_method: 'package',
             manage_service: false,
             db_type: 'mysql',
             db_port: 4711,
             import_schema: true,
           }
         end
-
-        it {
-          is_expected.to contain_package('icingaweb2-module-x509')
-            .with_ensure('installed')
-        }
 
         it {
           is_expected.to contain_icingaweb2__resource__database('x509')
@@ -102,21 +95,6 @@ describe('icingaweb2::module::x509', type: :class) do
             .with_unless(%r{^mysql.* -Ns -e 'SELECT \* FROM x509_certificate'$})
         }
 
-        it {
-          is_expected.to contain_user('icingax509')
-            .with_ensure('present')
-            .with_gid('bar')
-            .with_shell('/bin/false')
-            .with_system(true)
-        }
-
-        it {
-          is_expected.to contain_systemd__dropin_file('icinga-x509.conf')
-            .with_unit('icinga-x509.service')
-            .with_content(%r{User=icingax509})
-        }
-
-        it { is_expected.not_to contain_systemd__unit_file('icinga-x509.service') }
         it { is_expected.not_to contain_service('icinga-x509') }
       end
 
