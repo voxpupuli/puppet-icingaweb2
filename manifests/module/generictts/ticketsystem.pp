@@ -13,8 +13,8 @@
 # @api private
 #
 define icingaweb2::module::generictts::ticketsystem (
-  String                    $ticketsystem = $title,
-  Optional[String]          $pattern      = undef,
+  String[1]                 $ticketsystem = $title,
+  Optional[String[1]]       $pattern      = undef,
   Optional[Stdlib::HTTPUrl] $url          = undef,
 ) {
   assert_private("You're not supposed to use this defined type manually.")

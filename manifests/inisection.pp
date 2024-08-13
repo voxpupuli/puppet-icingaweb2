@@ -29,11 +29,11 @@
 #   }
 #
 define icingaweb2::inisection (
-  Stdlib::Absolutepath      $target,
-  String                    $section_name  = $title,
-  Hash                      $settings      = {},
-  Variant[String, Integer]  $order         = '01',
-  Boolean                   $replace       = true,
+  Stdlib::Absolutepath            $target,
+  String[1]                       $section_name  = $title,
+  Hash                            $settings      = {},
+  Variant[String[1], Integer[1]]  $order         = '01',
+  Boolean                         $replace       = true,
 ) {
   $conf_user      = $icingaweb2::conf_user
   $conf_group     = $icingaweb2::conf_group

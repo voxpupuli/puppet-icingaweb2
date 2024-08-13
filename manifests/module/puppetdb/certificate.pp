@@ -21,8 +21,8 @@
 # @api private
 #
 define icingaweb2::module::puppetdb::certificate (
-  String                    $ssl_key,
-  String                    $ssl_cacert,
+  String[1]                 $ssl_key,
+  String[1]                 $ssl_cacert,
   Enum['absent', 'present'] $ensure = 'present',
 ) {
   assert_private("You're not supposed to use this defined type manually.")

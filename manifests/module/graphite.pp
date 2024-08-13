@@ -60,25 +60,26 @@
 #   }
 #
 class icingaweb2::module::graphite (
-  Enum['absent', 'present']      $ensure,
-  Stdlib::HTTPUrl                $git_repository,
-  Enum['git', 'none', 'package'] $install_method,
-  String                         $package_name,
-  Stdlib::Absolutepath           $module_dir                            = "${icingaweb2::globals::default_module_path}/graphite",
-  Optional[String]               $git_revision                          = undef,
-  Optional[Stdlib::HTTPUrl]      $url                                   = undef,
-  Optional[Boolean]              $insecure                              = undef,
-  Optional[String]               $user                                  = undef,
-  Optional[Icinga::Secret]       $password                              = undef,
-  Optional[String]               $graphite_writer_host_name_template    = undef,
-  Optional[String]               $graphite_writer_service_name_template = undef,
-  Optional[String]               $customvar_obscured_check_command      = undef,
+  Enum['absent', 'present']         $ensure,
+  Stdlib::HTTPUrl                   $git_repository,
+  Enum['git', 'none', 'package']    $install_method,
+  String[1]                         $package_name,
+  Stdlib::Absolutepath              $module_dir                            = "${icingaweb2::globals::default_module_path}/graphite",
+  Optional[String[1]]               $git_revision                          = undef,
+  Optional[Stdlib::HTTPUrl]         $url                                   = undef,
+  Optional[Boolean]                 $insecure                              = undef,
+  Optional[String[1]]               $user                                  = undef,
+  Optional[Icinga::Secret]          $password                              = undef,
+  Optional[Icingaweb2::Secret]      $password                              = undef,
+  Optional[String[1]]               $graphite_writer_host_name_template    = undef,
+  Optional[String[1]]               $graphite_writer_service_name_template = undef,
+  Optional[String[1]]               $customvar_obscured_check_command      = undef,
   Optional[Enum[
       'minutes', 'hours', 'days',
       'weeks', 'months', 'years'
-  ]]                             $default_time_range_unit               = undef,
-  Optional[Integer[1]]           $default_time_range                    = undef,
-  Optional[Boolean]              $disable_no_graphs                     = undef,
+  ]]                                $default_time_range_unit               = undef,
+  Optional[Integer[1]]              $default_time_range                    = undef,
+  Optional[Boolean]                 $disable_no_graphs                     = undef,
 ) {
   require icingaweb2
 

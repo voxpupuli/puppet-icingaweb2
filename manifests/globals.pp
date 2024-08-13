@@ -67,7 +67,7 @@
 #   Path to `icingacli' comand line tool.
 #
 class icingaweb2::globals (
-  String                 $package_name,
+  String[1]              $package_name,
   Stdlib::Absolutepath   $conf_dir,
   Stdlib::Absolutepath   $state_dir,
   Stdlib::Absolutepath   $data_dir,
@@ -86,7 +86,7 @@ class icingaweb2::globals (
   Stdlib::Absolutepath   $pgsql_idoreports_sla_percent,
   Stdlib::Absolutepath   $mysql_x509_schema,
   Stdlib::Absolutepath   $pgsql_x509_schema,
-  String                 $gettext_package_name,
+  String[1]              $gettext_package_name,
   Stdlib::Absolutepath   $icingacli_bin,
 ) {
   $stdlib_version = load_module_metadata('stdlib')['version']

@@ -16,10 +16,10 @@
 # @api private
 #
 define icingaweb2::module::fileshipper::directory (
-  String                           $identifier = $title,
+  String[1]                        $identifier = $title,
   Optional[Stdlib::Absolutepath]   $source     = undef,
   Optional[Stdlib::Absolutepath]   $target     = undef,
-  String                           $extensions = '.conf',
+  String[1]                        $extensions = '.conf',
 ) {
   assert_private("You're not supposed to use this defined type manually.")
 

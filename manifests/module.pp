@@ -51,13 +51,13 @@
 #
 define icingaweb2::module (
   Enum['absent', 'present']         $ensure         = 'present',
-  String                            $module         = $title,
+  String[1]                         $module         = $title,
   Stdlib::Absolutepath              $module_dir     = "${icingaweb2::globals::default_module_path}/${title}",
   Enum['git', 'none', 'package']    $install_method = 'git',
-  Optional[String]                  $git_repository = undef,
+  Optional[String[1]]               $git_repository = undef,
   String                            $git_revision   = 'master',
-  Optional[String]                  $package_name   = undef,
-  Hash                              $settings       = {},
+  Optional[String[1]]               $package_name   = undef,
+  Hash[String[1], Any]              $settings       = {},
 ) {
   require icingaweb2
 

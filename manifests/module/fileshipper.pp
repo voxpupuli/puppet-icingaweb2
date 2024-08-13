@@ -49,11 +49,11 @@ class icingaweb2::module::fileshipper (
   Enum['absent', 'present']      $ensure,
   Stdlib::HTTPUrl                $git_repository,
   Enum['git', 'none', 'package'] $install_method,
-  String                         $package_name,
+  String[1]                      $package_name,
   Hash                           $base_directories,
   Hash                           $directories,
   Stdlib::Absolutepath           $module_dir   = "${icingaweb2::globals::default_module_path}/fileshipper",
-  Optional[String]               $git_revision = undef,
+  Optional[String[1]]            $git_revision = undef,
 ) {
   require icingaweb2
 

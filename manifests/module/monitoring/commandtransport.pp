@@ -25,11 +25,11 @@
 # @api private
 #
 define icingaweb2::module::monitoring::commandtransport (
-  String                       $commandtransport = $title,
+  String[1]                    $commandtransport = $title,
   Enum['api', 'local']         $transport        = 'api',
   Stdlib::Host                 $host             = 'localhost',
   Stdlib::Port                 $port             = 5665,
-  Optional[String]             $username         = undef,
+  Optional[String[1]]          $username         = undef,
   Optional[Icinga::Secret]     $password         = undef,
   Stdlib::Absolutepath         $path             = '/var/run/icinga2/cmd/icinga2.cmd',
 ) {

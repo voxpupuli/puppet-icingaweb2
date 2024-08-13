@@ -49,8 +49,8 @@
 class icingaweb2::module::audit (
   Enum['absent', 'present']      $ensure,
   Stdlib::HTTPUrl                $git_repository,
-  String                         $package_name,
   Enum['git', 'none', 'package'] $install_method,
+  String[1]                      $package_name,
   Enum['file', 'syslog', 'none'] $log_type,
   Variant[
     Enum['auth', 'user', 'authpriv'],
@@ -61,7 +61,7 @@ class icingaweb2::module::audit (
   Optional[Stdlib::Absolutepath] $log_file     = undef,
   Optional[String]               $log_ident    = undef,
   Stdlib::Absolutepath           $module_dir   = "${icingaweb2::globals::default_module_path}/audit",
-  Optional[String]               $git_revision = undef,
+  Optional[String[1]]            $git_revision = undef,
 ) {
   require icingaweb2
 

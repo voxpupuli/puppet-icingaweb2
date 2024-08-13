@@ -61,12 +61,12 @@ class icingaweb2::module::puppetdb (
   Enum['absent', 'present']      $ensure,
   Stdlib::HTTPUrl                $git_repository,
   Enum['git', 'none', 'package'] $install_method,
-  String                         $package_name,
+  String[1]                      $package_name,
   Enum['none', 'puppet']         $ssl,
   Hash                           $certificates,
   Stdlib::Absolutepath           $module_dir     = "${icingaweb2::globals::default_module_path}/puppetdb",
   Optional[Stdlib::Host]         $host           = undef,
-  Optional[String]               $git_revision   = undef,
+  Optional[String[1]]            $git_revision   = undef,
 ) {
   require icingaweb2
 

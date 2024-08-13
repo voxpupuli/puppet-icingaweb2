@@ -19,9 +19,9 @@
 #   Password for the transport.
 #
 define icingaweb2::module::icingadb::commandtransport (
-  String              $username,
+  String[1]           $username,
   Icinga::Secret      $password,
-  String              $commandtransport = $title,
+  String[1]           $commandtransport = $title,
   Stdlib::Host        $host             = 'localhost',
   Stdlib::Port        $port             = 5665,
 ) {
