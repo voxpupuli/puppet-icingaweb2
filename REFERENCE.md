@@ -253,7 +253,7 @@ Logging facility when using syslog. Possible values are 'user' or 'local0' up to
 
 ##### <a name="-icingaweb2--logging_application"></a>`logging_application`
 
-Data type: `String`
+Data type: `String[1]`
 
 Logging application name when using syslog.
 
@@ -278,7 +278,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--theme"></a>`theme`
 
-Data type: `String`
+Data type: `String[1]`
 
 The default theme setting. Users may override this settings.
 
@@ -304,7 +304,7 @@ If set to `false` packages aren't managed.
 
 ##### <a name="-icingaweb2--extra_packages"></a>`extra_packages`
 
-Data type: `Optional[Array[String]]`
+Data type: `Optional[Array[String[1]]]`
 
 An array of packages to install additionally.
 
@@ -328,7 +328,7 @@ Database type, can be either `mysql` or `pgsql`.
 
 ##### <a name="-icingaweb2--db_resource_name"></a>`db_resource_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Name for the icingaweb2 database resource.
 
@@ -348,13 +348,13 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--db_name"></a>`db_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Database name.
 
 ##### <a name="-icingaweb2--db_username"></a>`db_username`
 
-Data type: `String`
+Data type: `String[1]`
 
 Username for database access.
 
@@ -409,7 +409,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--tls_cert"></a>`tls_cert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
 
@@ -417,7 +417,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--tls_cacert"></a>`tls_cacert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
 
@@ -442,7 +442,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--tls_cipher"></a>`tls_cipher`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Cipher to use for the encrypted database connection.
 
@@ -450,20 +450,20 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--conf_user"></a>`conf_user`
 
-Data type: `String`
+Data type: `String[1]`
 
 By default this module expects Apache2 on the server. You can change the owner of the config files with this
 parameter.
 
 ##### <a name="-icingaweb2--conf_group"></a>`conf_group`
 
-Data type: `String`
+Data type: `String[1]`
 
 Group membership of config files.
 
 ##### <a name="-icingaweb2--default_domain"></a>`default_domain`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 When using domain-aware authentication, you can set a default domain here.
 
@@ -485,7 +485,7 @@ Manage a role for admin access.
 
 ##### <a name="-icingaweb2--default_admin_username"></a>`default_admin_username`
 
-Data type: `String`
+Data type: `String[1]`
 
 Default username for initial admin access. This parameter is only used
 if `import_schema` is set to `true` and only during the import itself.
@@ -499,27 +499,27 @@ if `import_schema` is set to `true` and only during the import itself.
 
 ##### <a name="-icingaweb2--resources"></a>`resources`
 
-Data type: `Hash[String, Hash[String, Any]]`
+Data type: `Hash[String[1], Hash[String[1], Any]]`
 
 Additional resources. Option `type` has to be set as hash key. Type of `ldap`
 declares a define resource of `icingaweb2::resource::ldap`, a type of `mysql`, `pgsql`,
 
 ##### <a name="-icingaweb2--default_auth_backend"></a>`default_auth_backend`
 
-Data type: `Variant[String, Boolean[false]]`
+Data type: `Variant[String[1], Boolean[false]]`
 
 Name of the user and group backend authentication of the icingaweb2 resource.
 If set to `false` the default authentication method is deactivated.
 
 ##### <a name="-icingaweb2--user_backends"></a>`user_backends`
 
-Data type: `Hash[String, Hash[String, Any]]`
+Data type: `Hash[String[1], Hash[String[1], Any]]`
 
 Additional user backends for access control. See `icingaweb2::config::authmethod`.
 
 ##### <a name="-icingaweb2--group_backends"></a>`group_backends`
 
-Data type: `Hash[String, Hash[String, Any]]`
+Data type: `Hash[String[1], Hash[String[1], Any]]`
 
 Additional group backends for access control. See `icingaweb2::config::groupbackend`.
 
@@ -557,7 +557,7 @@ The following parameters are available in the `icingaweb2::globals` class:
 
 ##### <a name="-icingaweb2--globals--package_name"></a>`package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Package to install.
 
@@ -671,7 +671,7 @@ Location of the x509 database schema for PostgreSQL.
 
 ##### <a name="-icingaweb2--globals--gettext_package_name"></a>`gettext_package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Package name `gettext` tool belongs to.
 
@@ -738,7 +738,7 @@ Set a git repository URL.
 
 ##### <a name="-icingaweb2--module--audit--git_revision"></a>`git_revision`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Set either a branch or a tag name, eg. `master` or `v1.0.2`.
 
@@ -752,7 +752,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 ##### <a name="-icingaweb2--module--audit--package_name"></a>`package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
@@ -854,7 +854,7 @@ Set a git repository URL.
 
 ##### <a name="-icingaweb2--module--businessprocess--git_revision"></a>`git_revision`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Set either a branch or a tag name, eg. `master` or `v2.1.0`.
 
@@ -868,7 +868,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 ##### <a name="-icingaweb2--module--businessprocess--package_name"></a>`package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
@@ -921,7 +921,7 @@ Set a git repository URL.
 
 ##### <a name="-icingaweb2--module--cube--git_revision"></a>`git_revision`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Set either a branch or a tag name, eg. `master` or `v1.0.0`.
 
@@ -935,7 +935,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 ##### <a name="-icingaweb2--module--cube--package_name"></a>`package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
@@ -1027,7 +1027,7 @@ Set a git repository URL.
 
 ##### <a name="-icingaweb2--module--director--git_revision"></a>`git_revision`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 
@@ -1041,7 +1041,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 ##### <a name="-icingaweb2--module--director--package_name"></a>`package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
@@ -1053,7 +1053,7 @@ Type of your database. Either `mysql` or `pgsql`.
 
 ##### <a name="-icingaweb2--module--director--db_resource_name"></a>`db_resource_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Name for the director database resource.
 
@@ -1073,13 +1073,13 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--director--db_name"></a>`db_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Name of the database.
 
 ##### <a name="-icingaweb2--module--director--db_username"></a>`db_username`
 
-Data type: `String`
+Data type: `String[1]`
 
 Username for DB connection.
 
@@ -1093,7 +1093,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--director--db_charset"></a>`db_charset`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Character set to use for the database.
 
@@ -1142,7 +1142,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--director--tls_cert"></a>`tls_cert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
 
@@ -1150,7 +1150,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--director--tls_cacert"></a>`tls_cacert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
 
@@ -1175,7 +1175,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--director--tls_cipher"></a>`tls_cipher`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Cipher to use for the encrypted database connection.
 
@@ -1197,7 +1197,7 @@ Run kickstart command after database migration. This requires `import_schema` to
 
 ##### <a name="-icingaweb2--module--director--endpoint"></a>`endpoint`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Endpoint object name of Icinga 2 API. This setting is only valid if `kickstart` is `true`.
 
@@ -1217,7 +1217,7 @@ Icinga 2 API port. This setting is only valid if `kickstart` is `true`.
 
 ##### <a name="-icingaweb2--module--director--api_username"></a>`api_username`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Icinga 2 API username. This setting is only valid if `kickstart` is `true`.
 
@@ -1251,7 +1251,7 @@ Whether the service should be started at boot time.
 
 ##### <a name="-icingaweb2--module--director--service_user"></a>`service_user`
 
-Data type: `String`
+Data type: `String[1]`
 
 The user as which the service is running. Only valid if `install_method` is set to `git`.
 
@@ -1343,13 +1343,13 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 ##### <a name="-icingaweb2--module--elasticsearch--package_name"></a>`package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
 ##### <a name="-icingaweb2--module--elasticsearch--git_revision"></a>`git_revision`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 
@@ -1432,13 +1432,13 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 ##### <a name="-icingaweb2--module--fileshipper--package_name"></a>`package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
 ##### <a name="-icingaweb2--module--fileshipper--git_revision"></a>`git_revision`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 
@@ -1512,7 +1512,7 @@ Set a git repository URL.
 
 ##### <a name="-icingaweb2--module--generictts--git_revision"></a>`git_revision`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Set either a branch or a tag name, eg. `master` or `v2.0.0`.
 
@@ -1526,7 +1526,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 ##### <a name="-icingaweb2--module--generictts--package_name"></a>`package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
@@ -1598,7 +1598,7 @@ Set a git repository URL.
 
 ##### <a name="-icingaweb2--module--graphite--git_revision"></a>`git_revision`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 
@@ -1612,7 +1612,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 ##### <a name="-icingaweb2--module--graphite--package_name"></a>`package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
@@ -1634,7 +1634,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--graphite--user"></a>`user`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 A user with access to your Graphite Web via HTTP basic authentication.
 
@@ -1650,7 +1650,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--graphite--graphite_writer_host_name_template"></a>`graphite_writer_host_name_template`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The value of your Icinga 2 GraphiteWriter's attribute `host_name_template` (if specified).
 
@@ -1658,7 +1658,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--graphite--graphite_writer_service_name_template"></a>`graphite_writer_service_name_template`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The value of your icinga 2 GraphiteWriter's attribute `service_name_template` (if specified).
 
@@ -1666,7 +1666,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--graphite--customvar_obscured_check_command"></a>`customvar_obscured_check_command`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The Icinga custom variable with the `actual` check command obscured by e.g. check_by_ssh.
 
@@ -1760,7 +1760,7 @@ Enable or disable module.
 
 ##### <a name="-icingaweb2--module--icingadb--package_name"></a>`package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 IicngaDB-Web module package name.
 
@@ -1772,7 +1772,7 @@ Type of your IDO database. Either `mysql` or `pgsql`.
 
 ##### <a name="-icingaweb2--module--icingadb--db_resource_name"></a>`db_resource_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Name for the icingadb database resource.
 
@@ -1792,13 +1792,13 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--icingadb--db_name"></a>`db_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Name of the IcingaDB database.
 
 ##### <a name="-icingaweb2--module--icingadb--db_username"></a>`db_username`
 
-Data type: `String`
+Data type: `String[1]`
 
 Username for IcingaDB database connection.
 
@@ -1812,7 +1812,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--icingadb--db_charset"></a>`db_charset`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The character set to use for the IcingaDB database connection.
 
@@ -1869,7 +1869,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--icingadb--db_tls_cacert"></a>`db_tls_cacert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The CA root certificate in PEM format. Only valid if db_use_tls is enabled.
 
@@ -1894,7 +1894,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--icingadb--db_tls_cipher"></a>`db_tls_cipher`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Cipher to use for the encrypted database connection.
 
@@ -1981,7 +1981,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--icingadb--redis_tls_cert"></a>`redis_tls_cert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Client certificate in PEM format to authenticate to Redis.
 Only valid if redis_use_tls is enabled.
@@ -1998,7 +1998,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--icingadb--redis_tls_cacert"></a>`redis_tls_cacert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The CA certificate in PEM format. Only valid if redis_use_tls is enabled.
 
@@ -2030,14 +2030,14 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--icingadb--settings"></a>`settings`
 
-Data type: `Hash[String, Any]`
+Data type: `Hash[String[1], Any]`
 
 General configuration of module icingadb.
 See official Icinga [documentation](https://icinga.com/docs/icinga-web/latest/modules/monitoring/doc/03-Configuration)
 
 ##### <a name="-icingaweb2--module--icingadb--commandtransports"></a>`commandtransports`
 
-Data type: `Hash[String, Hash]`
+Data type: `Hash[String[1], Hash]`
 
 A hash of command transports.
 
@@ -2091,7 +2091,7 @@ Set a git repository URL.
 
 ##### <a name="-icingaweb2--module--idoreports--git_revision"></a>`git_revision`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Set either a branch or a tag name, eg. `master` or `v2.1.0`.
 
@@ -2105,7 +2105,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 ##### <a name="-icingaweb2--module--idoreports--package_name"></a>`package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
@@ -2185,7 +2185,7 @@ Enable or disable module.
 
 ##### <a name="-icingaweb2--module--monitoring--protected_customvars"></a>`protected_customvars`
 
-Data type: `Variant[String, Array[String]]`
+Data type: `Variant[String[1], Array[String[1]]]`
 
 Custom variables in Icinga 2 may contain sensible information. Set patterns for custom variables
 that should be hidden in the web interface.
@@ -2238,7 +2238,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--monitoring--ido_db_charset"></a>`ido_db_charset`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The character set to use for the database connection.
 
@@ -2287,7 +2287,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--monitoring--tls_cert"></a>`tls_cert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
 
@@ -2295,7 +2295,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--monitoring--tls_cacert"></a>`tls_cacert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
 
@@ -2320,7 +2320,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--monitoring--tls_cipher"></a>`tls_cipher`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Cipher to use for the encrypted database connection.
 
@@ -2328,7 +2328,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--monitoring--settings"></a>`settings`
 
-Data type: `Hash[String,Any]`
+Data type: `Hash[String[1], Any]`
 
 General configuration of module monitoring.
 See official Icinga [documentation](https://icinga.com/docs/icinga-web/latest/modules/monitoring/doc/03-Configuration)
@@ -2393,7 +2393,7 @@ Set a git repository URL.
 
 ##### <a name="-icingaweb2--module--pdfexport--git_revision"></a>`git_revision`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Set either a branch or a tag name, eg. `master` or `v2.1.0`.
 
@@ -2407,7 +2407,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 ##### <a name="-icingaweb2--module--pdfexport--package_name"></a>`package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
@@ -2518,7 +2518,7 @@ Set a git repository URL.
 
 ##### <a name="-icingaweb2--module--puppetdb--git_revision"></a>`git_revision`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Set either a branch or a tag name, eg. `master` or `v1.3.2`.
 
@@ -2532,7 +2532,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 ##### <a name="-icingaweb2--module--puppetdb--package_name"></a>`package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
@@ -2632,7 +2632,7 @@ The upstream module repository.
 
 ##### <a name="-icingaweb2--module--reporting--git_revision"></a>`git_revision`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The version of the module that needs to be used.
 
@@ -2646,7 +2646,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 ##### <a name="-icingaweb2--module--reporting--package_name"></a>`package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
@@ -2658,7 +2658,7 @@ The database type. Either mysql or postgres.
 
 ##### <a name="-icingaweb2--module--reporting--db_resource_name"></a>`db_resource_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Name for the reporting database resource.
 
@@ -2678,13 +2678,13 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--reporting--db_name"></a>`db_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 The name of the database this module should use.
 
 ##### <a name="-icingaweb2--module--reporting--db_username"></a>`db_username`
 
-Data type: `String`
+Data type: `String[1]`
 
 The username needed to access the database.
 
@@ -2698,7 +2698,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--reporting--db_charset"></a>`db_charset`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The charset the database is set to.
 
@@ -2747,7 +2747,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--reporting--tls_cert"></a>`tls_cert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
 
@@ -2755,7 +2755,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--reporting--tls_cacert"></a>`tls_cacert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
 
@@ -2780,7 +2780,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--reporting--tls_cipher"></a>`tls_cipher`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Cipher to use for the encrypted database connection.
 
@@ -2798,7 +2798,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--reporting--mail"></a>`mail`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Mails are sent with this sender address.
 
@@ -2824,7 +2824,7 @@ Whether the service should be started at boot time.
 
 ##### <a name="-icingaweb2--module--reporting--service_user"></a>`service_user`
 
-Data type: `String`
+Data type: `String[1]`
 
 The user as which the service is running. Only valid if `install_method` is set to `git`.
 
@@ -2919,7 +2919,7 @@ The upstream module repository.
 
 ##### <a name="-icingaweb2--module--vspheredb--git_revision"></a>`git_revision`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The version of the module that needs to be used.
 
@@ -2933,7 +2933,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 ##### <a name="-icingaweb2--module--vspheredb--package_name"></a>`package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
@@ -2945,7 +2945,7 @@ The database type. Either mysql or postgres.
 
 ##### <a name="-icingaweb2--module--vspheredb--db_resource_name"></a>`db_resource_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Name for the vspheredb database resource.
 
@@ -2965,13 +2965,13 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--vspheredb--db_name"></a>`db_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 The name of the database this module should use.
 
 ##### <a name="-icingaweb2--module--vspheredb--db_username"></a>`db_username`
 
-Data type: `String`
+Data type: `String[1]`
 
 The username needed to access the database.
 
@@ -2985,7 +2985,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--vspheredb--db_charset"></a>`db_charset`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The charset the database is set to.
 
@@ -3034,7 +3034,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--vspheredb--tls_cert"></a>`tls_cert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
 
@@ -3042,7 +3042,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--vspheredb--tls_cacert"></a>`tls_cacert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
 
@@ -3067,7 +3067,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--vspheredb--tls_cipher"></a>`tls_cipher`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Cipher to use for the encrypted database connection.
 
@@ -3103,7 +3103,7 @@ Whether the service should be started at boot time.
 
 ##### <a name="-icingaweb2--module--vspheredb--service_user"></a>`service_user`
 
-Data type: `String`
+Data type: `String[1]`
 
 The user as which the service is running. Only valid if `install_method` is set to `git`.
 
@@ -3182,7 +3182,7 @@ The upstream module repository.
 
 ##### <a name="-icingaweb2--module--x509--git_revision"></a>`git_revision`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The version of the module that needs to be used.
 
@@ -3196,7 +3196,7 @@ Install methods are `git`, `package` and `none` is supported as installation met
 
 ##### <a name="-icingaweb2--module--x509--package_name"></a>`package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
@@ -3208,7 +3208,7 @@ The database type. Either mysql or pgsql.
 
 ##### <a name="-icingaweb2--module--x509--db_resource_name"></a>`db_resource_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Name for the x509 database resource.
 
@@ -3228,13 +3228,13 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--x509--db_name"></a>`db_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 The name of the database this module should use.
 
 ##### <a name="-icingaweb2--module--x509--db_username"></a>`db_username`
 
-Data type: `String`
+Data type: `String[1]`
 
 The username needed to access the database.
 
@@ -3248,7 +3248,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--x509--db_charset"></a>`db_charset`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The charset the database is set to.
 
@@ -3297,7 +3297,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--x509--tls_cert"></a>`tls_cert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
 
@@ -3305,7 +3305,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--x509--tls_cacert"></a>`tls_cacert`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
 
@@ -3330,7 +3330,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--x509--tls_cipher"></a>`tls_cipher`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Cipher to use for the encrypted database connection.
 
@@ -3366,7 +3366,7 @@ Whether the service should be started at boot time.
 
 ##### <a name="-icingaweb2--module--x509--service_user"></a>`service_user`
 
-Data type: `String`
+Data type: `String[1]`
 
 The user as which the service is running. Only valid if `install_method` is set to `git`.
 
@@ -3980,7 +3980,7 @@ Absolute path to the configuration file.
 
 ##### <a name="-icingaweb2--inisection--section_name"></a>`section_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Name of the target section. Settings are set under [$section_name]
 
@@ -3996,7 +3996,7 @@ Default value: `{}`
 
 ##### <a name="-icingaweb2--inisection--order"></a>`order`
 
-Data type: `Variant[String, Integer]`
+Data type: `Variant[String[1], Integer[1]]`
 
 Ordering of the INI section within a file. Defaults to `01`
 
@@ -4065,7 +4065,7 @@ Default value: `'present'`
 
 ##### <a name="-icingaweb2--module--module"></a>`module`
 
-Data type: `String`
+Data type: `String[1]`
 
 Name of the module.
 
@@ -4089,7 +4089,7 @@ Default value: `'git'`
 
 ##### <a name="-icingaweb2--module--git_repository"></a>`git_repository`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The git repository. This setting is only valid in combination with the installation method `git`.
 
@@ -4105,7 +4105,7 @@ Default value: `'master'`
 
 ##### <a name="-icingaweb2--module--package_name"></a>`package_name`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Package name of the module. This setting is only valid in combination with the installation method `package`.
 
@@ -4113,7 +4113,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--settings"></a>`settings`
 
-Data type: `Hash`
+Data type: `Hash[String[1], Any]`
 
 A hash with the module settings. Multiple configuration files with ini sections can be configured with this hash.
 The `module_name` should be used as target directory for the configuration files.
@@ -4161,7 +4161,7 @@ The following parameters are available in the `icingaweb2::resource::database` d
 
 ##### <a name="-icingaweb2--resource--database--resource_name"></a>`resource_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Name of the resources. Resources are referenced by their name in other configuration sections.
 
@@ -4197,13 +4197,13 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--resource--database--database"></a>`database`
 
-Data type: `String`
+Data type: `String[1]`
 
 The database to use.
 
 ##### <a name="-icingaweb2--resource--database--username"></a>`username`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The username to use when connecting to the server.
 
@@ -4219,7 +4219,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--resource--database--charset"></a>`charset`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The character set to use for the database connection.
 
@@ -4277,7 +4277,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--resource--database--tls_cipher"></a>`tls_cipher`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Chipher to use for the encrypted database connection.
 
@@ -4316,7 +4316,7 @@ The following parameters are available in the `icingaweb2::resource::ldap` defin
 
 ##### <a name="-icingaweb2--resource--ldap--resource_name"></a>`resource_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 Name of the resources. Resources are referenced by their name in other configuration sections.
 
@@ -4324,7 +4324,7 @@ Default value: `$title`
 
 ##### <a name="-icingaweb2--resource--ldap--host"></a>`host`
 
-Data type: `String`
+Data type: `String[1]`
 
 Connect to the database or ldap server on the given host. For using unix domain sockets, specify 'localhost' for
 MySQL and the path to the unix domain socket directory for PostgreSQL. When using the 'ldap' type you can also
@@ -4342,7 +4342,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--resource--ldap--root_dn"></a>`root_dn`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Root object of the tree, e.g. 'ou=people,dc=icinga,dc=com'.
 
@@ -4350,7 +4350,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--resource--ldap--bind_dn"></a>`bind_dn`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The user to use when connecting to the server.
 
@@ -4417,8 +4417,8 @@ Alias of
 ```puppet
 Struct[{
     name   => String,
-    users  => Optional[Array[String]],
-    groups => Optional[Array[String]],
+    users  => Optional[Array[String[1]]],
+    groups => Optional[Array[String[1]]],
 }]
 ```
 
