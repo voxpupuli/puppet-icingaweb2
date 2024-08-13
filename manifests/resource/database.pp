@@ -67,7 +67,7 @@ define icingaweb2::resource::database (
   Optional[Stdlib::Host]             $host          = undef,
   Optional[Stdlib::Port]             $port          = undef,
   Optional[String]                   $username      = undef,
-  Optional[Icingaweb2::Secret]       $password      = undef,
+  Optional[Icinga::Secret]           $password      = undef,
   Optional[String]                   $charset       = undef,
   Optional[Boolean]                  $use_tls       = undef,
   Optional[Boolean]                  $tls_noverify  = undef,

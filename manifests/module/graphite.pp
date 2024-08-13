@@ -69,7 +69,7 @@ class icingaweb2::module::graphite (
   Optional[Stdlib::HTTPUrl]      $url                                   = undef,
   Optional[Boolean]              $insecure                              = undef,
   Optional[String]               $user                                  = undef,
-  Optional[Icingaweb2::Secret]   $password                              = undef,
+  Optional[Icinga::Secret]       $password                              = undef,
   Optional[String]               $graphite_writer_host_name_template    = undef,
   Optional[String]               $graphite_writer_service_name_template = undef,
   Optional[String]               $customvar_obscured_check_command      = undef,
