@@ -26,9 +26,9 @@
 # @api private
 #
 define icingaweb2::module::elasticsearch::instance (
-  String                          $instance_name      = $title,
-  String                          $uri                = undef,
-  Optional[String]                $user               = undef,
+  String[1]                       $instance_name      = $title,
+  Optional[String[1]]             $uri                = undef,
+  Optional[String[1]]             $user               = undef,
   Optional[Icingaweb2::Secret]    $password           = undef,
   Optional[Stdlib::Absolutepath]  $ca                 = undef,
   Optional[Stdlib::Absolutepath]  $client_certificate = undef,

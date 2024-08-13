@@ -21,11 +21,11 @@
 # @api private
 #
 define icingaweb2::module::elasticsearch::eventtype (
-  String             $eventtype_name = $title,
-  Optional[String]   $instance       = undef,
-  Optional[String]   $index          = undef,
-  Optional[String]   $filter         = undef,
-  Optional[String]   $fields         = undef,
+  String[1]             $eventtype_name = $title,
+  Optional[String[1]]   $instance       = undef,
+  Optional[String[1]]   $index          = undef,
+  Optional[String[1]]   $filter         = undef,
+  Optional[String[1]]   $fields         = undef,
 ) {
   assert_private("You're not supposed to use this defined type manually.")
 

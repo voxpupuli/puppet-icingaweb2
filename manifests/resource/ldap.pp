@@ -37,11 +37,11 @@
 #   }
 #
 define icingaweb2::resource::ldap (
-  String                            $resource_name = $title,
-  String                            $host          = 'localhost',
+  String[1]                         $resource_name = $title,
+  String[1]                         $host          = 'localhost',
   Optional[Stdlib::Port]            $port          = undef,
-  Optional[String]                  $root_dn       = undef,
-  Optional[String]                  $bind_dn       = undef,
+  Optional[String[1]]               $root_dn       = undef,
+  Optional[String[1]]               $bind_dn       = undef,
   Optional[Icingaweb2::Secret]      $bind_pw       = undef,
   Enum['none', 'starttls', 'ldaps'] $encryption    = 'none',
   Integer                           $timeout       = 5,

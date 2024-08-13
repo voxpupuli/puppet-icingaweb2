@@ -10,7 +10,7 @@
 # @api private
 #
 define icingaweb2::module::fileshipper::basedir (
-  String                           $identifier = $title,
+  String[1]                        $identifier = $title,
   Optional[Stdlib::Absolutepath]   $basedir    = undef,
 ) {
   assert_private("You're not supposed to use this defined type manually.")

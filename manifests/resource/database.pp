@@ -62,20 +62,20 @@
 define icingaweb2::resource::database (
   Enum['mysql', 'pgsql', 'mssql',
   'oci', 'oracle', 'ibm', 'sqlite']  $type,
-  String                             $database,
-  String                             $resource_name = $title,
+  String[1]                          $database,
+  String[1]                          $resource_name = $title,
   Optional[Stdlib::Host]             $host          = undef,
   Optional[Stdlib::Port]             $port          = undef,
-  Optional[String]                   $username      = undef,
+  Optional[String[1]]                $username      = undef,
   Optional[Icingaweb2::Secret]       $password      = undef,
-  Optional[String]                   $charset       = undef,
+  Optional[String[1]]                $charset       = undef,
   Optional[Boolean]                  $use_tls       = undef,
   Optional[Boolean]                  $tls_noverify  = undef,
   Optional[Stdlib::Absolutepath]     $tls_key       = undef,
   Optional[Stdlib::Absolutepath]     $tls_cert      = undef,
   Optional[Stdlib::Absolutepath]     $tls_cacert    = undef,
   Optional[Stdlib::Absolutepath]     $tls_capath    = undef,
-  Optional[String]                   $tls_cipher    = undef,
+  Optional[String[1]]                $tls_cipher    = undef,
 ) {
   $conf_dir = $icingaweb2::globals::conf_dir
 
