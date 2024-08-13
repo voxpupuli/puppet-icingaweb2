@@ -86,7 +86,6 @@ that store groups.
 
 * [`Icingaweb2::AdminRole`](#Icingaweb2--AdminRole): A strict type for the default admin role
 * [`Icingaweb2::ImportSchema`](#Icingaweb2--ImportSchema): A type for setting import database schemata
-* [`Icingaweb2::Secret`](#Icingaweb2--Secret): A strict type for the secrets like passwords or keys
 
 ## Classes
 
@@ -360,7 +359,7 @@ Username for database access.
 
 ##### <a name="-icingaweb2--db_password"></a>`db_password`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 Password for database access.
 
@@ -401,7 +400,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--tls_key"></a>`tls_key`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
 
@@ -492,7 +491,7 @@ if `import_schema` is set to `true` and only during the import itself.
 
 ##### <a name="-icingaweb2--default_admin_password"></a>`default_admin_password`
 
-Data type: `Icingaweb2::Secret`
+Data type: `Icinga::Secret`
 
 Default password for initial admin access. This parameter is only used
 if `import_schema` is set to `true` and only during the import itself.
@@ -1085,7 +1084,7 @@ Username for DB connection.
 
 ##### <a name="-icingaweb2--module--director--db_password"></a>`db_password`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 Password for DB connection.
 
@@ -1134,7 +1133,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--director--tls_key"></a>`tls_key`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
 
@@ -1225,7 +1224,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--director--api_password"></a>`api_password`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 Icinga 2 API password. This setting is only valid if `kickstart` is `true`.
 
@@ -1642,7 +1641,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--graphite--password"></a>`password`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 The users password.
 
@@ -1804,7 +1803,7 @@ Username for IcingaDB database connection.
 
 ##### <a name="-icingaweb2--module--icingadb--db_password"></a>`db_password`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 Password for IcingaDB database connection.
 
@@ -1861,7 +1860,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--icingadb--db_tls_key"></a>`db_tls_key`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 The client private key in PEM format. Only valid if db_use_tls is enabled.
 
@@ -1916,7 +1915,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--icingadb--redis_password"></a>`redis_password`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 Password for Redis connection.
 
@@ -1940,7 +1939,7 @@ Default value: `$redis_port`
 
 ##### <a name="-icingaweb2--module--icingadb--redis_primary_password"></a>`redis_primary_password`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 Alternative parameter to use for `redis_passwod`. Useful for high availability environments.
 
@@ -1964,7 +1963,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--icingadb--redis_secondary_password"></a>`redis_secondary_password`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 Password for the second Redis server.
 
@@ -1990,7 +1989,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--icingadb--redis_tls_key"></a>`redis_tls_key`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 Client private key in PEM format. Only valid if redis_use_tls is enabled.
 
@@ -2230,7 +2229,7 @@ Username for IDO DB connection.
 
 ##### <a name="-icingaweb2--module--monitoring--ido_db_password"></a>`ido_db_password`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 Password for IDO DB connection.
 
@@ -2279,7 +2278,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--monitoring--tls_key"></a>`tls_key`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
 
@@ -2690,7 +2689,7 @@ The username needed to access the database.
 
 ##### <a name="-icingaweb2--module--reporting--db_password"></a>`db_password`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 The password needed to access the database.
 
@@ -2739,7 +2738,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--reporting--tls_key"></a>`tls_key`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
 
@@ -2977,7 +2976,7 @@ The username needed to access the database.
 
 ##### <a name="-icingaweb2--module--vspheredb--db_password"></a>`db_password`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 The password needed to access the database.
 
@@ -3026,7 +3025,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--vspheredb--tls_key"></a>`tls_key`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
 
@@ -3240,7 +3239,7 @@ The username needed to access the database.
 
 ##### <a name="-icingaweb2--module--x509--db_password"></a>`db_password`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 The password needed to access the database.
 
@@ -3289,7 +3288,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--x509--tls_key"></a>`tls_key`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
 
@@ -4211,7 +4210,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--resource--database--password"></a>`password`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 The password to use when connecting the database.
 
@@ -4358,7 +4357,7 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--resource--ldap--bind_pw"></a>`bind_pw`
 
-Data type: `Optional[Icingaweb2::Secret]`
+Data type: `Optional[Icinga::Secret]`
 
 The password to use when connecting to the server.
 
@@ -4427,10 +4426,4 @@ Struct[{
 A type for setting import database schemata
 
 Alias of `Variant[Boolean, Enum['mariadb', 'mysql']]`
-
-### <a name="Icingaweb2--Secret"></a>`Icingaweb2::Secret`
-
-A strict type for the secrets like passwords or keys
-
-Alias of `Variant[String, Sensitive[String]]`
 

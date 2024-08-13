@@ -145,8 +145,8 @@ class icingaweb2::module::director (
   String[1]                      $db_name,
   String[1]                      $db_username,
   Optional[Stdlib::Port]         $db_port         = undef,
-  Optional[Icingaweb2::Secret]   $db_password     = undef,
   Optional[String[1]]            $db_charset      = undef,
+  Optional[Icinga::Secret]       $db_password     = undef,
   Optional[Boolean]              $import_schema   = undef,
   Stdlib::Absolutepath           $module_dir      = "${icingaweb2::globals::default_module_path}/director",
   Optional[String[1]]            $git_revision    = undef,
@@ -155,14 +155,14 @@ class icingaweb2::module::director (
   Optional[Stdlib::Absolutepath] $tls_cert_file   = undef,
   Optional[Stdlib::Absolutepath] $tls_cacert_file = undef,
   Optional[Stdlib::Absolutepath] $tls_capath      = undef,
-  Optional[Icingaweb2::Secret]   $tls_key         = undef,
+  Optional[Icinga::Secret]       $tls_key         = undef,
   Optional[String[1]]            $tls_cert        = undef,
   Optional[String[1]]            $tls_cacert      = undef,
   Optional[Boolean]              $tls_noverify    = undef,
   Optional[String[1]]            $tls_cipher      = undef,
   Optional[String[1]]            $endpoint        = undef,
   Optional[String[1]]            $api_username    = undef,
-  Optional[Icingaweb2::Secret]   $api_password    = undef,
+  Optional[Icinga::Secret]       $api_password    = undef,
 ) {
   require icingaweb2
 

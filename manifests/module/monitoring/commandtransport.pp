@@ -30,7 +30,7 @@ define icingaweb2::module::monitoring::commandtransport (
   Stdlib::Host                 $host             = 'localhost',
   Stdlib::Port                 $port             = 5665,
   Optional[String[1]]          $username         = undef,
-  Optional[Icingaweb2::Secret] $password         = undef,
+  Optional[Icinga::Secret]     $password         = undef,
   Stdlib::Absolutepath         $path             = '/var/run/icinga2/cmd/icinga2.cmd',
 ) {
   $conf_dir        = $icingaweb2::globals::conf_dir

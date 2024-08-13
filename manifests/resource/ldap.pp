@@ -42,7 +42,7 @@ define icingaweb2::resource::ldap (
   Optional[Stdlib::Port]            $port          = undef,
   Optional[String[1]]               $root_dn       = undef,
   Optional[String[1]]               $bind_dn       = undef,
-  Optional[Icingaweb2::Secret]      $bind_pw       = undef,
+  Optional[Icinga::Secret]          $bind_pw       = undef,
   Enum['none', 'starttls', 'ldaps'] $encryption    = 'none',
   Integer                           $timeout       = 5,
 ) {

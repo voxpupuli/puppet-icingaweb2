@@ -20,7 +20,7 @@
 #
 define icingaweb2::module::icingadb::commandtransport (
   String[1]           $username,
-  Icingaweb2::Secret  $password,
+  Icinga::Secret      $password,
   String[1]           $commandtransport = $title,
   Stdlib::Host        $host             = 'localhost',
   Stdlib::Port        $port             = 5665,

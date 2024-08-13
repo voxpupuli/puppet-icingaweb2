@@ -29,7 +29,7 @@ define icingaweb2::module::elasticsearch::instance (
   String[1]                       $instance_name      = $title,
   Optional[String[1]]             $uri                = undef,
   Optional[String[1]]             $user               = undef,
-  Optional[Icingaweb2::Secret]    $password           = undef,
+  Optional[Icinga::Secret]        $password           = undef,
   Optional[Stdlib::Absolutepath]  $ca                 = undef,
   Optional[Stdlib::Absolutepath]  $client_certificate = undef,
   Optional[Stdlib::Absolutepath]  $client_private_key = undef,

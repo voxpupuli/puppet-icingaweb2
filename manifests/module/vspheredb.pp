@@ -126,7 +126,7 @@ class icingaweb2::module::vspheredb (
   Optional[Stdlib::Absolutepath]             $tls_cert_file   = undef,
   Optional[Stdlib::Absolutepath]             $tls_cacert_file = undef,
   Optional[Stdlib::Absolutepath]             $tls_capath      = undef,
-  Optional[Icingaweb2::Secret]               $tls_key         = undef,
+  Optional[Icinga::Secret]                   $tls_key         = undef,
   Optional[String[1]]                        $tls_cert        = undef,
   Optional[String[1]]                        $tls_cacert      = undef,
   Optional[Boolean]                          $tls_noverify    = undef,
