@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.0.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v5.0.0) (2024-08-13)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v4.1.0...v5.0.0)
+
+**Breaking changes:**
+
+- Drop EL7 support [\#412](https://github.com/voxpupuli/puppet-icingaweb2/pull/412) ([lbetz](https://github.com/lbetz))
+- Drop Debian Buster support [\#411](https://github.com/voxpupuli/puppet-icingaweb2/pull/411) ([lbetz](https://github.com/lbetz))
+
+**Implemented enhancements:**
+
+- Restrict params to non-empty strings [\#416](https://github.com/voxpupuli/puppet-icingaweb2/pull/416) ([lbetz](https://github.com/lbetz))
+- Set requirement of puppet-icinga to \>= 3.0.0 [\#415](https://github.com/voxpupuli/puppet-icingaweb2/pull/415) ([lbetz](https://github.com/lbetz))
+- Change some module package names [\#414](https://github.com/voxpupuli/puppet-icingaweb2/pull/414) ([lbetz](https://github.com/lbetz))
+- Add Ubuntu \(24.04\) Noble support [\#413](https://github.com/voxpupuli/puppet-icingaweb2/pull/413) ([lbetz](https://github.com/lbetz))
+- Set module dependency of puppet-icinga up to =\< 7.0.0 [\#410](https://github.com/voxpupuli/puppet-icingaweb2/pull/410) ([lbetz](https://github.com/lbetz))
+
+**Merged pull requests:**
+
+- fixtures.yml: Pull dependencies from git [\#407](https://github.com/voxpupuli/puppet-icingaweb2/pull/407) ([bastelfreak](https://github.com/bastelfreak))
+- puppet/systemd: Allow 8.x [\#406](https://github.com/voxpupuli/puppet-icingaweb2/pull/406) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v4.1.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v4.1.0) (2024-05-24)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v4.0.0...v4.1.0)
