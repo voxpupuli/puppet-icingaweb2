@@ -115,7 +115,7 @@ class icingaweb2::module::vspheredb (
   Stdlib::Host                               $db_host,
   String[1]                                  $db_name,
   String[1]                                  $db_username,
-  Optional[Icingaweb2::Secret]               $db_password     = undef,
+  Optional[Icinga::Secret]                   $db_password     = undef,
   Optional[Stdlib::Port]                     $db_port         = undef,
   Optional[String[1]]                        $db_charset      = undef,
   Optional[Icingaweb2::ImportSchema]         $import_schema   = undef,
