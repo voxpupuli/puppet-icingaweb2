@@ -28,7 +28,6 @@
 * [`icingaweb2::module::translation`](#icingaweb2--module--translation): Installs and configures the translation module.
 * [`icingaweb2::module::vspheredb`](#icingaweb2--module--vspheredb): Installs the vsphereDB plugin
 * [`icingaweb2::module::x509`](#icingaweb2--module--x509): Installs the x509 module
-* [`icingaweb2::module::x509::install`](#icingaweb2--module--x509--install): Install the x509 module
 
 #### Private Classes
 
@@ -49,6 +48,7 @@
 * `icingaweb2::module::vspheredb::install`: Install the VSphereDB module
 * `icingaweb2::module::vspheredb::service`: Manage the vspheredb service.
 * `icingaweb2::module::x509::config`: Configure the x509 module
+* `icingaweb2::module::x509::install`: Install the x509 module
 * `icingaweb2::module::x509::service`: Manage the x509 job scheduler.
 
 ### Defined types
@@ -3368,10 +3368,6 @@ Whether the service should be started at boot time.
 Data type: `String[1]`
 
 The user as which the service is running. Only valid if `install_method` is set to `git`.
-
-### <a name="icingaweb2--module--x509--install"></a>`icingaweb2::module::x509::install`
-
-Install the x509 module
 
 ## Defined types
 
