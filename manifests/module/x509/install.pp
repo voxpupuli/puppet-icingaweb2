@@ -1,6 +1,8 @@
 # @summary
 #   Install the x509 module
 #
+# @api private
+#
 class icingaweb2::module::x509::install {
   assert_private()
 
