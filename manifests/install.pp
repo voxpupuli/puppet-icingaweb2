@@ -26,6 +26,9 @@ class icingaweb2::install {
     package { $package_name:
       ensure => installed,
     }
+    File {
+      require => Package[$package_name],
+    }
   }
 
   if $extra_packages {
@@ -71,7 +74,7 @@ class icingaweb2::install {
     mode   => '0755',
   }
 
-  exec { 'link old db schema directory for compatibility':
+  -> exec { 'link old db schema directory for compatibility':
     path    => $facts['path'],
     command => "ln -s ${data_dir}/schema ${comp_dir}/schema",
     unless  => "stat ${comp_dir}/schema",
