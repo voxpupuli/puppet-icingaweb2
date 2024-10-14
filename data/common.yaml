@@ -59,8 +59,8 @@ icingaweb2::module::director::db_host: localhost
 icingaweb2::module::director::db_name: director
 icingaweb2::module::director::db_username: director
 
-icingaweb2::globals::mysql_reporting_schema: /schema/mysql.sql
-icingaweb2::globals::pgsql_reporting_schema: /schema/postgresql.sql
+icingaweb2::globals::mysql_reporting_schema: /schema/mysql.schema.sql
+icingaweb2::globals::pgsql_reporting_schema: /schema/pgsql.schema.sql
 icingaweb2::module::reporting::ensure: present
 icingaweb2::module::reporting::install_method: git
 icingaweb2::module::reporting::git_repository: https://github.com/Icinga/icingaweb2-module-reporting.git
