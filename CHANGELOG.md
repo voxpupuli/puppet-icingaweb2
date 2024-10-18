@@ -4,12 +4,26 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v5.0.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v5.0.0) (2024-08-13)
+## [v5.0.1](https://github.com/voxpupuli/puppet-icingaweb2/tree/v5.0.1) (2024-10-18)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v5.0.0...v5.0.1)
+
+**Fixed bugs:**
+
+- Fix path to reporting db schema [\#425](https://github.com/voxpupuli/puppet-icingaweb2/pull/425) ([lbetz](https://github.com/lbetz))
+- Install: Ensure package installed before file resources [\#422](https://github.com/voxpupuli/puppet-icingaweb2/pull/422) ([sagepe](https://github.com/sagepe))
+
+**Closed issues:**
+
+- First run on new server fails due to ordering of package and file resources [\#421](https://github.com/voxpupuli/puppet-icingaweb2/issues/421)
+
+## [v5.0.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v5.0.0) (2024-08-15)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v4.1.0...v5.0.0)
 
 **Breaking changes:**
 
+- Drop EOL Centos 8 support [\#419](https://github.com/voxpupuli/puppet-icingaweb2/pull/419) ([lbetz](https://github.com/lbetz))
 - Drop EL7 support [\#412](https://github.com/voxpupuli/puppet-icingaweb2/pull/412) ([lbetz](https://github.com/lbetz))
 - Drop Debian Buster support [\#411](https://github.com/voxpupuli/puppet-icingaweb2/pull/411) ([lbetz](https://github.com/lbetz))
 
