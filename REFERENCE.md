@@ -218,6 +218,7 @@ The following parameters are available in the `icingaweb2` class:
 * [`conf_group`](#-icingaweb2--conf_group)
 * [`default_domain`](#-icingaweb2--default_domain)
 * [`cookie_path`](#-icingaweb2--cookie_path)
+* [`use_strict_csp`](#-icingaweb2--use_strict_csp)
 * [`admin_role`](#-icingaweb2--admin_role)
 * [`default_admin_username`](#-icingaweb2--default_admin_username)
 * [`default_admin_password`](#-icingaweb2--default_admin_password)
@@ -473,6 +474,14 @@ Default value: `undef`
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Path to where cookies are stored.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--use_strict_csp"></a>`use_strict_csp`
+
+Data type: `Optional[Boolean]`
+
+Enable the inclusion of Content Security Policy (CSP) headers in application responses.
 
 Default value: `undef`
 
