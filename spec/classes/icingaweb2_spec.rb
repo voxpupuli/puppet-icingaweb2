@@ -68,6 +68,7 @@ describe('icingaweb2', type: :class) do
             )
         }
         it { is_expected.not_to contain_icingaweb2__inisection('config-authentication') }
+        it { is_expected.not_to contain_icingaweb2__inisection('config-security') }
         it { is_expected.not_to contain_icingaweb2__inisection('config-cookie') }
         it {
           is_expected.to contain_icingaweb2__resource__database('icingaweb2')
@@ -117,6 +118,38 @@ describe('icingaweb2', type: :class) do
             .with_section_name('authentication')
             .with_target('/etc/icingaweb2/config.ini')
             .with_settings({ 'default_domain' => 'foobar' })
+        }
+      end
+
+      context "#{os} with use_strict_csp 'true'" do
+        let(:params) do
+          {
+            use_strict_csp: true,
+            db_type: 'mysql',
+          }
+        end
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('config-security')
+            .with_section_name('security')
+            .with_target('/etc/icingaweb2/config.ini')
+            .with_settings({ 'use_strict_csp' => true })
+        }
+      end
+
+      context "#{os} with use_strict_csp 'false'" do
+        let(:params) do
+          {
+            use_strict_csp: false,
+            db_type: 'mysql',
+          }
+        end
+
+        it {
+          is_expected.to contain_icingaweb2__inisection('config-security')
+            .with_section_name('security')
+            .with_target('/etc/icingaweb2/config.ini')
+            .with_settings({ 'use_strict_csp' => false })
         }
       end
 

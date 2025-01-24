@@ -21,6 +21,8 @@ class icingaweb2::config {
 
   $cookie_path          = $icingaweb2::cookie_path
 
+  $use_strict_csp       = $icingaweb2::use_strict_csp
+
   $resources            = $icingaweb2::resources
   $default_auth_backend = $icingaweb2::default_auth_backend
   $user_backends        = $icingaweb2::user_backends
@@ -99,6 +101,16 @@ class icingaweb2::config {
       target       => "${conf_dir}/config.ini",
       settings     => {
         'path'     => $cookie_path,
+      },
+    }
+  }
+
+  if $use_strict_csp =~ NotUndef {
+    icingaweb2::inisection { 'config-security':
+      section_name => 'security',
+      target       => "${conf_dir}/config.ini",
+      settings     => {
+        'use_strict_csp' => $use_strict_csp,
       },
     }
   }

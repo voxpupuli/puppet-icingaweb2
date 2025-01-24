@@ -110,6 +110,9 @@
 # @param cookie_path
 #   Path to where cookies are stored.
 #
+# @param use_strict_csp
+#   Enable the inclusion of Content Security Policy (CSP) headers in application responses.
+#
 # @param admin_role
 #   Manage a role for admin access.
 #
@@ -255,6 +258,7 @@ class icingaweb2 (
   Optional[Array[String[1]]]                      $extra_packages      = undef,
   Optional[String[1]]                             $default_domain      = undef,
   Optional[Stdlib::Absolutepath]                  $cookie_path         = undef,
+  Optional[Boolean]                               $use_strict_csp      = undef,
 ) {
   require icingaweb2::globals
 
