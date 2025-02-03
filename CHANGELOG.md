@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [Unreleased](https://github.com/voxpupuli/puppet-icingaweb2/tree/HEAD)
+## [v5.1.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v5.1.0) (2025-02-03)
 
-[Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v5.0.1...HEAD)
+[Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v5.0.1...v5.1.0)
 
 **Implemented enhancements:**
 
