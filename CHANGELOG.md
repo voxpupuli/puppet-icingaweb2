@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.1.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v5.1.0) (2025-02-03)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v5.0.1...v5.1.0)
+
+**Implemented enhancements:**
+
+- Add support for the Content Security Policy \(CSP\) security config [\#428](https://github.com/voxpupuli/puppet-icingaweb2/pull/428) ([UiP9AV6Y](https://github.com/UiP9AV6Y))
+
+**Merged pull requests:**
+
+- puppet/systemd: allow 8.x [\#427](https://github.com/voxpupuli/puppet-icingaweb2/pull/427) ([jay7x](https://github.com/jay7x))
+
 ## [v5.0.1](https://github.com/voxpupuli/puppet-icingaweb2/tree/v5.0.1) (2024-10-18)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v5.0.0...v5.0.1)
