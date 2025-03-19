@@ -52,7 +52,7 @@ class icingaweb2::install {
       mode => '2770',
       ;
     $cert_dir:
-      mode  => '2770',
+      mode => '2770',
       ;
   }
 
