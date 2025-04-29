@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.2.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v5.2.0) (2025-04-29)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v5.1.0...v5.2.0)
+
+**Implemented enhancements:**
+
+- metadata.json: Add OpenVox [\#433](https://github.com/voxpupuli/puppet-icingaweb2/pull/433) ([jstraw](https://github.com/jstraw))
+
 ## [v5.1.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v5.1.0) (2025-02-03)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v5.0.1...v5.1.0)
