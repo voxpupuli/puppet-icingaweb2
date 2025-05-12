@@ -159,3 +159,7 @@ icingaweb2::module::puppetdb::certificates: {}
 icingaweb2::module::perfdatagraphs::ensure: present
 icingaweb2::module::perfdatagraphs::git_repository: https://github.com/NETWAYS/icingaweb2-module-perfdatagraphs.git
 icingaweb2::module::perfdatagraphs::install_method: git
+
+icingaweb2::module::perfdatagraphsgraphite::ensure: present
+icingaweb2::module::perfdatagraphsgraphite::git_repository: https://github.com/NETWAYS/icingaweb2-module-perfdatagraphs-graphite.git
+icingaweb2::module::perfdatagraphsgraphite::install_method: git
