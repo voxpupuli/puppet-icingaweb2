@@ -24,6 +24,7 @@
 * [`icingaweb2::module::monitoring`](#icingaweb2--module--monitoring): Manages the monitoring module. This module is deprecated.
 * [`icingaweb2::module::pdfexport`](#icingaweb2--module--pdfexport): Installs, configures and enables the pdfexport module.
 * [`icingaweb2::module::perfdatagraphs`](#icingaweb2--module--perfdatagraphs): Installs and enables the perfdatagraphs module.
+* [`icingaweb2::module::perfdatagraphsgraphite`](#icingaweb2--module--perfdatagraphsgraphite): Installs and enables the perfdatagraphsgraphite module.
 * [`icingaweb2::module::puppetdb`](#icingaweb2--module--puppetdb): Installs and configures the puppetdb module.
 * [`icingaweb2::module::reporting`](#icingaweb2--module--reporting): Installs the reporting module
 * [`icingaweb2::module::translation`](#icingaweb2--module--translation): Installs and configures the translation module.
@@ -2533,6 +2534,128 @@ Default value: `'PT12H'`
 Data type: `Optional[Integer[1]]`
 
 Cache lifetime in seconds.
+
+Default value: `undef`
+
+### <a name="icingaweb2--module--perfdatagraphsgraphite"></a>`icingaweb2::module::perfdatagraphsgraphite`
+
+Installs and enables the perfdatagraphsgraphite module.
+
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed.
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::module::perfdatagraphsgraphite` class:
+
+* [`ensure`](#-icingaweb2--module--perfdatagraphsgraphite--ensure)
+* [`module_dir`](#-icingaweb2--module--perfdatagraphsgraphite--module_dir)
+* [`git_repository`](#-icingaweb2--module--perfdatagraphsgraphite--git_repository)
+* [`git_revision`](#-icingaweb2--module--perfdatagraphsgraphite--git_revision)
+* [`install_method`](#-icingaweb2--module--perfdatagraphsgraphite--install_method)
+* [`package_name`](#-icingaweb2--module--perfdatagraphsgraphite--package_name)
+* [`api_url`](#-icingaweb2--module--perfdatagraphsgraphite--api_url)
+* [`api_username`](#-icingaweb2--module--perfdatagraphsgraphite--api_username)
+* [`api_password`](#-icingaweb2--module--perfdatagraphsgraphite--api_password)
+* [`api_timeout`](#-icingaweb2--module--perfdatagraphsgraphite--api_timeout)
+* [`api_tls_insecure`](#-icingaweb2--module--perfdatagraphsgraphite--api_tls_insecure)
+* [`writer_host_name_template`](#-icingaweb2--module--perfdatagraphsgraphite--writer_host_name_template)
+* [`writer_service_name_template`](#-icingaweb2--module--perfdatagraphsgraphite--writer_service_name_template)
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Enable or disable module.
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--module_dir"></a>`module_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+Target directory of the module.
+
+Default value: `"${icingaweb2::globals::default_module_path}/perfdatagraphsgraphite"`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--git_repository"></a>`git_repository`
+
+Data type: `Stdlib::HTTPUrl`
+
+Set a git repository URL.
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--git_revision"></a>`git_revision`
+
+Data type: `Optional[String[1]]`
+
+Set either a branch or a tag name, eg. `main` or `v0.1.1`.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--install_method"></a>`install_method`
+
+Data type: `Enum['git', 'none', 'package']`
+
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--package_name"></a>`package_name`
+
+Data type: `Optional[String[1]]`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--api_url"></a>`api_url`
+
+Data type: `Stdlib::HTTPUrl`
+
+URI to the graphite API.
+
+Default value: `'http://127.0.0.1:8542'`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--api_username"></a>`api_username`
+
+Data type: `Optional[String[1]]`
+
+Username to authenticate to the graphite API.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--api_password"></a>`api_password`
+
+Data type: `Optional[Icinga::Secret]`
+
+Password that belongs to `api_username`.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--api_timeout"></a>`api_timeout`
+
+Data type: `Optional[Integer[1]]`
+
+Connection timeout to the graphite API.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--api_tls_insecure"></a>`api_tls_insecure`
+
+Data type: `Boolean`
+
+Wether to validate the certificate of the graphite API.
+
+Default value: `false`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--writer_host_name_template"></a>`writer_host_name_template`
+
+Data type: `Optional[String[1]]`
+
+Host template. See Icinga 2 feature `graphite`.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--writer_service_name_template"></a>`writer_service_name_template`
+
+Data type: `Optional[String[1]]`
+
+Service template. See Icinga 2 feature `graphite`.
 
 Default value: `undef`
 
