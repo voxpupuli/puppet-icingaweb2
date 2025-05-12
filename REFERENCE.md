@@ -23,6 +23,7 @@
 * [`icingaweb2::module::idoreports`](#icingaweb2--module--idoreports): Installs, configures and enables the idoreports module. The module is deprecated.
 * [`icingaweb2::module::monitoring`](#icingaweb2--module--monitoring): Manages the monitoring module. This module is deprecated.
 * [`icingaweb2::module::pdfexport`](#icingaweb2--module--pdfexport): Installs, configures and enables the pdfexport module.
+* [`icingaweb2::module::perfdatagraphs`](#icingaweb2--module--perfdatagraphs): Installs and enables the perfdatagraphs module.
 * [`icingaweb2::module::puppetdb`](#icingaweb2--module--puppetdb): Installs and configures the puppetdb module.
 * [`icingaweb2::module::reporting`](#icingaweb2--module--reporting): Installs the reporting module
 * [`icingaweb2::module::translation`](#icingaweb2--module--translation): Installs and configures the translation module.
@@ -2448,6 +2449,90 @@ Default value: `undef`
 Data type: `Optional[Stdlib::Port]`
 
 Port to connect the remote running Chrome/Chromium.
+
+Default value: `undef`
+
+### <a name="icingaweb2--module--perfdatagraphs"></a>`icingaweb2::module::perfdatagraphs`
+
+Installs and enables the perfdatagraphs module.
+
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed.
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::module::perfdatagraphs` class:
+
+* [`ensure`](#-icingaweb2--module--perfdatagraphs--ensure)
+* [`module_dir`](#-icingaweb2--module--perfdatagraphs--module_dir)
+* [`git_repository`](#-icingaweb2--module--perfdatagraphs--git_repository)
+* [`git_revision`](#-icingaweb2--module--perfdatagraphs--git_revision)
+* [`install_method`](#-icingaweb2--module--perfdatagraphs--install_method)
+* [`package_name`](#-icingaweb2--module--perfdatagraphs--package_name)
+* [`default_backend`](#-icingaweb2--module--perfdatagraphs--default_backend)
+* [`default_timerange`](#-icingaweb2--module--perfdatagraphs--default_timerange)
+* [`cache_lifetime`](#-icingaweb2--module--perfdatagraphs--cache_lifetime)
+
+##### <a name="-icingaweb2--module--perfdatagraphs--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Enable or disable module.
+
+##### <a name="-icingaweb2--module--perfdatagraphs--module_dir"></a>`module_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+Target directory of the module.
+
+Default value: `"${icingaweb2::globals::default_module_path}/perfdatagraphs"`
+
+##### <a name="-icingaweb2--module--perfdatagraphs--git_repository"></a>`git_repository`
+
+Data type: `Stdlib::HTTPUrl`
+
+Set a git repository URL.
+
+##### <a name="-icingaweb2--module--perfdatagraphs--git_revision"></a>`git_revision`
+
+Data type: `Optional[String[1]]`
+
+Set either a branch or a tag name, eg. `main` or `v0.1.1`.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphs--install_method"></a>`install_method`
+
+Data type: `Enum['git', 'none', 'package']`
+
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+##### <a name="-icingaweb2--module--perfdatagraphs--package_name"></a>`package_name`
+
+Data type: `Optional[String[1]]`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphs--default_backend"></a>`default_backend`
+
+Data type: `Enum['Graphite']`
+
+Backend type.
+
+##### <a name="-icingaweb2--module--perfdatagraphs--default_timerange"></a>`default_timerange`
+
+Data type: `String[1]`
+
+Default timerange to show. Has to be in format defined in ISO 8601, e.g. PT12H.
+
+Default value: `'PT12H'`
+
+##### <a name="-icingaweb2--module--perfdatagraphs--cache_lifetime"></a>`cache_lifetime`
+
+Data type: `Optional[Integer[1]]`
+
+Cache lifetime in seconds.
 
 Default value: `undef`
 

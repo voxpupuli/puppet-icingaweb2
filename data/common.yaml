@@ -155,3 +155,7 @@ icingaweb2::module::puppetdb::git_repository: https://github.com/Icinga/icingawe
 icingaweb2::module::puppetdb::install_method: git
 icingaweb2::module::puppetdb::ssl: none
 icingaweb2::module::puppetdb::certificates: {}
+
+icingaweb2::module::perfdatagraphs::ensure: present
+icingaweb2::module::perfdatagraphs::git_repository: https://github.com/NETWAYS/icingaweb2-module-perfdatagraphs.git
+icingaweb2::module::perfdatagraphs::install_method: git
