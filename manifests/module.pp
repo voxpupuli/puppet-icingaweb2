@@ -83,6 +83,10 @@ define icingaweb2::module (
       }
     }
     'package': {
+      unless $package_name {
+        fail('You choose install method package but did not set a package_name.')
+      }
+
       package { $package_name:
         ensure => installed,
       }

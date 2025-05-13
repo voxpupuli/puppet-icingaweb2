@@ -31,15 +31,15 @@
 #   Cache lifetime in seconds.
 #
 class icingaweb2::module::perfdatagraphs (
-  Enum['absent', 'present']      $ensure,
-  Stdlib::HTTPUrl                $git_repository,
-  Enum['git', 'none', 'package'] $install_method,
   Enum['Graphite']               $default_backend,
+  Enum['absent', 'present']      $ensure            = 'present',
+  Enum['git', 'none', 'package'] $install_method    = 'git',
+  Optional[String[1]]            $package_name      = undef,
+  Stdlib::HTTPUrl                $git_repository    = 'https://github.com/NETWAYS/icingaweb2-module-perfdatagraphs.git',
+  Optional[String[1]]            $git_revision      = undef,
+  Stdlib::Absolutepath           $module_dir        = "${icingaweb2::globals::default_module_path}/perfdatagraphs",
   String[1]                      $default_timerange = 'PT12H',
   Optional[Integer[1]]           $cache_lifetime    = undef,
-  Optional[String[1]]            $package_name      = undef,
-  Stdlib::Absolutepath           $module_dir        = "${icingaweb2::globals::default_module_path}/perfdatagraphs",
-  Optional[String[1]]            $git_revision      = undef,
 ) {
   require icingaweb2
 

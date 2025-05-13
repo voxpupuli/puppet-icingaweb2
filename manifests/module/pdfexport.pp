@@ -40,10 +40,10 @@
 #   }
 #
 class icingaweb2::module::pdfexport (
-  Enum['absent', 'present']      $ensure,
-  Stdlib::HTTPUrl                $git_repository,
-  String[1]                      $package_name,
-  Enum['git', 'none', 'package'] $install_method,
+  Enum['absent', 'present']      $ensure             = 'present',
+  Enum['git', 'none', 'package'] $install_method     = 'git',
+  Optional[String[1]]            $package_name       = undef,
+  Stdlib::HTTPUrl                $git_repository     = 'https://github.com/Icinga/icingaweb2-module-pdfexport.git',
   Stdlib::Absolutepath           $module_dir         = "${icingaweb2::globals::default_module_path}/pdfexport",
   Optional[String[1]]            $git_revision       = undef,
   Optional[Stdlib::Absolutepath] $chrome_binary      = undef,

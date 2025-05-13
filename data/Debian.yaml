@@ -1,5 +1,6 @@
 ---
 icingaweb2::conf_user: www-data
+icingaweb2::conf_group: icingaweb2
 icingaweb2::globals::comp_db_schema_dir: /usr/share/icingaweb2/etc
 icingaweb2::globals::mysql_db_schema: /usr/share/icingaweb2/etc/schema/mysql.schema.sql
 icingaweb2::globals::pgsql_db_schema: /usr/share/icingaweb2/etc/schema/pgsql.schema.sql

@@ -43,9 +43,12 @@
 #   Service template. See Icinga 2 feature `graphite`.
 #
 class icingaweb2::module::perfdatagraphsgraphite (
-  Enum['absent', 'present']      $ensure,
-  Stdlib::HTTPUrl                $git_repository,
-  Enum['git', 'none', 'package'] $install_method,
+  Enum['absent', 'present']      $ensure                       = 'present',
+  Enum['git', 'none', 'package'] $install_method               = 'git',
+  Optional[String[1]]            $package_name                 = undef,
+  Stdlib::HTTPUrl                $git_repository               = 'https://github.com/NETWAYS/icingaweb2-module-perfdatagraphs-graphite.git',
+  Optional[String[1]]            $git_revision                 = undef,
+  Stdlib::Absolutepath           $module_dir                   = "${icingaweb2::globals::default_module_path}/perfdatagraphsgraphite",
   Stdlib::HTTPUrl                $api_url                      = 'http://127.0.0.1:8542',
   Optional[String[1]]            $api_username                 = undef,
   Optional[Icinga::Secret]       $api_password                 = undef,
@@ -53,9 +56,6 @@ class icingaweb2::module::perfdatagraphsgraphite (
   Boolean                        $api_tls_insecure             = false,
   Optional[String[1]]            $writer_host_name_template    = undef,
   Optional[String[1]]            $writer_service_name_template = undef,
-  Optional[String[1]]            $package_name                 = undef,
-  Stdlib::Absolutepath           $module_dir                   = "${icingaweb2::globals::default_module_path}/perfdatagraphsgraphite",
-  Optional[String[1]]            $git_revision                 = undef,
 ) {
   require icingaweb2::module::perfdatagraphs
 

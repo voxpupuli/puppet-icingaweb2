@@ -95,15 +95,15 @@
 #   }
 #
 class icingaweb2::module::monitoring (
-  Enum['absent', 'present']            $ensure,
-  Variant[String[1], Array[String[1]]] $protected_customvars,
-  Hash                                 $commandtransports,
-  Hash[String[1], Any]                 $settings,
   Enum['mysql', 'pgsql']               $ido_type,
-  Stdlib::Host                         $ido_host,
-  String                               $ido_resource_name,
-  String                               $ido_db_name,
-  String                               $ido_db_username,
+  Enum['absent', 'present']            $ensure               = 'present',
+  Variant[String[1], Array[String[1]]] $protected_customvars = ['*pw*', '*pass*', 'community'],
+  Hash                                 $commandtransports    = {},
+  Hash[String[1], Any]                 $settings             = {},
+  Stdlib::Host                         $ido_host             = 'localhost',
+  String                               $ido_resource_name    = 'icinga2',
+  String                               $ido_db_name          = 'icinga2',
+  String                               $ido_db_username      = 'icinga2',
   Optional[Stdlib::Port]               $ido_port             = undef,
   Optional[Icinga::Secret]             $ido_db_password      = undef,
   Optional[String[1]]                  $ido_db_charset       = undef,

@@ -32,13 +32,13 @@
 #   }
 #
 class icingaweb2::module::idoreports (
-  Enum['absent', 'present']                  $ensure,
-  Enum['git', 'none', 'package']             $install_method,
-  Stdlib::HTTPUrl                            $git_repository,
-  String[1]                                  $package_name,
-  Stdlib::Absolutepath                       $module_dir    = "${icingaweb2::globals::default_module_path}/idoreports",
-  Optional[Icingaweb2::ImportSchema]         $import_schema = undef,
-  Optional[String[1]]                        $git_revision  = undef,
+  Enum['absent', 'present']                  $ensure         = 'present',
+  Optional[String[1]]                        $package_name   = undef,
+  Enum['git', 'none', 'package']             $install_method = 'git',
+  Stdlib::HTTPUrl                            $git_repository = 'https://github.com/Icinga/icingaweb2-module-idoreports.git',
+  Optional[String[1]]                        $git_revision   = undef,
+  Stdlib::Absolutepath                       $module_dir     = "${icingaweb2::globals::default_module_path}/idoreports",
+  Optional[Icingaweb2::ImportSchema]         $import_schema  = undef,
 ) {
   unless defined(Class['icingaweb2::module::monitoring']) {
     fail('You must declare the icingaweb2::module::monitoring class before using icingaweb2::module::idoreports!')
