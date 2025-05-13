@@ -1,3 +1,4 @@
 ---
 icingaweb2::conf_user: wwwrun
+icingaweb2::conf_group: icingaweb2
 icingaweb2::globals::gettext_package_name: gettext-tools

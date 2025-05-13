@@ -58,15 +58,15 @@
 #   }
 #
 class icingaweb2::module::puppetdb (
-  Enum['absent', 'present']      $ensure,
-  Stdlib::HTTPUrl                $git_repository,
-  Enum['git', 'none', 'package'] $install_method,
-  String[1]                      $package_name,
-  Enum['none', 'puppet']         $ssl,
-  Hash                           $certificates,
+  Enum['absent', 'present']      $ensure         = 'present',
+  Enum['git', 'none', 'package'] $install_method = 'git',
+  Optional[String[1]]            $package_name   = undef,
+  Stdlib::HTTPUrl                $git_repository = 'https://github.com/Icinga/icingaweb2-module-puppetdb.git',
+  Optional[String[1]]            $git_revision   = undef,
+  Enum['none', 'puppet']         $ssl            = 'none',
+  Hash                           $certificates   = {},
   Stdlib::Absolutepath           $module_dir     = "${icingaweb2::globals::default_module_path}/puppetdb",
   Optional[Stdlib::Host]         $host           = undef,
-  Optional[String[1]]            $git_revision   = undef,
 ) {
   require icingaweb2
 

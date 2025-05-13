@@ -47,21 +47,21 @@
 #   }
 #
 class icingaweb2::module::audit (
-  Enum['absent', 'present']      $ensure,
-  Stdlib::HTTPUrl                $git_repository,
-  Enum['git', 'none', 'package'] $install_method,
-  String[1]                      $package_name,
-  Enum['file', 'syslog', 'none'] $log_type,
+  Enum['absent', 'present']      $ensure         = 'present',
+  Enum['git', 'none', 'package'] $install_method = 'git',
+  Optional[String[1]]            $package_name   = undef,
+  Stdlib::HTTPUrl                $git_repository = 'https://github.com/Icinga/icingaweb2-module-audit.git',
+  Optional[String[1]]            $git_revision   = undef,
+  Enum['file', 'syslog', 'none'] $log_type       = 'none',
   Variant[
     Enum['auth', 'user', 'authpriv'],
     Pattern[/^local[0-7]$/]
-  ]                              $log_facility,
-  Enum['json', 'none']           $stream_format,
-  Optional[Stdlib::Absolutepath] $stream_file  = undef,
-  Optional[Stdlib::Absolutepath] $log_file     = undef,
-  Optional[String]               $log_ident    = undef,
-  Stdlib::Absolutepath           $module_dir   = "${icingaweb2::globals::default_module_path}/audit",
-  Optional[String[1]]            $git_revision = undef,
+  ]                              $log_facility   = 'auth',
+  Enum['json', 'none']           $stream_format  = 'none',
+  Optional[Stdlib::Absolutepath] $stream_file    = undef,
+  Optional[Stdlib::Absolutepath] $log_file       = undef,
+  Optional[String]               $log_ident      = undef,
+  Stdlib::Absolutepath           $module_dir     = "${icingaweb2::globals::default_module_path}/audit",
 ) {
   require icingaweb2
 

@@ -5,7 +5,7 @@
 #   Enable or disable module.
 #
 class icingaweb2::module::translation (
-  Enum['absent', 'present'] $ensure,
+  Enum['absent', 'present'] $ensure = 'present',
 ) {
   require icingaweb2
 

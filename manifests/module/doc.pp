@@ -5,7 +5,7 @@
 #   Enable or disable module. Defaults to `present`
 #
 class icingaweb2::module::doc (
-  Enum['absent', 'present']   $ensure,
+  Enum['absent', 'present']   $ensure = 'present',
 ) {
   require icingaweb2
 
