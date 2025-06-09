@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.3.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v5.3.0) (2025-06-09)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v5.2.0...v5.3.0)
+
+**Implemented enhancements:**
+
+- Add module perfdatagraphite [\#436](https://github.com/voxpupuli/puppet-icingaweb2/pull/436) ([lbetz](https://github.com/lbetz))
+- Add module perfdatagraphs [\#435](https://github.com/voxpupuli/puppet-icingaweb2/pull/435) ([lbetz](https://github.com/lbetz))
+
+**Merged pull requests:**
+
+- Replace data/common.yaml with in code settings to improve documentation [\#437](https://github.com/voxpupuli/puppet-icingaweb2/pull/437) ([lbetz](https://github.com/lbetz))
+
 ## [v5.2.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v5.2.0) (2025-04-29)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v5.1.0...v5.2.0)
