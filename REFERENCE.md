@@ -1568,7 +1568,7 @@ Data type: `Stdlib::HTTPUrl`
 
 Set a git repository URL.
 
-Default value: `'https://github.com/Icinga/icingaweb2-module-elasticsearch.git'`
+Default value: `'https://github.com/Icinga/icingaweb2-module-fileshipper.git'`
 
 ##### <a name="-icingaweb2--module--fileshipper--install_method"></a>`install_method`
 
