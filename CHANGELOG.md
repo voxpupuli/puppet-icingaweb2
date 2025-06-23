@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.3.1](https://github.com/voxpupuli/puppet-icingaweb2/tree/v5.3.1) (2025-06-23)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v5.3.0...v5.3.1)
+
+**Fixed bugs:**
+
+- Fix fileshipper [\#443](https://github.com/voxpupuli/puppet-icingaweb2/pull/443) ([lbetz](https://github.com/lbetz))
+
 ## [v5.3.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v5.3.0) (2025-06-09)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v5.2.0...v5.3.0)
