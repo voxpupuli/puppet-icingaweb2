@@ -85,7 +85,7 @@ we add an parameter `manage_package` (set to `true` bye default) to do not manag
 
 This module depends on
 
-* [puppet/icinga] >= 2.9.0 < 6.0.0
+* [puppet/icinga] >= 2.9.0 < 8.0.0
 * [puppetlabs/stdlib] >= 6.6.0 < 10.0.0
 * [puppetlabs/vcsrepo] >= 3.2.0 < 7.0.0
   * required if modules use `git` (default) as `install_method`.
