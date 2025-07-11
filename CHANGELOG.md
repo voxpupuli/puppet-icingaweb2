@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v6.0.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v6.0.0) (2025-07-11)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v5.3.1...v6.0.0)
+
+**Breaking changes:**
+
+- Drop EOL Ubuntu 20.04 support [\#447](https://github.com/voxpupuli/puppet-icingaweb2/pull/447) ([lbetz](https://github.com/lbetz))
+- Drop EOL SLES 12 support [\#445](https://github.com/voxpupuli/puppet-icingaweb2/pull/445) ([thomas-merz](https://github.com/thomas-merz))
+
+**Implemented enhancements:**
+
+- Add EL 10 support [\#448](https://github.com/voxpupuli/puppet-icingaweb2/pull/448) ([lbetz](https://github.com/lbetz))
+- metadata.json: allow puppet/icinga 7.x [\#446](https://github.com/voxpupuli/puppet-icingaweb2/pull/446) ([lbetz](https://github.com/lbetz))
+
 ## [v5.3.1](https://github.com/voxpupuli/puppet-icingaweb2/tree/v5.3.1) (2025-06-23)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v5.3.0...v5.3.1)
