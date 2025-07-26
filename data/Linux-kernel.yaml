@@ -27,3 +27,5 @@ icingaweb2::module::generictts::package_name: icinga-generictts
 icingaweb2::module::graphite::package_name: icinga-graphite
 icingaweb2::module::pdfexport::package_name: icingaweb2-module-pdfexport
 icingaweb2::module::puppetdb::package_name: icingaweb2-module-puppetdb
+icingaweb2::module::perfdatagraphs::package_name: icingaweb2-module-perfdatagraphs
+icingaweb2::module::perfdatagraphsgraphite::package_name: icingaweb2-module-perfdatagraphs-graphite
