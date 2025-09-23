@@ -74,8 +74,8 @@ class icingaweb2::module::graphite (
   Optional[String[1]]               $graphite_writer_service_name_template = undef,
   Optional[String[1]]               $customvar_obscured_check_command      = undef,
   Optional[Enum[
-      'minutes', 'hours', 'days',
-      'weeks', 'months', 'years'
+    'minutes', 'hours', 'days',
+    'weeks', 'months', 'years'
   ]]                                $default_time_range_unit               = undef,
   Optional[Integer[1]]              $default_time_range                    = undef,
   Optional[Boolean]                 $disable_no_graphs                     = undef,

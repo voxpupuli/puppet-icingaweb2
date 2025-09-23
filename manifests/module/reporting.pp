@@ -173,7 +173,7 @@ class icingaweb2::module::reporting (
       'section_name' => 'mail',
       'target'       => "${module_conf_dir}/config.ini",
       'settings'     => delete_undef_values({
-          'from' => $mail,
+        'from' => $mail,
       }),
     },
   }

@@ -191,10 +191,10 @@ class icingaweb2::module::icingadb (
 
   if $redis_use_tls {
     $redis_settings = delete_undef_values({
-        tls  => true,
-        cert => $redis_tls['cert_file'],
-        key  => $redis_tls['key_file'],
-        ca   => icingaweb2::pick($redis_tls['cacert_file'], $icingaweb2::config::tls['cacert_file']),
+      tls  => true,
+      cert => $redis_tls['cert_file'],
+      key  => $redis_tls['key_file'],
+      ca   => icingaweb2::pick($redis_tls['cacert_file'], $icingaweb2::config::tls['cacert_file']),
     })
   } else {
     $redis_settings = {}
@@ -217,18 +217,18 @@ class icingaweb2::module::icingadb (
       'section_name' => 'redis1',
       'target'       => "${module_conf_dir}/redis.ini",
       'settings'     => delete_undef_values({
-          host     => $redis_primary_host,
-          port     => $redis_primary_port,
-          password => $redis_primary_password,
+        host     => $redis_primary_host,
+        port     => $redis_primary_port,
+        password => $redis_primary_password,
       }),
     },
     'icingaweb2-module-icingadb-redis2' => {
       'section_name' => 'redis2',
       'target'       => "${module_conf_dir}/redis.ini",
       'settings'     => delete_undef_values({
-          host     => $redis_secondary_host,
-          port     => $redis_secondary_port,
-          password => $redis_secondary_password,
+        host     => $redis_secondary_host,
+        port     => $redis_secondary_port,
+        password => $redis_secondary_password,
       }),
     },
     'icingaweb2-module-icingadb-settings' => {

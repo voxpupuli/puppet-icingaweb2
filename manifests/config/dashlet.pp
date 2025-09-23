@@ -47,10 +47,10 @@ define icingaweb2::config::dashlet (
   $conf_group = $icingaweb2::conf_group
 
   ensure_resource('file', "${conf_dir}/dashboards/${owner}", {
-      ensure => directory,
-      owner  => $conf_user,
-      group  => $conf_group,
-      mode   => '2770',
+    ensure => directory,
+    owner  => $conf_user,
+    group  => $conf_group,
+    mode   => '2770',
   })
 
   icingaweb2::inisection { "dashboard-${owner}-${dashboard}-${dashlet}":

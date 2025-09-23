@@ -81,10 +81,10 @@ define icingaweb2::config::navigation (
   } else {
     $file_target = "${conf_dir}/preferences/${owner}/${ini_file}"
     ensure_resource('file', "${conf_dir}/preferences/${owner}", {
-        ensure => directory,
-        owner  => $conf_user,
-        group  => $conf_group,
-        mode   => '2770',
+      ensure => directory,
+      owner  => $conf_user,
+      group  => $conf_group,
+      mode   => '2770',
     })
   }
 
