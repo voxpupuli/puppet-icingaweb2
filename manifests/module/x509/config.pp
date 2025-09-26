@@ -33,8 +33,8 @@ class icingaweb2::module::x509::config {
     systemd::unit_file { 'icinga-x509.service':
       ensure  => 'present',
       content => epp('icingaweb2/icinga-x509.service.epp', {
-          'conf_user'     => $service_user,
-          'icingacli_bin' => $icingacli_bin,
+        'conf_user'     => $service_user,
+        'icingacli_bin' => $icingacli_bin,
       }),
     }
   }

@@ -97,8 +97,8 @@ class icingaweb2::module::audit (
       'section_name' => 'stream',
       'target'       => "${module_conf_dir}/config.ini",
       'settings'     => delete_undef_values({
-          'format' => $stream_format,
-          'path'   => $stream_file,
+        'format' => $stream_format,
+        'path'   => $stream_file,
       }),
     },
   }

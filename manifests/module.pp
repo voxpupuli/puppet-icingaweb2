@@ -100,16 +100,16 @@ define icingaweb2::module (
     default:
       owner => $conf_user,
       group => $conf_group,
-      ;
+    ;
     "${conf_dir}/enabledModules/${module}":
       ensure => $enable_module,
       target => $module_dir,
-      ;
+    ;
     ["${conf_dir}/modules/${module}", "${state_dir}/${module}"]:
       ensure => directory,
       owner  => 'root',
       mode   => '2770',
-      ;
+    ;
   }
 
   create_resources('icingaweb2::inisection', $settings)

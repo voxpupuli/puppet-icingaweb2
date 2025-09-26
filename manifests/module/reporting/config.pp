@@ -35,8 +35,8 @@ class icingaweb2::module::reporting::config {
     systemd::unit_file { 'icinga-reporting.service':
       ensure  => 'present',
       content => epp('icingaweb2/icinga-reporting.service.epp', {
-          'conf_user'     => $service_user,
-          'icingacli_bin' => $icingaweb2::globals::icingacli_bin,
+        'conf_user'     => $service_user,
+        'icingacli_bin' => $icingaweb2::globals::icingacli_bin,
       }),
     }
   }

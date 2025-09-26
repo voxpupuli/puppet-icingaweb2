@@ -47,13 +47,13 @@ class icingaweb2::install {
       ensure => directory,
       owner  => root,
       group  => $conf_group,
-      ;
+    ;
     prefix(['modules', 'enabledModules', 'navigation', 'preferences', 'dashboards'], "${conf_dir}/"):
       mode => '2770',
-      ;
+    ;
     $cert_dir:
       mode => '2770',
-      ;
+    ;
   }
 
   if $use_tls {

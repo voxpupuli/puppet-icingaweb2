@@ -1850,8 +1850,8 @@ Data type:
 
 ```puppet
 Optional[Enum[
-      'minutes', 'hours', 'days',
-      'weeks', 'months', 'years'
+    'minutes', 'hours', 'days',
+    'weeks', 'months', 'years'
   ]]
 ```
 
@@ -4936,9 +4936,9 @@ Alias of
 
 ```puppet
 Struct[{
-    name   => String,
-    users  => Optional[Array[String[1]]],
-    groups => Optional[Array[String[1]]],
+  name   => String,
+  users  => Optional[Array[String[1]]],
+  groups => Optional[Array[String[1]]],
 }]
 ```
 

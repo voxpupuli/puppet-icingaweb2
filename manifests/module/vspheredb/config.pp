@@ -38,8 +38,8 @@ class icingaweb2::module::vspheredb::config {
     systemd::unit_file { 'icinga-vspheredb.service':
       ensure  => 'present',
       content => epp('icingaweb2/icinga-vspheredb.service.epp', {
-          'conf_user'     => $service_user,
-          'icingacli_bin' => $icingacli_bin,
+        'conf_user'     => $service_user,
+        'icingacli_bin' => $icingacli_bin,
       }),
     }
   }
