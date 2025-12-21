@@ -70,6 +70,13 @@
       ]
     },
     {
+      "operatingsystem": "Fedora",
+      "operatingsystemrelease": [
+        "42",
+        "43"
+      ]
+    },
+    {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
         "22.04",
