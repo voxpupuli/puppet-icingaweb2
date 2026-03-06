@@ -23,7 +23,7 @@ describe('icingaweb2::module::monitoring', type: :class) do
                 'username' => 'root',
                 'password' => 'foobar',
               },
-            } }
+            }, }
         end
 
         it {
@@ -45,7 +45,7 @@ describe('icingaweb2::module::monitoring', type: :class) do
           is_expected.to contain_icingaweb2__inisection('module-monitoring-security')
             .with_section_name('security')
             .with_target('/etc/icingaweb2/modules/monitoring/config.ini')
-            .with_settings({ 'protected_customvars' => '*pw*,*pass*,community', })
+            .with_settings({ 'protected_customvars' => '*pw*,*pass*,community' })
         }
 
         it {
@@ -84,7 +84,7 @@ describe('icingaweb2::module::monitoring', type: :class) do
               'foo' => {
                 'transport' => 'local',
               },
-            } }
+            }, }
         end
 
         it {
@@ -125,7 +125,7 @@ describe('icingaweb2::module::monitoring', type: :class) do
                 'password' => 'secret',
               },
             },
-            protected_customvars: ['foo', 'bar', '*baz*'] }
+            protected_customvars: ['foo', 'bar', '*baz*'], }
         end
 
         it {

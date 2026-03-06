@@ -62,7 +62,7 @@ describe('icingaweb2::module::perfdatagraphsgraphite', type: :class) do
               'api_timeout' => 5,
               'api_tls_insecure' => true,
               'writer_host_name_template' => 'host.template',
-              'writer_service_name_template' => 'service.template'
+              'writer_service_name_template' => 'service.template',
             )
         }
       end

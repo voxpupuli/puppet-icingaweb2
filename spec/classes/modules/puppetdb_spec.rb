@@ -91,7 +91,7 @@ describe('icingaweb2::module::puppetdb', type: :class) do
             certificates: { 'pupdb1' =>
                                               { 'ssl_key' => 'mysslkey1', 'ssl_cacert' => 'mycacert1' },
                             'pupdb2' =>
-                                              { 'ssl_key' => 'mysslkey2', 'ssl_cacert' => 'mycacert2' }  } }
+                                              { 'ssl_key' => 'mysslkey2', 'ssl_cacert' => 'mycacert2' }, }, }
         end
 
         it { is_expected.to contain_icingaweb2__module('puppetdb') }
@@ -172,7 +172,7 @@ describe('icingaweb2::module::puppetdb', type: :class) do
           { ssl: 'puppet',
             host: 'puppetdb.example.com',
             certificates: { 'pupdb1' =>
-                                              { 'ssl_key' => 'mysslkey1', 'ssl_cacert' => 'mycacert1' }  } }
+                                              { 'ssl_key' => 'mysslkey1', 'ssl_cacert' => 'mycacert1' } }, }
         end
 
         let(:facts) { facts }

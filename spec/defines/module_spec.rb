@@ -20,7 +20,7 @@ describe('icingaweb2::module', type: :define) do
             module: 'foo',
             module_dir: '/usr/local/icingaweb2-modules/foo',
             install_method: 'none',
-            settings: { 'section1' => { 'target' => '/foo/bar', 'settings' => { 'setting1' => 'value1', 'setting2' => 'value2' } } }
+            settings: { 'section1' => { 'target' => '/foo/bar', 'settings' => { 'setting1' => 'value1', 'setting2' => 'value2' } } },
           }
         end
 
@@ -59,7 +59,7 @@ describe('icingaweb2::module', type: :define) do
           { module: 'foo',
             module_dir: '/usr/local/icingaweb2-modules/foo',
             git_repository: 'https://github.com/icinga/foo.git',
-            git_revision: 'main' }
+            git_revision: 'main', }
         end
 
         it {
@@ -75,7 +75,7 @@ describe('icingaweb2::module', type: :define) do
           { module: 'foo',
             module_dir: '/usr/local/icingaweb2-modules/foo',
             install_method: 'package',
-            package_name: 'foo' }
+            package_name: 'foo', }
         end
 
         it { is_expected.to contain_package('foo').with('ensure' => 'installed') }
@@ -86,7 +86,7 @@ describe('icingaweb2::module', type: :define) do
           { module: 'foo',
             ensure: 'absent',
             module_dir: '/usr/local/icingaweb2-modules/foo',
-            install_method: 'none' }
+            install_method: 'none', }
         end
 
         it { is_expected.to contain_file('/etc/icingaweb2/enabledModules/foo').with_ensure('absent') }

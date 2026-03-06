@@ -21,7 +21,7 @@ describe('icingaweb2', type: :class) do
           '/etc/icingaweb2/navigation',
           '/etc/icingaweb2/preferences',
           '/etc/icingaweb2/dashboards',
-          '/var/lib/icingaweb2/certs' ].each do |file|
+          '/var/lib/icingaweb2/certs', ].each do |file|
           it {
             is_expected.to contain_file(file)
               .with_ensure('directory')
