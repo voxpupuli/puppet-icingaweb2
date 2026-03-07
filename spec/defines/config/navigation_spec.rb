@@ -19,7 +19,7 @@ describe('icingaweb2::config::navigation', type: :define) do
           {
             owner: 'foobar',
             url: 'url',
-            users: ['foo', 'bar'],
+            users: %w[foo bar],
             groups: ['foobars'],
             parent: 'parent',
             filter: 'filter',
@@ -49,7 +49,7 @@ describe('icingaweb2::config::navigation', type: :define) do
             url: 'url',
             target: '_blank',
             shared: true,
-            users: ['foo', 'bar'],
+            users: %w[foo bar],
             groups: ['foobars'],
           }
         end
@@ -77,7 +77,7 @@ describe('icingaweb2::config::navigation', type: :define) do
             owner: 'foobar',
             url: 'url',
             shared: true,
-            users: ['foo', 'bar'],
+            users: %w[foo bar],
             parent: 'parent',
             groups: ['foobars'],
           }
@@ -105,7 +105,7 @@ describe('icingaweb2::config::navigation', type: :define) do
             type: 'host-action',
             owner: 'foobar',
             url: 'url',
-            users: ['foo', 'bar'],
+            users: %w[foo bar],
             groups: ['foobars'],
             parent: 'parent',
             filter: 'filter',
@@ -137,7 +137,7 @@ describe('icingaweb2::config::navigation', type: :define) do
             url: 'url',
             target: '_blank',
             shared: true,
-            users: ['foo', 'bar'],
+            users: %w[foo bar],
             groups: ['foobars'],
             filter: 'filter',
           }

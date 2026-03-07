@@ -59,7 +59,7 @@ describe('icingaweb2::module::fileshipper', type: :class) do
             directories: {
               'test' => {
                 'source' => '/tmp/source',
-                'target'     => '/tmp/target',
+                'target' => '/tmp/target',
                 'extensions' => '.foobar',
               },
             },

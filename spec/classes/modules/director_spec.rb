@@ -26,7 +26,7 @@ describe('icingaweb2::module::director', type: :class) do
             kickstart: true,
             endpoint: 'foobar',
             api_username: 'root',
-            api_password: 'secret' }
+            api_password: 'secret', }
         end
 
         it {
@@ -95,7 +95,7 @@ describe('icingaweb2::module::director', type: :class) do
             db_password: 'director',
             install_method: 'package',
             manage_service: false,
-            import_schema: false }
+            import_schema: false, }
         end
 
         it {

@@ -36,7 +36,7 @@ describe('icingaweb2::module::pdfexport', type: :class) do
             chrome_binary: '/foo/bar',
             force_temp_storage: true,
             remote_host: 'foo.bar',
-            remote_port: 1234
+            remote_port: 1234,
           }
         end
 

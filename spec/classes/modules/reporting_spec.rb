@@ -106,7 +106,7 @@ describe('icingaweb2::module::reporting', type: :class) do
 
         it {
           is_expected.to contain_exec('import icingaweb2::module::reporting schema')
-            .with_command(%r{^mysql.*\< '/usr/share/icingaweb2/modules/reporting/schema/mysql.schema.sql'$})
+            .with_command(%r{^mysql.*< '/usr/share/icingaweb2/modules/reporting/schema/mysql.schema.sql'$})
             .with_unless(%r{^mysql.* -Ns -e 'SELECT \* FROM report'$})
         }
 

@@ -74,8 +74,8 @@ describe('icingaweb2::module::icingadb', type: :class) do
               'database' => 'icingadb',
               'username' => 'icingadb',
               'password' => 'secret',
-              'charset'  => nil,
-              'use_tls'  => nil,
+              'charset' => nil,
+              'use_tls' => nil,
             },
           )
         }
@@ -144,8 +144,8 @@ describe('icingaweb2::module::icingadb', type: :class) do
               'host' => 'localhost',
               'database' => 'icingadb',
               'username' => 'icingadb',
-              'charset'  => nil,
-              'use_tls'  => nil,
+              'charset' => nil,
+              'use_tls' => nil,
             },
           )
         }

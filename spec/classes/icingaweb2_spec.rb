@@ -16,12 +16,13 @@ describe('icingaweb2', type: :class) do
         it { is_expected.not_to contain_class('icinga::repos') }
 
         it { is_expected.to contain_package('icingaweb2').with('ensure' => 'installed') }
-        [ '/etc/icingaweb2/modules',
-          '/etc/icingaweb2/enabledModules',
-          '/etc/icingaweb2/navigation',
-          '/etc/icingaweb2/preferences',
-          '/etc/icingaweb2/dashboards',
-          '/var/lib/icingaweb2/certs' ].each do |file|
+
+        ['/etc/icingaweb2/modules',
+         '/etc/icingaweb2/enabledModules',
+         '/etc/icingaweb2/navigation',
+         '/etc/icingaweb2/preferences',
+         '/etc/icingaweb2/dashboards',
+         '/var/lib/icingaweb2/certs',].each do |file|
           it {
             is_expected.to contain_file(file)
               .with_ensure('directory')
@@ -44,6 +45,7 @@ describe('icingaweb2', type: :class) do
               },
             )
         }
+
         it {
           is_expected.to contain_icingaweb2__inisection('config-global')
             .with_section_name('global')
@@ -51,11 +53,12 @@ describe('icingaweb2', type: :class) do
             .with_settings(
               {
                 'show_stacktraces' => false,
-                 'module_path' => '/usr/share/icingaweb2/modules',
-                 'config_resource' => 'icingaweb2',
+                'module_path' => '/usr/share/icingaweb2/modules',
+                'config_resource' => 'icingaweb2',
               },
             )
         }
+
         it {
           is_expected.to contain_icingaweb2__inisection('config-themes')
             .with_section_name('themes')
@@ -67,9 +70,11 @@ describe('icingaweb2', type: :class) do
               },
             )
         }
+
         it { is_expected.not_to contain_icingaweb2__inisection('config-authentication') }
         it { is_expected.not_to contain_icingaweb2__inisection('config-security') }
         it { is_expected.not_to contain_icingaweb2__inisection('config-cookie') }
+
         it {
           is_expected.to contain_icingaweb2__resource__database('icingaweb2')
             .with_type('mysql')
@@ -107,12 +112,14 @@ describe('icingaweb2', type: :class) do
         end
 
         it { is_expected.not_to contain_package('icinga2').with('ensure' => 'installed') }
+
         it {
           is_expected.to contain_icingaweb2__inisection('config-cookie')
             .with_section_name('cookie')
             .with_target('/etc/icingaweb2/config.ini')
             .with_settings({ 'path' => '/foo/bar' })
         }
+
         it {
           is_expected.to contain_icingaweb2__inisection('config-authentication')
             .with_section_name('authentication')
@@ -205,8 +212,8 @@ describe('icingaweb2', type: :class) do
             .with_settings(
               {
                 'show_stacktraces' => false,
-                 'module_path' => '/usr/share/icingaweb2/modules',
-                 'config_resource' => 'foobar',
+                'module_path' => '/usr/share/icingaweb2/modules',
+                'config_resource' => 'foobar',
               },
             )
         }

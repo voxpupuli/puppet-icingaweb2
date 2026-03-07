@@ -40,7 +40,7 @@ describe('icingaweb2::inisection', type: :define) do
         it {
           is_expected.to contain_concat__fragment('foo-test-02')
             .with_target('/foo/bar')
-            .with_content(%r{\[test\]\nsetting1 = \"value1\"\nsetting2 = \"value2\"\n\n})
+            .with_content(%r{\[test\]\nsetting1 = "value1"\nsetting2 = "value2"\n\n})
             .with_order('02')
         }
       end

@@ -111,7 +111,7 @@ describe('icingaweb2::module::vspheredb', type: :class) do
 
         it {
           is_expected.to contain_exec('import icingaweb2::module::vspheredb schema')
-            .with_command(%r{^mysql.*\< '/usr/share/icingaweb2/modules/vspheredb/schema/mysql.sql'$})
+            .with_command(%r{^mysql.*< '/usr/share/icingaweb2/modules/vspheredb/schema/mysql.sql'$})
             .with_unless(%r{^mysql.*-Ns -e 'SELECT schema_version FROM vspheredb_schema_migration'$})
         }
 

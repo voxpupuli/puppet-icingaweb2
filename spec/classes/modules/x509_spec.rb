@@ -91,7 +91,7 @@ describe('icingaweb2::module::x509', type: :class) do
 
         it {
           is_expected.to contain_exec('import icingaweb2::module::x509 schema')
-            .with_command(%r{^mysql.*\< '/usr/share/icingaweb2/modules/x509/schema/mysql.schema.sql'$})
+            .with_command(%r{^mysql.*< '/usr/share/icingaweb2/modules/x509/schema/mysql.schema.sql'$})
             .with_unless(%r{^mysql.* -Ns -e 'SELECT \* FROM x509_certificate'$})
         }
 

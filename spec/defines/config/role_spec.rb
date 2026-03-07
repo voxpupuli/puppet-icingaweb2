@@ -30,7 +30,7 @@ describe('icingaweb2::config::role', type: :define) do
             users: 'bob, pete',
             permissions: 'module/monitoring',
             refusals: 'monitoring/commands/schedule-check',
-            filters: { 'monitoring/filter/objects' => 'host_name=linux-*' }
+            filters: { 'monitoring/filter/objects' => 'host_name=linux-*' },
           }
         end
 

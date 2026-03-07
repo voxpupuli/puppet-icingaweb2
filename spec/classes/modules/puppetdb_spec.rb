@@ -60,6 +60,7 @@ describe('icingaweb2::module::puppetdb', type: :class) do
           is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl')
             .with_ensure('directory')
         }
+
         it { is_expected.not_to contain_file('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb') }
       end
 
@@ -77,6 +78,7 @@ describe('icingaweb2::module::puppetdb', type: :class) do
         let(:params) { { ssl: 'none' } }
 
         it { is_expected.to contain_icingaweb2__module('puppetdb') }
+
         it {
           is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl')
             .with_ensure('directory')
@@ -91,20 +93,24 @@ describe('icingaweb2::module::puppetdb', type: :class) do
             certificates: { 'pupdb1' =>
                                               { 'ssl_key' => 'mysslkey1', 'ssl_cacert' => 'mycacert1' },
                             'pupdb2' =>
-                                              { 'ssl_key' => 'mysslkey2', 'ssl_cacert' => 'mycacert2' }  } }
+                                              { 'ssl_key' => 'mysslkey2', 'ssl_cacert' => 'mycacert2' }, }, }
         end
 
         it { is_expected.to contain_icingaweb2__module('puppetdb') }
+
         it {
           is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl')
             .with_ensure('directory')
         }
+
         it { is_expected.to have_icingaweb2__module__puppetdb__certificate_resource_count(2) }
+
         it {
           is_expected.to contain_icingaweb2__module__puppetdb__certificate('pupdb1')
             .with_ssl_key('mysslkey1')
             .with_ssl_cacert('mycacert1')
         }
+
         it {
           is_expected.to contain_icingaweb2__module__puppetdb__certificate('pupdb2')
             .with_ssl_key('mysslkey2')
@@ -122,14 +128,17 @@ describe('icingaweb2::module::puppetdb', type: :class) do
           is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl')
             .with_ensure('directory')
         }
+
         it {
           is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com')
             .with_ensure('directory')
         }
+
         it {
           is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/private_keys')
             .with_ensure('directory')
         }
+
         it {
           is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl/puppetdb.example.com/certs')
             .with_ensure('directory')
@@ -172,16 +181,18 @@ describe('icingaweb2::module::puppetdb', type: :class) do
           { ssl: 'puppet',
             host: 'puppetdb.example.com',
             certificates: { 'pupdb1' =>
-                                              { 'ssl_key' => 'mysslkey1', 'ssl_cacert' => 'mycacert1' }  } }
+                                              { 'ssl_key' => 'mysslkey1', 'ssl_cacert' => 'mycacert1' } }, }
         end
 
         let(:facts) { facts }
 
         it { is_expected.to contain_icingaweb2__module('puppetdb') }
+
         it {
           is_expected.to contain_file('/etc/icingaweb2/modules/puppetdb/ssl')
             .with_ensure('directory')
         }
+
         it { is_expected.to have_icingaweb2__module__puppetdb__certificate_resource_count(1) }
 
         it {
