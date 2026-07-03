@@ -42,18 +42,6 @@
 # @param pgsql_reporting_schema
 #   Location of the reporting database schema for PostgreSQL.
 #
-# @param mysql_idoreports_slaperiods
-#   Location of the slaperiods database extension for MySQL.
-#
-# @param mysql_idoreports_sla_percent
-#   Location of the get_sla_ok_percent database extension for MySQL.
-#
-# @param pgsql_idoreports_slaperiods
-#   Location of the slaperiods database extension for PostgreSQL.
-#
-# @param pgsql_idoreports_sla_percent
-#   Location of the get_sla_ok_percent database extension for PostgreSQL.
-#
 # @param mysql_x509_schema
 #   Location of the x509 database schema for MySQL/MariaDB.
 #
@@ -81,10 +69,6 @@ class icingaweb2::globals (
   Stdlib::Absolutepath   $pgsql_vspheredb_schema       = '/schema/pgsql.sql',
   Stdlib::Absolutepath   $mysql_reporting_schema       = '/schema/mysql.schema.sql',
   Stdlib::Absolutepath   $pgsql_reporting_schema       = '/schema/pgsql.schema.sql',
-  Stdlib::Absolutepath   $mysql_idoreports_slaperiods  = '/schema/mysql/slaperiods.sql',
-  Stdlib::Absolutepath   $mysql_idoreports_sla_percent = '/schema/mysql/get_sla_ok_percent.sql',
-  Stdlib::Absolutepath   $pgsql_idoreports_slaperiods  = '/schema/postgresql/slaperiods.sql',
-  Stdlib::Absolutepath   $pgsql_idoreports_sla_percent = '/schema/postgresql/get_sla_ok_percent.sql',
   Stdlib::Absolutepath   $mysql_x509_schema            = '/schema/mysql.schema.sql',
   Stdlib::Absolutepath   $pgsql_x509_schema            = '/schema/pgsql.schema.sql',
   Boolean                $role_replace                 = true,

@@ -20,8 +20,6 @@
 * [`icingaweb2::module::generictts`](#icingaweb2--module--generictts): Installs and enables the generictts module.
 * [`icingaweb2::module::graphite`](#icingaweb2--module--graphite): The Graphite module draws graphs out of time series data stored in Graphite.
 * [`icingaweb2::module::icingadb`](#icingaweb2--module--icingadb): Manages the icingadb module. This module is still optional at the moment.
-* [`icingaweb2::module::idoreports`](#icingaweb2--module--idoreports): Installs, configures and enables the idoreports module. The module is deprecated.
-* [`icingaweb2::module::monitoring`](#icingaweb2--module--monitoring): Manages the monitoring module. This module is deprecated.
 * [`icingaweb2::module::pdfexport`](#icingaweb2--module--pdfexport): Installs, configures and enables the pdfexport module.
 * [`icingaweb2::module::perfdatagraphs`](#icingaweb2--module--perfdatagraphs): Installs and enables the perfdatagraphs module.
 * [`icingaweb2::module::perfdatagraphsgraphite`](#icingaweb2--module--perfdatagraphsgraphite): Installs and enables the perfdatagraphsgraphite module.
@@ -41,8 +39,6 @@
 * `icingaweb2::module::director::service`: Manage the director service.
 * `icingaweb2::module::icingadb::config`: Configure the icingadb module.
 * `icingaweb2::module::icingadb::install`: Install the icingadb module.
-* `icingaweb2::module::monitoring::config`: Configure the monitoring module.
-* `icingaweb2::module::monitoring::install`: Installs the monitoring module.
 * `icingaweb2::module::reporting::config`: Configure the reporting module.
 * `icingaweb2::module::reporting::install`: Install the reporting module.
 * `icingaweb2::module::reporting::service`: Manage the reporting service.
@@ -77,7 +73,6 @@ that store groups.
 * `icingaweb2::module::fileshipper::directory`: Manages directories with plain Icinga 2 configuration files.
 * `icingaweb2::module::generictts::ticketsystem`: Manages ticketsystem configuration for the generictts module.
 * `icingaweb2::module::icingadb::commandtransport`: Manages commandtransport configuration for the icingadb module.
-* `icingaweb2::module::monitoring::commandtransport`: Manages commandtransport configuration for the monitoring module.
 * `icingaweb2::module::puppetdb::certificate`: Installs a certificate for the Icinga Web 2 puppetdb module.
 
 ### Functions
@@ -596,10 +591,6 @@ The following parameters are available in the `icingaweb2::globals` class:
 * [`pgsql_vspheredb_schema`](#-icingaweb2--globals--pgsql_vspheredb_schema)
 * [`mysql_reporting_schema`](#-icingaweb2--globals--mysql_reporting_schema)
 * [`pgsql_reporting_schema`](#-icingaweb2--globals--pgsql_reporting_schema)
-* [`mysql_idoreports_slaperiods`](#-icingaweb2--globals--mysql_idoreports_slaperiods)
-* [`mysql_idoreports_sla_percent`](#-icingaweb2--globals--mysql_idoreports_sla_percent)
-* [`pgsql_idoreports_slaperiods`](#-icingaweb2--globals--pgsql_idoreports_slaperiods)
-* [`pgsql_idoreports_sla_percent`](#-icingaweb2--globals--pgsql_idoreports_sla_percent)
 * [`mysql_x509_schema`](#-icingaweb2--globals--mysql_x509_schema)
 * [`pgsql_x509_schema`](#-icingaweb2--globals--pgsql_x509_schema)
 * [`gettext_package_name`](#-icingaweb2--globals--gettext_package_name)
@@ -692,38 +683,6 @@ Data type: `Stdlib::Absolutepath`
 Location of the reporting database schema for PostgreSQL.
 
 Default value: `'/schema/pgsql.schema.sql'`
-
-##### <a name="-icingaweb2--globals--mysql_idoreports_slaperiods"></a>`mysql_idoreports_slaperiods`
-
-Data type: `Stdlib::Absolutepath`
-
-Location of the slaperiods database extension for MySQL.
-
-Default value: `'/schema/mysql/slaperiods.sql'`
-
-##### <a name="-icingaweb2--globals--mysql_idoreports_sla_percent"></a>`mysql_idoreports_sla_percent`
-
-Data type: `Stdlib::Absolutepath`
-
-Location of the get_sla_ok_percent database extension for MySQL.
-
-Default value: `'/schema/mysql/get_sla_ok_percent.sql'`
-
-##### <a name="-icingaweb2--globals--pgsql_idoreports_slaperiods"></a>`pgsql_idoreports_slaperiods`
-
-Data type: `Stdlib::Absolutepath`
-
-Location of the slaperiods database extension for PostgreSQL.
-
-Default value: `'/schema/postgresql/slaperiods.sql'`
-
-##### <a name="-icingaweb2--globals--pgsql_idoreports_sla_percent"></a>`pgsql_idoreports_sla_percent`
-
-Data type: `Stdlib::Absolutepath`
-
-Location of the get_sla_ok_percent database extension for PostgreSQL.
-
-Default value: `'/schema/postgresql/get_sla_ok_percent.sql'`
 
 ##### <a name="-icingaweb2--globals--mysql_x509_schema"></a>`mysql_x509_schema`
 
@@ -1942,7 +1901,7 @@ IicngaDB-Web module package name.
 
 Data type: `Enum['mysql', 'pgsql']`
 
-Type of your IDO database. Either `mysql` or `pgsql`.
+Type of your IcingaDB database. Either `mysql` or `pgsql`.
 
 ##### <a name="-icingaweb2--module--icingadb--db_resource_name"></a>`db_resource_name`
 
@@ -2224,328 +2183,6 @@ Default value: `{}`
 ##### <a name="-icingaweb2--module--icingadb--commandtransports"></a>`commandtransports`
 
 Data type: `Hash[String[1], Hash]`
-
-A hash of command transports.
-
-Default value: `{}`
-
-### <a name="icingaweb2--module--idoreports"></a>`icingaweb2::module::idoreports`
-
-Installs, configures and enables the idoreports module. The module is deprecated.
-
-* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed. You can manage it yourself as package resource or declare the package name in icingaweb2 class parameter `extra_packages`.
-
-#### Examples
-
-##### 
-
-```puppet
-class { 'icingaweb2::module::idoreports':
-  git_revision  => 'v0.10.0',
-}
-```
-
-#### Parameters
-
-The following parameters are available in the `icingaweb2::module::idoreports` class:
-
-* [`ensure`](#-icingaweb2--module--idoreports--ensure)
-* [`module_dir`](#-icingaweb2--module--idoreports--module_dir)
-* [`git_repository`](#-icingaweb2--module--idoreports--git_repository)
-* [`git_revision`](#-icingaweb2--module--idoreports--git_revision)
-* [`install_method`](#-icingaweb2--module--idoreports--install_method)
-* [`package_name`](#-icingaweb2--module--idoreports--package_name)
-* [`import_schema`](#-icingaweb2--module--idoreports--import_schema)
-
-##### <a name="-icingaweb2--module--idoreports--ensure"></a>`ensure`
-
-Data type: `Enum['absent', 'present']`
-
-Enable or disable module.
-
-Default value: `'present'`
-
-##### <a name="-icingaweb2--module--idoreports--module_dir"></a>`module_dir`
-
-Data type: `Stdlib::Absolutepath`
-
-Target directory of the module.
-
-Default value: `"${icingaweb2::globals::default_module_path}/idoreports"`
-
-##### <a name="-icingaweb2--module--idoreports--git_repository"></a>`git_repository`
-
-Data type: `Stdlib::HTTPUrl`
-
-Set a git repository URL.
-
-Default value: `'https://github.com/Icinga/icingaweb2-module-idoreports.git'`
-
-##### <a name="-icingaweb2--module--idoreports--git_revision"></a>`git_revision`
-
-Data type: `Optional[String[1]]`
-
-Set either a branch or a tag name, eg. `master` or `v2.1.0`.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--idoreports--install_method"></a>`install_method`
-
-Data type: `Enum['git', 'none', 'package']`
-
-Install methods are `git`, `package` and `none` is supported as installation method.
-
-Default value: `'git'`
-
-##### <a name="-icingaweb2--module--idoreports--package_name"></a>`package_name`
-
-Data type: `Optional[String[1]]`
-
-Package name of the module. This setting is only valid in combination with the installation method `package`.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--idoreports--import_schema"></a>`import_schema`
-
-Data type: `Optional[Icingaweb2::ImportSchema]`
-
-The IDO database needs some extensions for reorting. Whether to import the database extensions or not.
-Options `mariadb` and `mysql`, both means true. With mariadb its cli options are used for the import,
-whereas with mysql its different options.
-
-Default value: `undef`
-
-### <a name="icingaweb2--module--monitoring"></a>`icingaweb2::module::monitoring`
-
-Requirements:
-  * IDO feature in Icinga 2 (MySQL or PostgreSQL)
-  * `ApiUser` object in Icinga 2 with proper permissions
-
-  class {'icingaweb2::module::monitoring':
-    ido_host        => 'localhost',
-    ido_type        => 'mysql',
-    ido_db_name     => 'icinga2',
-    ido_db_username => 'icinga2',
-    ido_db_password => 'supersecret',
-    commandtransports => {
-      icinga2 => {
-        transport => 'api',
-        username  => 'icingaweb2',
-        password  => 'supersecret',
-      }
-    }
-  }
-
-* **Note** At first have a look at the [Monitoring module documentation](https://www.icinga.com/docs/icingaweb2/latest/modules/monitoring/doc/01-About/).
-
-#### Examples
-
-##### This module is mandatory for almost every setup. It connects your Icinga Web interface to the Icinga 2 core. Current and history information are queried through the IDO database. Actions such as `Check Now`, `Set Downtime` or `Acknowledge` are send to the Icinga 2 API.
-
-```puppet
-
-```
-
-#### Parameters
-
-The following parameters are available in the `icingaweb2::module::monitoring` class:
-
-* [`ensure`](#-icingaweb2--module--monitoring--ensure)
-* [`protected_customvars`](#-icingaweb2--module--monitoring--protected_customvars)
-* [`ido_type`](#-icingaweb2--module--monitoring--ido_type)
-* [`ido_host`](#-icingaweb2--module--monitoring--ido_host)
-* [`ido_port`](#-icingaweb2--module--monitoring--ido_port)
-* [`ido_resource_name`](#-icingaweb2--module--monitoring--ido_resource_name)
-* [`ido_db_name`](#-icingaweb2--module--monitoring--ido_db_name)
-* [`ido_db_username`](#-icingaweb2--module--monitoring--ido_db_username)
-* [`ido_db_password`](#-icingaweb2--module--monitoring--ido_db_password)
-* [`ido_db_charset`](#-icingaweb2--module--monitoring--ido_db_charset)
-* [`use_tls`](#-icingaweb2--module--monitoring--use_tls)
-* [`tls_key_file`](#-icingaweb2--module--monitoring--tls_key_file)
-* [`tls_cert_file`](#-icingaweb2--module--monitoring--tls_cert_file)
-* [`tls_cacert_file`](#-icingaweb2--module--monitoring--tls_cacert_file)
-* [`tls_key`](#-icingaweb2--module--monitoring--tls_key)
-* [`tls_cert`](#-icingaweb2--module--monitoring--tls_cert)
-* [`tls_cacert`](#-icingaweb2--module--monitoring--tls_cacert)
-* [`tls_capath`](#-icingaweb2--module--monitoring--tls_capath)
-* [`tls_noverify`](#-icingaweb2--module--monitoring--tls_noverify)
-* [`tls_cipher`](#-icingaweb2--module--monitoring--tls_cipher)
-* [`settings`](#-icingaweb2--module--monitoring--settings)
-* [`commandtransports`](#-icingaweb2--module--monitoring--commandtransports)
-
-##### <a name="-icingaweb2--module--monitoring--ensure"></a>`ensure`
-
-Data type: `Enum['absent', 'present']`
-
-Enable or disable module.
-
-Default value: `'present'`
-
-##### <a name="-icingaweb2--module--monitoring--protected_customvars"></a>`protected_customvars`
-
-Data type: `Variant[String[1], Array[String[1]]]`
-
-Custom variables in Icinga 2 may contain sensible information. Set patterns for custom variables
-that should be hidden in the web interface.
-
-Default value: `['*pw*', '*pass*', 'community']`
-
-##### <a name="-icingaweb2--module--monitoring--ido_type"></a>`ido_type`
-
-Data type: `Enum['mysql', 'pgsql']`
-
-Type of your IDO database. Either `mysql` or `pgsql`.
-
-##### <a name="-icingaweb2--module--monitoring--ido_host"></a>`ido_host`
-
-Data type: `Stdlib::Host`
-
-Hostname of the IDO database.
-
-Default value: `'localhost'`
-
-##### <a name="-icingaweb2--module--monitoring--ido_port"></a>`ido_port`
-
-Data type: `Optional[Stdlib::Port]`
-
-Port of the IDO database.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--monitoring--ido_resource_name"></a>`ido_resource_name`
-
-Data type: `String`
-
-Resource name for the IDO database.
-
-Default value: `'icinga2'`
-
-##### <a name="-icingaweb2--module--monitoring--ido_db_name"></a>`ido_db_name`
-
-Data type: `String`
-
-Name of the IDO database.
-
-Default value: `'icinga2'`
-
-##### <a name="-icingaweb2--module--monitoring--ido_db_username"></a>`ido_db_username`
-
-Data type: `String`
-
-Username for IDO DB connection.
-
-Default value: `'icinga2'`
-
-##### <a name="-icingaweb2--module--monitoring--ido_db_password"></a>`ido_db_password`
-
-Data type: `Optional[Icinga::Secret]`
-
-Password for IDO DB connection.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--monitoring--ido_db_charset"></a>`ido_db_charset`
-
-Data type: `Optional[String[1]]`
-
-The character set to use for the database connection.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--monitoring--use_tls"></a>`use_tls`
-
-Data type: `Optional[Boolean]`
-
-Either enable or disable TLS encryption to the database. Other TLS parameters
-are only affected if this is set to 'true'.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--monitoring--tls_key_file"></a>`tls_key_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-Location of the private key for client authentication. Only valid if tls is enabled.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--monitoring--tls_cert_file"></a>`tls_cert_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-Location of the certificate for client authentication. Only valid if tls is enabled.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--monitoring--tls_cacert_file"></a>`tls_cacert_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-Location of the ca certificate. Only valid if tls is enabled.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--monitoring--tls_key"></a>`tls_key`
-
-Data type: `Optional[Icinga::Secret]`
-
-The private key to store in spicified `tls_key_file` file. Only valid if tls is enabled.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--monitoring--tls_cert"></a>`tls_cert`
-
-Data type: `Optional[String[1]]`
-
-The certificate to store in spicified `tls_cert_file` file. Only valid if tls is enabled.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--monitoring--tls_cacert"></a>`tls_cacert`
-
-Data type: `Optional[String[1]]`
-
-The ca certificate to store in spicified `tls_cacert_file` file. Only valid if tls is enabled.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--monitoring--tls_capath"></a>`tls_capath`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-The file path to the directory that contains the trusted SSL CA certificates, which are stored in PEM format.
-Only available for the mysql database.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--monitoring--tls_noverify"></a>`tls_noverify`
-
-Data type: `Optional[Boolean]`
-
-Disable validation of the server certificate.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--monitoring--tls_cipher"></a>`tls_cipher`
-
-Data type: `Optional[String[1]]`
-
-Cipher to use for the encrypted database connection.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--monitoring--settings"></a>`settings`
-
-Data type: `Hash[String[1], Any]`
-
-General configuration of module monitoring.
-See official Icinga [documentation](https://icinga.com/docs/icinga-web/latest/modules/monitoring/doc/03-Configuration)
-
-Default value: `{}`
-
-##### <a name="-icingaweb2--module--monitoring--commandtransports"></a>`commandtransports`
-
-Data type: `Hash`
 
 A hash of command transports.
 

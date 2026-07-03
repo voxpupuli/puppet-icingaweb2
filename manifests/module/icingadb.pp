@@ -10,7 +10,7 @@
 #   IicngaDB-Web module package name.
 #
 # @param db_type
-#   Type of your IDO database. Either `mysql` or `pgsql`.
+#   Type of your IcingaDB database. Either `mysql` or `pgsql`.
 #
 # @param db_resource_name
 #   Name for the icingadb database resource.
