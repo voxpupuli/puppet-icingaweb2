@@ -101,10 +101,10 @@ describe('icingaweb2', type: :class) do
         it { is_expected.not_to contain_icingaweb2__config__role('default admin user') }
       end
 
-      context "#{os} with manage_package 'false', cookie_path '/foo/bar', default_domain 'foobar'" do
+      context "#{os} with manage_packages 'false', cookie_path '/foo/bar', default_domain 'foobar'" do
         let(:params) do
           {
-            manage_package: false,
+            manage_packages: false,
             cookie_path: '/foo/bar',
             default_domain: 'foobar',
             db_type: 'mysql',
