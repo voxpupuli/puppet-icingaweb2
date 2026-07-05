@@ -34,6 +34,10 @@
 #   For more information, see http://github.com/icinga/puppet-icinga.
 #
 # @param manage_package
+#   DEPRECATED, will be removed in the next major release!
+#   If set to `false` packages aren't managed.
+#
+# @param manage_packages
 #   If set to `false` packages aren't managed.
 #
 # @param extra_packages
@@ -232,6 +236,7 @@ class icingaweb2 (
   Boolean                                         $theme_disabled         = false,
   Boolean                                         $manage_repos           = false,
   Boolean                                         $manage_package         = true,
+  Boolean                                         $manage_packages        = $manage_package,
   Hash[String[1], Hash[String[1], Any]]           $resources              = {},
   Variant[String[1], Boolean[false]]              $default_auth_backend   = 'Icinga Web 2',
   Hash[String[1], Hash[String[1], Any]]           $user_backends          = {},

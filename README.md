@@ -35,6 +35,10 @@ This module can manage all configurations files of Icinga Web 2 and import an in
 manage all official [modules](https://www.icinga.com/products/icinga-web-2-modules/) as well as modules developed by the
 community.
 
+### What's new in version 7.0.0
+
+Parameter `manage_package` is renamed to `manage_packages`. The origin `manage_package` is still working but will be removed in the next major release.
+
 ### What's new in version 4.0.0
 
 NOTICE: With this release come some breaking changes, please also read the CHANGELOG and test this new version with

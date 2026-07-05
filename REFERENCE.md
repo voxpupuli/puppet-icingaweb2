@@ -192,6 +192,7 @@ The following parameters are available in the `icingaweb2` class:
 * [`theme_disabled`](#-icingaweb2--theme_disabled)
 * [`manage_repos`](#-icingaweb2--manage_repos)
 * [`manage_package`](#-icingaweb2--manage_package)
+* [`manage_packages`](#-icingaweb2--manage_packages)
 * [`extra_packages`](#-icingaweb2--extra_packages)
 * [`import_schema`](#-icingaweb2--import_schema)
 * [`db_type`](#-icingaweb2--db_type)
@@ -313,9 +314,18 @@ Default value: `false`
 
 Data type: `Boolean`
 
+DEPRECATED, will be removed in the next major release!
 If set to `false` packages aren't managed.
 
 Default value: `true`
+
+##### <a name="-icingaweb2--manage_packages"></a>`manage_packages`
+
+Data type: `Boolean`
+
+If set to `false` packages aren't managed.
+
+Default value: `$manage_package`
 
 ##### <a name="-icingaweb2--extra_packages"></a>`extra_packages`
 
