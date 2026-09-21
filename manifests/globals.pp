@@ -6,6 +6,9 @@
 # @param package_name
 #   Package to install.
 #
+# @param selinux_package_name
+#   The name of the icingadb selinux package.
+#
 # @param conf_dir
 #   Path to the config files.
 #
@@ -56,6 +59,7 @@
 #
 class icingaweb2::globals (
   String[1]              $package_name,
+  String[1]              $selinux_package_name,
   String[1]              $gettext_package_name,
   Stdlib::Absolutepath   $conf_dir,
   Stdlib::Absolutepath   $state_dir,

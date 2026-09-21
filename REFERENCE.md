@@ -193,6 +193,7 @@ The following parameters are available in the `icingaweb2` class:
 * [`manage_repos`](#-icingaweb2--manage_repos)
 * [`manage_package`](#-icingaweb2--manage_package)
 * [`manage_packages`](#-icingaweb2--manage_packages)
+* [`manage_selinux`](#-icingaweb2--manage_selinux)
 * [`extra_packages`](#-icingaweb2--extra_packages)
 * [`import_schema`](#-icingaweb2--import_schema)
 * [`db_type`](#-icingaweb2--db_type)
@@ -326,6 +327,15 @@ Data type: `Boolean`
 If set to `false` packages aren't managed.
 
 Default value: `$manage_package`
+
+##### <a name="-icingaweb2--manage_selinux"></a>`manage_selinux`
+
+Data type: `Boolean`
+
+If set to true the icinga selinux package is installed if selinux is enabled. Also requires a
+`selinux_package_name` (icingaweb2::globals) and `manage_packages` has to be set to true.
+
+Default value: `false`
 
 ##### <a name="-icingaweb2--extra_packages"></a>`extra_packages`
 
@@ -589,6 +599,7 @@ This class loads the default parameters by doing a hiera lookup.
 The following parameters are available in the `icingaweb2::globals` class:
 
 * [`package_name`](#-icingaweb2--globals--package_name)
+* [`selinux_package_name`](#-icingaweb2--globals--selinux_package_name)
 * [`conf_dir`](#-icingaweb2--globals--conf_dir)
 * [`state_dir`](#-icingaweb2--globals--state_dir)
 * [`data_dir`](#-icingaweb2--globals--data_dir)
@@ -611,6 +622,12 @@ The following parameters are available in the `icingaweb2::globals` class:
 Data type: `String[1]`
 
 Package to install.
+
+##### <a name="-icingaweb2--globals--selinux_package_name"></a>`selinux_package_name`
+
+Data type: `String[1]`
+
+The name of the icingadb selinux package.
 
 ##### <a name="-icingaweb2--globals--conf_dir"></a>`conf_dir`
 

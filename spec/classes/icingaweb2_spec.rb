@@ -99,6 +99,34 @@ describe('icingaweb2', type: :class) do
         it { is_expected.not_to contain_exec('import schema') }
         it { is_expected.not_to contain_exec('create default admin user') }
         it { is_expected.not_to contain_icingaweb2__config__role('default admin user') }
+
+        if facts[:os]['family'] == 'RedHat'
+          context 'with manage_selinux => true, fact os.selinux.enabled => true' do
+            let(:facts) do
+              super().merge({ os: { family: 'RedHat', selinux: { enabled: true } } })
+            end
+
+            let(:params) do
+              { manage_selinux: true, db_type: 'mysql' }
+            end
+
+            it { is_expected.to contain_package('icingaweb2-selinux') }
+            it { is_expected.to contain_file('/etc/icingaweb2').with_seltype('icingaweb2_etc_t') }
+            it { is_expected.to contain_file('/var/lib/icingaweb2/certs').with_seltype('icingaweb2_var_lib_t') }
+          end
+
+          context 'with manage_selinux => true, fact os.selinux.enabled => false' do
+            let(:facts) do
+              super().merge({ os: { family: 'RedHat', selinux: { enabled: false } } })
+            end
+
+            let(:params) do
+              { manage_selinux: true, db_type: 'mysql' }
+            end
+
+            it { is_expected.not_to contain_package('icingaweb2-selinux') }
+          end
+        end
       end
 
       context "#{os} with manage_packages 'false', cookie_path '/foo/bar', default_domain 'foobar'" do

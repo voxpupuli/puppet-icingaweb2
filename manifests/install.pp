@@ -6,18 +6,20 @@
 class icingaweb2::install {
   assert_private("You're not supposed to use this defined type manually.")
 
-  $conf_dir        = $icingaweb2::globals::conf_dir
-  $stdlib_version  = $icingaweb2::globals::stdlib_version
-  $cert_dir        = $icingaweb2::cert_dir
-  $package_name    = $icingaweb2::globals::package_name
-  $data_dir        = $icingaweb2::globals::data_dir
-  $comp_dir        = $icingaweb2::globals::comp_db_schema_dir
-  $manage_packages = $icingaweb2::manage_packages
-  $extra_packages  = $icingaweb2::extra_packages
-  $conf_user       = $icingaweb2::conf_user
-  $conf_group      = $icingaweb2::conf_group
-  $use_tls         = $icingaweb2::use_tls
-  $tls             = $icingaweb2::tls
+  $conf_dir             = $icingaweb2::globals::conf_dir
+  $stdlib_version       = $icingaweb2::globals::stdlib_version
+  $cert_dir             = $icingaweb2::cert_dir
+  $package_name         = $icingaweb2::globals::package_name
+  $selinux_package_name = $icingaweb2::globals::selinux_package_name
+  $data_dir             = $icingaweb2::globals::data_dir
+  $comp_dir             = $icingaweb2::globals::comp_db_schema_dir
+  $manage_packages      = $icingaweb2::manage_packages
+  $manage_selinux       = $icingaweb2::_selinux
+  $extra_packages       = $icingaweb2::extra_packages
+  $conf_user            = $icingaweb2::conf_user
+  $conf_group           = $icingaweb2::conf_group
+  $use_tls              = $icingaweb2::use_tls
+  $tls                  = $icingaweb2::tls
 
   #
   # Packages
@@ -26,6 +28,14 @@ class icingaweb2::install {
     package { $package_name:
       ensure => installed,
     }
+
+    if $manage_selinux {
+      package { $selinux_package_name:
+        ensure  => installed,
+        require => Package[$package_name],
+      }
+    }
+
     File {
       require => Package[$package_name],
     }
@@ -48,11 +58,17 @@ class icingaweb2::install {
       owner  => root,
       group  => $conf_group,
     ;
+    $conf_dir:
+      seltype => 'icingaweb2_etc_t',
+      mode    => '2770',
+    ;
     prefix(['modules', 'enabledModules', 'navigation', 'preferences', 'dashboards'], "${conf_dir}/"):
-      mode => '2770',
+      mode    => '2770',
+      seltype => 'icingaweb2_etc_t',
     ;
     $cert_dir:
-      mode => '2770',
+      mode    => '2770',
+      seltype => 'icingaweb2_var_lib_t',
     ;
   }
 

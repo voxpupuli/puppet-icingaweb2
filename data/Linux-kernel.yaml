@@ -1,5 +1,6 @@
 ---
 icingaweb2::globals::package_name: icingaweb2
+icingaweb2::globals::selinux_package_name: icingaweb2-selinux
 icingaweb2::globals::conf_dir: /etc/icingaweb2
 icingaweb2::globals::state_dir: /var/lib/icingaweb2
 icingaweb2::globals::data_dir: /usr/share/icingaweb2
