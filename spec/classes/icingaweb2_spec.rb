@@ -102,9 +102,7 @@ describe('icingaweb2', type: :class) do
 
         if facts[:os]['family'] == 'RedHat'
           context 'with manage_selinux => true, fact os.selinux.enabled => true' do
-            let(:facts) do
-              super().merge({ os: { family: 'RedHat', selinux: { enabled: true } } })
-            end
+            let(:facts) { override_facts(super(), os: { family: 'RedHat', selinux: { enabled: true } }) }
 
             let(:params) do
               { manage_selinux: true, db_type: 'mysql' }
@@ -116,9 +114,7 @@ describe('icingaweb2', type: :class) do
           end
 
           context 'with manage_selinux => true, fact os.selinux.enabled => false' do
-            let(:facts) do
-              super().merge({ os: { family: 'RedHat', selinux: { enabled: false } } })
-            end
+            let(:facts) { override_facts(super(), os: { family: 'RedHat', selinux: { enabled: false } }) }
 
             let(:params) do
               { manage_selinux: true, db_type: 'mysql' }
