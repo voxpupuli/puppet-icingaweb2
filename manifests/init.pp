@@ -40,6 +40,10 @@
 # @param manage_packages
 #   If set to `false` packages aren't managed.
 #
+# @param manage_selinux
+#   If set to true the icinga selinux package is installed if selinux is enabled. Also requires a
+#   `selinux_package_name` (icingaweb2::globals) and `manage_packages` has to be set to true.
+#
 # @param extra_packages
 #   An array of packages to install additionally.
 #
@@ -237,6 +241,7 @@ class icingaweb2 (
   Boolean                                         $manage_repos           = false,
   Boolean                                         $manage_package         = true,
   Boolean                                         $manage_packages        = $manage_package,
+  Boolean                                         $manage_selinux         = false,
   Hash[String[1], Hash[String[1], Any]]           $resources              = {},
   Variant[String[1], Boolean[false]]              $default_auth_backend   = 'Icinga Web 2',
   Hash[String[1], Hash[String[1], Any]]           $user_backends          = {},
@@ -268,6 +273,11 @@ class icingaweb2 (
   require icingaweb2::globals
 
   $cert_dir = "${icingaweb2::globals::state_dir}/certs"
+  $_selinux = if fact('os.selinux.enabled') and $icingaweb2::globals::selinux_package_name {
+    $manage_selinux
+  } else {
+    false
+  }
 
   if $manage_repos {
     require icinga::repos
