@@ -49,7 +49,7 @@
 #   Service measurement template configured in the Icinga 2 Influxdb2Writer.
 #
 # @param auth_method
-#   Authentication method to use for the API.
+#   Required authentication method to use for the API: `basic` or `token`.
 #
 # @param auth_basic
 #   Username and password for HTTP basic authentication.
@@ -84,6 +84,7 @@
 class icingaweb2::module::perfdatagraphsinfluxdbv2 (
   String[1]                       $org,
   String[1]                       $bucket,
+  Enum['basic', 'token']          $auth_method,
   Enum['absent', 'present']       $ensure                              = 'present',
   Enum['git', 'none', 'package']  $install_method                      = 'git',
   Optional[String[1]]             $package_name                        = undef,
@@ -97,7 +98,6 @@ class icingaweb2::module::perfdatagraphsinfluxdbv2 (
   Optional[String[1]]             $writer_service_name_template_tag    = undef,
   Optional[String[1]]             $writer_host_template_measurement    = undef,
   Optional[String[1]]             $writer_service_template_measurement = undef,
-  Enum['none', 'basic', 'token']  $auth_method                         = 'none',
   Optional[Icingaweb2::BasicAuth] $auth_basic                          = undef,
   Optional[Icingaweb2::TokenAuth] $auth_token                          = undef,
   Boolean                         $use_tls                             = false,
@@ -139,10 +139,6 @@ class icingaweb2::module::perfdatagraphsinfluxdbv2 (
     }
   }
 
-  if $use_tls and (!$tls['cert_file'] or !$tls['key_file']) {
-    fail('Client certificate and key files are required when use_tls is enabled.')
-  }
-
   $config_settings = {
     api_url                             => $url,
     api_org                             => $org,
@@ -161,37 +157,31 @@ class icingaweb2::module::perfdatagraphsinfluxdbv2 (
     writer_service_template_measurement => $writer_service_template_measurement,
   }
 
-  case $auth_method {
-    'basic': {
-      if !$auth_basic {
-        fail('auth_basic must be set when auth_method is basic.')
-      }
-
-      $auth_password = $auth_basic['password'] =~ Sensitive ? {
-        true    => $auth_basic['password'],
-        default => Sensitive($auth_basic['password']),
-      }
-      $auth_settings = {
-        api_auth_username => $auth_basic['username'],
-        api_auth_password => $auth_password,
-      }
+  if $auth_method != 'token' {
+    if !$auth_basic {
+      fail('auth_basic must be set when auth_method is basic.')
     }
-    'token': {
-      if !$auth_token {
-        fail('auth_token must be set when auth_method is token.')
-      }
 
-      $auth_token_value = $auth_token['value'] =~ Sensitive ? {
-        true    => $auth_token['value'],
-        default => Sensitive($auth_token['value']),
-      }
-      $auth_settings = {
-        api_auth_tokentype  => $auth_token['type'],
-        api_auth_tokenvalue => $auth_token_value,
-      }
+    $auth_password = $auth_basic['password'] =~ Sensitive ? {
+      true    => $auth_basic['password'],
+      default => Sensitive($auth_basic['password']),
     }
-    default: {
-      $auth_settings = {}
+    $auth_settings = {
+      api_auth_username => $auth_basic['username'],
+      api_auth_password => $auth_password,
+    }
+  } else {
+    if !$auth_token {
+      fail('auth_token must be set when auth_method is token.')
+    }
+
+    $auth_token_value = $auth_token['value'] =~ Sensitive ? {
+      true    => $auth_token['value'],
+      default => Sensitive($auth_token['value']),
+    }
+    $auth_settings = {
+      api_auth_tokentype  => $auth_token['type'],
+      api_auth_tokenvalue => $auth_token_value,
     }
   }
 

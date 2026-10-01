@@ -15,7 +15,17 @@ describe('icingaweb2::module::perfdatagraphsinfluxdbv2', type: :class) do
       end
 
       context "#{os} with default connection settings" do
-        let(:params) { { org: 'icinga', bucket: 'icinga2' } }
+        let(:params) do
+          {
+            org: 'icinga',
+            bucket: 'icinga2',
+            auth_method: 'token',
+            auth_token: {
+              type: 'Token',
+              value: 'secret-token',
+            },
+          }
+        end
 
         it {
           is_expected.to contain_icingaweb2__module('perfdatagraphsinfluxdbv2')
@@ -31,7 +41,9 @@ describe('icingaweb2::module::perfdatagraphsinfluxdbv2', type: :class) do
               'api_url' => 'http://127.0.0.1:8086',
               'api_org' => 'icinga',
               'api_bucket' => 'icinga2',
-              'api_auth_method' => 'none',
+              'api_auth_method' => 'token',
+              'api_auth_tokentype' => 'Token',
+              'api_auth_tokenvalue' => sensitive('secret-token'),
               'api_auth_mtls' => false,
               'api_tls_insecure' => false,
             )
@@ -105,6 +117,11 @@ describe('icingaweb2::module::perfdatagraphsinfluxdbv2', type: :class) do
             writer_service_name_template_tag: 'service_name',
             writer_host_template_measurement: '$host.check_command$',
             writer_service_template_measurement: '$service.check_command$',
+            auth_method: 'token',
+            auth_token: {
+              type: 'Token',
+              value: 'secret-token',
+            },
             use_tls: true,
             tls_cert_file: '/etc/icingaweb2/client.crt',
             tls_key_file: '/etc/icingaweb2/client.key',
@@ -125,7 +142,9 @@ describe('icingaweb2::module::perfdatagraphsinfluxdbv2', type: :class) do
               'writer_service_name_template_tag' => 'service_name',
               'writer_host_template_measurement' => '$host.check_command$',
               'writer_service_template_measurement' => '$service.check_command$',
-              'api_auth_method' => 'none',
+              'api_auth_method' => 'token',
+              'api_auth_tokentype' => 'Token',
+              'api_auth_tokenvalue' => sensitive('secret-token'),
               'api_auth_mtls' => true,
               'api_auth_mtls_cert' => '/etc/icingaweb2/client.crt',
               'api_auth_mtls_key' => '/etc/icingaweb2/client.key',
@@ -140,6 +159,11 @@ describe('icingaweb2::module::perfdatagraphsinfluxdbv2', type: :class) do
           {
             org: 'icinga',
             bucket: 'icinga2',
+            auth_method: 'token',
+            auth_token: {
+              type: 'Token',
+              value: 'secret-token',
+            },
             use_tls: true,
             tls_cert: 'client certificate',
             tls_key: 'client private key',
@@ -153,7 +177,9 @@ describe('icingaweb2::module::perfdatagraphsinfluxdbv2', type: :class) do
               'api_url' => 'http://127.0.0.1:8086',
               'api_org' => 'icinga',
               'api_bucket' => 'icinga2',
-              'api_auth_method' => 'none',
+              'api_auth_method' => 'token',
+              'api_auth_tokentype' => 'Token',
+              'api_auth_tokenvalue' => sensitive('secret-token'),
               'api_auth_mtls' => true,
               'api_auth_mtls_cert' => '/var/lib/icingaweb2/certs/perfdatagraphsinfluxdbv2/perfdatagraphsinfluxdbv2.crt',
               'api_auth_mtls_key' => '/var/lib/icingaweb2/certs/perfdatagraphsinfluxdbv2/perfdatagraphsinfluxdbv2.key',

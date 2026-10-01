@@ -37,7 +37,7 @@
 #   Service template. See Icinga 2 feature `graphite`.
 #
 # @param auth_method
-#   Authentication method to use for the API.
+#   Required authentication method: `none`, `basic` or `token`.
 #
 # @param auth_basic
 #   Username and password for HTTP basic authentication.
@@ -70,6 +70,7 @@
 #   Wether to validate the certificate of the graphite API.
 #
 class icingaweb2::module::perfdatagraphsgraphite (
+  Enum['none', 'basic', 'token']  $auth_method,
   Enum['absent', 'present']       $ensure                       = 'present',
   Enum['git', 'none', 'package']  $install_method               = 'git',
   Optional[String[1]]             $package_name                 = undef,
@@ -81,7 +82,6 @@ class icingaweb2::module::perfdatagraphsgraphite (
   Optional[Integer[0]]            $max_data_points              = undef,
   Optional[String[1]]             $writer_host_name_template    = undef,
   Optional[String[1]]             $writer_service_name_template = undef,
-  Enum['none', 'basic', 'token']  $auth_method                  = 'none',
   Optional[Icingaweb2::BasicAuth] $auth_basic                   = undef,
   Optional[Icingaweb2::TokenAuth] $auth_token                   = undef,
   Boolean                         $use_tls                       = false,

@@ -15,7 +15,7 @@ describe('icingaweb2::module::perfdatagraphsinfluxdbv1', type: :class) do
       end
 
       context "#{os} with default connection settings" do
-        let(:params) { { database: 'icinga2' } }
+        let(:params) { { database: 'icinga2', auth_method: 'none' } }
 
         it {
           is_expected.to contain_icingaweb2__module('perfdatagraphsinfluxdbv1')
@@ -99,6 +99,7 @@ describe('icingaweb2::module::perfdatagraphsinfluxdbv1', type: :class) do
             writer_service_name_template_tag: 'service_name',
             writer_host_template_measurement: '$host.check_command$',
             writer_service_template_measurement: '$service.check_command$',
+            auth_method: 'none',
             use_tls: true,
             tls_cert_file: '/etc/icingaweb2/client.crt',
             tls_key_file: '/etc/icingaweb2/client.key',
@@ -132,6 +133,7 @@ describe('icingaweb2::module::perfdatagraphsinfluxdbv1', type: :class) do
         let(:params) do
           {
             database: 'icinga2',
+            auth_method: 'none',
             use_tls: true,
             tls_cert: 'client certificate',
             tls_key: 'client private key',

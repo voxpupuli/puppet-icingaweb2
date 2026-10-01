@@ -46,7 +46,7 @@
 #   Service measurement template configured in the Icinga 2 InfluxWriter.
 #
 # @param auth_method
-#   Authentication method to use for the API.
+#   Required authentication method: `none`, `basic` or `token`.
 #
 # @param auth_basic
 #   Username and password for HTTP basic authentication.
@@ -80,6 +80,7 @@
 #
 class icingaweb2::module::perfdatagraphsinfluxdbv1 (
   String[1]                       $database,
+  Enum['none', 'basic', 'token']  $auth_method,
   Enum['absent', 'present']       $ensure                              = 'present',
   Enum['git', 'none', 'package']  $install_method                      = 'git',
   Optional[String[1]]             $package_name                        = undef,
@@ -93,7 +94,6 @@ class icingaweb2::module::perfdatagraphsinfluxdbv1 (
   Optional[String[1]]             $writer_service_name_template_tag    = undef,
   Optional[String[1]]             $writer_host_template_measurement    = undef,
   Optional[String[1]]             $writer_service_template_measurement = undef,
-  Enum['none', 'basic', 'token']  $auth_method                         = 'none',
   Optional[Icingaweb2::BasicAuth] $auth_basic                          = undef,
   Optional[Icingaweb2::TokenAuth] $auth_token                          = undef,
   Boolean                         $use_tls                              = false,

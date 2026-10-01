@@ -2573,9 +2573,7 @@ Default value: `undef`
 
 Data type: `Enum['none', 'basic', 'token']`
 
-Authentication method to use for the API.
-
-Default value: `'none'`
+Required authentication method: `none`, `basic` or `token`.
 
 ##### <a name="-icingaweb2--module--perfdatagraphsgraphite--auth_basic"></a>`auth_basic`
 
@@ -2807,9 +2805,7 @@ Default value: `undef`
 
 Data type: `Enum['none', 'basic', 'token']`
 
-Authentication method to use for the API.
-
-Default value: `'none'`
+Required authentication method: `none`, `basic` or `token`.
 
 ##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv1--auth_basic"></a>`auth_basic`
 
@@ -3046,11 +3042,9 @@ Default value: `undef`
 
 ##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--auth_method"></a>`auth_method`
 
-Data type: `Enum['none', 'basic', 'token']`
+Data type: `Enum['basic', 'token']`
 
-Authentication method to use for the API.
-
-Default value: `'none'`
+Required authentication method to use for the API: `basic` or `token`.
 
 ##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--auth_basic"></a>`auth_basic`
 

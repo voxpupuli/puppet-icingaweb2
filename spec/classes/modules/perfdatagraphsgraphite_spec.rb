@@ -15,7 +15,7 @@ describe('icingaweb2::module::perfdatagraphsgraphite', type: :class) do
       end
 
       context "#{os} with git_revision 'v0.1.1'" do
-        let(:params) { { git_revision: 'v0.1.1' } }
+        let(:params) { { git_revision: 'v0.1.1', auth_method: 'none' } }
 
         it {
           is_expected.to contain_icingaweb2__module('perfdatagraphsgraphite')
@@ -134,6 +134,7 @@ describe('icingaweb2::module::perfdatagraphsgraphite', type: :class) do
         let(:params) do
           {
             git_revision: 'v1.0.0',
+            auth_method: 'none',
             use_tls: true,
             tls_cert: 'client certificate',
             tls_key: 'client private key',
