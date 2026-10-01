@@ -24,6 +24,7 @@
 * [`icingaweb2::module::perfdatagraphs`](#icingaweb2--module--perfdatagraphs): Installs and enables the perfdatagraphs module.
 * [`icingaweb2::module::perfdatagraphsgraphite`](#icingaweb2--module--perfdatagraphsgraphite): Installs and enables the perfdatagraphs-graphite module.
 * [`icingaweb2::module::perfdatagraphsinfluxdbv1`](#icingaweb2--module--perfdatagraphsinfluxdbv1): Installs and enables the perfdatagraphs InfluxDB v1 backend module.
+* [`icingaweb2::module::perfdatagraphsinfluxdbv2`](#icingaweb2--module--perfdatagraphsinfluxdbv2): Installs and enables the perfdatagraphs InfluxDB v2 backend module.
 * [`icingaweb2::module::puppetdb`](#icingaweb2--module--puppetdb): Installs and configures the puppetdb module.
 * [`icingaweb2::module::reporting`](#icingaweb2--module--reporting): Installs the reporting module
 * [`icingaweb2::module::translation`](#icingaweb2--module--translation): Installs and configures the translation module.
@@ -2883,6 +2884,247 @@ Client CA certificate content to manage.
 Default value: `undef`
 
 ##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv1--tls_insecure"></a>`tls_insecure`
+
+Data type: `Boolean`
+
+Skip verification of the InfluxDB server certificate.
+
+Default value: `false`
+
+### <a name="icingaweb2--module--perfdatagraphsinfluxdbv2"></a>`icingaweb2::module::perfdatagraphsinfluxdbv2`
+
+Installs and enables the perfdatagraphs InfluxDB v2 backend module.
+
+* **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed.
+
+#### Parameters
+
+The following parameters are available in the `icingaweb2::module::perfdatagraphsinfluxdbv2` class:
+
+* [`org`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--org)
+* [`bucket`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--bucket)
+* [`ensure`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--ensure)
+* [`module_dir`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--module_dir)
+* [`git_repository`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--git_repository)
+* [`git_revision`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--git_revision)
+* [`install_method`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--install_method)
+* [`package_name`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--package_name)
+* [`url`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--url)
+* [`timeout`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--timeout)
+* [`max_data_points`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--max_data_points)
+* [`writer_host_name_template_tag`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--writer_host_name_template_tag)
+* [`writer_service_name_template_tag`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--writer_service_name_template_tag)
+* [`writer_host_template_measurement`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--writer_host_template_measurement)
+* [`writer_service_template_measurement`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--writer_service_template_measurement)
+* [`auth_method`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--auth_method)
+* [`auth_basic`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--auth_basic)
+* [`auth_token`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--auth_token)
+* [`use_tls`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--use_tls)
+* [`tls_cert_file`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--tls_cert_file)
+* [`tls_key_file`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--tls_key_file)
+* [`tls_cacert_file`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--tls_cacert_file)
+* [`tls_cert`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--tls_cert)
+* [`tls_key`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--tls_key)
+* [`tls_cacert`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--tls_cacert)
+* [`tls_insecure`](#-icingaweb2--module--perfdatagraphsinfluxdbv2--tls_insecure)
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--org"></a>`org`
+
+Data type: `String[1]`
+
+InfluxDB organization for the bucket.
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--bucket"></a>`bucket`
+
+Data type: `String[1]`
+
+InfluxDB bucket containing performance data.
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Enable or disable module.
+
+Default value: `'present'`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--module_dir"></a>`module_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+Target directory of the module.
+
+Default value: `"${icingaweb2::globals::default_module_path}/perfdatagraphsinfluxdbv2"`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--git_repository"></a>`git_repository`
+
+Data type: `Stdlib::HTTPUrl`
+
+Set a git repository URL.
+
+Default value: `'https://github.com/NETWAYS/icingaweb2-module-perfdatagraphs-influxdbv2.git'`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--git_revision"></a>`git_revision`
+
+Data type: `Optional[String[1]]`
+
+Set either a branch or a tag name, eg. `main` or `v1.1.0`.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--install_method"></a>`install_method`
+
+Data type: `Enum['git', 'none', 'package']`
+
+Install methods are `git`, `package` and `none` is supported as installation method.
+
+Default value: `'git'`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--package_name"></a>`package_name`
+
+Data type: `Optional[String[1]]`
+
+Package name of the module. This setting is only valid in combination with the installation method `package`.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--url"></a>`url`
+
+Data type: `Stdlib::HTTPUrl`
+
+URI to the InfluxDB v2 API.
+
+Default value: `'http://127.0.0.1:8086'`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--timeout"></a>`timeout`
+
+Data type: `Optional[Integer[1]]`
+
+HTTP timeout for the API in seconds.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--max_data_points"></a>`max_data_points`
+
+Data type: `Optional[Integer[0]]`
+
+Maximum datapoints per series. Set to 0 to disable aggregation.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--writer_host_name_template_tag"></a>`writer_host_name_template_tag`
+
+Data type: `Optional[String[1]]`
+
+Host name tag configured in the Icinga 2 Influxdb2Writer.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--writer_service_name_template_tag"></a>`writer_service_name_template_tag`
+
+Data type: `Optional[String[1]]`
+
+Service name tag configured in the Icinga 2 Influxdb2Writer.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--writer_host_template_measurement"></a>`writer_host_template_measurement`
+
+Data type: `Optional[String[1]]`
+
+Host measurement template configured in the Icinga 2 Influxdb2Writer.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--writer_service_template_measurement"></a>`writer_service_template_measurement`
+
+Data type: `Optional[String[1]]`
+
+Service measurement template configured in the Icinga 2 Influxdb2Writer.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--auth_method"></a>`auth_method`
+
+Data type: `Enum['none', 'basic', 'token']`
+
+Authentication method to use for the API.
+
+Default value: `'none'`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--auth_basic"></a>`auth_basic`
+
+Data type: `Optional[Icingaweb2::BasicAuth]`
+
+Username and password for HTTP basic authentication.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--auth_token"></a>`auth_token`
+
+Data type: `Optional[Icingaweb2::TokenAuth]`
+
+Type and value for the Authorization header token.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--use_tls"></a>`use_tls`
+
+Data type: `Boolean`
+
+Use client certificate authentication.
+
+Default value: `false`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--tls_cert_file"></a>`tls_cert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Path to an existing client certificate file.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--tls_key_file"></a>`tls_key_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Path to an existing client key file.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--tls_cacert_file"></a>`tls_cacert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Path to an existing client CA file.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--tls_cert"></a>`tls_cert`
+
+Data type: `Optional[String[1]]`
+
+Client certificate content to manage.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--tls_key"></a>`tls_key`
+
+Data type: `Optional[Icinga::Secret]`
+
+Client private key content to manage.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--tls_cacert"></a>`tls_cacert`
+
+Data type: `Optional[String[1]]`
+
+Client CA certificate content to manage.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv2--tls_insecure"></a>`tls_insecure`
 
 Data type: `Boolean`
 
