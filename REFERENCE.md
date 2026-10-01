@@ -2471,13 +2471,13 @@ The following parameters are available in the `icingaweb2::module::perfdatagraph
 * [`auth_method`](#-icingaweb2--module--perfdatagraphsgraphite--auth_method)
 * [`auth_basic`](#-icingaweb2--module--perfdatagraphsgraphite--auth_basic)
 * [`auth_token`](#-icingaweb2--module--perfdatagraphsgraphite--auth_token)
-* [`use_mtls`](#-icingaweb2--module--perfdatagraphsgraphite--use_mtls)
-* [`mtls_cert_file`](#-icingaweb2--module--perfdatagraphsgraphite--mtls_cert_file)
-* [`mtls_key_file`](#-icingaweb2--module--perfdatagraphsgraphite--mtls_key_file)
-* [`mtls_cacert_file`](#-icingaweb2--module--perfdatagraphsgraphite--mtls_cacert_file)
-* [`mtls_cert`](#-icingaweb2--module--perfdatagraphsgraphite--mtls_cert)
-* [`mtls_key`](#-icingaweb2--module--perfdatagraphsgraphite--mtls_key)
-* [`mtls_cacert`](#-icingaweb2--module--perfdatagraphsgraphite--mtls_cacert)
+* [`use_tls`](#-icingaweb2--module--perfdatagraphsgraphite--use_tls)
+* [`tls_cert_file`](#-icingaweb2--module--perfdatagraphsgraphite--tls_cert_file)
+* [`tls_key_file`](#-icingaweb2--module--perfdatagraphsgraphite--tls_key_file)
+* [`tls_cacert_file`](#-icingaweb2--module--perfdatagraphsgraphite--tls_cacert_file)
+* [`tls_cert`](#-icingaweb2--module--perfdatagraphsgraphite--tls_cert)
+* [`tls_key`](#-icingaweb2--module--perfdatagraphsgraphite--tls_key)
+* [`tls_cacert`](#-icingaweb2--module--perfdatagraphsgraphite--tls_cacert)
 * [`tls_insecure`](#-icingaweb2--module--perfdatagraphsgraphite--tls_insecure)
 
 ##### <a name="-icingaweb2--module--perfdatagraphsgraphite--ensure"></a>`ensure`
@@ -2592,7 +2592,7 @@ Type and value for the Authorization header token.
 
 Default value: `undef`
 
-##### <a name="-icingaweb2--module--perfdatagraphsgraphite--use_mtls"></a>`use_mtls`
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--use_tls"></a>`use_tls`
 
 Data type: `Boolean`
 
@@ -2600,7 +2600,7 @@ Use client certificate authentication.
 
 Default value: `false`
 
-##### <a name="-icingaweb2--module--perfdatagraphsgraphite--mtls_cert_file"></a>`mtls_cert_file`
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--tls_cert_file"></a>`tls_cert_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -2608,7 +2608,7 @@ Path to an existing client certificate file.
 
 Default value: `undef`
 
-##### <a name="-icingaweb2--module--perfdatagraphsgraphite--mtls_key_file"></a>`mtls_key_file`
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--tls_key_file"></a>`tls_key_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -2616,7 +2616,7 @@ Path to an existing client key file.
 
 Default value: `undef`
 
-##### <a name="-icingaweb2--module--perfdatagraphsgraphite--mtls_cacert_file"></a>`mtls_cacert_file`
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--tls_cacert_file"></a>`tls_cacert_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -2624,7 +2624,7 @@ Path to an existing client CA file.
 
 Default value: `undef`
 
-##### <a name="-icingaweb2--module--perfdatagraphsgraphite--mtls_cert"></a>`mtls_cert`
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--tls_cert"></a>`tls_cert`
 
 Data type: `Optional[String[1]]`
 
@@ -2632,7 +2632,7 @@ Client certificate content to manage.
 
 Default value: `undef`
 
-##### <a name="-icingaweb2--module--perfdatagraphsgraphite--mtls_key"></a>`mtls_key`
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--tls_key"></a>`tls_key`
 
 Data type: `Optional[Icinga::Secret]`
 
@@ -2640,7 +2640,7 @@ Client private key content to manage.
 
 Default value: `undef`
 
-##### <a name="-icingaweb2--module--perfdatagraphsgraphite--mtls_cacert"></a>`mtls_cacert`
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--tls_cacert"></a>`tls_cacert`
 
 Data type: `Optional[String[1]]`
 
@@ -2683,13 +2683,13 @@ The following parameters are available in the `icingaweb2::module::perfdatagraph
 * [`auth_method`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--auth_method)
 * [`auth_basic`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--auth_basic)
 * [`auth_token`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--auth_token)
-* [`use_mtls`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--use_mtls)
-* [`mtls_cert_file`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--mtls_cert_file)
-* [`mtls_key_file`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--mtls_key_file)
-* [`mtls_cacert_file`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--mtls_cacert_file)
-* [`mtls_cert`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--mtls_cert)
-* [`mtls_key`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--mtls_key)
-* [`mtls_cacert`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--mtls_cacert)
+* [`use_tls`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--use_tls)
+* [`tls_cert_file`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--tls_cert_file)
+* [`tls_key_file`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--tls_key_file)
+* [`tls_cacert_file`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--tls_cacert_file)
+* [`tls_cert`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--tls_cert)
+* [`tls_key`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--tls_key)
+* [`tls_cacert`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--tls_cacert)
 * [`tls_insecure`](#-icingaweb2--module--perfdatagraphsinfluxdbv1--tls_insecure)
 
 ##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv1--ensure"></a>`ensure`
@@ -2826,7 +2826,7 @@ Type and value for the Authorization header token.
 
 Default value: `undef`
 
-##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv1--use_mtls"></a>`use_mtls`
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv1--use_tls"></a>`use_tls`
 
 Data type: `Boolean`
 
@@ -2834,7 +2834,7 @@ Use client certificate authentication.
 
 Default value: `false`
 
-##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv1--mtls_cert_file"></a>`mtls_cert_file`
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv1--tls_cert_file"></a>`tls_cert_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -2842,7 +2842,7 @@ Path to an existing client certificate file.
 
 Default value: `undef`
 
-##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv1--mtls_key_file"></a>`mtls_key_file`
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv1--tls_key_file"></a>`tls_key_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -2850,7 +2850,7 @@ Path to an existing client key file.
 
 Default value: `undef`
 
-##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv1--mtls_cacert_file"></a>`mtls_cacert_file`
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv1--tls_cacert_file"></a>`tls_cacert_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -2858,7 +2858,7 @@ Path to an existing client CA file.
 
 Default value: `undef`
 
-##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv1--mtls_cert"></a>`mtls_cert`
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv1--tls_cert"></a>`tls_cert`
 
 Data type: `Optional[String[1]]`
 
@@ -2866,7 +2866,7 @@ Client certificate content to manage.
 
 Default value: `undef`
 
-##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv1--mtls_key"></a>`mtls_key`
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv1--tls_key"></a>`tls_key`
 
 Data type: `Optional[Icinga::Secret]`
 
@@ -2874,7 +2874,7 @@ Client private key content to manage.
 
 Default value: `undef`
 
-##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv1--mtls_cacert"></a>`mtls_cacert`
+##### <a name="-icingaweb2--module--perfdatagraphsinfluxdbv1--tls_cacert"></a>`tls_cacert`
 
 Data type: `Optional[String[1]]`
 

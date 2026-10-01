@@ -99,10 +99,10 @@ describe('icingaweb2::module::perfdatagraphsinfluxdbv1', type: :class) do
             writer_service_name_template_tag: 'service_name',
             writer_host_template_measurement: '$host.check_command$',
             writer_service_template_measurement: '$service.check_command$',
-            use_mtls: true,
-            mtls_cert_file: '/etc/icingaweb2/client.crt',
-            mtls_key_file: '/etc/icingaweb2/client.key',
-            mtls_cacert_file: '/etc/icingaweb2/ca.crt',
+            use_tls: true,
+            tls_cert_file: '/etc/icingaweb2/client.crt',
+            tls_key_file: '/etc/icingaweb2/client.key',
+            tls_cacert_file: '/etc/icingaweb2/ca.crt',
             tls_insecure: true,
           }
         end
@@ -132,10 +132,10 @@ describe('icingaweb2::module::perfdatagraphsinfluxdbv1', type: :class) do
         let(:params) do
           {
             database: 'icinga2',
-            use_mtls: true,
-            mtls_cert: 'client certificate',
-            mtls_key: 'client private key',
-            mtls_cacert: 'client CA certificate',
+            use_tls: true,
+            tls_cert: 'client certificate',
+            tls_key: 'client private key',
+            tls_cacert: 'client CA certificate',
           }
         end
 

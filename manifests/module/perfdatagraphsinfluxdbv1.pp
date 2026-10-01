@@ -54,25 +54,25 @@
 # @param auth_token
 #   Type and value for the Authorization header token.
 #
-# @param use_mtls
+# @param use_tls
 #   Use client certificate authentication.
 #
-# @param mtls_cert_file
+# @param tls_cert_file
 #   Path to an existing client certificate file.
 #
-# @param mtls_key_file
+# @param tls_key_file
 #   Path to an existing client key file.
 #
-# @param mtls_cacert_file
+# @param tls_cacert_file
 #   Path to an existing client CA file.
 #
-# @param mtls_cert
+# @param tls_cert
 #   Client certificate content to manage.
 #
-# @param mtls_key
+# @param tls_key
 #   Client private key content to manage.
 #
-# @param mtls_cacert
+# @param tls_cacert
 #   Client CA certificate content to manage.
 #
 # @param tls_insecure
@@ -96,13 +96,13 @@ class icingaweb2::module::perfdatagraphsinfluxdbv1 (
   Enum['none', 'basic', 'token']  $auth_method                         = 'none',
   Optional[Icingaweb2::BasicAuth] $auth_basic                          = undef,
   Optional[Icingaweb2::TokenAuth] $auth_token                          = undef,
-  Boolean                         $use_mtls                            = false,
-  Optional[Stdlib::Absolutepath]  $mtls_cert_file                      = undef,
-  Optional[Stdlib::Absolutepath]  $mtls_key_file                       = undef,
-  Optional[Stdlib::Absolutepath]  $mtls_cacert_file                    = undef,
-  Optional[String[1]]             $mtls_cert                           = undef,
-  Optional[Icinga::Secret]        $mtls_key                            = undef,
-  Optional[String[1]]             $mtls_cacert                         = undef,
+  Boolean                         $use_tls                              = false,
+  Optional[Stdlib::Absolutepath]  $tls_cert_file                        = undef,
+  Optional[Stdlib::Absolutepath]  $tls_key_file                         = undef,
+  Optional[Stdlib::Absolutepath]  $tls_cacert_file                      = undef,
+  Optional[String[1]]             $tls_cert                             = undef,
+  Optional[Icinga::Secret]        $tls_key                              = undef,
+  Optional[String[1]]             $tls_cacert                           = undef,
   Boolean                         $tls_insecure                        = false,
 ) {
   require icingaweb2::module::perfdatagraphs
@@ -110,18 +110,18 @@ class icingaweb2::module::perfdatagraphsinfluxdbv1 (
   $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/perfdatagraphsinfluxdbv1"
   $cert_dir        = "${icingaweb2::globals::state_dir}/certs/perfdatagraphsinfluxdbv1"
-  $mtls            = icinga::cert::files(
+  $tls             = icinga::cert::files(
     'perfdatagraphsinfluxdbv1',
     $cert_dir,
-    $mtls_key_file,
-    $mtls_cert_file,
-    $mtls_cacert_file,
-    $mtls_key,
-    $mtls_cert,
-    $mtls_cacert,
+    $tls_key_file,
+    $tls_cert_file,
+    $tls_cacert_file,
+    $tls_key,
+    $tls_cert,
+    $tls_cacert,
   )
 
-  if $mtls_key or $mtls_cert or $mtls_cacert {
+  if $tls_key or $tls_cert or $tls_cacert {
     file { $cert_dir:
       ensure => directory,
       owner  => 'root',
@@ -131,12 +131,12 @@ class icingaweb2::module::perfdatagraphsinfluxdbv1 (
     -> icinga::cert { 'icingaweb2::module::perfdatagraphsinfluxdbv1 mTLS client':
       owner => $icingaweb2::conf_user,
       group => $icingaweb2::conf_group,
-      args  => $mtls,
+      args  => $tls,
     }
   }
 
-  if $use_mtls and (!$mtls['cert_file'] or !$mtls['key_file']) {
-    fail('Client certificate and key files are required when use_mtls is enabled.')
+  if $use_tls and (!$tls['cert_file'] or !$tls['key_file']) {
+    fail('Client certificate and key files are required when use_tls is enabled.')
   }
 
   $config_settings = {
@@ -145,10 +145,10 @@ class icingaweb2::module::perfdatagraphsinfluxdbv1 (
     api_timeout                         => $timeout,
     api_max_data_points                 => $max_data_points,
     api_auth_method                     => $auth_method,
-    api_auth_mtls                       => $use_mtls,
-    api_auth_mtls_cert                  => $mtls['cert_file'],
-    api_auth_mtls_key                   => $mtls['key_file'],
-    api_auth_mtls_ca                    => $mtls['cacert_file'],
+    api_auth_mtls                       => $use_tls,
+    api_auth_mtls_cert                  => $tls['cert_file'],
+    api_auth_mtls_key                   => $tls['key_file'],
+    api_auth_mtls_ca                    => $tls['cacert_file'],
     api_tls_insecure                    => $tls_insecure,
     writer_host_name_template_tag       => $writer_host_name_template_tag,
     writer_service_name_template_tag    => $writer_service_name_template_tag,
