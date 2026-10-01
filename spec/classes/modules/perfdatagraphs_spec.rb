@@ -26,7 +26,12 @@ describe('icingaweb2::module::perfdatagraphs', type: :class) do
           is_expected.to contain_icingaweb2__inisection('icingaweb2-module-perfdatagraphs')
             .with_section_name('perfdatagraphs')
             .with_target('/etc/icingaweb2/modules/perfdatagraphs/config.ini')
-            .with_settings('default_backend' => 'Graphite', 'default_timerange' => 'PT12H')
+            .with_settings(
+              'default_backend' => 'Graphite',
+              'default_timerange' => 'PT12H',
+              'disable_thresholds_rendering' => false,
+              'disable_objectview_graphs_rendering' => false,
+            )
         }
       end
 
@@ -36,7 +41,10 @@ describe('icingaweb2::module::perfdatagraphs', type: :class) do
             git_revision: 'v0.1.1',
             default_backend: 'Graphite',
             default_timerange: 'PT6H30M',
+            minimum_chart_count: 5,
             cache_lifetime: 3,
+            disable_thresholds_rendering: true,
+            disable_objectview_graphs_rendering: true,
           }
         end
 
@@ -50,7 +58,14 @@ describe('icingaweb2::module::perfdatagraphs', type: :class) do
           is_expected.to contain_icingaweb2__inisection('icingaweb2-module-perfdatagraphs')
             .with_section_name('perfdatagraphs')
             .with_target('/etc/icingaweb2/modules/perfdatagraphs/config.ini')
-            .with_settings('default_backend' => 'Graphite', 'default_timerange' => 'PT6H30M', 'cache_lifetime' => 3)
+            .with_settings(
+              'default_backend' => 'Graphite',
+              'default_timerange' => 'PT6H30M',
+              'minimum_chart_count' => 5,
+              'cache_lifetime' => 3,
+              'disable_thresholds_rendering' => true,
+              'disable_objectview_graphs_rendering' => true,
+            )
         }
       end
     end

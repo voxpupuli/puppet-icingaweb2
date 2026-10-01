@@ -22,7 +22,7 @@
 * [`icingaweb2::module::icingadb`](#icingaweb2--module--icingadb): Manages the icingadb module. This module is still optional at the moment.
 * [`icingaweb2::module::pdfexport`](#icingaweb2--module--pdfexport): Installs, configures and enables the pdfexport module.
 * [`icingaweb2::module::perfdatagraphs`](#icingaweb2--module--perfdatagraphs): Installs and enables the perfdatagraphs module.
-* [`icingaweb2::module::perfdatagraphsgraphite`](#icingaweb2--module--perfdatagraphsgraphite): Installs and enables the perfdatagraphsgraphite module.
+* [`icingaweb2::module::perfdatagraphsgraphite`](#icingaweb2--module--perfdatagraphsgraphite): Installs and enables the perfdatagraphs-graphite module.
 * [`icingaweb2::module::puppetdb`](#icingaweb2--module--puppetdb): Installs and configures the puppetdb module.
 * [`icingaweb2::module::reporting`](#icingaweb2--module--reporting): Installs the reporting module
 * [`icingaweb2::module::translation`](#icingaweb2--module--translation): Installs and configures the translation module.
@@ -82,7 +82,9 @@ that store groups.
 ### Data types
 
 * [`Icingaweb2::AdminRole`](#Icingaweb2--AdminRole): A strict type for the default admin role
+* [`Icingaweb2::BasicAuth`](#Icingaweb2--BasicAuth): A strict type for HTTP basic authentication credentials.
 * [`Icingaweb2::ImportSchema`](#Icingaweb2--ImportSchema): A type for setting import database schemata
+* [`Icingaweb2::TokenAuth`](#Icingaweb2--TokenAuth): A strict type for token authentication credentials.
 
 ## Classes
 
@@ -2345,7 +2347,10 @@ The following parameters are available in the `icingaweb2::module::perfdatagraph
 * [`package_name`](#-icingaweb2--module--perfdatagraphs--package_name)
 * [`default_backend`](#-icingaweb2--module--perfdatagraphs--default_backend)
 * [`default_timerange`](#-icingaweb2--module--perfdatagraphs--default_timerange)
+* [`minimum_chart_count`](#-icingaweb2--module--perfdatagraphs--minimum_chart_count)
 * [`cache_lifetime`](#-icingaweb2--module--perfdatagraphs--cache_lifetime)
+* [`disable_thresholds_rendering`](#-icingaweb2--module--perfdatagraphs--disable_thresholds_rendering)
+* [`disable_objectview_graphs_rendering`](#-icingaweb2--module--perfdatagraphs--disable_objectview_graphs_rendering)
 
 ##### <a name="-icingaweb2--module--perfdatagraphs--ensure"></a>`ensure`
 
@@ -2409,6 +2414,14 @@ Default timerange to show. Has to be in format defined in ISO 8601, e.g. PT12H.
 
 Default value: `'PT12H'`
 
+##### <a name="-icingaweb2--module--perfdatagraphs--minimum_chart_count"></a>`minimum_chart_count`
+
+Data type: `Optional[Integer[0]]`
+
+The minimum count of charts to be rendered on the object page.
+
+Default value: `undef`
+
 ##### <a name="-icingaweb2--module--perfdatagraphs--cache_lifetime"></a>`cache_lifetime`
 
 Data type: `Optional[Integer[1]]`
@@ -2417,9 +2430,25 @@ Cache lifetime in seconds.
 
 Default value: `undef`
 
+##### <a name="-icingaweb2--module--perfdatagraphs--disable_thresholds_rendering"></a>`disable_thresholds_rendering`
+
+Data type: `Boolean`
+
+Disable warning and critical thresholds rendering by default.
+
+Default value: `false`
+
+##### <a name="-icingaweb2--module--perfdatagraphs--disable_objectview_graphs_rendering"></a>`disable_objectview_graphs_rendering`
+
+Data type: `Boolean`
+
+Disable graph rendering on object detail views.
+
+Default value: `false`
+
 ### <a name="icingaweb2--module--perfdatagraphsgraphite"></a>`icingaweb2::module::perfdatagraphsgraphite`
 
-Installs and enables the perfdatagraphsgraphite module.
+Installs and enables the perfdatagraphs-graphite module.
 
 * **Note** If you want to use `git` as `install_method`, the CLI `git` command has to be installed.
 
@@ -2433,13 +2462,22 @@ The following parameters are available in the `icingaweb2::module::perfdatagraph
 * [`git_revision`](#-icingaweb2--module--perfdatagraphsgraphite--git_revision)
 * [`install_method`](#-icingaweb2--module--perfdatagraphsgraphite--install_method)
 * [`package_name`](#-icingaweb2--module--perfdatagraphsgraphite--package_name)
-* [`api_url`](#-icingaweb2--module--perfdatagraphsgraphite--api_url)
-* [`api_username`](#-icingaweb2--module--perfdatagraphsgraphite--api_username)
-* [`api_password`](#-icingaweb2--module--perfdatagraphsgraphite--api_password)
-* [`api_timeout`](#-icingaweb2--module--perfdatagraphsgraphite--api_timeout)
-* [`api_tls_insecure`](#-icingaweb2--module--perfdatagraphsgraphite--api_tls_insecure)
+* [`url`](#-icingaweb2--module--perfdatagraphsgraphite--url)
+* [`timeout`](#-icingaweb2--module--perfdatagraphsgraphite--timeout)
+* [`max_data_points`](#-icingaweb2--module--perfdatagraphsgraphite--max_data_points)
 * [`writer_host_name_template`](#-icingaweb2--module--perfdatagraphsgraphite--writer_host_name_template)
 * [`writer_service_name_template`](#-icingaweb2--module--perfdatagraphsgraphite--writer_service_name_template)
+* [`auth_method`](#-icingaweb2--module--perfdatagraphsgraphite--auth_method)
+* [`auth_basic`](#-icingaweb2--module--perfdatagraphsgraphite--auth_basic)
+* [`auth_token`](#-icingaweb2--module--perfdatagraphsgraphite--auth_token)
+* [`use_mtls`](#-icingaweb2--module--perfdatagraphsgraphite--use_mtls)
+* [`mtls_cert_file`](#-icingaweb2--module--perfdatagraphsgraphite--mtls_cert_file)
+* [`mtls_key_file`](#-icingaweb2--module--perfdatagraphsgraphite--mtls_key_file)
+* [`mtls_cacert_file`](#-icingaweb2--module--perfdatagraphsgraphite--mtls_cacert_file)
+* [`mtls_cert`](#-icingaweb2--module--perfdatagraphsgraphite--mtls_cert)
+* [`mtls_key`](#-icingaweb2--module--perfdatagraphsgraphite--mtls_key)
+* [`mtls_cacert`](#-icingaweb2--module--perfdatagraphsgraphite--mtls_cacert)
+* [`tls_insecure`](#-icingaweb2--module--perfdatagraphsgraphite--tls_insecure)
 
 ##### <a name="-icingaweb2--module--perfdatagraphsgraphite--ensure"></a>`ensure`
 
@@ -2489,7 +2527,7 @@ Package name of the module. This setting is only valid in combination with the i
 
 Default value: `undef`
 
-##### <a name="-icingaweb2--module--perfdatagraphsgraphite--api_url"></a>`api_url`
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--url"></a>`url`
 
 Data type: `Stdlib::HTTPUrl`
 
@@ -2497,37 +2535,21 @@ URI to the graphite API.
 
 Default value: `'http://127.0.0.1:8542'`
 
-##### <a name="-icingaweb2--module--perfdatagraphsgraphite--api_username"></a>`api_username`
-
-Data type: `Optional[String[1]]`
-
-Username to authenticate to the graphite API.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--perfdatagraphsgraphite--api_password"></a>`api_password`
-
-Data type: `Optional[Icinga::Secret]`
-
-Password that belongs to `api_username`.
-
-Default value: `undef`
-
-##### <a name="-icingaweb2--module--perfdatagraphsgraphite--api_timeout"></a>`api_timeout`
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--timeout"></a>`timeout`
 
 Data type: `Optional[Integer[1]]`
 
-Connection timeout to the graphite API.
+HTTP timeout for the API in seconds.
 
 Default value: `undef`
 
-##### <a name="-icingaweb2--module--perfdatagraphsgraphite--api_tls_insecure"></a>`api_tls_insecure`
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--max_data_points"></a>`max_data_points`
 
-Data type: `Boolean`
+Data type: `Optional[Integer[0]]`
 
-Wether to validate the certificate of the graphite API.
+The maximum numbers of datapoints each series returns. Disable aggregation by setting this to 0.
 
-Default value: `false`
+Default value: `undef`
 
 ##### <a name="-icingaweb2--module--perfdatagraphsgraphite--writer_host_name_template"></a>`writer_host_name_template`
 
@@ -2544,6 +2566,94 @@ Data type: `Optional[String[1]]`
 Service template. See Icinga 2 feature `graphite`.
 
 Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--auth_method"></a>`auth_method`
+
+Data type: `Enum['none', 'basic', 'token']`
+
+Authentication method to use for the API.
+
+Default value: `'none'`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--auth_basic"></a>`auth_basic`
+
+Data type: `Optional[Icingaweb2::BasicAuth]`
+
+Username and password for HTTP basic authentication.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--auth_token"></a>`auth_token`
+
+Data type: `Optional[Icingaweb2::TokenAuth]`
+
+Type and value for the Authorization header token.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--use_mtls"></a>`use_mtls`
+
+Data type: `Boolean`
+
+Use client certificate authentication.
+
+Default value: `false`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--mtls_cert_file"></a>`mtls_cert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Path to an existing client certificate file.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--mtls_key_file"></a>`mtls_key_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Path to an existing client key file.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--mtls_cacert_file"></a>`mtls_cacert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Path to an existing client CA file.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--mtls_cert"></a>`mtls_cert`
+
+Data type: `Optional[String[1]]`
+
+Client certificate content to manage.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--mtls_key"></a>`mtls_key`
+
+Data type: `Optional[Icinga::Secret]`
+
+Client private key content to manage.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--mtls_cacert"></a>`mtls_cacert`
+
+Data type: `Optional[String[1]]`
+
+Client CA certificate content to manage.
+
+Default value: `undef`
+
+##### <a name="-icingaweb2--module--perfdatagraphsgraphite--tls_insecure"></a>`tls_insecure`
+
+Data type: `Boolean`
+
+Wether to validate the certificate of the graphite API.
+
+Default value: `false`
 
 ### <a name="icingaweb2--module--puppetdb"></a>`icingaweb2::module::puppetdb`
 
@@ -4606,9 +4716,35 @@ Struct[{
 }]
 ```
 
+### <a name="Icingaweb2--BasicAuth"></a>`Icingaweb2::BasicAuth`
+
+A strict type for HTTP basic authentication credentials.
+
+Alias of
+
+```puppet
+Struct[{
+  'username' => String[1],
+  'password' => Icinga::Secret,
+}]
+```
+
 ### <a name="Icingaweb2--ImportSchema"></a>`Icingaweb2::ImportSchema`
 
 A type for setting import database schemata
 
 Alias of `Variant[Boolean, Enum['mariadb', 'mysql']]`
+
+### <a name="Icingaweb2--TokenAuth"></a>`Icingaweb2::TokenAuth`
+
+A strict type for token authentication credentials.
+
+Alias of
+
+```puppet
+Struct[{
+  'type'  => String[1],
+  'value' => Icinga::Secret,
+}]
+```
 
