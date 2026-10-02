@@ -37,7 +37,7 @@ describe('icingaweb2::module::vspheredb', type: :class) do
           is_expected.to contain_icingaweb2__module('vspheredb')
             .with_install_method('git')
             .with_git_revision('v1.7.1')
-            .with_package_name('icingaweb2-module-vspheredb')
+            .with_package_name('icinga-vspheredb')
         }
 
         it {
@@ -88,7 +88,7 @@ describe('icingaweb2::module::vspheredb', type: :class) do
         end
 
         it {
-          is_expected.to contain_package('icingaweb2-module-vspheredb')
+          is_expected.to contain_package('icinga-vspheredb')
             .with_ensure('installed')
         }
 
