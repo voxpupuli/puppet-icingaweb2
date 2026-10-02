@@ -38,7 +38,6 @@ describe('icingaweb2::module::reporting', type: :class) do
           is_expected.to contain_icingaweb2__module('reporting')
             .with_install_method('git')
             .with_git_revision('v1.0.0')
-            .with_package_name('icingaweb2-module-reporting')
         }
 
         it {
@@ -78,21 +77,15 @@ describe('icingaweb2::module::reporting', type: :class) do
         it { is_expected.not_to contain_exec('import icingaweb2::module::reporting schema') }
       end
 
-      context "#{os} with db_type 'mysql', db_port '4711', install_method 'package', manage_service 'false', import_schema 'true'" do
+      context "#{os} with db_type 'mysql', db_port '4711', manage_service 'false', import_schema 'true'" do
         let(:params) do
           {
-            install_method: 'package',
             manage_service: false,
             db_type: 'mysql',
             db_port: 4711,
             import_schema: true,
           }
         end
-
-        it {
-          is_expected.to contain_package('icingaweb2-module-reporting')
-            .with_ensure('installed')
-        }
 
         it {
           is_expected.to contain_icingaweb2__resource__database('reporting')
@@ -118,13 +111,6 @@ describe('icingaweb2::module::reporting', type: :class) do
             .with_system(true)
         }
 
-        it {
-          is_expected.to contain_systemd__dropin_file('icinga-reporting.conf')
-            .with_unit('icinga-reporting.service')
-            .with_content(%r{User=icingareporting})
-        }
-
-        it { is_expected.not_to contain_systemd__unit_file('icinga-reporting.service') }
         it { is_expected.not_to contain_service('icinga-reporting') }
       end
 

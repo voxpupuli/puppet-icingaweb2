@@ -15,17 +15,12 @@ icingaweb2::logging_file: /var/log/icingaweb2/icingaweb2.log
 
 icingaweb2::module::icingadb::package_name: icingadb-web
 icingaweb2::module::director::package_name: icinga-director
-icingaweb2::module::reporting::package_name: icingaweb2-module-reporting
 icingaweb2::module::vspheredb::package_name: icinga-vspheredb
 icingaweb2::module::x509::package_name: icinga-x509
-icingaweb2::module::audit::package_name: icingaweb2-module-audit
 icingaweb2::module::businessprocess::package_name: icinga-businessprocess
 icingaweb2::module::cube::package_name: icinga-cube
-icingaweb2::module::elasticsearch::package_name: icingaweb2-module-elasticsearch
-icingaweb2::module::fileshipper::package_name: icingaweb2-module-fileshipper
 icingaweb2::module::generictts::package_name: icinga-generictts
 icingaweb2::module::graphite::package_name: icinga-graphite
-icingaweb2::module::pdfexport::package_name: icingaweb2-module-pdfexport
 icingaweb2::module::puppetdb::package_name: icingaweb2-module-puppetdb
 icingaweb2::module::perfdatagraphs::package_name: icingaweb2-module-perfdatagraphs
 icingaweb2::module::perfdatagraphsgraphite::package_name: icingaweb2-module-perfdatagraphs-graphite
