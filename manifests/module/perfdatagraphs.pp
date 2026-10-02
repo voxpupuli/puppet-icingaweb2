@@ -27,28 +27,43 @@
 # @param default_timerange
 #   Default timerange to show. Has to be in format defined in ISO 8601, e.g. PT12H.
 #
+# @param minimum_chart_count
+#   The minimum count of charts to be rendered on the object page.
+#
 # @param cache_lifetime
 #   Cache lifetime in seconds.
 #
+# @param disable_thresholds_rendering
+#   Disable warning and critical thresholds rendering by default.
+#
+# @param disable_objectview_graphs_rendering
+#   Disable graph rendering on object detail views.
+#
 class icingaweb2::module::perfdatagraphs (
   Enum['Graphite']               $default_backend,
-  Enum['absent', 'present']      $ensure            = 'present',
-  Enum['git', 'none', 'package'] $install_method    = 'git',
-  Optional[String[1]]            $package_name      = undef,
-  Stdlib::HTTPUrl                $git_repository    = 'https://github.com/NETWAYS/icingaweb2-module-perfdatagraphs.git',
-  Optional[String[1]]            $git_revision      = undef,
-  Stdlib::Absolutepath           $module_dir        = "${icingaweb2::globals::default_module_path}/perfdatagraphs",
-  String[1]                      $default_timerange = 'PT12H',
-  Optional[Integer[1]]           $cache_lifetime    = undef,
+  Enum['absent', 'present']      $ensure                              = 'present',
+  Enum['git', 'none', 'package'] $install_method                      = 'git',
+  Optional[String[1]]            $package_name                        = undef,
+  Stdlib::HTTPUrl                $git_repository                      = 'https://github.com/NETWAYS/icingaweb2-module-perfdatagraphs.git',
+  Optional[String[1]]            $git_revision                        = undef,
+  Stdlib::Absolutepath           $module_dir                          = "${icingaweb2::globals::default_module_path}/perfdatagraphs",
+  String[1]                      $default_timerange                   = 'PT12H',
+  Optional[Integer[0]]            $minimum_chart_count                = undef,
+  Optional[Integer[1]]           $cache_lifetime                      = undef,
+  Boolean                        $disable_thresholds_rendering        = false,
+  Boolean                        $disable_objectview_graphs_rendering = false,
 ) {
   require icingaweb2
 
   $conf_dir        = $icingaweb2::globals::conf_dir
   $module_conf_dir = "${conf_dir}/modules/perfdatagraphs"
   $config_settings = {
-    default_backend   => $default_backend,
-    default_timerange => $default_timerange,
-    cache_lifetime    => $cache_lifetime,
+    default_backend                     => $default_backend,
+    default_timerange                   => $default_timerange,
+    minimum_chart_count                 => $minimum_chart_count,
+    cache_lifetime                      => $cache_lifetime,
+    disable_thresholds_rendering        => $disable_thresholds_rendering,
+    disable_objectview_graphs_rendering => $disable_objectview_graphs_rendering,
   }
 
   $settings = {
