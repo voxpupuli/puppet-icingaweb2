@@ -125,6 +125,20 @@ describe('icingaweb2', type: :class) do
         end
       end
 
+      context "#{os} with managed TLS certificate contents" do
+        let(:params) do
+          {
+            db_type: 'mysql',
+            use_tls: true,
+            tls_key: 'client private key',
+            tls_cert: 'client certificate',
+          }
+        end
+
+        it { is_expected.to contain_file('/var/lib/icingaweb2/certs/icingaweb2.key').with_seltype('icingaweb2_var_lib_t') }
+        it { is_expected.to contain_file('/var/lib/icingaweb2/certs/icingaweb2.crt').with_seltype('icingaweb2_var_lib_t') }
+      end
+
       context "#{os} with manage_packages 'false', cookie_path '/foo/bar', default_domain 'foobar'" do
         let(:params) do
           {

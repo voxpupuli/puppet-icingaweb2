@@ -74,9 +74,10 @@ class icingaweb2::install {
 
   if $use_tls {
     icinga::cert { 'icingaweb2 tls client config':
-      owner => $conf_user,
-      group => $conf_group,
-      args  => $tls,
+      owner   => $conf_user,
+      group   => $conf_group,
+      seltype => 'icingaweb2_var_lib_t',
+      args    => $tls,
     }
   }
 

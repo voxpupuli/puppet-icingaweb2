@@ -117,9 +117,10 @@ class icingaweb2::module::perfdatagraphsgraphite (
       mode   => '2770',
     }
     -> icinga::cert { 'icingaweb2::module::perfdatagraphsgraphite mTLS client':
-      owner => $icingaweb2::conf_user,
-      group => $icingaweb2::conf_group,
-      args  => $tls,
+      owner   => $icingaweb2::conf_user,
+      group   => $icingaweb2::conf_group,
+      seltype => 'icingaweb2_var_lib_t',
+      args    => $tls,
     }
   }
 

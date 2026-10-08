@@ -146,6 +146,8 @@ describe('icingaweb2::module::vspheredb', type: :class) do
           }
         end
 
+        it { is_expected.to contain_icinga__cert('icingaweb2::module::vspheredb tls client config').with_seltype('icingaweb2_var_lib_t') }
+
         it {
           is_expected.to contain_icingaweb2__resource__database('vspheredb').with(
             {

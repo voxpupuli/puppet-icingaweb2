@@ -111,6 +111,8 @@ describe('icingaweb2::module::x509', type: :class) do
           }
         end
 
+        it { is_expected.to contain_icinga__cert('icingaweb2::module::x509 tls client config').with_seltype('icingaweb2_var_lib_t') }
+
         it {
           is_expected.to contain_icingaweb2__inisection('icingaweb2-module-x509-backend')
             .with_section_name('backend')
