@@ -171,6 +171,8 @@ describe('icingaweb2::module::perfdatagraphsinfluxdbv2', type: :class) do
           }
         end
 
+        it { is_expected.to contain_icinga__cert('icingaweb2::module::perfdatagraphsinfluxdbv2 TLS client').with_seltype('icingaweb2_var_lib_t') }
+
         it {
           is_expected.to contain_icingaweb2__inisection('icingaweb2-module-perfdatagraphsinfluxdbv2')
             .with_settings(

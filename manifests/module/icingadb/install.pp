@@ -31,17 +31,19 @@ class icingaweb2::module::icingadb::install {
 
   if $redis_use_tls {
     icinga::cert { 'icingaweb2::module::icingadb redis client tls config':
-      owner => $conf_user,
-      group => $conf_group,
-      args  => $redis_tls,
+      owner   => $conf_user,
+      group   => $conf_group,
+      seltype => 'icingaweb2_var_lib_t',
+      args    => $redis_tls,
     }
   }
 
   if $db_use_tls {
     icinga::cert { 'icingaweb2::module::icingadb database tls client config':
-      owner => $conf_user,
-      group => $conf_group,
-      args  => $db_tls,
+      owner   => $conf_user,
+      group   => $conf_group,
+      seltype => 'icingaweb2_var_lib_t',
+      args    => $db_tls,
     }
   }
 }

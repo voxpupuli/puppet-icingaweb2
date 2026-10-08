@@ -48,9 +48,10 @@ class icingaweb2::module::director::install {
     }
 
     icinga::cert { 'icingaweb2::module::director tls client config':
-      owner => $conf_user,
-      group => $conf_group,
-      args  => $tls,
+      owner   => $conf_user,
+      group   => $conf_group,
+      seltype => 'icingaweb2_var_lib_t',
+      args    => $tls,
     }
   }
 
