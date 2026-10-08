@@ -751,7 +751,7 @@ Installs and enables the audit  module.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'icingaweb2::module::audit':
@@ -889,7 +889,7 @@ Installs and enables the businessprocess module.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'icingaweb2::module::businessprocess':
@@ -964,7 +964,7 @@ Installs and enables the cube module.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'icingaweb2::module::cube':
@@ -1039,7 +1039,7 @@ Install and configure the director module.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'icingaweb2::module::director':
@@ -1403,7 +1403,7 @@ The Elasticsearch module displays events from data stored in Elasticsearch.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'icingaweb2::module::elasticsearch':
@@ -1608,7 +1608,7 @@ Installs and enables the generictts module.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'icingaweb2::module::generictts':
@@ -1700,7 +1700,7 @@ The Graphite module draws graphs out of time series data stored in Graphite.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'icingaweb2::module::graphite':
@@ -2227,7 +2227,7 @@ Installs, configures and enables the pdfexport module.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'icingaweb2::module::pdfexport':
@@ -3257,7 +3257,7 @@ Installs the reporting module
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'icingaweb2::module::reporting':
@@ -3571,7 +3571,7 @@ Installs the vsphereDB plugin
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'icingaweb2::module::vspheredb':
@@ -3858,7 +3858,7 @@ Installs the x509 module
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'icingaweb2::module::x509':
@@ -4783,7 +4783,7 @@ Download, enable and configure Icinga Web 2 modules.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 $conf_dir        = $icingaweb2::globals::conf_dir
@@ -5218,4 +5218,3 @@ Struct[{
   'value' => Icinga::Secret,
 }]
 ```
-
