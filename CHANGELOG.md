@@ -4,6 +4,43 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v7.0.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v7.0.0) (2026-10-08)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v6.0.0...v7.0.0)
+
+**Breaking changes:**
+
+- puppet/icinga: Require v7.2+ [\#484](https://github.com/voxpupuli/puppet-icingaweb2/pull/484) ([lbetz](https://github.com/lbetz))
+- Drop EOL Debian 11 support [\#483](https://github.com/voxpupuli/puppet-icingaweb2/pull/483) ([lbetz](https://github.com/lbetz))
+- Drop EOL Fedora 42 support [\#482](https://github.com/voxpupuli/puppet-icingaweb2/pull/482) ([lbetz](https://github.com/lbetz))
+- Remove default packages for fileshipper, audit, reporting, pdfexport, elastic [\#471](https://github.com/voxpupuli/puppet-icingaweb2/pull/471) ([lbetz](https://github.com/lbetz))
+- Remove IDO support [\#465](https://github.com/voxpupuli/puppet-icingaweb2/pull/465) ([lbetz](https://github.com/lbetz))
+- Drop puppet, update openvox minimum version to 8.19 [\#452](https://github.com/voxpupuli/puppet-icingaweb2/pull/452) ([TheMeier](https://github.com/TheMeier))
+
+**Implemented enhancements:**
+
+- SELinux: Label all managed TLS certificates [\#485](https://github.com/voxpupuli/puppet-icingaweb2/pull/485) ([lbetz](https://github.com/lbetz))
+- Allow puppet/systemd 10.x [\#481](https://github.com/voxpupuli/puppet-icingaweb2/pull/481) ([lbetz](https://github.com/lbetz))
+- Allow puppetlabs/vcsrepo 8.x [\#480](https://github.com/voxpupuli/puppet-icingaweb2/pull/480) ([lbetz](https://github.com/lbetz))
+- Allow puppetlabs/concat 10.x [\#479](https://github.com/voxpupuli/puppet-icingaweb2/pull/479) ([lbetz](https://github.com/lbetz))
+- Allow puppetlabs/stdlib 10.x [\#478](https://github.com/voxpupuli/puppet-icingaweb2/pull/478) ([lbetz](https://github.com/lbetz))
+- Add Ubuntu 26.04 support [\#477](https://github.com/voxpupuli/puppet-icingaweb2/pull/477) ([lbetz](https://github.com/lbetz))
+- Add Fedora 44 support [\#476](https://github.com/voxpupuli/puppet-icingaweb2/pull/476) ([lbetz](https://github.com/lbetz))
+- Update requirements to allow OpenVox 9 [\#473](https://github.com/voxpupuli/puppet-icingaweb2/pull/473) ([sebastianrakel](https://github.com/sebastianrakel))
+- Rename default package\_name for the vspheredb module [\#470](https://github.com/voxpupuli/puppet-icingaweb2/pull/470) ([lbetz](https://github.com/lbetz))
+- Update perfdatagraphs and add influxdb support [\#469](https://github.com/voxpupuli/puppet-icingaweb2/pull/469) ([lbetz](https://github.com/lbetz))
+- Manage SELinux package on managed RedHat hosts [\#467](https://github.com/voxpupuli/puppet-icingaweb2/pull/467) ([lbetz](https://github.com/lbetz))
+- Add param manage\_packages to replace manage\_package in the future [\#466](https://github.com/voxpupuli/puppet-icingaweb2/pull/466) ([lbetz](https://github.com/lbetz))
+- Add support for Fedora 42 and 43 [\#460](https://github.com/voxpupuli/puppet-icingaweb2/pull/460) ([lbetz](https://github.com/lbetz))
+- Allow puppet/systemd 9.x [\#459](https://github.com/voxpupuli/puppet-icingaweb2/pull/459) ([lbetz](https://github.com/lbetz))
+- Allow puppet/icinga 8.x [\#458](https://github.com/voxpupuli/puppet-icingaweb2/pull/458) ([lbetz](https://github.com/lbetz))
+- Allow puppetlabs/vcsrepo 7.x [\#451](https://github.com/voxpupuli/puppet-icingaweb2/pull/451) ([TheMeier](https://github.com/TheMeier))
+- Add default package names for perfdatagraphs-graphite [\#450](https://github.com/voxpupuli/puppet-icingaweb2/pull/450) ([lbetz](https://github.com/lbetz))
+
+**Merged pull requests:**
+
+- Add support for Debian 13 [\#454](https://github.com/voxpupuli/puppet-icingaweb2/pull/454) ([lbetz](https://github.com/lbetz))
+
 ## [v6.0.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v6.0.0) (2025-07-11)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v5.3.1...v6.0.0)
