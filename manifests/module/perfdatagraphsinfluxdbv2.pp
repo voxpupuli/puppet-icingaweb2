@@ -127,15 +127,16 @@ class icingaweb2::module::perfdatagraphsinfluxdbv2 (
 
   if $tls_key or $tls_cert or $tls_cacert {
     file { $cert_dir:
-      ensure => directory,
-      owner  => 'root',
-      group  => $icingaweb2::conf_group,
-      mode   => '2770',
+      ensure  => directory,
+      owner   => 'root',
+      group   => $icingaweb2::conf_group,
+      mode    => '2770',
+      seltype => 'icingaweb2_rw_content_t',
     }
     -> icinga::cert { 'icingaweb2::module::perfdatagraphsinfluxdbv2 TLS client':
       owner   => $icingaweb2::conf_user,
       group   => $icingaweb2::conf_group,
-      seltype => 'icingaweb2_var_lib_t',
+      seltype => 'icingaweb2_rw_content_t',
       args    => $tls,
     }
   }

@@ -102,7 +102,7 @@ describe('icingaweb2::module::icingadb', type: :class) do
           }
         end
 
-        it { is_expected.to contain_icinga__cert('icingaweb2::module::icingadb redis client tls config').with_seltype('icingaweb2_var_lib_t') }
+        it { is_expected.to contain_icinga__cert('icingaweb2::module::icingadb redis client tls config').with_seltype('icingaweb2_rw_content_t') }
 
         it {
           is_expected.to contain_icingaweb2__inisection('icingaweb2-module-icingadb-config')
@@ -169,7 +169,7 @@ describe('icingaweb2::module::icingadb', type: :class) do
           }
         end
 
-        it { is_expected.to contain_icinga__cert('icingaweb2::module::icingadb database tls client config').with_seltype('icingaweb2_var_lib_t') }
+        it { is_expected.to contain_icinga__cert('icingaweb2::module::icingadb database tls client config').with_seltype('icingaweb2_rw_content_t') }
 
         it {
           is_expected.to contain_icingaweb2__resource__database('icingadb').with(

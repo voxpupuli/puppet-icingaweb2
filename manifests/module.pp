@@ -98,17 +98,23 @@ define icingaweb2::module (
 
   file {
     default:
-      owner => $conf_user,
-      group => $conf_group,
+      ensure  => directory,
+      owner   => $conf_user,
+      group   => $conf_group,
+      seltype => 'icingaweb2_config_t',
     ;
     "${conf_dir}/enabledModules/${module}":
       ensure => $enable_module,
       target => $module_dir,
     ;
-    ["${conf_dir}/modules/${module}", "${state_dir}/${module}"]:
-      ensure => directory,
-      owner  => 'root',
-      mode   => '2770',
+    "${conf_dir}/modules/${module}":
+      owner => 'root',
+      mode  => '2770',
+    ;
+    "${state_dir}/${module}":
+      owner   => 'root',
+      mode    => '2770',
+      seltype => 'icingaweb2_rw_content_t',
     ;
   }
 

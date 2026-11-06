@@ -23,17 +23,18 @@ class icingaweb2::module::icingadb::install {
   }
 
   file { $cert_dir:
-    ensure => directory,
-    owner  => 'root',
-    group  => $conf_group,
-    mode   => '2770',
+    ensure  => directory,
+    owner   => 'root',
+    group   => $conf_group,
+    mode    => '2770',
+    seltype => 'icingaweb2_rw_content_t',
   }
 
   if $redis_use_tls {
     icinga::cert { 'icingaweb2::module::icingadb redis client tls config':
       owner   => $conf_user,
       group   => $conf_group,
-      seltype => 'icingaweb2_var_lib_t',
+      seltype => 'icingaweb2_rw_content_t',
       args    => $redis_tls,
     }
   }
@@ -42,7 +43,7 @@ class icingaweb2::module::icingadb::install {
     icinga::cert { 'icingaweb2::module::icingadb database tls client config':
       owner   => $conf_user,
       group   => $conf_group,
-      seltype => 'icingaweb2_var_lib_t',
+      seltype => 'icingaweb2_rw_content_t',
       args    => $db_tls,
     }
   }

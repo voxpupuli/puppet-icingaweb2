@@ -109,8 +109,8 @@ describe('icingaweb2', type: :class) do
             end
 
             it { is_expected.to contain_package('icingaweb2-selinux') }
-            it { is_expected.to contain_file('/etc/icingaweb2').with_seltype('icingaweb2_etc_t') }
-            it { is_expected.to contain_file('/var/lib/icingaweb2/certs').with_seltype('icingaweb2_var_lib_t') }
+            it { is_expected.to contain_file('/etc/icingaweb2').with_seltype('icingaweb2_config_t') }
+            it { is_expected.to contain_file('/var/lib/icingaweb2/certs').with_seltype('icingaweb2_rw_content_t') }
           end
 
           context 'with manage_selinux => true, fact os.selinux.enabled => false' do
@@ -135,8 +135,8 @@ describe('icingaweb2', type: :class) do
           }
         end
 
-        it { is_expected.to contain_file('/var/lib/icingaweb2/certs/icingaweb2.key').with_seltype('icingaweb2_var_lib_t') }
-        it { is_expected.to contain_file('/var/lib/icingaweb2/certs/icingaweb2.crt').with_seltype('icingaweb2_var_lib_t') }
+        it { is_expected.to contain_file('/var/lib/icingaweb2/certs/icingaweb2.key').with_seltype('icingaweb2_rw_content_t') }
+        it { is_expected.to contain_file('/var/lib/icingaweb2/certs/icingaweb2.crt').with_seltype('icingaweb2_rw_content_t') }
       end
 
       context "#{os} with manage_packages 'false', cookie_path '/foo/bar', default_domain 'foobar'" do

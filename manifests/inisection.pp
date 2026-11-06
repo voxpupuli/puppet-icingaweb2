@@ -46,6 +46,7 @@ define icingaweb2::inisection (
       owner   => $conf_user,
       group   => $conf_group,
       mode    => '0640',
+      seltype => 'icingaweb2_config_t',
     }
   }
 
