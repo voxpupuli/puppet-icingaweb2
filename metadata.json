@@ -1,6 +1,6 @@
 {
   "name": "puppet-icingaweb2",
-  "version": "7.0.1-rc0",
+  "version": "7.1.0",
   "author": "Vox Pupuli",
   "summary": "Icinga Web 2 Puppet Module",
   "license": "Apache-2.0",
@@ -26,7 +26,7 @@
     },
     {
       "name": "puppet/systemd",
-      "version_requirement": ">= 3.1.0 < 11.0.0"
+      "version_requirement": ">= 3.1.0 < 12.0.0"
     }
   ],
   "operatingsystem_support": [

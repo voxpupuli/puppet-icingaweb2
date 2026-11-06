@@ -4,7 +4,15 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v7.0.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v7.0.0) (2026-10-08)
+## [v7.1.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v7.1.0) (2026-10-28)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v7.0.0...v7.1.0)
+
+**Implemented enhancements:**
+
+- puppet/systemd: Allow 11.x [\#487](https://github.com/voxpupuli/puppet-icingaweb2/pull/487) ([bastelfreak](https://github.com/bastelfreak))
+
+## [v7.0.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v7.0.0) (2026-10-09)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v6.0.0...v7.0.0)
 
