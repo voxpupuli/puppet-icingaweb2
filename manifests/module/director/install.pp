@@ -41,16 +41,17 @@ class icingaweb2::module::director::install {
 
   if $use_tls {
     file { $cert_dir:
-      ensure => directory,
-      owner  => 'root',
-      group  => $conf_group,
-      mode   => '2770',
+      ensure  => directory,
+      owner   => 'root',
+      group   => $conf_group,
+      mode    => '2770',
+      seltype => 'icingaweb2_rw_content_t',
     }
 
     icinga::cert { 'icingaweb2::module::director tls client config':
       owner   => $conf_user,
       group   => $conf_group,
-      seltype => 'icingaweb2_var_lib_t',
+      seltype => 'icingaweb2_rw_content_t',
       args    => $tls,
     }
   }

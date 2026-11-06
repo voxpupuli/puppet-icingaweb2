@@ -34,10 +34,14 @@ class icingaweb2::install {
         ensure  => installed,
         require => Package[$package_name],
       }
-    }
 
-    File {
-      require => Package[$package_name],
+      File {
+        require => Package[$selinux_package_name],
+      }
+    } else {
+      File {
+        require => Package[$package_name],
+      }
     }
   }
 
@@ -59,16 +63,16 @@ class icingaweb2::install {
       group  => $conf_group,
     ;
     $conf_dir:
-      seltype => 'icingaweb2_etc_t',
+      seltype => 'icingaweb2_config_t',
       mode    => '2770',
     ;
     prefix(['modules', 'enabledModules', 'navigation', 'preferences', 'dashboards'], "${conf_dir}/"):
       mode    => '2770',
-      seltype => 'icingaweb2_etc_t',
+      seltype => 'icingaweb2_config_t',
     ;
     $cert_dir:
       mode    => '2770',
-      seltype => 'icingaweb2_var_lib_t',
+      seltype => 'icingaweb2_rw_content_t',
     ;
   }
 
@@ -76,7 +80,7 @@ class icingaweb2::install {
     icinga::cert { 'icingaweb2 tls client config':
       owner   => $conf_user,
       group   => $conf_group,
-      seltype => 'icingaweb2_var_lib_t',
+      seltype => 'icingaweb2_rw_content_t',
       args    => $tls,
     }
   }
