@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v7.1.1](https://github.com/voxpupuli/puppet-icingaweb2/tree/v7.1.1) (2026-11-06)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v7.1.0...v7.1.1)
+
+**Fixed bugs:**
+
+- Fix and add all seltypes [\#490](https://github.com/voxpupuli/puppet-icingaweb2/pull/490) ([lbetz](https://github.com/lbetz))
+
 ## [v7.1.0](https://github.com/voxpupuli/puppet-icingaweb2/tree/v7.1.0) (2026-10-28)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-icingaweb2/compare/v7.0.0...v7.1.0)
